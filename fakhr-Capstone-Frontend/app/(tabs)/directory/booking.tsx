@@ -1,21 +1,69 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Image } from "expo-image";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useMemo, useState } from "react";
 import {
   Alert,
   Linking,
+  Platform,
   Pressable,
   ScrollView,
+  Share,
   StyleSheet,
   Text,
   TextInput,
+  useWindowDimensions,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import type { DirectoryListing } from "../../../components/directory/types";
-import { libraryColors as c } from "../../../constants/libraryTheme";
 import { saveMockBooking } from "../../../utils/mockBookingsStore";
+
+const colors = {
+  bg: "#FFFFFF",
+  title: "#3D4A78",
+  muted: "#A8ABB4",
+  line: "#D8DCE8",
+  cardBorder: "#E6E8EE",
+  selected: "#7B88B8",
+  white: "#FFFFFF",
+  success: "#3CCF7A",
+  chevron: "#8B91AF",
+  timeMuted: "#8B91AF",
+};
+
+const DESIGN_W = 390;
+
+const STEPS = [
+  { n: 1, label: "الخدمة" },
+  { n: 2, label: "الموعد" },
+  { n: 3, label: "التأكيد" },
+  { n: 4, label: "التأكيد" },
+];
+
+const AR_DAYS = [
+  "الأحد",
+  "الاثنين",
+  "الثلاثاء",
+  "الأربعاء",
+  "الخميس",
+  "الجمعة",
+  "السبت",
+];
+
+const AR_MONTHS = [
+  "يناير",
+  "فبراير",
+  "مارس",
+  "أبريل",
+  "مايو",
+  "يونيو",
+  "يوليو",
+  "أغسطس",
+  "سبتمبر",
+  "أكتوبر",
+  "نوفمبر",
+  "ديسمبر",
+];
 
 const TIME_SLOTS = [
   "09:00 AM",
@@ -41,57 +89,125 @@ function parseListing(raw: string | string[] | undefined): DirectoryListing | nu
   }
 }
 
-function formatDateChip(d: Date): { key: string; line1: string; line2: string } {
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  return {
-    key: d.toISOString().slice(0, 10),
-    line1: days[d.getDay()],
-    line2: String(d.getDate()),
-  };
+function formatTimeAr(slot: string) {
+  const [time, period] = slot.split(" ");
+  const [h, m] = time.split(":");
+  const hour = String(parseInt(h, 10));
+  const suffix = period === "PM" ? "م" : "ص";
+  return `${hour}:${m} ${suffix}`;
+}
+
+function slotToHours(slot: string | null) {
+  if (!slot) return { h: 11, m: 0 };
+  const [time, period] = slot.split(" ");
+  let h = parseInt(time.split(":")[0], 10);
+  const m = parseInt(time.split(":")[1], 10) || 0;
+  if (period === "PM" && h < 12) h += 12;
+  if (period === "AM" && h === 12) h = 0;
+  return { h, m };
+}
+
+function buildCalendarStamp(dateKey: string, slot: string | null) {
+  if (!dateKey) return "";
+  const { h, m } = slotToHours(slot);
+  const ymd = dateKey.replace(/-/g, "");
+  return `${ymd}T${String(h).padStart(2, "0")}${String(m).padStart(2, "0")}00`;
+}
+
+function shiftCalendarStamp(stamp: string, minutes: number) {
+  const y = Number(stamp.slice(0, 4));
+  const mo = Number(stamp.slice(4, 6)) - 1;
+  const d = Number(stamp.slice(6, 8));
+  const h = Number(stamp.slice(9, 11));
+  const mi = Number(stamp.slice(11, 13));
+  const dt = new Date(y, mo, d, h, mi + minutes, 0);
+  const ymd = `${dt.getFullYear()}${String(dt.getMonth() + 1).padStart(2, "0")}${String(dt.getDate()).padStart(2, "0")}`;
+  return `${ymd}T${String(dt.getHours()).padStart(2, "0")}${String(dt.getMinutes()).padStart(2, "0")}00`;
 }
 
 export default function BookingScreen() {
   const router = useRouter();
+  const { width: windowWidth } = useWindowDimensions();
+  const contentW = Math.min(windowWidth, 430);
+  const s = contentW / DESIGN_W;
+  const ms = (n: number) => Math.round(n * s);
+
   const { item: itemParam } = useLocalSearchParams<{ item?: string }>();
   const listing = useMemo(() => parseListing(itemParam), [itemParam]);
 
   const dateOptions = useMemo(() => {
-    const out: { key: string; line1: string; line2: string }[] = [];
+    const out: {
+      key: string;
+      day: string;
+      date: string;
+      month: string;
+    }[] = [];
     const start = new Date();
     start.setHours(0, 0, 0, 0);
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 4; i++) {
       const d = new Date(start);
       d.setDate(start.getDate() + i);
-      out.push(formatDateChip(d));
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+      out.push({
+        key,
+        day: AR_DAYS[d.getDay()],
+        date: String(d.getDate()),
+        month: AR_MONTHS[d.getMonth()],
+      });
     }
     return out;
   }, []);
 
+  const [phase, setPhase] = useState<1 | 2 | 3>(1);
   const [selectedDateKey, setSelectedDateKey] = useState(
-    () => dateOptions[0]?.key ?? ""
+    () => dateOptions[2]?.key ?? dateOptions[0]?.key ?? "",
   );
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string | null>("01:00 PM");
   const [patientName, setPatientName] = useState("");
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
 
+  const providerName = listing?.name || "مؤسسة فاطمة";
+  const activeStep = phase === 1 ? 1 : 2;
+
   const selectedDateLabel = useMemo(() => {
     const opt = dateOptions.find((d) => d.key === selectedDateKey);
     if (!opt) return "";
-    return `${opt.line1} ${opt.line2}`;
+    return `${opt.day} ${opt.date} ${opt.month}`;
   }, [dateOptions, selectedDateKey]);
+
+  const confirmationDateLabel = useMemo(() => {
+    const opt = dateOptions.find((d) => d.key === selectedDateKey);
+    if (!opt) return "";
+    const year = selectedDateKey.slice(0, 4);
+    return `${opt.day} ${opt.date} ${opt.month} ${year}`;
+  }, [dateOptions, selectedDateKey]);
+
+  const appointmentType =
+    listing?.subtitle?.trim() || listing?.tags?.[0] || "جلسة تخاطب";
+  const confirmationTime = selectedTime
+    ? `الساعة: ${formatTimeAr(selectedTime)}`
+    : "";
+
+  const goNext = () => {
+    if (!selectedTime) {
+      Alert.alert("مطلوب", "يرجى اختيار وقت الموعد.");
+      return;
+    }
+    setPhase(2);
+  };
 
   const confirm = () => {
     if (!listing) {
-      Alert.alert("Error", "Missing listing.");
+      Alert.alert("خطأ", "تعذر تحميل بيانات الحجز.");
       return;
     }
     if (!patientName.trim() || !phone.trim()) {
-      Alert.alert("Required", "Please enter full name and phone number.");
+      Alert.alert("مطلوب", "يرجى إدخال الاسم الكامل ورقم الهاتف.");
       return;
     }
     if (!selectedTime) {
-      Alert.alert("Required", "Please select a time slot.");
+      Alert.alert("مطلوب", "يرجى اختيار وقت الموعد.");
       return;
     }
     saveMockBooking({
@@ -102,358 +218,681 @@ export default function BookingScreen() {
       phone: phone.trim(),
       notes: notes.trim() || undefined,
     });
-    Alert.alert(
-      "Booking confirmed",
-      `Your appointment with ${listing.name} is saved (mock).`,
-      [{ text: "OK", onPress: () => router.back() }]
-    );
+    setPhase(3);
   };
 
-  if (!listing) {
-    return (
-      <SafeAreaView style={styles.safe} edges={["top"]}>
-        <View style={styles.headerRow}>
-          <Pressable onPress={() => router.back()} style={styles.backBtn}>
-            <Ionicons name="chevron-back" size={24} color={c.text} />
-          </Pressable>
-          <Text style={styles.headerTitle}>Book Appointment</Text>
-          <View style={{ width: 44 }} />
-        </View>
-        <Text style={styles.missing}>Unable to load this booking.</Text>
-      </SafeAreaView>
-    );
-  }
+  const addToCalendar = () => {
+    const summary = `${appointmentType} — ${providerName}`;
+    const details = [appointmentType, confirmationDateLabel, confirmationTime, providerName]
+      .filter(Boolean)
+      .join("\n");
+    const start = buildCalendarStamp(selectedDateKey, selectedTime);
+    const end = start ? shiftCalendarStamp(start, 60) : "";
+    const calUrl =
+      start && end
+        ? `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(summary)}&details=${encodeURIComponent(details)}&dates=${start}/${end}`
+        : "";
+
+    if (Platform.OS === "web" && calUrl) {
+      Linking.openURL(calUrl).catch(() => {
+        Share.share({ message: details, title: summary }).catch(() => {});
+      });
+      return;
+    }
+    Share.share({ message: details, title: summary }).catch(() => {});
+  };
+
+  const viewAppointments = () => {
+    router.push("/(tabs)/bookings");
+  };
 
   return (
-    <SafeAreaView style={styles.safe} edges={["top", "bottom"]}>
-      <View style={styles.headerRow}>
-        <Pressable onPress={() => router.back()} style={styles.backBtn}>
-          <Ionicons name="chevron-back" size={24} color={c.text} />
-        </Pressable>
-        <Text style={styles.headerTitle}>Book Appointment</Text>
-        <View style={{ width: 44 }} />
-      </View>
+    <SafeAreaView style={styles.safe} edges={["top"]}>
+      <View style={[styles.column, { width: contentW }]}>
+        {phase === 3 ? (
+          <ScrollView
+            style={styles.scroll}
+            contentContainerStyle={{
+              paddingHorizontal: ms(22),
+              paddingTop: ms(14),
+              paddingBottom: ms(28),
+            }}
+            showsVerticalScrollIndicator={false}
+          >
+            <Text
+              style={[styles.title, { fontSize: ms(24), lineHeight: ms(32) }]}
+            >
+              تأكيد الحجز
+            </Text>
 
-      <ScrollView
-        style={styles.scroll}
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.summaryCard}>
-          <Image
-            source={{ uri: listing.imageUrl }}
-            style={styles.summaryImage}
-            contentFit="cover"
-          />
-          <View style={styles.summaryText}>
-            <Text style={styles.summaryName}>{listing.name}</Text>
-            <Text style={styles.summarySub}>{listing.subtitle}</Text>
-            <View style={styles.ratingRow}>
-              <Ionicons name="star" size={14} color="#D4A017" />
-              <Text style={styles.ratingNum}>{listing.rating}</Text>
+            <View
+              style={[
+                styles.confirmArrows,
+                {
+                  marginTop: ms(16),
+                  paddingHorizontal: ms(2),
+                  flexDirection: "row",
+                  direction: "ltr",
+                },
+              ]}
+            >
+              <Pressable
+                onPress={() => router.back()}
+                hitSlop={12}
+                style={({ pressed }) => [pressed && styles.pressed]}
+                accessibilityRole="button"
+                accessibilityLabel="رجوع"
+              >
+                <Ionicons
+                  name="chevron-back"
+                  size={ms(20)}
+                  color={colors.title}
+                />
+              </Pressable>
+              <Pressable
+                onPress={viewAppointments}
+                hitSlop={12}
+                style={({ pressed }) => [pressed && styles.pressed]}
+                accessibilityRole="button"
+                accessibilityLabel="التالي"
+              >
+                <Ionicons
+                  name="chevron-forward"
+                  size={ms(20)}
+                  color={colors.title}
+                />
+              </Pressable>
             </View>
-            <View style={styles.locRow}>
-              <Ionicons name="location-outline" size={14} color={c.textMuted} />
-              <Text style={styles.locSmall}>{listing.locationLine}</Text>
+
+            <View
+              style={[
+                styles.successCircle,
+                {
+                  width: ms(92),
+                  height: ms(92),
+                  borderRadius: ms(46),
+                  marginTop: ms(8),
+                  marginBottom: ms(20),
+                  alignSelf: "center",
+                },
+              ]}
+            >
+              <Ionicons name="checkmark" size={ms(50)} color={colors.white} />
             </View>
+
+            <Text
+              style={[
+                styles.successMsg,
+                { fontSize: ms(22), lineHeight: ms(32), marginBottom: ms(12) },
+              ]}
+            >
+              تم حجز موعدك بنجاح
+            </Text>
+            <Text
+              style={[
+                styles.confirmType,
+                { fontSize: ms(17), lineHeight: ms(26), marginBottom: ms(8) },
+              ]}
+            >
+              {appointmentType}
+            </Text>
+            <Text
+              style={[
+                styles.confirmDate,
+                { fontSize: ms(16), lineHeight: ms(24), marginBottom: ms(4) },
+              ]}
+            >
+              {confirmationDateLabel}
+            </Text>
+            <Text
+              style={[
+                styles.confirmTime,
+                {
+                  fontSize: ms(14),
+                  lineHeight: ms(22),
+                  marginBottom: ms(10),
+                  writingDirection: "rtl",
+                },
+              ]}
+            >
+              {confirmationTime}
+            </Text>
+            <Text
+              style={[
+                styles.confirmProvider,
+                {
+                  fontSize: ms(17),
+                  lineHeight: ms(26),
+                  marginBottom: ms(24),
+                },
+              ]}
+            >
+              {providerName}
+            </Text>
+
+            <Pressable
+              onPress={addToCalendar}
+              style={({ pressed }) => [
+                styles.nextBtn,
+                {
+                  minHeight: ms(52),
+                  borderRadius: ms(18),
+                  marginBottom: ms(12),
+                  width: "100%",
+                },
+                pressed && styles.pressed,
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel="إضافة إلى التقويم"
+            >
+              <Text style={[styles.nextText, { fontSize: ms(17) }]}>
+                إضافة إلى التقويم
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={viewAppointments}
+              style={({ pressed }) => [
+                styles.nextBtn,
+                {
+                  minHeight: ms(52),
+                  borderRadius: ms(18),
+                  width: "100%",
+                },
+                pressed && styles.pressed,
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel="عرض مواعيدي"
+            >
+              <Text style={[styles.nextText, { fontSize: ms(17) }]}>
+                عرض مواعيدي
+              </Text>
+            </Pressable>
+          </ScrollView>
+        ) : (
+          <ScrollView
+          style={styles.scroll}
+          contentContainerStyle={[
+            styles.scrollContent,
+            {
+              paddingHorizontal: ms(20),
+              paddingTop: ms(14),
+              paddingBottom: ms(28),
+            },
+          ]}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          <Text
+            style={[styles.title, { fontSize: ms(24), lineHeight: ms(32) }]}
+          >
+            حجز موعد
+          </Text>
+
+          <View
+            style={[
+              styles.stepper,
+              {
+                marginTop: ms(18),
+                marginBottom: ms(22),
+                flexDirection: "row-reverse",
+                direction: "ltr",
+              },
+            ]}
+          >
+            <View
+              style={[
+                styles.stepLine,
+                {
+                  left: "12.5%",
+                  right: "12.5%",
+                  top: ms(15),
+                },
+              ]}
+            />
+            {STEPS.map((step) => {
+              const active = step.n === activeStep;
+              return (
+                <View key={step.n} style={styles.stepItem}>
+                  <View
+                    style={[
+                      styles.stepCircle,
+                      {
+                        width: ms(32),
+                        height: ms(32),
+                        borderRadius: ms(16),
+                      },
+                      active ? styles.stepCircleActive : styles.stepCircleIdle,
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.stepNum,
+                        { fontSize: ms(14) },
+                        active ? styles.stepNumActive : styles.stepNumIdle,
+                      ]}
+                    >
+                      {step.n}
+                    </Text>
+                  </View>
+                  <Text
+                    style={[
+                      styles.stepLabel,
+                      { fontSize: ms(11), marginTop: ms(6) },
+                      active ? styles.stepLabelActive : styles.stepLabelIdle,
+                    ]}
+                  >
+                    {step.label}
+                  </Text>
+                </View>
+              );
+            })}
           </View>
-        </View>
 
-        <Text style={styles.sectionLabel}>Select date</Text>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.dateStrip}
-        >
-          {dateOptions.map((d) => {
-            const sel = d.key === selectedDateKey;
-            return (
-              <Pressable
-                key={d.key}
-                onPress={() => setSelectedDateKey(d.key)}
-                style={({ pressed }) => [
-                  styles.dateChip,
-                  sel && styles.dateChipSelected,
-                  pressed && styles.pressed,
+          {phase === 1 ? (
+            <>
+              <Text
+                style={[
+                  styles.provider,
+                  { fontSize: ms(15), marginBottom: ms(18) },
                 ]}
               >
-                <Text style={[styles.dateLine1, sel && styles.dateLineSel]}>
-                  {d.line1}
-                </Text>
-                <Text style={[styles.dateLine2, sel && styles.dateLineSel]}>
-                  {d.line2}
-                </Text>
-              </Pressable>
-            );
-          })}
+                {providerName}
+              </Text>
+
+              <View
+                style={[
+                  styles.dateRow,
+                  {
+                    gap: ms(8),
+                    flexDirection: "row-reverse",
+                    direction: "ltr",
+                  },
+                ]}
+              >
+                {dateOptions.map((d) => {
+                  const sel = d.key === selectedDateKey;
+                  return (
+                    <Pressable
+                      key={d.key}
+                      onPress={() => setSelectedDateKey(d.key)}
+                      style={({ pressed }) => [
+                        styles.dateCard,
+                        {
+                          minHeight: ms(108),
+                          borderRadius: ms(18),
+                          paddingVertical: ms(12),
+                        },
+                        sel && styles.dateCardSelected,
+                        pressed && styles.pressed,
+                      ]}
+                      accessibilityRole="button"
+                      accessibilityLabel={d.day}
+                    >
+                      <Text
+                        style={[
+                          styles.dateDay,
+                          { fontSize: ms(11) },
+                          sel && styles.dateTextSel,
+                        ]}
+                        numberOfLines={1}
+                      >
+                        {d.day}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.dateNum,
+                          { fontSize: ms(24), lineHeight: ms(30) },
+                          sel && styles.dateTextSel,
+                        ]}
+                      >
+                        {d.date}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.dateMonth,
+                          { fontSize: ms(10) },
+                          sel && styles.dateTextSel,
+                        ]}
+                        numberOfLines={1}
+                      >
+                        {d.month}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+
+              <View
+                style={[
+                  styles.timeRow,
+                  {
+                    gap: ms(8),
+                    marginTop: ms(16),
+                    marginBottom: ms(28),
+                    flexDirection: "row",
+                    direction: "ltr",
+                  },
+                ]}
+              >
+                {([TIME_SLOTS[3], TIME_SLOTS[2], TIME_SLOTS[4]] as string[]).map(
+                  (slot) => {
+                  const sel = selectedTime === slot;
+                  return (
+                    <Pressable
+                      key={slot}
+                      onPress={() => setSelectedTime(slot)}
+                      style={({ pressed }) => [
+                        styles.timeCard,
+                        {
+                          flex: 1,
+                          minHeight: ms(44),
+                          borderRadius: ms(14),
+                        },
+                        sel && styles.timeCardSelected,
+                        pressed && styles.pressed,
+                      ]}
+                      accessibilityRole="button"
+                      accessibilityLabel={formatTimeAr(slot)}
+                    >
+                      <Text
+                        style={[
+                          styles.timeText,
+                          { fontSize: ms(14), writingDirection: "ltr" },
+                          sel && styles.timeTextSel,
+                        ]}
+                      >
+                        {formatTimeAr(slot)}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+            </>
+          ) : (
+            <View>
+              <Text
+                style={[
+                  styles.provider,
+                  { fontSize: ms(16), marginBottom: ms(16) },
+                ]}
+              >
+                {providerName}
+              </Text>
+              <Text style={styles.inputLabel}>الاسم الكامل</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="أدخل الاسم الكامل"
+                placeholderTextColor={colors.muted}
+                value={patientName}
+                onChangeText={setPatientName}
+                textAlign="right"
+              />
+              <Text style={styles.inputLabel}>رقم الهاتف</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="05xxxxxxxx"
+                placeholderTextColor={colors.muted}
+                keyboardType="phone-pad"
+                value={phone}
+                onChangeText={setPhone}
+                textAlign="right"
+              />
+              <Text style={styles.inputLabel}>ملاحظات (اختياري)</Text>
+              <TextInput
+                style={[styles.input, styles.textArea]}
+                placeholder="أي معلومات إضافية"
+                placeholderTextColor={colors.muted}
+                value={notes}
+                onChangeText={setNotes}
+                multiline
+                textAlign="right"
+                textAlignVertical="top"
+              />
+            </View>
+          )}
+
+          <Pressable
+            onPress={phase === 1 ? goNext : confirm}
+            style={({ pressed }) => [
+              styles.nextBtn,
+              {
+                minHeight: ms(52),
+                borderRadius: ms(16),
+                marginTop: phase === 1 ? 0 : ms(12),
+              },
+              pressed && styles.pressed,
+            ]}
+            accessibilityRole="button"
+            accessibilityLabel={phase === 1 ? "التالي" : "تأكيد الحجز"}
+          >
+            <Text style={[styles.nextText, { fontSize: ms(18) }]}>
+              {phase === 1 ? "التالي" : "تأكيد الحجز"}
+            </Text>
+          </Pressable>
         </ScrollView>
-
-        <Text style={styles.sectionLabel}>Available times</Text>
-        <View style={styles.timeGrid}>
-          {TIME_SLOTS.map((t) => {
-            const sel = selectedTime === t;
-            return (
-              <Pressable
-                key={t}
-                onPress={() => setSelectedTime(t)}
-                style={({ pressed }) => [
-                  styles.timeCell,
-                  sel && styles.timeCellSelected,
-                  pressed && styles.pressed,
-                ]}
-              >
-                <Text style={[styles.timeText, sel && styles.timeTextSel]}>
-                  {t}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </View>
-
-        <Text style={styles.sectionLabel}>Patient information</Text>
-        <Text style={styles.inputLabel}>Full Name</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter full name"
-          placeholderTextColor={c.textLight}
-          value={patientName}
-          onChangeText={setPatientName}
-        />
-        <Text style={styles.inputLabel}>Phone Number</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="05xxxxxxxx"
-          placeholderTextColor={c.textLight}
-          keyboardType="phone-pad"
-          value={phone}
-          onChangeText={setPhone}
-        />
-
-        <Text style={styles.sectionLabel}>Notes (optional)</Text>
-        <TextInput
-          style={styles.textArea}
-          placeholder="Anything we should know?"
-          placeholderTextColor={c.textLight}
-          value={notes}
-          onChangeText={setNotes}
-          multiline
-          textAlignVertical="top"
-        />
-
-        <View style={styles.recap}>
-          <Text style={styles.recapTitle}>Summary</Text>
-          <Text style={styles.recapLine}>
-            <Text style={styles.recapBold}>When: </Text>
-            {selectedDateLabel}
-            {selectedTime ? ` at ${selectedTime}` : ""}
-          </Text>
-          <Text style={styles.recapLine}>
-            <Text style={styles.recapBold}>With: </Text>
-            {listing.name}
-          </Text>
-        </View>
-
-        <Pressable
-          style={({ pressed }) => [styles.callSupport, pressed && styles.pressed]}
-          onPress={() =>
-            Linking.openURL(`tel:${listing.phone.replace(/\s/g, "")}`).catch(
-              () => {}
-            )
-          }
-        >
-          <Ionicons name="call-outline" size={18} color={c.primary} />
-          <Text style={styles.callSupportText}>Call Center</Text>
-        </Pressable>
-
-        <Pressable
-          style={({ pressed }) => [styles.confirmBtn, pressed && styles.pressed]}
-          onPress={confirm}
-        >
-          <Text style={styles.confirmText}>Confirm Booking</Text>
-        </Pressable>
-      </ScrollView>
+        )}
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: c.bgApp },
-  headerRow: {
-    flexDirection: "row",
+  safe: {
+    flex: 1,
+    backgroundColor: colors.bg,
     alignItems: "center",
-    paddingHorizontal: 12,
-    paddingBottom: 8,
   },
-  backBtn: {
-    width: 44,
-    height: 44,
+  column: {
+    flex: 1,
+    maxWidth: 430,
+  },
+  scroll: {
+    flex: 1,
+  },
+  scrollContent: {
+    width: "100%",
+  },
+  title: {
+    fontWeight: "800",
+    color: colors.title,
+    textAlign: "center",
+    writingDirection: "rtl",
+  },
+  stepper: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    position: "relative",
+  },
+  stepLine: {
+    position: "absolute",
+    height: 1.5,
+    backgroundColor: colors.line,
+  },
+  stepItem: {
+    flex: 1,
+    alignItems: "center",
+    zIndex: 1,
+  },
+  stepCircle: {
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: colors.white,
+    borderWidth: 1.5,
+    borderColor: colors.line,
   },
-  headerTitle: {
-    flex: 1,
+  stepCircleActive: {
+    backgroundColor: colors.selected,
+    borderColor: colors.selected,
+  },
+  stepCircleIdle: {
+    backgroundColor: colors.white,
+    borderColor: colors.line,
+  },
+  stepNum: {
+    fontWeight: "700",
+  },
+  stepNumActive: {
+    color: colors.white,
+  },
+  stepNumIdle: {
+    color: colors.muted,
+  },
+  stepLabel: {
+    fontWeight: "600",
     textAlign: "center",
-    fontSize: 17,
-    fontWeight: "700",
-    color: c.text,
+    writingDirection: "rtl",
   },
-  scroll: { flex: 1 },
-  scrollContent: { paddingHorizontal: 20, paddingBottom: 32 },
-  summaryCard: {
+  stepLabelActive: {
+    color: colors.title,
+  },
+  stepLabelIdle: {
+    color: colors.muted,
+  },
+  provider: {
+    fontWeight: "800",
+    color: colors.title,
+    textAlign: "right",
+    writingDirection: "rtl",
+    width: "100%",
+  },
+  dateRow: {
     flexDirection: "row",
-    backgroundColor: c.white,
-    borderRadius: 16,
-    padding: 12,
-    marginBottom: 20,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: c.inputBorder,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 6,
-    elevation: 2,
+    width: "100%",
   },
-  summaryImage: {
-    width: 76,
-    height: 76,
-    borderRadius: 12,
-    backgroundColor: c.chipBg,
-  },
-  summaryText: { flex: 1, marginLeft: 12, justifyContent: "center" },
-  summaryName: {
-    fontSize: 16,
-    fontWeight: "700",
-    color: c.text,
-    marginBottom: 4,
-  },
-  summarySub: { fontSize: 13, color: c.textMuted, marginBottom: 6 },
-  ratingRow: { flexDirection: "row", alignItems: "center", marginBottom: 4 },
-  ratingNum: {
-    marginLeft: 4,
-    fontSize: 13,
-    fontWeight: "700",
-    color: c.text,
-  },
-  locRow: { flexDirection: "row", alignItems: "center" },
-  locSmall: { marginLeft: 4, fontSize: 12, color: c.textMuted, flex: 1 },
-  sectionLabel: {
-    fontSize: 15,
-    fontWeight: "700",
-    color: c.text,
-    marginBottom: 10,
-    marginTop: 4,
-  },
-  dateStrip: { paddingBottom: 8, flexDirection: "row" },
-  dateChip: {
-    width: 56,
-    paddingVertical: 10,
-    marginRight: 10,
-    borderRadius: 14,
-    backgroundColor: c.white,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: c.inputBorder,
+  dateCard: {
+    flex: 1,
     alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.white,
+    borderWidth: 1,
+    borderColor: colors.cardBorder,
   },
-  dateChipSelected: {
-    backgroundColor: c.primary,
-    borderColor: c.primary,
+  dateCardSelected: {
+    backgroundColor: colors.selected,
+    borderColor: colors.selected,
   },
-  dateLine1: { fontSize: 11, fontWeight: "600", color: c.textMuted },
-  dateLine2: { fontSize: 16, fontWeight: "700", color: c.text, marginTop: 2 },
-  dateLineSel: { color: c.white },
-  timeGrid: {
+  dateDay: {
+    fontWeight: "600",
+    color: colors.muted,
+    writingDirection: "rtl",
+  },
+  dateNum: {
+    fontWeight: "800",
+    color: colors.title,
+    marginTop: 2,
+  },
+  dateMonth: {
+    fontWeight: "600",
+    color: colors.muted,
+    writingDirection: "rtl",
+  },
+  dateTextSel: {
+    color: colors.white,
+  },
+  timeRow: {
     flexDirection: "row",
-    flexWrap: "wrap",
-    marginBottom: 16,
-    justifyContent: "space-between",
+    width: "100%",
   },
-  timeCell: {
-    width: "31%",
-    marginBottom: 10,
-    paddingVertical: 12,
-    borderRadius: 12,
-    backgroundColor: c.white,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: c.inputBorder,
+  timeCard: {
     alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.white,
+    borderWidth: 1,
+    borderColor: colors.cardBorder,
   },
-  timeCellSelected: {
-    backgroundColor: c.selectedCardBg,
-    borderColor: c.primary,
+  timeCardSelected: {
+    backgroundColor: colors.selected,
+    borderColor: colors.selected,
   },
-  timeText: { fontSize: 13, fontWeight: "600", color: c.text },
-  timeTextSel: { color: c.primary },
+  timeText: {
+    fontWeight: "700",
+    color: colors.title,
+    writingDirection: "rtl",
+  },
+  timeTextSel: {
+    color: colors.white,
+  },
   inputLabel: {
     fontSize: 13,
     fontWeight: "600",
-    color: c.textMuted,
+    color: colors.title,
+    textAlign: "right",
+    writingDirection: "rtl",
     marginBottom: 6,
   },
   input: {
-    backgroundColor: c.white,
+    backgroundColor: colors.white,
     borderRadius: 14,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: c.inputBorder,
+    borderWidth: 1,
+    borderColor: colors.cardBorder,
     paddingHorizontal: 14,
     paddingVertical: 12,
     fontSize: 15,
-    color: c.text,
+    color: colors.title,
     marginBottom: 14,
+    writingDirection: "rtl",
   },
   textArea: {
-    backgroundColor: c.white,
-    borderRadius: 14,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: c.inputBorder,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
     minHeight: 90,
-    fontSize: 15,
-    color: c.text,
-    marginBottom: 18,
   },
-  recap: {
-    backgroundColor: c.white,
-    borderRadius: 14,
-    padding: 14,
-    marginBottom: 14,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: c.inputBorder,
-  },
-  recapTitle: {
-    fontSize: 14,
-    fontWeight: "700",
-    color: c.text,
-    marginBottom: 8,
-  },
-  recapLine: { fontSize: 14, color: c.textMuted, marginBottom: 4 },
-  recapBold: { fontWeight: "700", color: c.text },
-  callSupport: {
-    flexDirection: "row",
+  nextBtn: {
+    backgroundColor: colors.selected,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 12,
-    marginBottom: 10,
+    width: "100%",
   },
-  callSupportText: {
-    marginLeft: 8,
-    fontSize: 15,
+  nextText: {
+    color: colors.white,
     fontWeight: "700",
-    color: c.primary,
+    writingDirection: "rtl",
   },
-  confirmBtn: {
-    backgroundColor: c.primary,
-    borderRadius: 999,
-    paddingVertical: 16,
+  pressed: {
+    opacity: 0.9,
+  },
+  confirmArrows: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.12,
-    shadowRadius: 10,
-    elevation: 4,
+    width: "100%",
   },
-  confirmText: { color: c.white, fontSize: 17, fontWeight: "700" },
-  missing: { padding: 24, fontSize: 15, color: c.textMuted, textAlign: "center" },
-  pressed: { opacity: 0.9 },
+  successCircle: {
+    backgroundColor: colors.success,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  successMsg: {
+    fontWeight: "800",
+    color: colors.title,
+    textAlign: "center",
+    writingDirection: "rtl",
+    width: "100%",
+  },
+  confirmType: {
+    fontWeight: "700",
+    color: colors.title,
+    textAlign: "center",
+    writingDirection: "rtl",
+    width: "100%",
+  },
+  confirmDate: {
+    fontWeight: "700",
+    color: colors.title,
+    textAlign: "center",
+    writingDirection: "rtl",
+    width: "100%",
+  },
+  confirmTime: {
+    fontWeight: "600",
+    color: colors.timeMuted,
+    textAlign: "center",
+    width: "100%",
+  },
+  confirmProvider: {
+    fontWeight: "800",
+    color: colors.title,
+    textAlign: "center",
+    writingDirection: "rtl",
+    width: "100%",
+  },
 });

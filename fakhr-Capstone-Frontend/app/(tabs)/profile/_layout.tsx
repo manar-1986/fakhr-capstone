@@ -14,6 +14,8 @@ export default function ProfileLayout() {
       <Stack.Screen name="edit-child-profile" />
       <Stack.Screen name="edit-profile" />
       <Stack.Screen name="settings" />
+      <Stack.Screen name="help-support" />
+      <Stack.Screen name="logout" />
       <Stack.Screen name="manage-children" />
       <Stack.Screen name="add-child" />
       <Stack.Screen name="child-details" />

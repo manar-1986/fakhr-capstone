@@ -1,114 +1,105 @@
 import { Ionicons } from "@expo/vector-icons";
 import type { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { CommonActions } from "@react-navigation/native";
-import { useRouter } from "expo-router";
+import { usePathname, useRouter } from "expo-router";
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useLanguage } from "../../context/LanguageContext";
-import { libraryColors as c } from "../../constants/libraryTheme";
+
+const colors = {
+  white: "#FFFFFF",
+  active: "#6F80B4",
+  inactive: "#3A3D4A",
+  border: "#ECEEF3",
+};
+
+type TabDef = {
+  key: string;
+  label: string;
+  icon: React.ComponentProps<typeof Ionicons>["name"];
+  iconFocused: React.ComponentProps<typeof Ionicons>["name"];
+  routeName?: "index" | "discover" | "community" | "profile";
+  href?: string;
+};
+
+const TABS: TabDef[] = [
+  { key: "home", label: "الرئيسية", icon: "home-outline", iconFocused: "home", routeName: "index" },
+  { key: "search", label: "بحث", icon: "heart-outline", iconFocused: "heart", routeName: "discover" },
+  { key: "favorites", label: "المفضلة", icon: "heart-outline", iconFocused: "heart", href: "/(tabs)/library" },
+  { key: "messages", label: "رسائلي", icon: "search-outline", iconFocused: "search", routeName: "community" },
+  { key: "profile", label: "حسابي", icon: "person-outline", iconFocused: "person", routeName: "profile" },
+];
 
 export function MainTabBar({ state, navigation }: BottomTabBarProps) {
-  const { t } = useTranslation();
-  const { isRTL } = useLanguage();
   const insets = useSafeAreaInsets();
   const router = useRouter();
+  const pathname = usePathname();
   const bottomPad = Math.max(insets.bottom, 8);
-  const barHeight = 56;
+  const barHeight = 58;
   const focusedRoute = state.routes[state.index]?.name;
 
-  const renderTab = (name: "index" | "discover" | "community" | "profile") => {
-    const route = state.routes.find((r) => r.name === name);
-    if (!route) return <View key={name} style={styles.tab} />;
-    const tabKey =
-      name === "index"
-        ? "tabs.home"
-        : name === "discover"
-          ? "tabs.discover"
-          : name === "community"
-            ? "tabs.circles"
-            : "tabs.profile";
-    const label = t(tabKey);
-    const focused = focusedRoute === name;
-    const color = focused ? c.primary : c.textTertiary;
+  if (
+    pathname.includes("school-details") ||
+    pathname.includes("helpCenter") ||
+    pathname.includes("booking") ||
+    pathname.includes("logout")
+  ) {
+    return null;
+  }
 
-    let iconName: React.ComponentProps<typeof Ionicons>["name"] = "ellipse-outline";
-    if (name === "index") iconName = focused ? "home" : "home-outline";
-    if (name === "discover")
-      iconName = focused ? "compass" : "compass-outline";
-    if (name === "community")
-      iconName = focused ? "people-circle" : "people-circle-outline";
-    if (name === "profile")
-      iconName = focused ? "person" : "person-outline";
+  const isFocused = (tab: TabDef) => {
+    if (tab.href) return pathname.includes("library");
+    return focusedRoute === tab.routeName;
+  };
 
-    const onPress = () => {
-      const event = navigation.emit({
-        type: "tabPress",
-        target: route.key,
-        canPreventDefault: true,
-      });
-      if (!focused && !event.defaultPrevented) {
-        navigation.dispatch(
-          CommonActions.navigate({
-            name: route.name,
-            params: route.params,
-          })
-        );
-      }
-    };
-
-    return (
-      <Pressable
-        key={route.key}
-        accessibilityRole="button"
-        onPress={onPress}
-        style={styles.tab}
-      >
-        <Ionicons name={iconName} size={24} color={color} />
-        <Text style={[styles.label, { color }]} numberOfLines={1}>
-          {label}
-        </Text>
-      </Pressable>
-    );
+  const onPressTab = (tab: TabDef) => {
+    if (tab.href) {
+      router.push(tab.href as never);
+      return;
+    }
+    const route = state.routes.find((r) => r.name === tab.routeName);
+    if (!route) return;
+    const event = navigation.emit({
+      type: "tabPress",
+      target: route.key,
+      canPreventDefault: true,
+    });
+    if (!event.defaultPrevented) {
+      navigation.dispatch(
+        CommonActions.navigate({
+          name: route.name,
+          params: route.params,
+        })
+      );
+    }
   };
 
   return (
-    <View
-      style={[
-        styles.outer,
-        {
-          paddingBottom: bottomPad,
-        },
-      ]}
-    >
-      <View
-        style={[
-          styles.row,
-          { minHeight: barHeight },
-          isRTL && styles.rowReverse,
-        ]}
-      >
-        {renderTab("index")}
-        {renderTab("discover")}
-        <View style={styles.fabSpacer} />
-        {renderTab("community")}
-        {renderTab("profile")}
+    <View style={[styles.outer, { paddingBottom: bottomPad }]}>
+      <View style={[styles.row, { minHeight: barHeight }]}>
+        {TABS.map((tab) => {
+          const focused = isFocused(tab);
+          const color = focused ? colors.active : colors.inactive;
+          return (
+            <Pressable
+              key={tab.key}
+              accessibilityRole="button"
+              accessibilityLabel={tab.label}
+              onPress={() => onPressTab(tab)}
+              style={styles.tab}
+            >
+              <Ionicons
+                name={focused ? tab.iconFocused : tab.icon}
+                size={22}
+                color={color}
+              />
+              <Text style={[styles.label, { color }]} numberOfLines={1}>
+                {tab.label}
+              </Text>
+            </Pressable>
+          );
+        })}
       </View>
-      <Pressable
-        accessibilityRole="button"
-        style={[
-          styles.fab,
-          {
-            bottom: bottomPad + barHeight - 28,
-          },
-        ]}
-        onPress={() => {
-          router.push("/(tabs)/community");
-        }}
-      >
-        <Ionicons name="add" size={32} color={c.white} />
-      </Pressable>
     </View>
   );
 }
@@ -119,9 +110,9 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: c.white,
+    backgroundColor: colors.white,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: c.border,
+    borderTopColor: colors.border,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.05,
@@ -129,40 +120,19 @@ const styles = StyleSheet.create({
     elevation: Platform.OS === "android" ? 12 : 0,
   },
   row: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  rowReverse: {
     flexDirection: "row-reverse",
+    alignItems: "center",
   },
   tab: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 4,
-  },
-  fabSpacer: {
-    width: 56,
+    paddingVertical: 6,
   },
   label: {
-    fontSize: 10,
-    fontWeight: "500",
+    fontSize: 11,
+    fontWeight: "600",
     marginTop: 2,
-  },
-  fab: {
-    position: "absolute",
-    left: "50%",
-    marginLeft: -28,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: c.primary,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 8,
+    writingDirection: "rtl",
   },
 });

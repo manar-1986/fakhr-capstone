@@ -1,570 +1,328 @@
 import { Ionicons } from "@expo/vector-icons";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Alert,
+  Image,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
+  TextInput,
+  useWindowDimensions,
   View,
-  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useQuery } from "@tanstack/react-query";
-import { centersListQueryKey, getCenters } from "../../api/directory.api";
-import { HealthCenter } from "../../types/directory.types";
 import { getCurrentUser } from "../../api/users.api";
 import { useAuth } from "../../context/AuthContext";
-import { RESOURCES, RESOURCE_CATEGORIES } from "../../constants/resources";
-import { useTranslation } from "react-i18next";
 
-// Design system colors
 const colors = {
-  bgApp: "#FAF9F6",
-  bgCard: "#FFFFFF",
-  primary: "#7FB77E",
-  primaryHover: "#6A9E69",
-  primarySoft: "#E8F0E8",
-  accentCare: "#5F8F8B",
-  accentCareSoft: "#E8F0EF",
-  accentLearn: "#5F8F8B",
-  accentLearnSoft: "#E8F0EF",
-  text: "#2F2F2F",
-  textSecondary: "#4A4A4A",
-  textTertiary: "#8A8A8A",
-  border: "rgba(0, 0, 0, 0.05)",
-  badge: "#7FB77E",
+  bg: "#FFFFFF",
+  title: "#1A1C29",
+  subtitle: "#6E7479",
+  brand: "#6F80B4",
+  icon: "#6F80B4",
+  specialist: "#3EC8B3",
+  placeholder: "#A8ABB4",
+  searchBg: "#F4F5F8",
+  searchBorder: "#E6E8EE",
+  white: "#FFFFFF",
+  bannerBtn: "#F4F6FB",
+  bannerBtnText: "#5A6480",
 };
 
-function getGreetingKey(): "home.goodMorning" | "home.goodAfternoon" | "home.goodEvening" {
-  const hour = new Date().getHours();
-  if (hour < 12) return "home.goodMorning";
-  if (hour < 17) return "home.goodAfternoon";
-  return "home.goodEvening";
-}
+const DESIGN_W = 437;
+
+type ServiceItem = {
+  id: string;
+  label: string;
+  icon: keyof typeof Ionicons.glyphMap;
+  color: string;
+  onPress: () => void;
+};
 
 export default function HomeScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const { user } = useAuth();
-  const greeting = t(getGreetingKey());
-  // "ADHD" is selected by default
-  const [selectedResource, setSelectedResource] = React.useState<string | null>(
-    "adhd"
-  );
+  const { width: windowWidth } = useWindowDimensions();
+  const contentW = Math.min(windowWidth, 430);
+  const s = contentW / DESIGN_W;
+  const ms = (n: number) => Math.round(n * s);
+  const [search, setSearch] = useState("");
 
-  // Fetch current user profile from API
-  const { data: currentUser, isLoading: userLoading } = useQuery({
+  const { data: currentUser } = useQuery({
     queryKey: ["currentUser"],
     queryFn: getCurrentUser,
-    enabled: !!user, // Only fetch if user is logged in
+    enabled: !!user,
     retry: false,
   });
 
-  // Same query key as directory > centers (no filters) so Health Centers on home reuses that cache
-  const {
-    data: centersData,
-    isLoading: centersLoading,
-    isError: centersError,
-    error: centersQueryError,
-    refetch: refetchCenters,
-  } = useQuery({
-    queryKey: centersListQueryKey(),
-    queryFn: () => getCenters(),
-    retry: 2,
-    retryDelay: (i) => Math.min(1000 * 2 ** i, 8000),
-  });
-
-  const centersErrorMessage =
-    centersQueryError instanceof Error
-      ? centersQueryError.message
-      : typeof centersQueryError === "string"
-        ? centersQueryError
-        : t("home.unknownError");
-
-  const centers: HealthCenter[] = React.useMemo(() => {
-    if (!centersData || !Array.isArray(centersData)) return [];
-    return centersData.slice(0, 3);
-  }, [centersData]);
-
-  // Get user information - use API data if available, fallback to context user, then defaults
-  const userName = currentUser?.name || user?.name || t("home.userFallback");
-  const userInitials = React.useMemo(() => {
-    if (!userName) return "U";
-    return userName
-      .split(" ")
-      .map((n: string) => n[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2);
+  const userName = currentUser?.name || user?.name || "";
+  const firstName = useMemo(() => {
+    const name = userName.trim();
+    if (!name) return "شيخة";
+    return name.split(/\s+/)[0];
   }, [userName]);
 
+  const padX = ms(20);
+  const gridGap = ms(10);
+  const cellW = Math.floor((contentW - padX * 2 - gridGap * 3) / 4);
+
+  const openSearch = () => {
+    router.push("/(tabs)/directory");
+  };
+
+  const services: ServiceItem[] = [
+    {
+      id: "disability",
+      label: "فئات الإعاقة\nتعرف إلى إعاقة",
+      icon: "accessibility-outline",
+      color: colors.icon,
+      onPress: () => router.push("/(tabs)/resources"),
+    },
+    {
+      id: "schools",
+      label: "المدارس",
+      icon: "school-outline",
+      color: colors.icon,
+      onPress: () => router.push("/(tabs)/directory/schools"),
+    },
+    {
+      id: "centers",
+      label: "المراكز",
+      icon: "business-outline",
+      color: colors.icon,
+      onPress: () => router.push("/(tabs)/directory/centers"),
+    },
+    {
+      id: "doctors",
+      label: "الأطباء\nومتخصصين",
+      icon: "person-outline",
+      color: colors.specialist,
+      onPress: () => router.push("/(tabs)/directory/professionals"),
+    },
+    {
+      id: "activities",
+      label: "الأنشطة\nوالبرامج",
+      icon: "people-outline",
+      color: colors.icon,
+      onPress: () => router.push("/(tabs)/services"),
+    },
+    {
+      id: "products",
+      label: "المنتجات\nالمنزلية",
+      icon: "storefront-outline",
+      color: colors.icon,
+      onPress: () => router.push("/(tabs)/services"),
+    },
+    {
+      id: "homeServices",
+      label: "الخدمات\nالمنزلية",
+      icon: "home-outline",
+      color: colors.icon,
+      onPress: () => router.push("/(tabs)/services"),
+    },
+    {
+      id: "consultations",
+      label: "الاستشارات",
+      icon: "chatbubble-ellipses-outline",
+      color: colors.icon,
+      onPress: () => router.push("/(tabs)/community/advice"),
+    },
+  ];
+
   return (
-    <SafeAreaView style={styles.container} edges={["top", "bottom"]}>
+    <SafeAreaView style={styles.safe} edges={["top"]}>
       <ScrollView
         style={styles.scroll}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[
+          styles.scrollContent,
+          {
+            width: contentW,
+            paddingHorizontal: padX,
+            paddingTop: ms(6),
+            paddingBottom: ms(108),
+          },
+        ]}
         showsVerticalScrollIndicator={false}
-        contentInsetAdjustmentBehavior="automatic"
       >
-        {/* Header */}
-        <View style={styles.header}>
-          <View style={styles.headerLeft}>
-            <View style={styles.avatarContainer}>
-              <View style={styles.avatar}>
-                {userLoading ? (
-                  <ActivityIndicator size="small" color="#FFFFFF" />
-                ) : (
-                  <Text style={styles.avatarText}>{userInitials}</Text>
-                )}
-              </View>
-              <View style={styles.onlineIndicator} />
-            </View>
-            <View style={styles.headerText}>
-              <Text style={styles.greetingSmall}>{greeting}</Text>
-              {userLoading ? (
-                <ActivityIndicator size="small" color={colors.text} style={{ marginTop: 4 }} />
-              ) : (
-                <Text style={styles.userName}>{userName}</Text>
-              )}
-            </View>
-          </View>
+        <View style={[styles.topRow, { height: ms(56), marginBottom: ms(4) }]}>
           <Pressable
-            style={({ pressed }) => [
-              styles.notificationBtn,
-              pressed && { transform: [{ scale: 0.95 }] },
-            ]}
             onPress={() => {
               Alert.alert(t("home.notifications"), t("home.newNotifications"));
             }}
+            hitSlop={10}
+            style={({ pressed }) => [styles.iconBtn, styles.iconLeft, pressed && styles.pressed]}
+            accessibilityRole="button"
+            accessibilityLabel="الإشعارات"
           >
-            <Ionicons
-              name="notifications-outline"
-              size={24}
-              color={colors.text}
-            />
-            <View style={styles.badge}>
-              <Text style={styles.badgeText}>2</Text>
-            </View>
+            <Ionicons name="notifications-outline" size={ms(24)} color={colors.title} />
+          </Pressable>
+          <Image
+            source={require("../../assets/images/fakhr-wordmark-blue.png")}
+            style={{ width: ms(42), height: ms(52) }}
+            resizeMode="contain"
+            accessibilityLabel="فخر"
+          />
+          <Pressable
+            onPress={() => router.push("/(tabs)/library")}
+            hitSlop={10}
+            style={({ pressed }) => [styles.iconBtn, styles.iconRight, pressed && styles.pressed]}
+            accessibilityRole="button"
+            accessibilityLabel="المفضلة"
+          >
+            <Ionicons name="refresh-outline" size={ms(24)} color={colors.title} />
           </Pressable>
         </View>
 
-        {/* Welcome Card */}
-        <View style={styles.welcomeCard}>
-          <View style={styles.welcomeContent}>
-            <Text style={styles.welcomeTitle}>{t("home.welcomeToFakhr")}</Text>
-            <Text style={styles.welcomeSubtitle}>
-              {t("home.welcomeSubtitle")}
+        <Text
+          style={[
+            styles.greeting,
+            { fontSize: ms(26), lineHeight: ms(34), marginTop: ms(4) },
+          ]}
+        >
+          {`مرحباً ${firstName}`}
+        </Text>
+        <Text
+          style={[
+            styles.helpLine,
+            { fontSize: ms(14), lineHeight: ms(22), marginBottom: ms(14) },
+          ]}
+        >
+          كيف يمكننا مساعدتك اليوم؟
+        </Text>
+
+        <Pressable
+          onPress={openSearch}
+          style={[
+            styles.searchBar,
+            {
+              minHeight: ms(46),
+              borderRadius: ms(22),
+              paddingHorizontal: ms(16),
+              marginBottom: ms(14),
+            },
+          ]}
+        >
+          <TextInput
+            value={search}
+            onChangeText={setSearch}
+            placeholder="ابحث عن خدمة، جهة، أو منتج"
+            placeholderTextColor={colors.placeholder}
+            style={[styles.searchInput, { fontSize: ms(14) }]}
+            textAlign="right"
+            returnKeyType="search"
+            onSubmitEditing={openSearch}
+            onFocus={openSearch}
+          />
+          <Ionicons name="search-outline" size={ms(20)} color={colors.placeholder} />
+        </Pressable>
+
+        <View
+          style={[
+            styles.hero,
+            {
+              minHeight: ms(148),
+              borderRadius: ms(22),
+              marginBottom: ms(16),
+              paddingLeft: ms(18),
+            },
+          ]}
+        >
+          <View style={styles.heroTextCol}>
+            <Text style={[styles.heroTitle, { fontSize: ms(20), lineHeight: ms(28) }]}>
+              {"كل ما تحتاجه\nفي مكان واحد"}
             </Text>
+            <Pressable
+              onPress={() => router.push("/(tabs)/discover")}
+              style={({ pressed }) => [
+                styles.heroBtn,
+                { borderRadius: ms(14), minHeight: ms(32), paddingHorizontal: ms(14) },
+                pressed && styles.pressed,
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel="اكتشف الآن"
+            >
+              <Text style={[styles.heroBtnText, { fontSize: ms(13) }]}>اكتشف الآن</Text>
+            </Pressable>
           </View>
-          <TouchableOpacity
-            onPress={() => router.push("/(tabs)/directory/helpCenter")}
-            activeOpacity={0.7}
-          >
-            <Ionicons name="sparkles" size={28} color={colors.primary} />
-          </TouchableOpacity>
+          <Image
+            source={require("../../assets/images/home-hero-girl.png")}
+            style={{ width: ms(148), height: ms(148) }}
+            resizeMode="cover"
+          />
         </View>
 
-        {/* Resource Selection Card */}
-        <View style={styles.resourceCard}>
-          <View style={styles.resourceCardHeader}>
-            <Ionicons name="library-outline" size={22} color={colors.primary} />
-            <Text style={styles.resourceCardTitle}>
-              {t("home.resourceQuestion")}
-            </Text>
-          </View>
-          <Text style={styles.resourceCardSubtitle}>
-            {t("home.resourceSubtitle")}
-          </Text>
-
-          {/* Resource Type Buttons */}
-          <View style={styles.resourceButtonsRow}>
+        <View style={[styles.grid, { gap: gridGap, marginBottom: ms(16) }]}>
+          {services.map((item) => (
             <Pressable
+              key={item.id}
+              onPress={item.onPress}
               style={({ pressed }) => [
-                styles.resourceButton,
-                selectedResource === "add" && styles.resourceButtonActive,
-                pressed && { transform: [{ scale: 0.98 }] },
+                styles.cell,
+                { width: cellW, minHeight: ms(96) },
+                pressed && styles.pressed,
               ]}
-              onPress={() =>
-                setSelectedResource(selectedResource === "add" ? null : "add")
-              }
+              accessibilityRole="button"
+              accessibilityLabel={item.label.replace("\n", " ")}
             >
-              <View
-                style={[
-                  styles.resourceIconWrap,
-                  selectedResource === "add" && styles.resourceIconWrapActive,
-                ]}
-              >
-                <Ionicons
-                  name="flash-outline"
-                  size={24}
-                  color={
-                    selectedResource === "add" ? "#FFFFFF" : colors.primary
-                  }
-                />
-              </View>
+              <Ionicons name={item.icon} size={ms(32)} color={item.color} />
               <Text
                 style={[
-                  styles.resourceButtonText,
-                  selectedResource === "add" && styles.resourceButtonTextActive,
+                  styles.cellLabel,
+                  { fontSize: ms(11), lineHeight: ms(16), marginTop: ms(8) },
                 ]}
               >
-                ADD
+                {item.label}
               </Text>
-              <Text style={styles.resourceButtonDesc}>{t("home.attentionDeficit")}</Text>
             </Pressable>
-
-            <Pressable
-              style={({ pressed }) => [
-                styles.resourceButton,
-                selectedResource === "adhd" && styles.resourceButtonActive,
-                pressed && { transform: [{ scale: 0.98 }] },
-              ]}
-              onPress={() =>
-                setSelectedResource(selectedResource === "adhd" ? null : "adhd")
-              }
-            >
-              <View
-                style={[
-                  styles.resourceIconWrap,
-                  selectedResource === "adhd" && styles.resourceIconWrapActive,
-                ]}
-              >
-                <Ionicons
-                  name="pulse-outline"
-                  size={24}
-                  color={
-                    selectedResource === "adhd" ? "#FFFFFF" : colors.primary
-                  }
-                />
-              </View>
-              <Text
-                style={[
-                  styles.resourceButtonText,
-                  selectedResource === "adhd" &&
-                  styles.resourceButtonTextActive,
-                ]}
-              >
-                ADHD
-              </Text>
-              <Text style={styles.resourceButtonDesc}>{t("home.hyperactivity")}</Text>
-            </Pressable>
-
-            <Pressable
-              style={({ pressed }) => [
-                styles.resourceButton,
-                selectedResource === "autism" && styles.resourceButtonActive,
-                pressed && { transform: [{ scale: 0.98 }] },
-              ]}
-              onPress={() =>
-                setSelectedResource(
-                  selectedResource === "autism" ? null : "autism"
-                )
-              }
-            >
-              <View
-                style={[
-                  styles.resourceIconWrap,
-                  selectedResource === "autism" &&
-                  styles.resourceIconWrapActive,
-                ]}
-              >
-                <Ionicons
-                  name="heart-outline"
-                  size={24}
-                  color={
-                    selectedResource === "autism" ? "#FFFFFF" : colors.primary
-                  }
-                />
-              </View>
-              <Text
-                style={[
-                  styles.resourceButtonText,
-                  selectedResource === "autism" &&
-                  styles.resourceButtonTextActive,
-                ]}
-              >
-                Autism
-              </Text>
-              <Text style={styles.resourceButtonDesc}>{t("home.spectrum")}</Text>
-            </Pressable>
-          </View>
+          ))}
         </View>
 
-        {/* Resources Section */}
-        {selectedResource ? (
-          <View style={styles.resourcesSection}>
-            {/* Section Header */}
-            <View style={styles.resourcesSectionHeader}>
-              <View style={styles.resourcesSectionHeaderLeft}>
-                <View style={styles.resourcesSectionIcon}>
-                  <Ionicons
-                    name={
-                      selectedResource === "add"
-                        ? "flash"
-                        : selectedResource === "adhd"
-                          ? "pulse"
-                          : "heart"
-                    }
-                    size={18}
-                    color="#FFFFFF"
-                  />
-                </View>
-                <View>
-                  <Text style={styles.resourcesSectionTitle}>
-                    {selectedResource === "add"
-                      ? t("home.addResources")
-                      : selectedResource === "adhd"
-                        ? t("home.adhdResources")
-                        : t("home.autismResources")}
-                  </Text>
-                  <Text style={styles.resourcesSectionCount}>
-                    {t("home.curatedHelp")}
-                  </Text>
-                </View>
-              </View>
-              <Pressable
-                onPress={() => setSelectedResource(null)}
-                style={({ pressed }) => [
-                  styles.clearButton,
-                  pressed && { opacity: 0.7 },
-                ]}
-              >
-                <Ionicons
-                  name="close-circle"
-                  size={20}
-                  color={colors.textTertiary}
-                />
-              </Pressable>
-            </View>
-
-            {/* Content type icons - navigate to respective pages */}
-            <View style={styles.resourceTypeIconsRow}>
-              {(["videos", "articles", "podcasts"] as const).map((contentType) => {
-                const items = RESOURCES[selectedResource as keyof typeof RESOURCES]?.[contentType];
-                const hasItems = items && items.length > 0;
-                const category = RESOURCE_CATEGORIES[contentType];
-                return (
-                  <Pressable
-                    key={contentType}
-                    style={({ pressed }) => [
-                      styles.resourceTypeIconBtn,
-                      pressed && { opacity: 0.8 },
-                      !hasItems && styles.resourceTypeIconDisabled,
-                    ]}
-                    onPress={() =>
-                      hasItems &&
-                      router.push({
-                        pathname: "/(tabs)/resources/resource-content",
-                        params: { resource: selectedResource, type: contentType },
-                      })
-                    }
-                    disabled={!hasItems}
-                  >
-                    <View
-                      style={[
-                        styles.resourceTypeIconWrap,
-                        { backgroundColor: category.bgColor },
-                      ]}
-                    >
-                      <Ionicons
-                        name={
-                          contentType === "videos"
-                            ? "play-circle"
-                            : contentType === "articles"
-                              ? "document-text"
-                              : "headset"
-                        }
-                        size={28}
-                        color={hasItems ? category.color : colors.textTertiary}
-                      />
-                    </View>
-                    <Text
-                      style={[
-                        styles.resourceTypeIconLabel,
-                        !hasItems && styles.resourceTypeIconLabelDisabled,
-                      ]}
-                    >
-                      {category.title}
-                    </Text>
-                  </Pressable>
-                );
-              })}
-            </View>
-          </View>
-        ) : (
-          <View style={styles.emptyStateCard}>
-            <View style={styles.emptyStateIconWrap}>
-              <Ionicons
-                name="videocam-outline"
-                size={32}
-                color={colors.primary}
-              />
-            </View>
-            <Text style={styles.emptyStateTitle}>{t("home.discoverResources")}</Text>
-            <Text style={styles.emptyStateDescription}>
-              {t("home.emptyResourcesDescription")}
+        <View
+          style={[
+            styles.aiBanner,
+            {
+              minHeight: ms(148),
+              borderRadius: ms(22),
+              paddingLeft: ms(18),
+              paddingVertical: ms(16),
+            },
+          ]}
+        >
+          <View style={styles.aiTextCol}>
+            <Text style={[styles.aiTitle, { fontSize: ms(28), lineHeight: ms(36) }]}>
+              اسأل فخر
             </Text>
-            <View style={styles.emptyStateHints}>
-              <View style={styles.emptyStateHint}>
-                <Ionicons
-                  name="checkmark-circle"
-                  size={16}
-                  color={colors.primary}
-                />
-                <Text style={styles.emptyStateHintText}>
-                  {t("home.expertCurated")}
-                </Text>
-              </View>
-              <View style={styles.emptyStateHint}>
-                <Ionicons
-                  name="checkmark-circle"
-                  size={16}
-                  color={colors.primary}
-                />
-                <Text style={styles.emptyStateHintText}>
-                  {t("home.freeYoutube")}
-                </Text>
-              </View>
-              <View style={styles.emptyStateHint}>
-                <Ionicons
-                  name="checkmark-circle"
-                  size={16}
-                  color={colors.primary}
-                />
-                <Text style={styles.emptyStateHintText}>
-                  {t("home.practicalStrategies")}
-                </Text>
-              </View>
-            </View>
-          </View>
-        )}
-
-        {/* Health Centers Card - Third from bottom */}
-        <View style={styles.centersCard}>
-          <View style={styles.centersCardHeader}>
-            <View style={styles.centersCardHeaderLeft}>
-              <View style={styles.centersCardIcon}>
-                <Ionicons name="medical" size={22} color={colors.primary} />
-              </View>
-              <View>
-                <Text style={styles.centersCardTitle}>{t("home.healthCenters")}</Text>
-                <Text style={styles.centersCardSubtitle}>
-                  {t("home.findSpecializedCare")}
-                </Text>
-              </View>
-            </View>
-            <Pressable
-              onPress={() => router.push("/(tabs)/directory/centers")}
-              style={({ pressed }) => [
-                styles.centersViewAllBtn,
-                pressed && { opacity: 0.7 },
+            <Text
+              style={[
+                styles.aiSub,
+                { fontSize: ms(13), lineHeight: ms(20), marginBottom: ms(12) },
               ]}
             >
-              <Text style={styles.centersViewAllText}>{t("home.viewAll")}</Text>
-              <Ionicons name="chevron-forward" size={16} color={colors.primary} />
+              مساعدك الذكي على مدار الساعة
+            </Text>
+            <Pressable
+              onPress={() => router.push("/(tabs)/directory/helpCenter")}
+              style={({ pressed }) => [
+                styles.aiBtn,
+                { borderRadius: ms(16), minHeight: ms(36), paddingHorizontal: ms(16) },
+                pressed && styles.pressed,
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel="ابدأ المحادثة"
+            >
+              <Text style={[styles.aiBtnText, { fontSize: ms(14) }]}>ابدأ المحادثة</Text>
             </Pressable>
           </View>
-
-          {centersLoading ? (
-            <View style={styles.centersLoading}>
-              <ActivityIndicator size="small" color={colors.primary} />
-              <Text style={styles.centersLoadingText}>{t("home.loadingCenters")}</Text>
-            </View>
-          ) : centersError ? (
-            <View style={styles.centersEmpty}>
-              <Ionicons name="cloud-offline-outline" size={32} color={colors.textTertiary} />
-              <Text style={styles.centersEmptyText}>{t("home.couldNotLoadCenters")}</Text>
-              <Text style={styles.centersErrorDetail} numberOfLines={6}>
-                {centersErrorMessage.trim()}
-              </Text>
-              <Text style={styles.centersErrorHint} numberOfLines={4}>
-                {
-                  "Update EXPO_PUBLIC_API_URL in .env to this machine's LAN IP (same Wi-Fi as your phone), with /api at the end, restart Expo, and keep the backend running."
-                }
-              </Text>
-              <Pressable
-                onPress={() => refetchCenters()}
-                style={({ pressed }) => [styles.centersRetryBtn, pressed && { opacity: 0.8 }]}
-              >
-                <Text style={styles.centersRetryText}>{t("home.tapToRetry")}</Text>
-              </Pressable>
-            </View>
-          ) : centers.length > 0 ? (
-            <View style={styles.centersList}>
-              {centers.map((center: HealthCenter) => (
-                <Pressable
-                  key={center.id || (center as { _id?: string })._id}
-                  style={({ pressed }) => [
-                    styles.centerItem,
-                    pressed && { transform: [{ scale: 0.98 }] },
-                  ]}
-                  onPress={() =>
-                    router.push(`/(tabs)/directory/center-details?id=${center.id || (center as { _id?: string })._id}`)
-                  }
-                >
-                  <View style={styles.centerItemContent}>
-                    <View style={styles.centerItemHeader}>
-                      <Text style={styles.centerItemName} numberOfLines={1}>
-                        {center.name || "Unnamed Center"}
-                      </Text>
-                      {center.type && (
-                        <View
-                          style={[
-                            styles.centerTypeBadge,
-                            center.type === "public"
-                              ? styles.centerTypeBadgePublic
-                              : styles.centerTypeBadgePrivate,
-                          ]}
-                        >
-                          <Text
-                            style={[
-                              styles.centerTypeText,
-                              center.type === "public"
-                                ? styles.centerTypeTextPublic
-                                : styles.centerTypeTextPrivate,
-                            ]}
-                          >
-                            {center.type === "public" ? "Public" : "Private"}
-                          </Text>
-                        </View>
-                      )}
-                    </View>
-                    <Text style={styles.centerItemAddress} numberOfLines={1}>
-                      {center.address || "Address not available"}
-                    </Text>
-                    {center.city && (
-                      <Text style={styles.centerItemCity}>{center.city}</Text>
-                    )}
-                    {(center.rating !== undefined && center.rating !== null && typeof center.rating === "number") && (
-                      <View style={styles.centerItemRating}>
-                        <Ionicons name="star" size={14} color="#F5A623" />
-                        <Text style={styles.centerItemRatingText}>
-                          {center.rating.toFixed(1)}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                  <Ionicons
-                    name="chevron-forward"
-                    size={20}
-                    color={colors.textTertiary}
-                  />
-                </Pressable>
-              ))}
-            </View>
-          ) : (
-            <View style={styles.centersEmpty}>
-              <Ionicons
-                name="medical-outline"
-                size={32}
-                color={colors.textTertiary}
-              />
-              <Text style={styles.centersEmptyText}>{t("home.noCenters")}</Text>
-            </View>
-          )}
+          <Image
+            source={require("../../assets/images/home-robot.png")}
+            style={{ width: ms(120), height: ms(132), marginRight: ms(6) }}
+            resizeMode="contain"
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -572,1048 +330,142 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safe: {
     flex: 1,
-    backgroundColor: colors.bgApp, // #FAF6F2
+    backgroundColor: colors.bg,
   },
   scroll: {
     flex: 1,
   },
   scrollContent: {
-    paddingHorizontal: 16, // padding: 20px 16px from .page
-    paddingTop: 20,
-    paddingBottom: 140, // Increased padding: 64px (tab bar) + safe area (up to 34px) + 24px (spacing) + 18px (extra safety)
-    maxWidth: 420, // max-width: 420px
     alignSelf: "center",
+  },
+  topRow: {
     width: "100%",
-  },
-  // Header - Professional Design
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 20,
-  },
-  headerLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-    flex: 1,
-  },
-  avatarContainer: {
-    position: "relative",
-  },
-  avatar: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: colors.primary,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  avatarText: {
-    fontSize: 20,
-    fontWeight: "700",
-    color: "#FFFFFF",
-  },
-  onlineIndicator: {
-    position: "absolute",
-    bottom: 2,
-    right: 2,
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: "#4CAF50",
-    borderWidth: 2,
-    borderColor: colors.bgApp,
-  },
-  headerText: {
-    flex: 1,
-  },
-  greetingSmall: {
-    fontSize: 13,
-    color: colors.textTertiary,
-    marginBottom: 2,
-  },
-  userName: {
-    fontSize: 18,
-    fontWeight: "700",
-    color: colors.text,
-    letterSpacing: -0.3,
-  },
-  // Welcome Card
-  welcomeCard: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: `${colors.primary}12`,
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: `${colors.primary}20`,
-  },
-  welcomeContent: {
-    flex: 1,
-  },
-  welcomeTitle: {
-    fontSize: 16,
-    fontWeight: "700",
-    color: colors.text,
-    marginBottom: 4,
-  },
-  welcomeSubtitle: {
-    fontSize: 13,
-    color: colors.textSecondary,
-    lineHeight: 18,
-  },
-  // Resource Card - Professional design
-  resourceCard: {
-    backgroundColor: colors.bgCard,
-    borderRadius: 20,
-    padding: 20,
-    marginTop: 20,
-    marginBottom: 24,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
-    elevation: 3,
-  },
-  resourceCardHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    marginBottom: 6,
-  },
-  resourceCardTitle: {
-    fontSize: 18,
-    fontWeight: "700",
-    color: colors.text,
-  },
-  resourceCardSubtitle: {
-    fontSize: 14,
-    color: colors.textTertiary,
-    marginBottom: 20,
-  },
-  resourceButtonsRow: {
-    flexDirection: "row",
-    gap: 10,
-  },
-  resourceButton: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: colors.bgApp,
-    borderRadius: 16,
-    paddingVertical: 16,
-    paddingHorizontal: 8,
-    borderWidth: 2,
-    borderColor: "transparent",
-  },
-  resourceButtonActive: {
-    backgroundColor: `${colors.primary}10`,
-    borderColor: colors.primary,
-  },
-  resourceIconWrap: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: `${colors.primary}15`,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
-  },
-  resourceIconWrapActive: {
-    backgroundColor: colors.primary,
-  },
-  resourceButtonText: {
-    fontSize: 15,
-    fontWeight: "700",
-    color: colors.text,
-    marginBottom: 2,
-  },
-  resourceButtonTextActive: {
-    color: colors.primary,
-  },
-  resourceButtonDesc: {
-    fontSize: 11,
-    color: colors.textTertiary,
-  },
-  // Notification Button
-  notificationBtn: {
-    width: 48,
-    height: 48,
-    borderRadius: 14,
-    backgroundColor: colors.bgCard,
-    borderWidth: 1.5,
-    borderColor: colors.border,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
-    elevation: 1,
   },
-  badge: {
+  iconBtn: {
+    width: 40,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
     position: "absolute",
     top: 6,
-    right: 6,
-    backgroundColor: colors.badge,
-    minWidth: 18,
-    height: 18,
-    borderRadius: 9,
-    justifyContent: "center",
-    alignItems: "center",
+    zIndex: 2,
   },
-  badgeText: {
-    color: "#FFFFFF",
-    fontSize: 10,
-    fontWeight: "600",
+  iconLeft: {
+    left: 0,
   },
-  // Create account CTA
-  createCta: {
-    backgroundColor: colors.bgCard, // #FFFFFF
-    borderRadius: 14, // var(--radius)
-    paddingVertical: 24,
-    paddingHorizontal: 20,
-    marginBottom: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.04,
-    shadowRadius: 10,
-    elevation: 2,
-    borderWidth: 1,
-    borderColor: colors.border,
-    alignItems: "center",
+  iconRight: {
+    right: 0,
   },
-  createCtaText: {
-    marginBottom: 16,
-    fontSize: 16, // 1rem - BODY TEXT SIZE
-    fontWeight: "400", // REGULAR WEIGHT
-    color: colors.text,
+  greeting: {
+    fontWeight: "800",
+    color: colors.title,
     textAlign: "center",
-    lineHeight: 24, // 1.5 for readability
+    writingDirection: "rtl",
   },
-  btnPrimary: {
-    paddingVertical: 12,
-    paddingHorizontal: 28,
-    backgroundColor: colors.primary,
-    borderRadius: 24,
-    alignItems: "center",
-    alignSelf: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 3,
-    elevation: 1,
-  },
-  btnPrimaryText: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  // Mood Row - exact CSS values
-  moodRow: {
-    flexDirection: "row",
-    gap: 10, // gap: 10px
-    marginBottom: 22, // margin-bottom: 22px
-  },
-  moodBtn: {
-    flex: 1,
-    paddingVertical: 14, // padding: 14px
-    borderRadius: 20, // border-radius: 20px
-    backgroundColor: colors.bgCard, // var(--bg-card)
-    borderWidth: 1.5,
-    borderColor: colors.border,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 3,
-    elevation: 1,
-  },
-  moodBtnActive: {
-    backgroundColor: colors.primary, // var(--primary)
-    borderColor: colors.primary,
-  },
-  moodBtnText: {
-    fontSize: 14.4, // 0.9rem = 14.4px
-    fontWeight: "400",
-    color: colors.text, // var(--text)
-  },
-  moodBtnTextActive: {
-    color: "#FFFFFF",
-  },
-  // Card - exact CSS values
-  card: {
-    backgroundColor: colors.bgCard, // var(--bg-card)
-    borderRadius: 14, // var(--radius)
-    padding: 20, // padding: 20px
-    marginBottom: 20, // Increased spacing below cards for better separation
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 3,
-    elevation: 1,
-    borderWidth: 1,
-    borderColor: colors.border, // var(--border)
-  },
-  profileCardContainer: {
-    // Make entire card pressable
-  },
-  // Profile card - exact CSS values
-  profileCard: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 14, // gap: 14px
-  },
-  profileAvatar: {
-    width: 52, // 52px
-    height: 52,
-    borderRadius: 26, // 50%
-    borderWidth: 2,
-    borderColor: colors.accentCare, // var(--accent-care)
-    backgroundColor: colors.accentCareSoft, // var(--accent-care-soft)
-  },
-  profileInfo: {
-    flex: 1,
-  },
-  profileInfoH3: {
-    fontSize: 16.8, // 1.05rem = 16.8px
-    fontWeight: "600",
-    color: colors.text,
-    lineHeight: 21.84, // 1.3
-    margin: 0,
-  },
-  profileInfoP: {
-    fontSize: 14, // 0.875rem = 14px
-    color: colors.textSecondary,
-    lineHeight: 19.6, // 1.4
-    marginTop: 4,
-    marginBottom: 0,
-  },
-  dropdownBtn: {
-    width: 40, // 40px
-    height: 40,
-    borderRadius: 10, // var(--radius-sm)
-    backgroundColor: colors.bgApp, // var(--bg-app)
-    borderWidth: 1.5,
-    borderColor: colors.border,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  dropdownBtnText: {
-    fontSize: 16,
-    color: colors.textSecondary,
-  },
-  // Section title - exact CSS values
-  sectionTitle: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 12, // margin-bottom: 12px - EXACT CSS VALUE
-    marginTop: 20, // Increased spacing above sections for clear separation
-  },
-  sectionTitleH2: {
-    fontSize: 16, // 1rem = 16px - SECTION TITLE SIZE
-    fontWeight: "600", // BOLD - DISTINCT FROM BODY TEXT
-    color: colors.text, // #3A3A3A - DARKER THAN BODY
-    letterSpacing: -0.16, // -0.01em
-    lineHeight: 20.8, // 1.3
-    margin: 0,
-  },
-  sectionTitleSpan: {
-    fontSize: 12.8, // 0.8rem = 12.8px
-    color: colors.textTertiary, // var(--text-tertiary)
-  },
-  // Progress - exact CSS values
-  progressDots: {
-    flexDirection: "row",
-    gap: 8, // gap: 8px
-    marginBottom: 10, // margin-bottom: 10px
-  },
-  progressDot: {
-    width: 10, // 10px
-    height: 10,
-    borderRadius: 5, // 50%
-    backgroundColor: colors.accentCare, // var(--accent-care)
-  },
-  progressDotPending: {
-    backgroundColor: colors.primarySoft, // var(--primary-soft)
-  },
-  planSummary: {
-    fontSize: 14.4, // 0.9rem = 14.4px
-    color: colors.textSecondary,
-  },
-  // Task card - exact CSS values
-  taskCard: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    gap: 16, // gap: 16px
-    padding: 20, // padding: 20px
-    backgroundColor: colors.bgCard,
-    borderRadius: 14, // var(--radius)
-    marginBottom: 20, // Increased spacing below task card
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 3,
-    elevation: 1,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  taskCheckbox: {
-    width: 22, // 22px
-    height: 22,
-    borderWidth: 2,
-    borderColor: colors.textTertiary, // var(--text-tertiary)
-    borderRadius: 6, // border-radius: 6px
-    marginTop: 2, // margin-top: 2px
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  taskCheckboxCompleted: {
-    backgroundColor: colors.accentCare,
-    borderColor: colors.accentCare,
-  },
-  checkmark: {
-    color: "#FFFFFF",
-    fontSize: 14,
-    fontWeight: "600",
-  },
-  taskContent: {
-    flex: 1,
-  },
-  taskContentH4: {
-    fontSize: 16, // 1rem
-    fontWeight: "600",
-    color: colors.text,
-    lineHeight: 22.4, // 1.4
-    marginBottom: 6, // margin: 0 0 6px
-    marginTop: 0,
-  },
-  taskContentP: {
-    fontSize: 14, // 0.875rem
-    color: colors.textSecondary,
-    lineHeight: 21, // 1.5
-    margin: 0,
-  },
-  why: {
-    marginTop: 12, // margin-top: 12px
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6, // gap: 6px
-  },
-  whyText: {
-    fontSize: 12.8, // 0.8rem = 12.8px
-    color: colors.textTertiary,
-  },
-  // Recommendation card - exact CSS values
-  recCard: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 16, // gap: 16px
-    padding: 20, // padding: 20px
-    marginBottom: 12,
-    backgroundColor: colors.bgCard,
-    borderRadius: 14, // var(--radius)
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 3,
-    elevation: 1,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  recIcon: {
-    width: 48, // 48px
-    height: 48,
-    borderRadius: 10, // var(--radius-sm)
-    backgroundColor: colors.accentLearnSoft, // var(--accent-learn-soft)
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  recIconText: {
-    fontSize: 19.2, // 1.2rem = 19.2px
-    color: colors.accentLearn, // var(--accent-learn)
-  },
-  recContent: {
-    flex: 1,
-  },
-  recContentH4: {
-    fontSize: 16, // 1rem
-    fontWeight: "600",
-    color: colors.text,
-    lineHeight: 22.4, // 1.4
-    marginBottom: 6, // margin: 0 0 6px
-    marginTop: 0,
-  },
-  recContentDesc: {
-    fontSize: 13.6, // 0.85rem = 13.6px
-    color: colors.textSecondary,
-    marginBottom: 10, // margin-bottom: 10px
-    lineHeight: 20.4, // 1.5
-  },
-  recMeta: {
-    fontSize: 12, // 0.75rem = 12px
-    color: colors.textTertiary, // var(--text-tertiary)
-  },
-  // Resources Section - Professional Design
-  resourcesSection: {
-    marginTop: 4,
-  },
-  resourcesSectionHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 16,
-  },
-  resourcesSectionHeaderLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-  },
-  resourcesSectionIcon: {
-    width: 36,
-    height: 36,
-    borderRadius: 10,
-    backgroundColor: colors.primary,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  resourcesSectionTitle: {
-    fontSize: 17,
-    fontWeight: "700",
-    color: colors.text,
-  },
-  resourcesSectionCount: {
-    fontSize: 13,
-    color: colors.textTertiary,
-    marginTop: 1,
-  },
-  clearButton: {
-    padding: 4,
-  },
-  resourceTypeIconsRow: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    paddingVertical: 20,
-    paddingHorizontal: 8,
-    gap: 12,
-  },
-  resourceTypeIconBtn: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  resourceTypeIconWrap: {
-    width: 56,
-    height: 56,
-    borderRadius: 16,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 8,
-  },
-  resourceTypeIconLabel: {
-    fontSize: 12,
-    fontWeight: "600",
-    color: colors.textSecondary,
-  },
-  resourceTypeIconDisabled: {
-    opacity: 0.5,
-  },
-  resourceTypeIconLabelDisabled: {
-    color: colors.textTertiary,
-  },
-  // Category Section
-  categorySection: {
-    marginBottom: 24,
-  },
-  categoryHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 14,
-    gap: 10,
-  },
-  categoryIconWrap: {
-    width: 36,
-    height: 36,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  categoryTitle: {
-    flex: 1,
-    fontSize: 17,
-    fontWeight: "700",
-    color: colors.text,
-  },
-  categoryBadge: {
-    backgroundColor: colors.bgApp,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  categoryBadgeText: {
-    fontSize: 12,
-    fontWeight: "600",
-    color: colors.textSecondary,
-  },
-  // Resource Item
-  resourceItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: colors.bgCard,
-    borderRadius: 14,
-    padding: 14,
-    marginBottom: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
-    elevation: 1,
-  },
-  resourceItemIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 12,
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: 12,
-  },
-  resourceItemContent: {
-    flex: 1,
-  },
-  resourceItemTitle: {
-    fontSize: 15,
-    fontWeight: "600",
-    color: colors.text,
-    marginBottom: 4,
-    lineHeight: 20,
-  },
-  resourceItemDesc: {
-    fontSize: 13,
-    color: colors.textSecondary,
-    marginBottom: 6,
-  },
-  resourceItemMeta: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 5,
-  },
-  resourceItemMetaText: {
-    fontSize: 11,
-    color: colors.textTertiary,
-  },
-  resourceItemDot: {
-    width: 3,
-    height: 3,
-    borderRadius: 1.5,
-    backgroundColor: colors.textTertiary,
-    marginHorizontal: 3,
-  },
-  resourceItemSource: {
-    fontSize: 11,
+  helpLine: {
     fontWeight: "500",
-    color: colors.primary,
+    color: colors.subtitle,
+    textAlign: "center",
+    writingDirection: "rtl",
   },
-  // Video Card - Professional Design
-  videoCard: {
-    backgroundColor: colors.bgCard,
-    borderRadius: 16,
-    marginBottom: 12,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
+  searchBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.searchBg,
+    borderWidth: 1,
+    borderColor: colors.searchBorder,
+    direction: "ltr",
+  },
+  searchInput: {
+    flex: 1,
+    color: colors.title,
+    paddingVertical: 8,
+    writingDirection: "rtl",
+  },
+  hero: {
+    backgroundColor: colors.brand,
+    flexDirection: "row",
+    alignItems: "center",
     overflow: "hidden",
+    direction: "ltr",
   },
-  videoThumbnail: {
-    height: 120,
-    backgroundColor: `${colors.primary}15`,
-    alignItems: "center",
-    justifyContent: "center",
-    position: "relative",
-  },
-  videoPlayButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: colors.primary,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: colors.primary,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  videoDurationBadge: {
-    position: "absolute",
-    bottom: 10,
-    right: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-    backgroundColor: "rgba(0, 0, 0, 0.7)",
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 6,
-  },
-  videoDurationText: {
-    fontSize: 11,
-    fontWeight: "600",
-    color: "#FFFFFF",
-  },
-  videoInfo: {
-    padding: 16,
-  },
-  videoTitle: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: colors.text,
-    marginBottom: 6,
-    lineHeight: 22,
-  },
-  videoDescription: {
-    fontSize: 14,
-    color: colors.textSecondary,
-    lineHeight: 20,
-    marginBottom: 12,
-  },
-  videoMeta: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-  },
-  videoMetaText: {
-    fontSize: 12,
-    color: colors.textTertiary,
-  },
-  videoMetaDot: {
-    width: 3,
-    height: 3,
-    borderRadius: 1.5,
-    backgroundColor: colors.textTertiary,
-    marginHorizontal: 4,
-  },
-  videoMetaLink: {
-    fontSize: 12,
-    fontWeight: "600",
-    color: colors.primary,
-  },
-  // Empty State Card - Professional Design
-  emptyStateCard: {
-    backgroundColor: colors.bgCard,
-    borderRadius: 20,
-    padding: 32,
-    alignItems: "center",
-    marginTop: 4,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.04,
-    shadowRadius: 8,
-    elevation: 2,
-  },
-  emptyStateIconWrap: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
-    backgroundColor: `${colors.primary}15`,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 20,
-  },
-  emptyStateTitle: {
-    fontSize: 20,
-    fontWeight: "700",
-    color: colors.text,
-    marginBottom: 8,
-  },
-  emptyStateDescription: {
-    fontSize: 15,
-    color: colors.textSecondary,
-    textAlign: "center",
-    lineHeight: 22,
-    marginBottom: 24,
-  },
-  emptyStateHints: {
-    gap: 10,
-  },
-  emptyStateHint: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  emptyStateHintText: {
-    fontSize: 14,
-    color: colors.textSecondary,
-  },
-  // Quick actions - exact CSS values
-  quickActions: {
-    flexDirection: "row",
-    gap: 12, // gap: 12px
-    marginBottom: 16,
-  },
-  quickAction: {
+  heroTextCol: {
     flex: 1,
-    backgroundColor: colors.bgCard,
-    borderRadius: 14, // var(--radius)
-    paddingVertical: 18, // padding: 18px 12px
-    paddingHorizontal: 12,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 3,
-    elevation: 1,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  iconWrap: {
-    width: 48,
-    height: 48,
-    borderRadius: 10, // var(--radius-sm)
-    marginBottom: 12,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  iconWrapPrimary: {
-    backgroundColor: colors.primarySoft,
-  },
-  iconWrapGreen: {
-    backgroundColor: colors.accentCareSoft,
-  },
-  iconWrapText: {
-    fontSize: 20,
-  },
-  quickActionSpan: {
-    fontSize: 12.48, // 0.78rem = 12.48px
-    fontWeight: "400",
-    color: colors.text,
-    lineHeight: 16.224,
-    textAlign: "center",
-  },
-  // Chart card - exact CSS values
-  chartCard: {
-    backgroundColor: colors.bgCard,
-    borderRadius: 14, // var(--radius)
-    padding: 20, // padding: 20px
-    marginBottom: 20, // Spacing below chart card
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 3,
-    elevation: 1,
-    borderWidth: 1,
-    borderColor: colors.border,
-    minHeight: 180, // Increased to accommodate bars (120px) + labels (~20px) + padding (40px) = ~180px
-    overflow: "visible", // Allow labels to be visible
-  },
-  chartBars: {
-    flexDirection: "row",
-    alignItems: "flex-end",
-    justifyContent: "space-between",
-    gap: 8, // gap: 8px between bars
-    minHeight: 120, // Changed from height to minHeight to accommodate labels
-    paddingBottom: 20, // Space for labels below bars
-  },
-  chartBarContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-  chartBar: {
-    width: "100%",
-    borderRadius: 4, // Rounded top corners
-    borderTopLeftRadius: 4,
-    borderTopRightRadius: 4,
-    minHeight: 20, // Minimum bar height
-  },
-  chartBarLabel: {
-    fontSize: 12,
-    color: colors.textTertiary,
-    marginTop: 6,
-    textAlign: "center",
-  },
-  chartBarGreen: {
-    backgroundColor: colors.accentCare, // #7BA68A
-  },
-  chartBarBlue: {
-    backgroundColor: colors.accentLearn, // #9B8BA6
-  },
-  // Health Centers Card
-  centersCard: {
-    backgroundColor: colors.bgCard,
-    borderRadius: 20,
-    padding: 20,
-    marginBottom: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
-    elevation: 3,
-  },
-  centersCardHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 16,
-  },
-  centersCardHeaderLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-    flex: 1,
-  },
-  centersCardIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: 12,
-    backgroundColor: `${colors.primary}15`,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  centersCardTitle: {
-    fontSize: 18,
-    fontWeight: "700",
-    color: colors.text,
-    marginBottom: 2,
-  },
-  centersCardSubtitle: {
-    fontSize: 13,
-    color: colors.textTertiary,
-  },
-  centersViewAllBtn: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-  },
-  centersViewAllText: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: colors.primary,
-  },
-  centersList: {
+    alignItems: "flex-start",
+    paddingVertical: 16,
     gap: 12,
   },
-  centerItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: colors.bgApp,
-    borderRadius: 14,
-    padding: 14,
-    borderWidth: 1,
-    borderColor: colors.border,
+  heroTitle: {
+    fontWeight: "800",
+    color: colors.white,
+    textAlign: "right",
+    writingDirection: "rtl",
   },
-  centerItemContent: {
-    flex: 1,
-  },
-  centerItemHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 4,
-  },
-  centerItemName: {
-    fontSize: 15,
-    fontWeight: "600",
-    color: colors.text,
-    flex: 1,
-    marginRight: 8,
-  },
-  centerTypeBadge: {
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  centerTypeBadgePublic: {
-    backgroundColor: "#dcfce7",
-  },
-  centerTypeBadgePrivate: {
-    backgroundColor: "#fef3c7",
-  },
-  centerTypeText: {
-    fontSize: 11,
-    fontWeight: "600",
-    textTransform: "capitalize",
-  },
-  centerTypeTextPublic: {
-    color: "#15803d",
-  },
-  centerTypeTextPrivate: {
-    color: "#b45309",
-  },
-  centerItemAddress: {
-    fontSize: 13,
-    color: colors.textSecondary,
-    marginBottom: 2,
-  },
-  centerItemCity: {
-    fontSize: 12,
-    color: colors.textTertiary,
-    marginBottom: 6,
-  },
-  centerItemRating: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-  },
-  centerItemRatingText: {
-    fontSize: 13,
-    fontWeight: "600",
-    color: colors.text,
-  },
-  centersLoading: {
-    flexDirection: "row",
+  heroBtn: {
+    backgroundColor: colors.bannerBtn,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 20,
-    gap: 8,
   },
-  centersLoadingText: {
-    fontSize: 14,
-    color: colors.textTertiary,
+  heroBtnText: {
+    fontWeight: "700",
+    color: colors.bannerBtnText,
+    writingDirection: "rtl",
   },
-  centersEmpty: {
+  grid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    direction: "ltr",
+  },
+  cell: {
     alignItems: "center",
-    paddingVertical: 24,
+    justifyContent: "flex-start",
+    paddingTop: 8,
   },
-  centersEmptyText: {
-    fontSize: 14,
-    color: colors.textTertiary,
-    marginTop: 8,
-  },
-  centersErrorDetail: {
-    fontSize: 12,
-    color: colors.textSecondary,
-    marginTop: 10,
+  cellLabel: {
+    fontWeight: "700",
+    color: colors.title,
     textAlign: "center",
-    lineHeight: 18,
-    paddingHorizontal: 8,
+    writingDirection: "rtl",
   },
-  centersErrorHint: {
-    fontSize: 11,
-    color: colors.textTertiary,
-    marginTop: 10,
-    textAlign: "center",
-    lineHeight: 16,
-    paddingHorizontal: 12,
+  aiBanner: {
+    backgroundColor: colors.brand,
+    flexDirection: "row",
+    alignItems: "center",
+    overflow: "hidden",
+    direction: "ltr",
   },
-  centersRetryBtn: {
-    marginTop: 12,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 12,
-    backgroundColor: `${colors.primary}18`,
+  aiTextCol: {
+    flex: 1,
+    alignItems: "flex-start",
   },
-  centersRetryText: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: colors.primary,
+  aiTitle: {
+    fontWeight: "800",
+    color: colors.white,
+    textAlign: "right",
+    writingDirection: "rtl",
+  },
+  aiSub: {
+    fontWeight: "500",
+    color: colors.white,
+    textAlign: "right",
+    writingDirection: "rtl",
+  },
+  aiBtn: {
+    backgroundColor: colors.white,
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "flex-start",
+  },
+  aiBtnText: {
+    fontWeight: "700",
+    color: colors.brand,
+    writingDirection: "rtl",
+  },
+  pressed: {
+    opacity: 0.85,
   },
 });

@@ -1,34 +1,58 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useState, type ComponentProps } from "react";
 import { useTranslation } from "react-i18next";
 import {
-  I18nManager,
+  Alert,
   Modal,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLanguage } from "../../../context/LanguageContext";
 import type { AppLanguage } from "../../../i18n";
-import {
-  cardShadow,
-  colors,
-  radius,
-  spacing,
-  typography,
-} from "../../../theme";
+
+const colors = {
+  bg: "#FFFFFF",
+  title: "#3D4A78",
+  label: "#3D4A78",
+  icon: "#6E7CAF",
+  chevron: "#C5CAD8",
+  muted: "#8B91AF",
+  divider: "#EEF0F5",
+  delete: "#D95B73",
+  white: "#FFFFFF",
+  overlay: "rgba(26, 28, 41, 0.4)",
+};
+
+const DESIGN_W = 390;
+
+type IoniconName = ComponentProps<typeof Ionicons>["name"];
+
+type SettingsRow = {
+  key: string;
+  label: string;
+  icon: IoniconName;
+  iconColor?: string;
+  showLanguage?: boolean;
+  onPress: () => void;
+};
 
 export default function SettingsScreen() {
   const router = useRouter();
   const { t } = useTranslation();
-  const { locale, setLocale, isRTL } = useLanguage();
+  const { locale, setLocale } = useLanguage();
+  const { width: windowWidth } = useWindowDimensions();
+  const contentW = Math.min(windowWidth, 430);
+  const s = contentW / DESIGN_W;
+  const ms = (n: number) => Math.round(n * s);
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
-  const reverseRows = isRTL !== I18nManager.isRTL;
+
   const languageLabel =
     locale === "ar"
       ? t("settings.arabic", { lng: "ar" })
@@ -41,66 +65,124 @@ export default function SettingsScreen() {
     }
   };
 
+  const rows: SettingsRow[] = [
+    {
+      key: "general",
+      label: "الإعدادات العامة",
+      icon: "settings-outline",
+      onPress: () => router.push("/(tabs)/profile/edit-profile"),
+    },
+    {
+      key: "privacy",
+      label: "الخصوصية والأمان",
+      icon: "lock-closed-outline",
+      onPress: () =>
+        Alert.alert(t("settings.privacy"), t("community.privacyAlert")),
+    },
+    {
+      key: "language",
+      label: "اللغة",
+      icon: "globe-outline",
+      showLanguage: true,
+      onPress: () => setLanguageModalVisible(true),
+    },
+    {
+      key: "notifications",
+      label: "تفضيلات الإشعارات",
+      icon: "notifications-outline",
+      onPress: () =>
+        Alert.alert(t("home.notifications"), t("home.newNotifications")),
+    },
+    {
+      key: "password",
+      label: "تغيير كلمة المرور",
+      icon: "person-circle-outline",
+      onPress: () => router.push("/(auth)/forgot-password"),
+    },
+    {
+      key: "delete",
+      label: "حذف الحساب",
+      icon: "trash-outline",
+      iconColor: colors.delete,
+      onPress: () =>
+        Alert.alert("حذف الحساب", "هل أنت متأكد من رغبتك في حذف الحساب؟", [
+          { text: "إلغاء", style: "cancel" },
+          { text: "حذف", style: "destructive" },
+        ]),
+    },
+  ];
+
   return (
-    <SafeAreaView style={styles.wrapper} edges={["top"]}>
-      <View style={[styles.header, reverseRows && styles.rowReverse]}>
-        <Pressable
-          style={({ pressed }) => [styles.backBtn, pressed && { opacity: 0.7 }]}
-          onPress={() => router.back()}
-          accessibilityRole="button"
-          accessibilityLabel={t("settings.backToProfile")}
+    <SafeAreaView style={styles.safe} edges={["top"]}>
+      <View style={[styles.column, { width: contentW }]}>
+        <ScrollView
+          style={styles.scroll}
+          contentContainerStyle={{
+            paddingHorizontal: ms(20),
+            paddingTop: ms(14),
+            paddingBottom: ms(28),
+          }}
+          showsVerticalScrollIndicator={false}
         >
-          <Ionicons
-            name={isRTL ? "arrow-forward" : "arrow-back"}
-            size={24}
-            color={colors.text}
-          />
-        </Pressable>
-        <Text style={styles.headerTitle}>{t("settings.title")}</Text>
-        <View style={styles.headerSide} />
+          <Text
+            style={[
+              styles.title,
+              { fontSize: ms(24), lineHeight: ms(32), marginBottom: ms(22) },
+            ]}
+          >
+            الإعدادات
+          </Text>
+
+          {rows.map((row, index) => (
+            <Pressable
+              key={row.key}
+              onPress={row.onPress}
+              style={({ pressed }) => [
+                styles.row,
+                {
+                  minHeight: ms(56),
+                  paddingVertical: ms(14),
+                  gap: ms(12),
+                  flexDirection: "row-reverse",
+                  direction: "ltr",
+                },
+                index < rows.length - 1 && styles.rowBorder,
+                pressed && styles.pressed,
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel={
+                row.showLanguage ? `${row.label}, ${languageLabel}` : row.label
+              }
+            >
+              <Ionicons
+                name={row.icon}
+                size={ms(22)}
+                color={row.iconColor || colors.icon}
+              />
+              <Text style={[styles.rowLabel, { fontSize: ms(16) }]}>
+                {row.label}
+              </Text>
+              {row.showLanguage ? (
+                <Text style={[styles.langValue, { fontSize: ms(13) }]}>
+                  {languageLabel}
+                </Text>
+              ) : null}
+              <View style={{ direction: "ltr" }}>
+                <Text
+                  style={{
+                    color: colors.chevron,
+                    fontSize: ms(22),
+                    lineHeight: ms(24),
+                    fontWeight: "300",
+                  }}
+                >
+                  {"\u203A"}
+                </Text>
+              </View>
+            </Pressable>
+          ))}
+        </ScrollView>
       </View>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.content}
-      >
-        <TouchableOpacity
-          style={[styles.settingItem, reverseRows && styles.rowReverse]}
-          activeOpacity={0.85}
-          onPress={() => router.push("/(tabs)/profile/edit-profile")}
-        >
-          <Text style={styles.settingLabel}>{t("settings.editProfile")}</Text>
-          <Ionicons
-            name={isRTL ? "chevron-back" : "chevron-forward"}
-            size={18}
-            color={colors.textMuted}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.settingItem} activeOpacity={0.85}>
-          <Text style={styles.settingLabel}>{t("settings.notifications")}</Text>
-          <Text style={styles.settingValue}>{t("settings.notificationsOn")}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.settingItem, reverseRows && styles.rowReverse]}
-          activeOpacity={0.85}
-          onPress={() => setLanguageModalVisible(true)}
-          accessibilityRole="button"
-          accessibilityLabel={`${t("settings.language")}, ${languageLabel}`}
-        >
-          <Text style={styles.settingLabel}>{t("settings.language")}</Text>
-          <View style={[styles.valueRow, reverseRows && styles.rowReverse]}>
-            <Text style={styles.settingValue}>{languageLabel}</Text>
-            <Ionicons
-              name={isRTL ? "chevron-back" : "chevron-forward"}
-              size={18}
-              color={colors.textMuted}
-            />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.settingItem} activeOpacity={0.85}>
-          <Text style={styles.settingLabel}>{t("settings.privacy")}</Text>
-          <Text style={styles.settingValue}>→</Text>
-        </TouchableOpacity>
-      </ScrollView>
 
       <Modal
         visible={languageModalVisible}
@@ -113,26 +195,24 @@ export default function SettingsScreen() {
           onPress={() => setLanguageModalVisible(false)}
         >
           <Pressable style={styles.sheet}>
-            <Text style={[styles.sheetTitle, isRTL && styles.textRtl]}>
-              {t("settings.chooseLanguage")}
-            </Text>
+            <Text style={styles.sheetTitle}>{t("settings.chooseLanguage")}</Text>
 
             <TouchableOpacity
-              style={[styles.optionRow, reverseRows && styles.rowReverse]}
+              style={styles.optionRow}
               onPress={() => selectLanguage("en")}
               accessibilityRole="button"
               accessibilityState={{ selected: locale === "en" }}
             >
               <Text style={styles.optionLabel}>{t("settings.english")}</Text>
               {locale === "en" ? (
-                <Ionicons name="checkmark" size={22} color={colors.primary} />
+                <Ionicons name="checkmark" size={22} color={colors.icon} />
               ) : (
                 <View style={styles.optionSpacer} />
               )}
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.optionRow, reverseRows && styles.rowReverse]}
+              style={styles.optionRow}
               onPress={() => selectLanguage("ar")}
               accessibilityRole="button"
               accessibilityState={{ selected: locale === "ar" }}
@@ -141,7 +221,7 @@ export default function SettingsScreen() {
                 {t("settings.arabic", { lng: "ar" })}
               </Text>
               {locale === "ar" ? (
-                <Ionicons name="checkmark" size={22} color={colors.primary} />
+                <Ionicons name="checkmark" size={22} color={colors.icon} />
               ) : (
                 <View style={styles.optionSpacer} />
               )}
@@ -161,106 +241,80 @@ export default function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
+  safe: {
     flex: 1,
-    backgroundColor: colors.background,
-  },
-  header: {
-    flexDirection: "row",
+    backgroundColor: colors.bg,
     alignItems: "center",
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
   },
-  backBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: radius.md,
-    backgroundColor: colors.backgroundCard,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  headerTitle: {
+  column: {
     flex: 1,
+    maxWidth: 430,
+  },
+  scroll: {
+    flex: 1,
+  },
+  title: {
+    fontWeight: "800",
+    color: colors.title,
     textAlign: "center",
-    fontSize: typography.h3,
-    fontWeight: typography.weightBold,
-    color: colors.text,
+    writingDirection: "rtl",
   },
-  headerSide: {
-    width: 40,
-    height: 40,
+  row: {
+    alignItems: "center",
+    width: "100%",
   },
-  container: {
+  rowBorder: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.divider,
+  },
+  rowLabel: {
     flex: 1,
+    fontWeight: "700",
+    color: colors.label,
+    textAlign: "right",
+    writingDirection: "rtl",
   },
-  content: {
-    paddingHorizontal: spacing.xl,
-    paddingTop: spacing.md,
-    paddingBottom: 100,
+  langValue: {
+    fontWeight: "500",
+    color: colors.muted,
+    writingDirection: "rtl",
   },
-  settingItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: colors.backgroundCard,
-    borderRadius: radius.lg,
-    padding: spacing.lg,
-    marginBottom: spacing.md,
-    ...cardShadow,
-  },
-  settingLabel: {
-    fontSize: typography.body,
-    fontWeight: typography.weightMedium,
-    color: colors.text,
-  },
-  settingValue: {
-    fontSize: typography.body,
-    color: colors.textMuted,
-  },
-  valueRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-  },
-  rowReverse: {
-    flexDirection: "row-reverse",
+  pressed: {
+    opacity: 0.88,
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
+    backgroundColor: colors.overlay,
     justifyContent: "flex-end",
   },
   sheet: {
-    backgroundColor: colors.background,
-    borderTopLeftRadius: radius.xl,
-    borderTopRightRadius: radius.xl,
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.lg,
-    paddingBottom: spacing.xl,
+    backgroundColor: colors.white,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 28,
   },
   sheetTitle: {
-    fontSize: typography.h3,
-    fontWeight: typography.weightBold,
-    color: colors.text,
+    fontSize: 18,
+    fontWeight: "700",
+    color: colors.title,
     textAlign: "center",
-    marginBottom: spacing.md,
-  },
-  textRtl: {
     writingDirection: "rtl",
+    marginBottom: 14,
   },
   optionRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: colors.backgroundCard,
-    borderRadius: radius.lg,
-    padding: spacing.lg,
-    marginBottom: spacing.sm,
+    paddingVertical: 16,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.divider,
   },
   optionLabel: {
-    fontSize: typography.body,
-    fontWeight: typography.weightMedium,
-    color: colors.text,
+    fontSize: 16,
+    fontWeight: "600",
+    color: colors.label,
   },
   optionSpacer: {
     width: 22,
@@ -268,12 +322,13 @@ const styles = StyleSheet.create({
   },
   cancelBtn: {
     alignItems: "center",
-    paddingVertical: spacing.md,
-    marginTop: spacing.xs,
+    paddingVertical: 14,
+    marginTop: 8,
   },
   cancelText: {
-    fontSize: typography.body,
-    fontWeight: typography.weightSemibold,
-    color: colors.textMuted,
+    fontSize: 16,
+    fontWeight: "600",
+    color: colors.muted,
+    writingDirection: "rtl",
   },
 });

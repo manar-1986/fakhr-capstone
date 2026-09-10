@@ -2,7 +2,8 @@ import { Stack } from "expo-router";
 import React from "react";
 
 /**
- * Signup stack (React Navigation Stack via Expo Router): Create Account → Child Profile → Step 3.
+ * Signup stack (React Navigation Stack via Expo Router):
+ * Create Account → User Type → Welcome Intro → Interests → Child Profile → Step 3.
  */
 export default function SignupStackLayout() {
   return (
@@ -14,6 +15,9 @@ export default function SignupStackLayout() {
       }}
     >
       <Stack.Screen name="index" />
+      <Stack.Screen name="user-type" />
+      <Stack.Screen name="intro" />
+      <Stack.Screen name="interests" />
       <Stack.Screen name="child-profile-setup" />
       <Stack.Screen name="step-three" />
     </Stack>

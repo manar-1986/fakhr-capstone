@@ -1,10 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useMutation } from "@tanstack/react-query";
+import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
 import * as SecureStore from "expo-secure-store";
 import { useState } from "react";
 import {
   Alert,
+  Image,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -18,16 +20,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { login } from "../../api/auth.api";
 import { useAuth, USER_PROFILE_CACHE_KEY } from "../../context/AuthContext";
 
-// Brand colors
 const colors = {
-  primary: "#6E7CAF",
-  primarySoft: "#AAB3D6",
-  bgTop: "#BCC3D8",
-  bgBottom: "#AAB3D6",
-  accent: "#8B91AF",
-  text: "#6E7CAF",
-  textSecondary: "#8B91AF",
-  border: "#AAB3D6",
+  bg: "#FFFFFF",
+  primary: "#6E81BB",
+  text: "#1E2030",
+  textMuted: "#8A8D99",
+  placeholder: "#A8ABB4",
+  border: "#E6E6EA",
+  socialBorder: "#E0E0E4",
+  forgot: "#6A6B82",
   white: "#FFFFFF",
 };
 
@@ -67,8 +68,21 @@ export default function LoginScreen() {
     loginMutation.mutate({ email, password });
   };
 
+  const handleBack = () => {
+    try {
+      if (typeof router.canGoBack === "function" && router.canGoBack()) {
+        router.back();
+        return;
+      }
+    } catch {
+      /* fall through */
+    }
+    router.replace("/(auth)/welcome");
+  };
+
   return (
-    <SafeAreaView style={styles.container} edges={["top"]}>
+    <SafeAreaView style={styles.container} edges={["top", "bottom"]}>
+      <StatusBar style="dark" />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.keyboard}
@@ -78,101 +92,155 @@ export default function LoginScreen() {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          <View style={styles.logoBlock}>
-            <View style={styles.logoIconWrap}>
-              <View style={styles.logoIcon}>
-                <Ionicons name="heart" size={32} color={colors.white} />
-              </View>
-            </View>
-            <Text style={styles.appName}>فخر</Text>
-            <Text style={styles.appTagline}>رحلة الدعم تبدأ هنا</Text>
+          <View style={styles.header}>
+            <Pressable
+              onPress={handleBack}
+              hitSlop={12}
+              style={({ pressed }) => [styles.backBtn, pressed && styles.pressed]}
+              accessibilityRole="button"
+              accessibilityLabel="رجوع"
+            >
+              <Ionicons name="chevron-back" size={26} color={colors.text} />
+            </Pressable>
+            <Image
+              source={require("../../assets/images/fakhr-wordmark-blue.png")}
+              style={styles.logo}
+              resizeMode="contain"
+              accessibilityLabel="فخر"
+            />
           </View>
 
-          <View style={styles.authForm}>
-            <View style={styles.formGroup}>
-              <Text style={styles.label}>البريد الإلكتروني</Text>
+          <Text style={styles.heading}>مرحباً بعودتك</Text>
+
+          <View style={styles.form}>
+            <TextInput
+              style={styles.input}
+              placeholder="البريد الإلكتروني"
+              placeholderTextColor={colors.placeholder}
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              textAlign="right"
+            />
+
+            <View style={styles.passwordWrap}>
               <TextInput
-                style={styles.input}
-                placeholder="أدخل بريدك الإلكتروني"
-                placeholderTextColor={colors.textSecondary}
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
+                style={styles.passwordInput}
+                placeholder="كلمة المرور"
+                placeholderTextColor={colors.placeholder}
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={!isPasswordVisible}
                 textAlign="right"
               />
+              <Pressable
+                style={({ pressed }) => [
+                  styles.togglePassword,
+                  pressed && styles.pressed,
+                ]}
+                onPress={() => setIsPasswordVisible((prev) => !prev)}
+                accessibilityLabel={
+                  isPasswordVisible ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"
+                }
+              >
+                <Ionicons
+                  name={isPasswordVisible ? "eye-off-outline" : "eye-outline"}
+                  size={20}
+                  color={colors.placeholder}
+                />
+              </Pressable>
             </View>
 
-            <View style={styles.formGroup}>
-              <Text style={styles.label}>كلمة المرور</Text>
-              <View style={styles.inputWrap}>
-                <TextInput
-                  style={styles.inputInWrap}
-                  placeholder="أدخل كلمة المرور"
-                  placeholderTextColor={colors.textSecondary}
-                  value={password}
-                  onChangeText={setPassword}
-                  secureTextEntry={!isPasswordVisible}
-                  textAlign="right"
-                />
-                <Pressable
-                  style={({ pressed }) => [
-                    styles.togglePassword,
-                    pressed && { opacity: 0.7 },
-                  ]}
-                  onPress={() => setIsPasswordVisible((prev) => !prev)}
-                >
-                  <Ionicons
-                    name={isPasswordVisible ? "eye-off-outline" : "eye-outline"}
-                    size={20}
-                    color={colors.textSecondary}
-                  />
-                </Pressable>
-              </View>
-            </View>
+            <Pressable
+              onPress={() => router.push("/(auth)/forgot-password")}
+              style={({ pressed }) => [
+                styles.forgotWrap,
+                pressed && styles.pressed,
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel="نسيت كلمة المرور؟"
+            >
+              <Text style={styles.forgotPassword}>نسيت كلمة المرور؟</Text>
+            </Pressable>
 
             <Pressable
               style={({ pressed }) => [
                 styles.btnPrimary,
-                pressed && { opacity: 0.8 },
+                pressed && { opacity: 0.85 },
               ]}
               onPress={handleLogin}
               disabled={loginMutation.isPending}
+              accessibilityRole="button"
+              accessibilityLabel="تسجيل الدخول"
             >
               <Text style={styles.btnPrimaryText}>
                 {loginMutation.isPending ? "جاري تسجيل الدخول..." : "تسجيل الدخول"}
               </Text>
             </Pressable>
 
-            <Pressable>
-              {({ pressed }) => (
-                <Text
-                  style={[
-                    styles.forgotPassword,
-                    pressed && { opacity: 0.7 },
-                  ]}
-                >
-                  نسيت كلمة المرور؟
-                </Text>
-              )}
-            </Pressable>
+            <Text style={styles.dividerText}>أو الدخول عبر</Text>
 
-            <View style={styles.dividerRow}>
-              <View style={styles.dividerLine} />
-              <Text style={styles.dividerText}>أو</Text>
-              <View style={styles.dividerLine} />
+            <View style={styles.socialRow}>
+              <Pressable
+                style={({ pressed }) => [
+                  styles.socialBtn,
+                  pressed && styles.pressed,
+                ]}
+                onPress={() =>
+                  Alert.alert("Google", "تسجيل الدخول عبر Google غير متاح حالياً.")
+                }
+                accessibilityRole="button"
+                accessibilityLabel="Google"
+              >
+                <Text style={styles.googleG}>G</Text>
+              </Pressable>
+              <Pressable
+                style={({ pressed }) => [
+                  styles.socialBtn,
+                  pressed && styles.pressed,
+                ]}
+                onPress={() =>
+                  Alert.alert("Apple", "تسجيل الدخول عبر Apple غير متاح حالياً.")
+                }
+                accessibilityRole="button"
+                accessibilityLabel="Apple"
+              >
+                <Ionicons name="logo-apple" size={26} color="#111111" />
+              </Pressable>
+              <Pressable
+                style={({ pressed }) => [
+                  styles.socialBtn,
+                  pressed && styles.pressed,
+                ]}
+                onPress={() =>
+                  Alert.alert("الحساب", "تسجيل الدخول عبر هذا الخيار غير متاح حالياً.")
+                }
+                accessibilityRole="button"
+                accessibilityLabel="تسجيل الدخول بالحساب"
+              >
+                <View style={styles.personBadge}>
+                  <Ionicons
+                    name="person-outline"
+                    size={16}
+                    color={colors.primary}
+                  />
+                </View>
+              </Pressable>
             </View>
-
-            <Pressable
-              style={({ pressed }) => [
-                styles.btnSecondary,
-                pressed && { opacity: 0.85 },
-              ]}
-              onPress={() => router.push("/(signup)")}
-            >
-              <Text style={styles.btnSecondaryText}>إنشاء حساب جديد</Text>
-            </Pressable>
           </View>
+
+          <Text style={styles.footer}>
+            <Text style={styles.footerMuted}>ليس لديك حساب؟ </Text>
+            <Text
+              style={styles.footerLink}
+              onPress={() => router.push("/(signup)")}
+              accessibilityRole="link"
+              accessibilityLabel="إنشاء حساب"
+            >
+              إنشاء حساب
+            </Text>
+          </Text>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -182,157 +250,167 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.bgTop,
+    backgroundColor: colors.bg,
   },
   keyboard: {
     flex: 1,
   },
   scrollContent: {
-    paddingTop: 48,
-    paddingHorizontal: 32,
-    paddingBottom: 40,
+    flexGrow: 1,
+    paddingHorizontal: 28,
+    paddingTop: 8,
+    paddingBottom: 28,
+    maxWidth: 430,
+    width: "100%",
+    alignSelf: "center",
+  },
+  header: {
+    height: 96,
     alignItems: "center",
-  },
-  logoBlock: {
-    alignItems: "center",
-    marginBottom: 40,
-  },
-  logoIconWrap: {
-    marginBottom: 24,
-  },
-  logoIcon: {
-    width: 88,
-    height: 88,
-    borderRadius: 24,
-    backgroundColor: colors.accent,
     justifyContent: "center",
-    alignItems: "center",
-    shadowColor: "#000000",
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.12,
-    shadowRadius: 16,
-    elevation: 4,
-  },
-  appName: {
-    fontSize: 28,
-    fontWeight: "700",
-    color: colors.text,
     marginBottom: 8,
   },
-  appTagline: {
-    fontSize: 14,
-    color: colors.textSecondary,
+  backBtn: {
+    position: "absolute",
+    left: 0,
+    top: 8,
+    width: 40,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 2,
   },
-  authForm: {
-    width: "100%",
-    maxWidth: 360,
+  logo: {
+    width: 72,
+    height: 96,
   },
-  formGroup: {
-    marginBottom: 20,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: "600",
-    marginBottom: 6,
+  heading: {
+    fontSize: 26,
+    fontWeight: "700",
     color: colors.text,
-    textAlign: "right",
+    textAlign: "center",
+    writingDirection: "rtl",
+    marginBottom: 28,
+  },
+  form: {
+    width: "100%",
   },
   input: {
     width: "100%",
+    minHeight: 56,
     paddingVertical: 16,
     paddingHorizontal: 18,
     borderRadius: 18,
     borderWidth: 1,
     borderColor: colors.border,
-    fontSize: 16,
+    fontSize: 15,
     backgroundColor: colors.white,
     color: colors.text,
-    shadowColor: "#000000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
+    marginBottom: 16,
   },
-  inputWrap: {
+  passwordWrap: {
     position: "relative",
+    marginBottom: 16,
   },
-  inputInWrap: {
+  passwordInput: {
     width: "100%",
+    minHeight: 56,
     paddingVertical: 16,
     paddingRight: 18,
-    paddingLeft: 52,
+    paddingLeft: 48,
     borderRadius: 18,
     borderWidth: 1,
     borderColor: colors.border,
-    fontSize: 16,
+    fontSize: 15,
     backgroundColor: colors.white,
     color: colors.text,
-    shadowColor: "#000000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
   },
   togglePassword: {
     position: "absolute",
     left: 14,
-    top: "50%",
-    transform: [{ translateY: -10 }],
-    borderRadius: 6,
-    padding: 6,
+    top: 0,
+    bottom: 0,
+    justifyContent: "center",
+  },
+  forgotWrap: {
+    width: "100%",
+    marginBottom: 20,
+  },
+  forgotPassword: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: colors.forgot,
+    textAlign: "right",
+    writingDirection: "rtl",
   },
   btnPrimary: {
     width: "100%",
-    paddingVertical: 16,
+    minHeight: 56,
     backgroundColor: colors.primary,
-    borderRadius: 24,
+    borderRadius: 22,
     alignItems: "center",
-    marginTop: 8,
-    marginBottom: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.18,
-    shadowRadius: 8,
-    elevation: 3,
+    justifyContent: "center",
+    marginBottom: 28,
   },
   btnPrimaryText: {
     color: colors.white,
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  forgotPassword: {
-    fontSize: 13,
-    color: colors.textSecondary,
-    textAlign: "center",
-    marginBottom: 24,
-  },
-  dividerRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 24,
-    gap: 8,
-  },
-  dividerLine: {
-    flex: 1,
-    height: StyleSheet.hairlineWidth,
-    backgroundColor: colors.border,
+    fontSize: 17,
+    fontWeight: "700",
+    writingDirection: "rtl",
   },
   dividerText: {
-    fontSize: 13,
-    color: colors.textSecondary,
+    fontSize: 14,
+    color: colors.textMuted,
+    textAlign: "center",
+    marginBottom: 20,
+    writingDirection: "rtl",
   },
-  btnSecondary: {
-    width: "100%",
-    paddingVertical: 14,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: colors.primary,
+  socialRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 18,
+    marginBottom: 36,
+  },
+  socialBtn: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    borderWidth: 1.5,
+    borderColor: colors.socialBorder,
     backgroundColor: colors.white,
     alignItems: "center",
+    justifyContent: "center",
   },
-  btnSecondaryText: {
+  googleG: {
+    fontSize: 26,
+    fontWeight: "700",
+    color: "#4285F4",
+  },
+  personBadge: {
+    width: 26,
+    height: 30,
+    borderRadius: 7,
+    borderWidth: 1.5,
+    borderColor: colors.primary,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  footer: {
+    marginTop: "auto",
+    textAlign: "center",
+    writingDirection: "rtl",
+  },
+  footerMuted: {
     fontSize: 15,
-    fontWeight: "600",
-    color: colors.primary,
+    color: colors.text,
+  },
+  footerLink: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: colors.text,
+  },
+  pressed: {
+    opacity: 0.7,
   },
 });

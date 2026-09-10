@@ -33,35 +33,11 @@ export default function DirectoryLayout() {
       }}
     >
       <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="schools" options={{ headerShown: false }} />
+      <Stack.Screen name="school-details" options={{ headerShown: false }} />
       <Stack.Screen name="booking" options={{ headerShown: false }} />
-      <Stack.Screen
-        name="centers"
-        options={{
-          headerShown: true,
-          headerTitle: "Health Centers",
-          headerTitleAlign: "center",
-          headerLeft: backButton,
-          headerTitleStyle: {
-            fontSize: typography.h2,
-            fontWeight: typography.weightBold,
-            color: colors.text,
-          },
-        }}
-      />
-      <Stack.Screen
-        name="professionals"
-        options={{
-          headerShown: true,
-          headerTitle: "Professionals",
-          headerTitleAlign: "center",
-          headerLeft: backButton,
-          headerTitleStyle: {
-            fontSize: typography.h2,
-            fontWeight: typography.weightBold,
-            color: colors.text,
-          },
-        }}
-      />
+      <Stack.Screen name="centers" options={{ headerShown: false }} />
+      <Stack.Screen name="professionals" options={{ headerShown: false }} />
       <Stack.Screen
         name="center-details"
         options={{
