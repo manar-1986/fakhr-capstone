@@ -1,390 +1,413 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import React from "react";
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useQuery } from "@tanstack/react-query";
-import { getServices } from "../../../api/services.api";
+import { useRouter } from "expo-router";
+import React, { useMemo, useState } from "react";
+import {
+  ActivityIndicator,
+  I18nManager,
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  getServices,
+  HOME_SERVICES,
+  type Service,
+} from "../../../api/services.api";
 
-// Design system colors
 const colors = {
-  bgApp: "#FAF9F6",
-  bgCard: "#FFFFFF",
-  primary: "#7FB77E",
-  primaryLight: "#E8F5E8",
-  secondary: "#5F8F8B",
-  text: "#2F2F2F",
-  textSecondary: "#4A4A4A",
-  textMuted: "#8A8A8A",
-  border: "rgba(0, 0, 0, 0.06)",
+  bg: "#FFFFFF",
+  title: "#2C3558",
+  text: "#2C3558",
+  selected: "#6E7CAF",
+  unselectedBg: "#EEF0F6",
+  unselectedText: "#5A6178",
+  star: "#F4C430",
+  chevron: "#C5C7CE",
+  divider: "#F0F1F4",
+  white: "#FFFFFF",
 };
+
+const rowDir = I18nManager.isRTL ? "row-reverse" : "row";
+const DESIGN_W = 390;
+const PAGE_SIZE = 4;
+
+const FILTERS = [
+  { id: "all", label: "الكل" },
+  { id: "زراعية", label: "زراعية" },
+  { id: "التنظيف", label: "التنظيف" },
+] as const;
+
+const PHOTOS = [
+  require("../../../assets/images/home-service-1.png"),
+  require("../../../assets/images/home-service-2.png"),
+  require("../../../assets/images/home-service-3.png"),
+  require("../../../assets/images/home-service-4.png"),
+];
+
+type ServiceRow = {
+  id: string;
+  name: string;
+  category: string;
+  priceLabel: string;
+  photoIndex: number;
+  imageUri?: string;
+};
+
+function formatKd(value: number): string {
+  return `KD ${value.toFixed(3)}`;
+}
+
+function servicePrice(service: Service): string {
+  const raw = service.price;
+  if (typeof raw === "number" && Number.isFinite(raw)) {
+    return formatKd(raw);
+  }
+  const extra = service as Service & { startingPrice?: number; cost?: number };
+  const fallback = extra.startingPrice ?? extra.cost;
+  if (typeof fallback === "number" && Number.isFinite(fallback)) {
+    return formatKd(fallback);
+  }
+  return "";
+}
+
+function mapService(service: Service, index: number): ServiceRow {
+  const uri = service.image?.trim();
+  return {
+    id: service.id,
+    name: service.name,
+    category: service.category || "",
+    priceLabel: servicePrice(service),
+    photoIndex: index % PHOTOS.length,
+    imageUri: uri || undefined,
+  };
+}
 
 export default function ServicesScreen() {
   const router = useRouter();
+  const { width: windowWidth } = useWindowDimensions();
+  const contentW = Math.min(windowWidth, 430);
+  const s = contentW / DESIGN_W;
+  const ms = (n: number) => Math.round(n * s);
 
-  // Fetch services from API
-  const { data: services = [], isLoading, error } = useQuery({
+  const [filter, setFilter] = useState<(typeof FILTERS)[number]["id"]>("all");
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
+  const { data: apiServices, isLoading, error } = useQuery({
     queryKey: ["services"],
     queryFn: getServices,
     retry: false,
   });
 
-  const handleServicePress = (serviceId: string) => {
+  const rows = useMemo(() => {
+    const source =
+      apiServices && apiServices.length > 0 ? apiServices : HOME_SERVICES;
+    return source.map(mapService);
+  }, [apiServices]);
+
+  const filteredRows = useMemo(() => {
+    if (filter === "all") return rows;
+    return rows.filter((row) => row.category === filter);
+  }, [rows, filter]);
+
+  const visibleRows = filteredRows.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredRows.length;
+
+  const openService = (id: string) => {
     router.push({
       pathname: "/(tabs)/services/service-details",
-      params: { id: serviceId },
+      params: { id },
     });
   };
 
-  // Calculate stats from services data
-  const totalProviders = services.reduce((acc, s) => acc + s.providers, 0);
-  const avgRating = services.length > 0
-    ? services.reduce((acc, s) => acc + s.rating, 0) / services.length
-    : 0;
-
   return (
-    <SafeAreaView style={styles.container} edges={["top"]}>
-      <ScrollView
-        style={styles.scroll}
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Header */}
-        <View style={styles.header}>
-          <View style={styles.headerIcon}>
-            <Ionicons name="grid" size={24} color="#FFFFFF" />
-          </View>
-          <View style={styles.headerText}>
-            <Text style={styles.title}>Services</Text>
-            <Text style={styles.subtitle}>
-              Browse available services for your child
-            </Text>
-          </View>
-        </View>
+    <SafeAreaView style={styles.safe} edges={["top"]}>
+      <View style={[styles.column, { width: contentW }]}>
+        <ScrollView
+          style={styles.scroll}
+          contentContainerStyle={[
+            styles.scrollContent,
+            {
+              paddingHorizontal: ms(18),
+              paddingTop: ms(8),
+              paddingBottom: ms(108),
+            },
+          ]}
+          showsVerticalScrollIndicator={false}
+        >
+          <Text
+            style={[
+              styles.title,
+              {
+                fontSize: ms(24),
+                lineHeight: ms(32),
+                marginBottom: ms(18),
+              },
+            ]}
+          >
+            الخدمات المنزلية
+          </Text>
 
-        {/* Stats Row */}
-        <View style={styles.statsRow}>
-          <View style={styles.statItem}>
-            <Text style={styles.statNumber}>{services.length}</Text>
-            <Text style={styles.statLabel}>Services</Text>
-          </View>
-          <View style={styles.statDivider} />
-          <View style={styles.statItem}>
-            <Text style={styles.statNumber}>{totalProviders}</Text>
-            <Text style={styles.statLabel}>Providers</Text>
-          </View>
-          <View style={styles.statDivider} />
-          <View style={styles.statItem}>
-            <Text style={styles.statNumber}>{avgRating.toFixed(1)}</Text>
-            <Text style={styles.statLabel}>Avg Rating</Text>
-          </View>
-        </View>
-
-        {/* Loading State */}
-        {isLoading && (
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color={colors.primary} />
-            <Text style={styles.loadingText}>Loading services...</Text>
-          </View>
-        )}
-
-        {/* Error State */}
-        {error && (
-          <View style={styles.errorContainer}>
-            <Ionicons name="alert-circle-outline" size={48} color={colors.textMuted} />
-            <Text style={styles.errorText}>Failed to load services</Text>
-            <Text style={styles.errorSubtext}>Please try again later</Text>
-          </View>
-        )}
-
-        {/* Services List */}
-        {!isLoading && !error && (
-          <>
-            <Text style={styles.sectionTitle}>All Services</Text>
-            <View style={styles.servicesList}>
-              {services.length === 0 ? (
-                <View style={styles.emptyContainer}>
-                  <Ionicons name="grid-outline" size={48} color={colors.textMuted} />
-                  <Text style={styles.emptyText}>No services available</Text>
-                </View>
-              ) : (
-                services.map((service) => (
-            <Pressable
-              key={service.id}
-              style={({ pressed }) => [
-                styles.serviceCard,
-                pressed && { transform: [{ scale: 0.98 }] },
-              ]}
-              onPress={() => handleServicePress(service.id)}
-            >
-              {/* Service Icon */}
-              <View
-                style={[
-                  styles.serviceIconWrap,
-                  { backgroundColor: `${service.color}15` },
-                ]}
-              >
-                <Ionicons
-                  name={service.icon as any}
-                  size={26}
-                  color={service.color}
-                />
-              </View>
-
-              {/* Service Info */}
-              <View style={styles.serviceInfo}>
-                <View style={styles.serviceHeader}>
-                  <Text style={styles.serviceName}>{service.name}</Text>
-                  <View style={styles.categoryBadge}>
-                    <Text style={styles.categoryText}>{service.category}</Text>
-                  </View>
-                </View>
-                <Text style={styles.serviceDescription} numberOfLines={2}>
-                  {service.description}
-                </Text>
-                <View style={styles.serviceMeta}>
-                  <View style={styles.ratingWrap}>
-                    <Ionicons name="star" size={14} color="#F5A623" />
-                    <Text style={styles.ratingText}>{service.rating}</Text>
-                  </View>
-                  <View style={styles.metaDot} />
-                  <Ionicons
-                    name="person-outline"
-                    size={14}
-                    color={colors.textMuted}
-                  />
-                  <Text style={styles.providersText}>
-                    {service.providers} providers
+          <View
+            style={[
+              styles.filters,
+              {
+                flexDirection: rowDir,
+                gap: ms(8),
+                marginBottom: ms(18),
+              },
+            ]}
+          >
+            {FILTERS.map((item) => {
+              const selected = filter === item.id;
+              return (
+                <Pressable
+                  key={item.id}
+                  onPress={() => {
+                    setFilter(item.id);
+                    setVisibleCount(PAGE_SIZE);
+                  }}
+                  style={({ pressed }) => [
+                    styles.filterBtn,
+                    {
+                      minHeight: ms(36),
+                      borderRadius: ms(10),
+                      backgroundColor: selected
+                        ? colors.selected
+                        : colors.unselectedBg,
+                    },
+                    pressed && styles.pressed,
+                  ]}
+                  accessibilityRole="button"
+                  accessibilityState={{ selected }}
+                  accessibilityLabel={item.label}
+                >
+                  <Text
+                    style={[
+                      styles.filterText,
+                      {
+                        fontSize: ms(14),
+                        color: selected ? colors.white : colors.unselectedText,
+                      },
+                    ]}
+                  >
+                    {item.label}
                   </Text>
-                </View>
-              </View>
-
-              {/* Arrow */}
-              <View style={styles.arrowWrap}>
-                <Ionicons
-                  name="chevron-forward"
-                  size={20}
-                  color={colors.textMuted}
-                />
-              </View>
                 </Pressable>
-                ))
-              )}
+              );
+            })}
+          </View>
+
+          {isLoading && (
+            <View style={styles.loading}>
+              <ActivityIndicator size="large" color={colors.selected} />
             </View>
-          </>
-        )}
-      </ScrollView>
+          )}
+
+          {!isLoading && error && rows.length === 0 && (
+            <Text style={[styles.empty, { fontSize: ms(14) }]}>
+              تعذر تحميل الخدمات
+            </Text>
+          )}
+
+          {!isLoading && (
+            <View style={{ width: "100%" }}>
+              {visibleRows.map((row, index) => {
+                const imageSize = ms(70);
+                const source = row.imageUri
+                  ? { uri: row.imageUri }
+                  : PHOTOS[row.photoIndex % PHOTOS.length];
+                return (
+                  <Pressable
+                    key={`${row.id}-${index}`}
+                    onPress={() => openService(row.id)}
+                    style={({ pressed }) => [
+                      styles.row,
+                      {
+                        minHeight: ms(84),
+                        paddingVertical: ms(14),
+                        gap: ms(12),
+                        flexDirection: rowDir,
+                      },
+                      pressed && styles.pressed,
+                    ]}
+                    accessibilityRole="button"
+                    accessibilityLabel={row.name}
+                  >
+                    <Image
+                      source={source}
+                      style={{
+                        width: imageSize,
+                        height: imageSize,
+                        borderRadius: ms(12),
+                        backgroundColor: colors.unselectedBg,
+                      }}
+                      resizeMode="cover"
+                    />
+                    <View style={styles.info}>
+                      <Text
+                        style={[
+                          styles.name,
+                          { fontSize: ms(16), lineHeight: ms(22) },
+                        ]}
+                        numberOfLines={1}
+                      >
+                        {row.name}
+                      </Text>
+                      {!!row.priceLabel && (
+                        <View
+                          style={[
+                            styles.priceRow,
+                            {
+                              marginTop: ms(6),
+                              gap: ms(5),
+                              flexDirection: rowDir,
+                            },
+                          ]}
+                        >
+                          <Ionicons
+                            name="star"
+                            size={ms(13)}
+                            color={colors.star}
+                          />
+                          <Text
+                            style={[
+                              styles.price,
+                              { fontSize: ms(13), lineHeight: ms(18) },
+                            ]}
+                          >
+                            {row.priceLabel}
+                          </Text>
+                        </View>
+                      )}
+                    </View>
+                    <Ionicons
+                      name="chevron-forward"
+                      size={ms(16)}
+                      color={colors.chevron}
+                    />
+                  </Pressable>
+                );
+              })}
+            </View>
+          )}
+
+          <Pressable
+            onPress={() => {
+              if (hasMore) setVisibleCount((count) => count + PAGE_SIZE);
+            }}
+            style={({ pressed }) => [
+              styles.moreBtn,
+              {
+                marginTop: ms(22),
+                minHeight: ms(50),
+                borderRadius: ms(14),
+              },
+              pressed && styles.pressed,
+            ]}
+            accessibilityRole="button"
+            accessibilityLabel="عرض المزيد"
+          >
+            <Text style={[styles.moreBtnText, { fontSize: ms(16) }]}>
+              عرض المزيد
+            </Text>
+          </Pressable>
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safe: {
     flex: 1,
-    backgroundColor: colors.bgApp,
+    backgroundColor: colors.bg,
+    alignItems: "center",
+  },
+  column: {
+    flex: 1,
+    maxWidth: 430,
   },
   scroll: {
     flex: 1,
+    width: "100%",
   },
   scrollContent: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 100,
-  },
-  // Header
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 24,
-  },
-  headerIcon: {
-    width: 52,
-    height: 52,
-    borderRadius: 16,
-    backgroundColor: colors.primary,
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: 14,
-  },
-  headerText: {
-    flex: 1,
+    width: "100%",
+    alignItems: "stretch",
   },
   title: {
-    fontSize: 26,
-    fontWeight: "700",
-    color: colors.text,
-    letterSpacing: -0.5,
+    fontWeight: "800",
+    color: colors.title,
+    textAlign: "center",
+    writingDirection: "rtl",
   },
-  subtitle: {
-    fontSize: 14,
-    color: colors.textSecondary,
-    marginTop: 4,
+  filters: {
+    width: "100%",
+    alignItems: "center",
   },
-  // Stats Row
-  statsRow: {
-    flexDirection: "row",
-    backgroundColor: colors.bgCard,
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 28,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.04,
-    shadowRadius: 8,
-    elevation: 2,
-  },
-  statItem: {
+  filterBtn: {
     flex: 1,
-    alignItems: "center",
-  },
-  statNumber: {
-    fontSize: 22,
-    fontWeight: "700",
-    color: colors.primary,
-    marginBottom: 2,
-  },
-  statLabel: {
-    fontSize: 12,
-    color: colors.textMuted,
-  },
-  statDivider: {
-    width: 1,
-    height: 36,
-    backgroundColor: colors.border,
-  },
-  // Section
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "700",
-    color: colors.text,
-    marginBottom: 16,
-  },
-  // Services List
-  servicesList: {
-    gap: 12,
-  },
-  serviceCard: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: colors.bgCard,
-    borderRadius: 18,
-    padding: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
-  },
-  serviceIconWrap: {
-    width: 56,
-    height: 56,
-    borderRadius: 16,
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 14,
-  },
-  serviceInfo: {
-    flex: 1,
-  },
-  serviceHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-    marginBottom: 6,
-  },
-  serviceName: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: colors.text,
-  },
-  categoryBadge: {
-    backgroundColor: `${colors.primary}15`,
     paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 6,
   },
-  categoryText: {
-    fontSize: 10,
-    fontWeight: "600",
-    color: colors.primary,
-    textTransform: "uppercase",
+  filterText: {
+    fontWeight: "700",
+    writingDirection: "rtl",
   },
-  serviceDescription: {
-    fontSize: 13,
-    color: colors.textMuted,
-    lineHeight: 18,
-    marginBottom: 8,
-  },
-  serviceMeta: {
-    flexDirection: "row",
+  loading: {
+    paddingVertical: 28,
     alignItems: "center",
-    gap: 6,
   },
-  ratingWrap: {
-    flexDirection: "row",
+  empty: {
+    textAlign: "center",
+    color: colors.unselectedText,
+    writingDirection: "rtl",
+    paddingVertical: 24,
+  },
+  row: {
+    width: "100%",
     alignItems: "center",
-    gap: 4,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.divider,
   },
-  ratingText: {
-    fontSize: 13,
+  info: {
+    flex: 1,
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
+  name: {
+    fontWeight: "800",
+    color: colors.text,
+    textAlign: "right",
+    writingDirection: "rtl",
+  },
+  priceRow: {
+    alignItems: "center",
+  },
+  price: {
     fontWeight: "600",
     color: colors.text,
+    writingDirection: "ltr",
   },
-  metaDot: {
-    width: 3,
-    height: 3,
-    borderRadius: 1.5,
-    backgroundColor: colors.textMuted,
-    marginHorizontal: 4,
-  },
-  providersText: {
-    fontSize: 12,
-    color: colors.textMuted,
-  },
-  arrowWrap: {
-    width: 32,
-    height: 32,
-    borderRadius: 10,
-    backgroundColor: colors.bgApp,
+  moreBtn: {
+    backgroundColor: colors.selected,
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: 8,
+    width: "100%",
   },
-  // Loading & Error States
-  loadingContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 40,
+  moreBtnText: {
+    color: colors.white,
+    fontWeight: "700",
+    writingDirection: "rtl",
   },
-  loadingText: {
-    marginTop: 12,
-    fontSize: 14,
-    color: colors.textSecondary,
-  },
-  errorContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 40,
-  },
-  errorText: {
-    marginTop: 16,
-    fontSize: 16,
-    fontWeight: "600",
-    color: colors.text,
-  },
-  errorSubtext: {
-    marginTop: 4,
-    fontSize: 14,
-    color: colors.textMuted,
-  },
-  emptyContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 40,
-  },
-  emptyText: {
-    marginTop: 12,
-    fontSize: 14,
-    color: colors.textMuted,
+  pressed: {
+    opacity: 0.88,
   },
 });

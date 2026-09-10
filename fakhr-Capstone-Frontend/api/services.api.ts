@@ -15,6 +15,8 @@ export interface Service {
   duration: string;
   frequency: string;
   ageRange: string;
+  price?: number;
+  image?: string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -33,6 +35,17 @@ export interface ServiceResponse {
     service: Service;
   };
 }
+
+/** Home-services fallback when API is unreachable (e.g. mobile + localhost) */
+export const HOME_SERVICES: Service[] = [
+  { id: "hs-1", name: "معلمة منزلية خاصة", description: "معلمة منزلية خاصة", longDescription: "", icon: "school", category: "تعليم", rating: 4.8, reviews: 40, providers: 6, color: "#6E7CAF", benefits: [], duration: "60 min", frequency: "Weekly", ageRange: "All ages", price: 10 },
+  { id: "hs-2", name: "ممرضة منزلية", description: "ممرضة منزلية", longDescription: "", icon: "medkit", category: "رعاية", rating: 4.8, reviews: 36, providers: 8, color: "#6E7CAF", benefits: [], duration: "60 min", frequency: "As needed", ageRange: "All ages", price: 12 },
+  { id: "hs-3", name: "أخصائية علاج طبيعي", description: "أخصائية علاج طبيعي", longDescription: "", icon: "fitness", category: "رعاية", rating: 4.9, reviews: 28, providers: 5, color: "#6E7CAF", benefits: [], duration: "45-60 min", frequency: "1-2x per week", ageRange: "All ages", price: 15 },
+  { id: "hs-4", name: "مساعدة منزلية مدربة", description: "مساعدة منزلية مدربة", longDescription: "", icon: "home", category: "التنظيف", rating: 4.6, reviews: 22, providers: 10, color: "#6E7CAF", benefits: [], duration: "4-8 hours", frequency: "Weekly", ageRange: "All ages", price: 8 },
+  { id: "hs-5", name: "عاملة تنظيف منزلية", description: "خدمات تنظيف منزلية", longDescription: "", icon: "sparkles", category: "التنظيف", rating: 4.5, reviews: 18, providers: 9, color: "#6E7CAF", benefits: [], duration: "3-6 hours", frequency: "Weekly", ageRange: "All ages", price: 9 },
+  { id: "hs-6", name: "خدمات زراعية منزلية", description: "خدمات زراعية منزلية", longDescription: "", icon: "leaf", category: "زراعية", rating: 4.4, reviews: 12, providers: 4, color: "#6E7CAF", benefits: [], duration: "2-4 hours", frequency: "Weekly", ageRange: "All ages", price: 11 },
+  { id: "hs-7", name: "مساعدة زراعية منزلية", description: "مساعدة زراعية منزلية", longDescription: "", icon: "leaf", category: "زراعية", rating: 4.3, reviews: 9, providers: 3, color: "#6E7CAF", benefits: [], duration: "2-4 hours", frequency: "Weekly", ageRange: "All ages", price: 13 },
+];
 
 /** Fallback services when API is unreachable (e.g. mobile + localhost) */
 const FALLBACK_SERVICES: Service[] = [
@@ -56,14 +69,16 @@ export const getServices = async (): Promise<Service[]> => {
     }
     if (Array.isArray(res)) return res;
     if (data && Array.isArray(data)) return data as Service[];
-    return FALLBACK_SERVICES;
+    return HOME_SERVICES;
   } catch {
-    return FALLBACK_SERVICES;
+    return HOME_SERVICES;
   }
 };
 
 export const getServiceById = async (serviceId: string): Promise<Service> => {
-  const fallback = FALLBACK_SERVICES.find((s) => s.id === serviceId);
+  const fallback = [...HOME_SERVICES, ...FALLBACK_SERVICES].find(
+    (s) => s.id === serviceId,
+  );
   if (fallback) return fallback;
   try {
     const response = await instance.get(`/services/${serviceId}`);

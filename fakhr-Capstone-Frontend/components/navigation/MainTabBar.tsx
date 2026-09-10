@@ -1,6 +1,4 @@
 import { Ionicons } from "@expo/vector-icons";
-import type { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import { CommonActions } from "@react-navigation/native";
 import { usePathname, useRouter } from "expo-router";
 import React from "react";
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
@@ -30,7 +28,21 @@ const TABS: TabDef[] = [
   { key: "profile", label: "حسابي", icon: "person-outline", iconFocused: "person", routeName: "profile" },
 ];
 
-export function MainTabBar({ state, navigation }: BottomTabBarProps) {
+type MainTabBarProps = {
+  state: {
+    index: number;
+    routes: { key: string; name: string; params?: object }[];
+  };
+  navigation: {
+    emit: (event: {
+      type: "tabPress";
+      target: string;
+      canPreventDefault: boolean;
+    }) => { defaultPrevented: boolean };
+  };
+};
+
+export function MainTabBar({ state, navigation }: MainTabBarProps) {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const pathname = usePathname();
@@ -65,12 +77,11 @@ export function MainTabBar({ state, navigation }: BottomTabBarProps) {
       canPreventDefault: true,
     });
     if (!event.defaultPrevented) {
-      navigation.dispatch(
-        CommonActions.navigate({
-          name: route.name,
-          params: route.params,
-        })
-      );
+      if (tab.routeName === "index") {
+        router.navigate("/(tabs)");
+      } else if (tab.routeName) {
+        router.navigate(`/(tabs)/${tab.routeName}`);
+      }
     }
   };
 
