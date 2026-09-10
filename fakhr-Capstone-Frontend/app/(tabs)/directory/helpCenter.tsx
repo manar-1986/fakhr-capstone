@@ -241,7 +241,7 @@ export default function HelpCenterScreen() {
               paddingVertical: ms(10),
               paddingBottom: ms(18),
               gap: ms(10),
-              direction: "ltr" as const,
+              flexDirection: "row",
             },
           ]}
         >

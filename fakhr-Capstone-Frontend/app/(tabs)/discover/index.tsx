@@ -27,19 +27,7 @@ export default function DiscoverScreen() {
 
         <Pressable
           style={styles.linkCard}
-          onPress={() => router.push("/(tabs)/library")}
-        >
-          <Ionicons name="library-outline" size={24} color={c.primary} />
-          <View style={styles.linkText}>
-            <Text style={styles.linkTitle}>{t("discover.library")}</Text>
-            <Text style={styles.linkSub}>{t("discover.librarySub")}</Text>
-          </View>
-          <Ionicons name="chevron-forward" size={20} color={c.textLight} />
-        </Pressable>
-
-        <Pressable
-          style={styles.linkCard}
-          onPress={() => router.push("/(tabs)/directory")}
+          onPress={() => router.navigate("/directory")}
         >
           <Ionicons name="business-outline" size={24} color={c.primary} />
           <View style={styles.linkText}>

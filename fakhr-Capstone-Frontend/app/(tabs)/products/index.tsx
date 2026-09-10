@@ -1,6 +1,4 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "expo-router";
 import React, { useMemo, useState } from "react";
 import {
   Image,
@@ -12,11 +10,6 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  getServices,
-  HOME_SERVICES,
-  type Service,
-} from "../../../api/services.api";
 
 const colors = {
   bg: "#FFFFFF",
@@ -36,63 +29,85 @@ const PAGE_SIZE = 4;
 
 const FILTERS = [
   { id: "all", label: "الكل" },
-  { id: "زراعية", label: "زراعية" },
-  { id: "التنظيف", label: "التنظيف" },
+  { id: "أدوات تعليمية", label: "أدوات تعليمية" },
+  { id: "المستلزمات", label: "المستلزمات" },
 ] as const;
 
 const PHOTOS = [
-  require("../../../assets/images/home-service-1.png"),
-  require("../../../assets/images/home-service-2.png"),
-  require("../../../assets/images/home-service-3.png"),
-  require("../../../assets/images/home-service-4.png"),
+  require("../../../assets/images/product-1.png"),
+  require("../../../assets/images/product-2.png"),
+  require("../../../assets/images/product-3.png"),
+  require("../../../assets/images/product-4.png"),
 ];
 
-type ServiceRow = {
+type ProductRow = {
   id: string;
   name: string;
   category: string;
   priceLabel: string;
   photoIndex: number;
-  imageUri?: string;
 };
 
-function formatKd(value: number): string {
-  return `KD ${value.toFixed(3)}`;
-}
+const PRODUCTS: ProductRow[] = [
+  {
+    id: "p-1",
+    name: "كرسي متحرك",
+    category: "المستلزمات",
+    priceLabel: "KD 95.000",
+    photoIndex: 0,
+  },
+  {
+    id: "p-2",
+    name: "بطاقات تواصل مصورة",
+    category: "أدوات تعليمية",
+    priceLabel: "KD 6.500",
+    photoIndex: 1,
+  },
+  {
+    id: "p-3",
+    name: "سماعات عازلة للضوضاء",
+    category: "المستلزمات",
+    priceLabel: "KD 12.000",
+    photoIndex: 2,
+  },
+  {
+    id: "p-4",
+    name: "أدوات تنمية مهارات",
+    category: "أدوات تعليمية",
+    priceLabel: "KD 16.000",
+    photoIndex: 3,
+  },
+  {
+    id: "p-5",
+    name: "لوحة تواصل",
+    category: "أدوات تعليمية",
+    priceLabel: "KD 8.000",
+    photoIndex: 1,
+  },
+  {
+    id: "p-6",
+    name: "وسادة دعم",
+    category: "المستلزمات",
+    priceLabel: "KD 14.000",
+    photoIndex: 0,
+  },
+  {
+    id: "p-7",
+    name: "مكعبات حسية",
+    category: "أدوات تعليمية",
+    priceLabel: "KD 9.500",
+    photoIndex: 3,
+  },
+  {
+    id: "p-8",
+    name: "حزام أمان",
+    category: "المستلزمات",
+    priceLabel: "KD 11.000",
+    photoIndex: 2,
+  },
+];
 
-function servicePrice(service: Service): string {
-  const raw = service.price;
-  if (typeof raw === "number" && Number.isFinite(raw)) {
-    return formatKd(raw);
-  }
-  const extra = service as Service & { startingPrice?: number; cost?: number };
-  const fallback = extra.startingPrice ?? extra.cost;
-  if (typeof fallback === "number" && Number.isFinite(fallback)) {
-    return formatKd(fallback);
-  }
-  return "";
-}
-
-function remoteImage(uri?: string): string | undefined {
-  const value = uri?.trim();
-  if (!value) return undefined;
-  if (value.startsWith("http://") || value.startsWith("https://")) return value;
-  return undefined;
-}
-
-function mapService(service: Service, index: number): ServiceRow {
-  return {
-    id: service.id,
-    name: service.name,
-    category: service.category || "",
-    priceLabel: servicePrice(service),
-    photoIndex: index % PHOTOS.length,
-    imageUri: remoteImage(service.image),
-  };
-}
-
-export default function ServicesScreen() {
-  const router = useRouter();
+export default function ProductsScreen() {
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
   const s = contentW / DESIGN_W;
@@ -101,32 +116,13 @@ export default function ServicesScreen() {
   const [filter, setFilter] = useState<(typeof FILTERS)[number]["id"]>("all");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-  const { data: apiServices } = useQuery({
-    queryKey: ["services"],
-    queryFn: getServices,
-    retry: false,
-  });
-
-  const rows = useMemo(() => {
-    const source =
-      apiServices && apiServices.length > 0 ? apiServices : HOME_SERVICES;
-    return source.map(mapService);
-  }, [apiServices]);
-
   const filteredRows = useMemo(() => {
-    if (filter === "all") return rows;
-    return rows.filter((row) => row.category === filter);
-  }, [rows, filter]);
+    if (filter === "all") return PRODUCTS;
+    return PRODUCTS.filter((row) => row.category === filter);
+  }, [filter]);
 
   const visibleRows = filteredRows.slice(0, visibleCount);
   const hasMore = visibleCount < filteredRows.length;
-
-  const openService = (id: string) => {
-    router.push({
-      pathname: "/(tabs)/services/service-details",
-      params: { id },
-    });
-  };
 
   return (
     <SafeAreaView style={styles.safe} edges={["top"]}>
@@ -136,7 +132,7 @@ export default function ServicesScreen() {
           contentContainerStyle={{
             paddingHorizontal: ms(18),
             paddingTop: ms(10),
-            paddingBottom: ms(28),
+            paddingBottom: ms(108),
           }}
           showsVerticalScrollIndicator={false}
         >
@@ -150,7 +146,7 @@ export default function ServicesScreen() {
               },
             ]}
           >
-            الخدمات المنزلية
+            المنتجات
           </Text>
 
           <View
@@ -205,18 +201,19 @@ export default function ServicesScreen() {
           {visibleRows.map((row, index) => {
             const imageSize = ms(68);
             const photo = PHOTOS[row.photoIndex % PHOTOS.length];
-            const source = row.imageUri ? { uri: row.imageUri } : photo;
             return (
               <Pressable
                 key={`${row.id}-${index}`}
-                onPress={() => openService(row.id)}
                 style={({ pressed }) => [
                   styles.row,
                   {
                     minHeight: ms(88),
                     paddingVertical: ms(12),
                     gap: ms(14),
-                    borderBottomWidth: index === visibleRows.length - 1 ? 0 : StyleSheet.hairlineWidth,
+                    borderBottomWidth:
+                      index === visibleRows.length - 1
+                        ? 0
+                        : StyleSheet.hairlineWidth,
                   },
                   pressed && styles.pressed,
                 ]}
@@ -224,7 +221,7 @@ export default function ServicesScreen() {
                 accessibilityLabel={row.name}
               >
                 <Image
-                  source={source}
+                  source={photo}
                   style={{
                     width: imageSize,
                     height: imageSize,
@@ -242,27 +239,25 @@ export default function ServicesScreen() {
                   >
                     {row.name}
                   </Text>
-                  {!!row.priceLabel && (
-                    <View
+                  <View
+                    style={[
+                      styles.priceRow,
+                      {
+                        marginTop: ms(6),
+                        gap: ms(5),
+                      },
+                    ]}
+                  >
+                    <Ionicons name="star" size={ms(13)} color={colors.star} />
+                    <Text
                       style={[
-                        styles.priceRow,
-                        {
-                          marginTop: ms(6),
-                          gap: ms(5),
-                        },
+                        styles.price,
+                        { fontSize: ms(13), lineHeight: ms(18) },
                       ]}
                     >
-                      <Ionicons name="star" size={ms(13)} color={colors.star} />
-                      <Text
-                        style={[
-                          styles.price,
-                          { fontSize: ms(13), lineHeight: ms(18) },
-                        ]}
-                      >
-                        {row.priceLabel}
-                      </Text>
-                    </View>
-                  )}
+                      {row.priceLabel}
+                    </Text>
+                  </View>
                 </View>
                 <Ionicons
                   name="chevron-forward"
@@ -326,10 +321,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   filterBtn: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 8,
+    paddingHorizontal: 14,
   },
   filterText: {
     fontWeight: "700",

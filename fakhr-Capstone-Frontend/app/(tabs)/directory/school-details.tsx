@@ -515,7 +515,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-end",
-    direction: "ltr",
+    flexDirection: "row",
   },
   ratingText: {
     fontWeight: "600",
@@ -524,7 +524,7 @@ const styles = StyleSheet.create({
   },
   tabs: {
     flexDirection: "row",
-    direction: "ltr",
+    flexDirection: "row",
   },
   tab: {
     flex: 1,
@@ -571,7 +571,7 @@ const styles = StyleSheet.create({
   },
   contactRow: {
     flexDirection: "row",
-    direction: "ltr",
+    flexDirection: "row",
   },
   contactBtn: {
     flex: 1,

@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -40,6 +40,7 @@ type ServiceItem = {
   label: string;
   icon: keyof typeof Ionicons.glyphMap;
   color: string;
+  href?: string;
   onPress: () => void;
 };
 
@@ -72,7 +73,7 @@ export default function HomeScreen() {
   const cellW = Math.floor((contentW - padX * 2 - gridGap * 3) / 4);
 
   const openSearch = () => {
-    router.push("/(tabs)/directory");
+    router.navigate("/directory");
   };
 
   const services: ServiceItem[] = [
@@ -81,56 +82,64 @@ export default function HomeScreen() {
       label: "فئات الإعاقة\nتعرف إلى إعاقة",
       icon: "accessibility-outline",
       color: colors.icon,
-      onPress: () => router.push("/(tabs)/resources"),
+      href: "/resources",
+      onPress: () => router.navigate("/resources"),
     },
     {
       id: "schools",
       label: "المدارس",
       icon: "school-outline",
       color: colors.icon,
-      onPress: () => router.push("/(tabs)/directory/schools"),
+      href: "/directory/schools",
+      onPress: () => router.navigate("/directory/schools"),
     },
     {
       id: "centers",
       label: "المراكز",
       icon: "business-outline",
       color: colors.icon,
-      onPress: () => router.push("/(tabs)/directory/centers"),
+      href: "/directory/centers",
+      onPress: () => router.navigate("/directory/centers"),
     },
     {
       id: "doctors",
       label: "الأطباء\nومتخصصين",
       icon: "person-outline",
       color: colors.specialist,
-      onPress: () => router.push("/(tabs)/directory/professionals"),
+      href: "/directory/professionals",
+      onPress: () => router.navigate("/directory/professionals"),
     },
     {
       id: "activities",
       label: "الأنشطة\nوالبرامج",
       icon: "people-outline",
       color: colors.icon,
-      onPress: () => router.push("/(tabs)/services"),
+      href: "/services",
+      onPress: () => router.navigate("/services"),
     },
     {
       id: "products",
       label: "المنتجات\nالمنزلية",
       icon: "storefront-outline",
       color: colors.icon,
-      onPress: () => router.push("/(tabs)/services"),
+      href: "/products",
+      onPress: () => router.navigate("/products"),
     },
     {
       id: "homeServices",
       label: "الخدمات\nالمنزلية",
       icon: "home-outline",
       color: colors.icon,
-      onPress: () => router.push("/(tabs)/services"),
+      href: "/services",
+      onPress: () => router.navigate("/services"),
     },
     {
       id: "consultations",
       label: "الاستشارات",
       icon: "chatbubble-ellipses-outline",
       color: colors.icon,
-      onPress: () => router.push("/(tabs)/community/advice"),
+      href: "/community/advice",
+      onPress: () => router.navigate("/community/advice"),
     },
   ];
 
@@ -168,11 +177,11 @@ export default function HomeScreen() {
             accessibilityLabel="فخر"
           />
           <Pressable
-            onPress={() => router.push("/(tabs)/library")}
+            onPress={() => {}}
             hitSlop={10}
             style={({ pressed }) => [styles.iconBtn, styles.iconRight, pressed && styles.pressed]}
             accessibilityRole="button"
-            accessibilityLabel="المفضلة"
+            accessibilityLabel="تحديث"
           >
             <Ionicons name="refresh-outline" size={ms(24)} color={colors.title} />
           </Pressable>
@@ -237,7 +246,7 @@ export default function HomeScreen() {
               {"كل ما تحتاجه\nفي مكان واحد"}
             </Text>
             <Pressable
-              onPress={() => router.push("/(tabs)/discover")}
+              onPress={() => router.navigate("/directory")}
               style={({ pressed }) => [
                 styles.heroBtn,
                 { borderRadius: ms(14), minHeight: ms(32), paddingHorizontal: ms(14) },
@@ -257,29 +266,38 @@ export default function HomeScreen() {
         </View>
 
         <View style={[styles.grid, { gap: gridGap, marginBottom: ms(16) }]}>
-          {services.map((item) => (
-            <Pressable
-              key={item.id}
-              onPress={item.onPress}
-              style={({ pressed }) => [
-                styles.cell,
-                { width: cellW, minHeight: ms(96) },
-                pressed && styles.pressed,
-              ]}
-              accessibilityRole="button"
-              accessibilityLabel={item.label.replace("\n", " ")}
-            >
-              <Ionicons name={item.icon} size={ms(32)} color={item.color} />
-              <Text
-                style={[
-                  styles.cellLabel,
-                  { fontSize: ms(11), lineHeight: ms(16), marginTop: ms(8) },
+          {services.map((item) => {
+            const cell = (
+              <Pressable
+                onPress={item.onPress}
+                style={({ pressed }) => [
+                  styles.cell,
+                  { width: cellW, minHeight: ms(96) },
+                  pressed && styles.pressed,
                 ]}
+                accessibilityRole="button"
+                accessibilityLabel={item.label.replace("\n", " ")}
               >
-                {item.label}
-              </Text>
-            </Pressable>
-          ))}
+                <Ionicons name={item.icon} size={ms(32)} color={item.color} />
+                <Text
+                  style={[
+                    styles.cellLabel,
+                    { fontSize: ms(11), lineHeight: ms(16), marginTop: ms(8) },
+                  ]}
+                >
+                  {item.label}
+                </Text>
+              </Pressable>
+            );
+            if (item.href) {
+              return (
+                <Link key={item.id} href={item.href} asChild>
+                  {cell}
+                </Link>
+              );
+            }
+            return <React.Fragment key={item.id}>{cell}</React.Fragment>;
+          })}
         </View>
 
         <View
@@ -378,7 +396,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.searchBg,
     borderWidth: 1,
     borderColor: colors.searchBorder,
-    direction: "ltr",
+    flexDirection: "row",
   },
   searchInput: {
     flex: 1,
@@ -391,7 +409,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     overflow: "hidden",
-    direction: "ltr",
+    flexDirection: "row",
   },
   heroTextCol: {
     flex: 1,
@@ -418,7 +436,7 @@ const styles = StyleSheet.create({
   grid: {
     flexDirection: "row",
     flexWrap: "wrap",
-    direction: "ltr",
+    flexDirection: "row",
   },
   cell: {
     alignItems: "center",
@@ -436,7 +454,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     overflow: "hidden",
-    direction: "ltr",
+    flexDirection: "row",
   },
   aiTextCol: {
     flex: 1,

@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-end",
     width: "100%",
-    direction: "ltr",
+    flexDirection: "row",
   },
   featureText: {
     fontWeight: "600",

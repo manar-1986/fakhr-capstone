@@ -29,12 +29,12 @@ const colors = {
 
 export default function ServiceDetailsScreen() {
   const router = useRouter();
-  const { id } = useLocalSearchParams();
+  const params = useLocalSearchParams<{ id?: string | string[] }>();
+  const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
-  // Fetch service details from API
   const { data: service, isLoading, error } = useQuery({
     queryKey: ["service", id],
-    queryFn: () => getServiceById(id as string),
+    queryFn: () => getServiceById(String(id)),
     enabled: !!id,
     retry: false,
   });

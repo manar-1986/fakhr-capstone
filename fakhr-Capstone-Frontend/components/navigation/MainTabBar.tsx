@@ -16,15 +16,11 @@ type TabDef = {
   label: string;
   icon: React.ComponentProps<typeof Ionicons>["name"];
   iconFocused: React.ComponentProps<typeof Ionicons>["name"];
-  routeName?: "index" | "discover" | "community" | "profile";
-  href?: string;
+  routeName: "index" | "profile";
 };
 
 const TABS: TabDef[] = [
   { key: "home", label: "الرئيسية", icon: "home-outline", iconFocused: "home", routeName: "index" },
-  { key: "search", label: "بحث", icon: "heart-outline", iconFocused: "heart", routeName: "discover" },
-  { key: "favorites", label: "المفضلة", icon: "heart-outline", iconFocused: "heart", href: "/(tabs)/library" },
-  { key: "messages", label: "رسائلي", icon: "search-outline", iconFocused: "search", routeName: "community" },
   { key: "profile", label: "حسابي", icon: "person-outline", iconFocused: "person", routeName: "profile" },
 ];
 
@@ -54,21 +50,15 @@ export function MainTabBar({ state, navigation }: MainTabBarProps) {
     pathname.includes("school-details") ||
     pathname.includes("helpCenter") ||
     pathname.includes("booking") ||
-    pathname.includes("logout")
+    pathname.includes("logout") ||
+    pathname.includes("service-details")
   ) {
     return null;
   }
 
-  const isFocused = (tab: TabDef) => {
-    if (tab.href) return pathname.includes("library");
-    return focusedRoute === tab.routeName;
-  };
+  const isFocused = (tab: TabDef) => focusedRoute === tab.routeName;
 
   const onPressTab = (tab: TabDef) => {
-    if (tab.href) {
-      router.push(tab.href as never);
-      return;
-    }
     const route = state.routes.find((r) => r.name === tab.routeName);
     if (!route) return;
     const event = navigation.emit({
@@ -79,7 +69,7 @@ export function MainTabBar({ state, navigation }: MainTabBarProps) {
     if (!event.defaultPrevented) {
       if (tab.routeName === "index") {
         router.navigate("/(tabs)");
-      } else if (tab.routeName) {
+      } else {
         router.navigate(`/(tabs)/${tab.routeName}`);
       }
     }

@@ -230,7 +230,7 @@ export default function CentersScreen() {
               paddingHorizontal: ms(14),
               marginBottom: ms(12),
               gap: ms(8),
-              direction: "ltr" as const,
+              flexDirection: "row",
             },
           ]}
         >
@@ -259,7 +259,7 @@ export default function CentersScreen() {
             {
               marginBottom: ms(16),
               gap: ms(8),
-              direction: "ltr" as const,
+              flexDirection: "row",
             },
           ]}
         >
@@ -300,7 +300,7 @@ export default function CentersScreen() {
                   {
                     gap: ms(10),
                     minHeight: photoH,
-                    direction: "ltr" as const,
+                    flexDirection: "row",
                   },
                   pressed && styles.pressed,
                 ]}
@@ -344,7 +344,7 @@ export default function CentersScreen() {
                       {
                         marginTop: ms(4),
                         gap: ms(4),
-                        direction: "ltr" as const,
+                        flexDirection: "row",
                       },
                     ]}
                   >
@@ -447,7 +447,7 @@ function FilterChip({
           minHeight: size(36),
           borderRadius: size(18),
           paddingHorizontal: size(10),
-          direction: "ltr" as const,
+          flexDirection: "row",
         },
         pressed && styles.pressed,
       ]}
@@ -548,7 +548,7 @@ const styles = StyleSheet.create({
   ratingRow: {
     flexDirection: "row",
     alignItems: "center",
-    direction: "ltr",
+    flexDirection: "row",
   },
   ratingText: {
     fontWeight: "600",

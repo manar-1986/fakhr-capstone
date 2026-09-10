@@ -91,28 +91,16 @@ export default function ProfileTabScreen() {
       onPress: () => router.push("/(tabs)/profile/manage-children"),
     },
     {
-      key: "favorites",
-      label: "المفضلة",
-      icon: "heart-outline",
-      onPress: () => router.push("/(tabs)/library"),
-    },
-    {
       key: "bookings",
       label: "مواعيدي",
       icon: "calendar-outline",
-      onPress: () => router.push("/(tabs)/bookings"),
-    },
-    {
-      key: "messages",
-      label: "رسائلي",
-      icon: "chatbubble-outline",
-      onPress: () => router.push("/(tabs)/community"),
+      onPress: () => router.navigate("/bookings"),
     },
     {
       key: "advice",
       label: "استشاراتي",
       icon: "chatbubbles-outline",
-      onPress: () => router.push("/(tabs)/community/advice"),
+      onPress: () => router.navigate("/community/advice"),
     },
     {
       key: "notifications",
@@ -125,7 +113,7 @@ export default function ProfileTabScreen() {
       key: "offers",
       label: "العروض والخصومات",
       icon: "pricetag-outline",
-      onPress: () => router.push("/(tabs)/services"),
+      onPress: () => router.navigate("/services"),
     },
     {
       key: "settings",
@@ -259,7 +247,7 @@ const styles = StyleSheet.create({
   profileRow: {
     flexDirection: "row",
     alignItems: "center",
-    direction: "ltr",
+    flexDirection: "row",
   },
   profileText: {
     flex: 1,
@@ -284,7 +272,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
-    direction: "ltr",
+    flexDirection: "row",
     gap: 12,
   },
   rowBorder: {

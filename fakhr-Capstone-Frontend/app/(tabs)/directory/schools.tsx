@@ -474,7 +474,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderWidth: 1,
     borderColor: colors.searchBorder,
-    direction: "ltr",
+    flexDirection: "row",
   },
   searchInput: {
     flex: 1,
@@ -485,7 +485,7 @@ const styles = StyleSheet.create({
   filterRow: {
     flexDirection: "row",
     alignItems: "center",
-    direction: "ltr",
+    flexDirection: "row",
   },
   chip: {
     flexDirection: "row",
@@ -511,7 +511,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
-    direction: "ltr",
+    flexDirection: "row",
   },
   info: {
     flex: 1,
@@ -532,7 +532,7 @@ const styles = StyleSheet.create({
   ratingRow: {
     flexDirection: "row",
     alignItems: "center",
-    direction: "ltr",
+    flexDirection: "row",
   },
   ratingText: {
     fontWeight: "600",

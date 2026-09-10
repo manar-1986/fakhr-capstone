@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { MainTabBar } from "../../components/navigation/MainTabBar";
 
 /**
- * Main tabs: Home, Discover, (+ FAB), Circles (community), Settings (profile).
+ * Main tabs: Home, Discover, Library, Profile.
  */
 export default function TabsLayout() {
   const { t } = useTranslation();
@@ -18,11 +18,7 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen name="index" options={{ title: t("tabs.home") }} />
-      <Tabs.Screen name="discover" options={{ title: t("tabs.discover") }} />
-      <Tabs.Screen
-        name="community"
-        options={{ title: t("tabs.circles"), tabBarLabel: t("tabs.circles") }}
-      />
+      <Tabs.Screen name="discover" options={{ href: null }} />
       <Tabs.Screen
         name="profile"
         options={{
@@ -31,14 +27,16 @@ export default function TabsLayout() {
         }}
       />
 
-      <Tabs.Screen name="directory" options={{ href: null }} />
-      <Tabs.Screen name="bookings" options={{ href: null }} />
+      <Tabs.Screen name="community" options={{ title: "المجتمع" }} />
+      <Tabs.Screen name="directory" options={{ title: "الدليل" }} />
+      <Tabs.Screen name="bookings" options={{ title: "مواعيدي" }} />
       <Tabs.Screen name="library" options={{ href: null }} />
-      <Tabs.Screen name="documents" options={{ href: null }} />
-      <Tabs.Screen name="plan" options={{ href: null }} />
-      <Tabs.Screen name="resources" options={{ href: null }} />
-      <Tabs.Screen name="services" options={{ href: null }} />
-      <Tabs.Screen name="professionals" options={{ href: null }} />
+      <Tabs.Screen name="documents" options={{ title: "المستندات" }} />
+      <Tabs.Screen name="plan" options={{ title: "الخطة" }} />
+      <Tabs.Screen name="resources" options={{ title: "فئات الإعاقة" }} />
+      <Tabs.Screen name="services" options={{ title: "الخدمات المنزلية" }} />
+      <Tabs.Screen name="products" options={{ title: "المنتجات" }} />
+      <Tabs.Screen name="professionals" options={{ title: "المتخصصون" }} />
     </Tabs>
   );
 }

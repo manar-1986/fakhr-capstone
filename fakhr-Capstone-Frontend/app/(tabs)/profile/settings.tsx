@@ -144,7 +144,7 @@ export default function SettingsScreen() {
                   paddingVertical: ms(14),
                   gap: ms(12),
                   flexDirection: "row-reverse",
-                  direction: "ltr",
+                  flexDirection: "row",
                 },
                 index < rows.length - 1 && styles.rowBorder,
                 pressed && styles.pressed,
@@ -167,7 +167,7 @@ export default function SettingsScreen() {
                   {languageLabel}
                 </Text>
               ) : null}
-              <View style={{ direction: "ltr" }}>
+              <View style={{ flexDirection: "row" }}>
                 <Text
                   style={{
                     color: colors.chevron,

@@ -76,12 +76,13 @@ export const getServices = async (): Promise<Service[]> => {
 };
 
 export const getServiceById = async (serviceId: string): Promise<Service> => {
+  const id = String(Array.isArray(serviceId) ? serviceId[0] : serviceId);
   const fallback = [...HOME_SERVICES, ...FALLBACK_SERVICES].find(
-    (s) => s.id === serviceId,
+    (s) => s.id === id,
   );
   if (fallback) return fallback;
   try {
-    const response = await instance.get(`/services/${serviceId}`);
+    const response = await instance.get(`/services/${id}`);
     const res = response as unknown as ServiceResponse;
     if (res?.data?.service) return res.data.service;
     throw new Error("Service not found");

@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: "row",
     alignItems: "center",
-    direction: "ltr",
+    flexDirection: "row",
     gap: 10,
   },
   cardLabel: {
@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.helpBg,
     flexDirection: "row",
     alignItems: "center",
-    direction: "ltr",
+    flexDirection: "row",
   },
   helpTextCol: {
     flex: 1,

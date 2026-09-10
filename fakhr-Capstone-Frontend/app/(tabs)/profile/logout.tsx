@@ -36,7 +36,7 @@ function LogoutDoorIcon({ size }: { size: number }) {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        direction: "ltr",
+        flexDirection: "row",
       }}
     >
       <View

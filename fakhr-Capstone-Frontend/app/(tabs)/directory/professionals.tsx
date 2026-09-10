@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getProfessionals } from "../../../api/directory.api";
+import type { DirectoryListing } from "../../../components/directory/types";
 import type { Professional } from "../../../types/directory.types";
 
 const colors = {
@@ -51,6 +52,7 @@ type SpecialistRow = {
 
 const FALLBACK: SpecialistRow[] = [
   {
+    id: "doc-1",
     name: "د. نورة الشمري",
     specialty: "اختصاصية نفسية",
     rating: 4.9,
@@ -58,6 +60,7 @@ const FALLBACK: SpecialistRow[] = [
     photoIndex: 0,
   },
   {
+    id: "doc-2",
     name: "د. أحمد المطيري",
     specialty: "استشاري أطفال",
     rating: 4.8,
@@ -65,6 +68,7 @@ const FALLBACK: SpecialistRow[] = [
     photoIndex: 1,
   },
   {
+    id: "doc-3",
     name: "د. فاطمة العلي",
     specialty: "اختصاصية نطق ولغة",
     rating: 4.7,
@@ -72,6 +76,7 @@ const FALLBACK: SpecialistRow[] = [
     photoIndex: 2,
   },
   {
+    id: "doc-4",
     name: "د. سالم الحربي",
     specialty: "استشاري أعصاب",
     rating: 4.9,
@@ -79,6 +84,7 @@ const FALLBACK: SpecialistRow[] = [
     photoIndex: 3,
   },
   {
+    id: "doc-5",
     name: "د. خالد العنزي",
     specialty: "أخصائي علاج وظيفي",
     rating: 4.6,
@@ -86,6 +92,7 @@ const FALLBACK: SpecialistRow[] = [
     photoIndex: 1,
   },
   {
+    id: "doc-6",
     name: "د. مريم السالم",
     specialty: "استشارية تغذية",
     rating: 4.8,
@@ -93,6 +100,7 @@ const FALLBACK: SpecialistRow[] = [
     photoIndex: 0,
   },
   {
+    id: "doc-7",
     name: "د. يوسف العتيبي",
     specialty: "أخصائي سلوكي",
     rating: 4.5,
@@ -154,11 +162,23 @@ export default function ProfessionalsScreen() {
     const id =
       row.id ||
       (apiPros && professionalId(apiPros[index])) ||
-      (apiPros && professionalId(apiPros[0])) ||
-      "";
-    router.push(
-      `/(tabs)/directory/professional-details?id=${id}` as const,
-    );
+      `doc-${index + 1}`;
+    const listing: DirectoryListing = {
+      id,
+      kind: "doctor",
+      name: row.name,
+      subtitle: row.specialty,
+      status: "OPEN",
+      locationLine: "",
+      rating: row.rating.toFixed(1),
+      imageUrl: row.imageUri || "",
+      tags: row.specialty ? [row.specialty] : [],
+      phone: "",
+    };
+    router.push({
+      pathname: "/(tabs)/directory/booking",
+      params: { item: encodeURIComponent(JSON.stringify(listing)) },
+    });
   };
 
   return (
@@ -195,7 +215,7 @@ export default function ProfessionalsScreen() {
                 paddingHorizontal: ms(14),
                 marginBottom: ms(18),
                 gap: ms(8),
-                direction: "ltr" as const,
+                flexDirection: "row",
               },
             ]}
           >
@@ -233,7 +253,7 @@ export default function ProfessionalsScreen() {
                     {
                       gap: ms(12),
                       minHeight: avatar,
-                      direction: "ltr" as const,
+                      flexDirection: "row",
                     },
                     pressed && styles.pressed,
                   ]}
@@ -279,7 +299,7 @@ export default function ProfessionalsScreen() {
                         {
                           marginTop: ms(4),
                           gap: ms(4),
-                          direction: "ltr" as const,
+                          flexDirection: "row",
                         },
                       ]}
                     >
@@ -399,7 +419,7 @@ const styles = StyleSheet.create({
   ratingRow: {
     flexDirection: "row",
     alignItems: "center",
-    direction: "ltr",
+    flexDirection: "row",
   },
   ratingText: {
     fontWeight: "600",

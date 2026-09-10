@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   grid: {
     flexDirection: "row",
     flexWrap: "wrap",
-    direction: "ltr",
+    flexDirection: "row",
   },
   card: {
     alignItems: "center",

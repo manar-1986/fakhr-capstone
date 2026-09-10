@@ -272,7 +272,7 @@ export default function BookingScreen() {
                   marginTop: ms(16),
                   paddingHorizontal: ms(2),
                   flexDirection: "row",
-                  direction: "ltr",
+                  flexDirection: "row",
                 },
               ]}
             >
@@ -435,7 +435,7 @@ export default function BookingScreen() {
                 marginTop: ms(18),
                 marginBottom: ms(22),
                 flexDirection: "row-reverse",
-                direction: "ltr",
+                flexDirection: "row",
               },
             ]}
           >
@@ -505,7 +505,7 @@ export default function BookingScreen() {
                   {
                     gap: ms(8),
                     flexDirection: "row-reverse",
-                    direction: "ltr",
+                    flexDirection: "row",
                   },
                 ]}
               >
@@ -570,7 +570,7 @@ export default function BookingScreen() {
                     marginTop: ms(16),
                     marginBottom: ms(28),
                     flexDirection: "row",
-                    direction: "ltr",
+                    flexDirection: "row",
                   },
                 ]}
               >
