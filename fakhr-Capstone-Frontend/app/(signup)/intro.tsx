@@ -48,7 +48,7 @@ export default function SignupWelcomeIntroScreen() {
   };
 
   const handleSkip = () => {
-    router.replace("/(tabs)");
+    router.replace("/(tabs)/home");
   };
 
   return (

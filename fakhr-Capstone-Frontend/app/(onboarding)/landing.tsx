@@ -22,7 +22,7 @@ export default function LandingScreen() {
   const router = useRouter();
 
   const handleGetStarted = () => {
-    router.replace("/(tabs)");
+    router.replace("/(tabs)/home");
   };
 
   const handleAlreadyHaveAccount = () => {

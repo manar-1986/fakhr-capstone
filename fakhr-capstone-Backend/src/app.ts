@@ -28,8 +28,8 @@ if (env.NODE_ENV === "production" && env.EMAIL_HOST) {
   });
 }
 
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
-app.use(cors());
 app.use(morgan("dev"));
 
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
@@ -57,6 +57,6 @@ app.use("/api/ai", aiRoutes);
 // Error handling middleware (must be last)
 app.use(errorHandler);
 
-app.listen(env.PORT, () => {
+app.listen(Number(env.PORT) || 8000, "0.0.0.0", () => {
   console.log(`Server is running on http://localhost:${env.PORT}`);
 });

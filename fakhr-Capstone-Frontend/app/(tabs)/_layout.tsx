@@ -3,6 +3,10 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { MainTabBar } from "../../components/navigation/MainTabBar";
 
+export const unstable_settings = {
+  initialRouteName: "home",
+};
+
 /**
  * Main tabs: Home, Discover, Library, Profile.
  */
@@ -11,13 +15,14 @@ export default function TabsLayout() {
 
   return (
     <Tabs
+      initialRouteName="home"
       tabBar={(props) => <MainTabBar {...props} />}
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: true,
       }}
     >
-      <Tabs.Screen name="index" options={{ title: t("tabs.home") }} />
+      <Tabs.Screen name="home" options={{ title: t("tabs.home") }} />
       <Tabs.Screen name="discover" options={{ href: null }} />
       <Tabs.Screen
         name="profile"

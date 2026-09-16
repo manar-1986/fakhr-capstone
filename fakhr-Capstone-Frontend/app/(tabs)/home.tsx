@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getCurrentUser } from "../../api/users.api";
+import { WEB_PHONE_WIDTH } from "../../components/layout/WebAppShell";
 import { useAuth } from "../../context/AuthContext";
 
 const colors = {
@@ -49,7 +50,7 @@ export default function HomeScreen() {
   const router = useRouter();
   const { user } = useAuth();
   const { width: windowWidth } = useWindowDimensions();
-  const contentW = Math.min(windowWidth, 430);
+  const contentW = Math.min(windowWidth, WEB_PHONE_WIDTH);
   const s = contentW / DESIGN_W;
   const ms = (n: number) => Math.round(n * s);
   const [search, setSearch] = useState("");
@@ -70,7 +71,8 @@ export default function HomeScreen() {
 
   const padX = ms(20);
   const gridGap = ms(10);
-  const cellW = Math.floor((contentW - padX * 2 - gridGap * 3) / 4);
+  const innerW = contentW - padX * 2;
+  const cellW = Math.floor((innerW - gridGap * 3) / 4);
 
   const openSearch = () => {
     router.navigate("/directory");
@@ -151,6 +153,7 @@ export default function HomeScreen() {
           styles.scrollContent,
           {
             width: contentW,
+            maxWidth: WEB_PHONE_WIDTH,
             paddingHorizontal: padX,
             paddingTop: ms(6),
             paddingBottom: ms(108),
@@ -265,14 +268,23 @@ export default function HomeScreen() {
           />
         </View>
 
-        <View style={[styles.grid, { gap: gridGap, marginBottom: ms(16) }]}>
+        <View
+          style={[
+            styles.grid,
+            {
+              width: innerW,
+              gap: gridGap,
+              marginBottom: ms(16),
+            },
+          ]}
+        >
           {services.map((item) => {
             const cell = (
               <Pressable
                 onPress={item.onPress}
                 style={({ pressed }) => [
                   styles.cell,
-                  { width: cellW, minHeight: ms(96) },
+                  { width: "100%", minHeight: ms(96) },
                   pressed && styles.pressed,
                 ]}
                 accessibilityRole="button"
@@ -289,14 +301,17 @@ export default function HomeScreen() {
                 </Text>
               </Pressable>
             );
-            if (item.href) {
-              return (
-                <Link key={item.id} href={item.href} asChild>
-                  {cell}
-                </Link>
-              );
-            }
-            return <React.Fragment key={item.id}>{cell}</React.Fragment>;
+            return (
+              <View key={item.id} style={{ width: cellW }}>
+                {item.href ? (
+                  <Link href={item.href} asChild>
+                    {cell}
+                  </Link>
+                ) : (
+                  cell
+                )}
+              </View>
+            );
           })}
         </View>
 
@@ -354,6 +369,7 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
+    width: "100%",
   },
   scrollContent: {
     alignSelf: "center",
@@ -396,7 +412,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.searchBg,
     borderWidth: 1,
     borderColor: colors.searchBorder,
-    flexDirection: "row",
   },
   searchInput: {
     flex: 1,
@@ -409,7 +424,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     overflow: "hidden",
-    flexDirection: "row",
   },
   heroTextCol: {
     flex: 1,
@@ -436,7 +450,7 @@ const styles = StyleSheet.create({
   grid: {
     flexDirection: "row",
     flexWrap: "wrap",
-    flexDirection: "row",
+    alignSelf: "flex-start",
   },
   cell: {
     alignItems: "center",
@@ -454,7 +468,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     overflow: "hidden",
-    flexDirection: "row",
   },
   aiTextCol: {
     flex: 1,

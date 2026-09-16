@@ -32,7 +32,7 @@ export default function SignupStepThreeScreen() {
         </Text>
         <Pressable
           style={({ pressed }) => [styles.primary, pressed && styles.pressed]}
-          onPress={() => router.replace("/(tabs)")}
+            onPress={() => router.replace("/(tabs)/home")}
         >
           <Text style={styles.primaryText}>Continue to app</Text>
           <Ionicons name="arrow-forward" size={20} color={c.white} />

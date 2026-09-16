@@ -5,6 +5,7 @@
     "start": "npm --prefix fakhr-Capstone-Frontend start",
     "web": "npm --prefix fakhr-Capstone-Frontend run web",
     "android": "npm --prefix fakhr-Capstone-Frontend run android",
-    "ios": "npm --prefix fakhr-Capstone-Frontend run ios"
+    "ios": "npm --prefix fakhr-Capstone-Frontend run ios",
+    "backend": "npm --prefix fakhr-capstone-Backend start"
   }
 }

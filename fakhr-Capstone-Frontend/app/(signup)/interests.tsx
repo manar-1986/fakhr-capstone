@@ -73,7 +73,7 @@ export default function InterestsSelectionScreen() {
       router.push("/(signup)/child-profile-setup");
       return;
     }
-    router.replace("/(tabs)");
+    router.replace("/(tabs)/home");
   };
 
   return (

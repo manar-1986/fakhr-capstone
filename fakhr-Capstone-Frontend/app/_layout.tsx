@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import { I18nextProvider } from "react-i18next";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { WebAppShell } from "../components/layout/WebAppShell";
 import { AuthProvider } from "../context/AuthContext";
 import { LanguageProvider } from "../context/LanguageContext";
 import i18n from "../i18n";
@@ -16,7 +17,9 @@ export default function RootLayout() {
         <LanguageProvider>
           <QueryClientProvider client={queryClient}>
             <AuthProvider>
-              <Stack screenOptions={{ headerShown: false }} />
+              <WebAppShell>
+                <Stack screenOptions={{ headerShown: false }} />
+              </WebAppShell>
             </AuthProvider>
           </QueryClientProvider>
         </LanguageProvider>

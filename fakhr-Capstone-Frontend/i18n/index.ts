@@ -1,6 +1,6 @@
 import * as Localization from "expo-localization";
 import type { Locale } from "expo-localization";
-import * as SecureStore from "expo-secure-store";
+import * as SecureStore from "../utils/secureStorage";
 import * as Updates from "expo-updates";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";

@@ -17,7 +17,7 @@ export default function GeneratePlanScreen() {
   const generateMutation = useMutation({
     mutationFn: generateCarePath,
     onSuccess: () => {
-      router.replace("/(tabs)");
+      router.replace("/(tabs)/home");
     },
     onError: (error: Error) => {
       Alert.alert(

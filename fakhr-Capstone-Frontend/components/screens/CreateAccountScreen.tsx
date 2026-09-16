@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import * as SecureStore from "expo-secure-store";
+import * as SecureStore from "../../utils/secureStorage";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {

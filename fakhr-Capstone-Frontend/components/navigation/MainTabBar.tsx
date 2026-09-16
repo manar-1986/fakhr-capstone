@@ -16,11 +16,11 @@ type TabDef = {
   label: string;
   icon: React.ComponentProps<typeof Ionicons>["name"];
   iconFocused: React.ComponentProps<typeof Ionicons>["name"];
-  routeName: "index" | "profile";
+  routeName: "home" | "profile";
 };
 
 const TABS: TabDef[] = [
-  { key: "home", label: "الرئيسية", icon: "home-outline", iconFocused: "home", routeName: "index" },
+  { key: "home", label: "الرئيسية", icon: "home-outline", iconFocused: "home", routeName: "home" },
   { key: "profile", label: "حسابي", icon: "person-outline", iconFocused: "person", routeName: "profile" },
 ];
 
@@ -67,11 +67,7 @@ export function MainTabBar({ state, navigation }: MainTabBarProps) {
       canPreventDefault: true,
     });
     if (!event.defaultPrevented) {
-      if (tab.routeName === "index") {
-        router.navigate("/(tabs)");
-      } else {
-        router.navigate(`/(tabs)/${tab.routeName}`);
-      }
+      router.navigate(`/(tabs)/${tab.routeName}`);
     }
   };
 

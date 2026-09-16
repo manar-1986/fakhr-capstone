@@ -1,29 +1,19 @@
-import { Redirect, useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { Redirect } from "expo-router";
 import { useAuth } from "../context/AuthContext";
 
 /**
- * Root index: authenticated users → tabs; guests → signup stack (Create Account first).
+ * Root `/` is only an auth gate. Thursday Home lives at `/(tabs)/home`
+ * so it does not collide with this file on web.
  */
 export default function Index() {
-  const router = useRouter();
   const { loading, user } = useAuth();
-  const [bootstrapped, setBootstrapped] = useState(false);
 
-  useEffect(() => {
-    if (loading) return;
-    if (user) {
-      router.replace("/(tabs)");
-    }
-    setBootstrapped(true);
-  }, [loading, user, router]);
-
-  if (loading || !bootstrapped) {
+  if (loading) {
     return null;
   }
 
   if (user) {
-    return null;
+    return <Redirect href="/(tabs)/home" />;
   }
 
   return <Redirect href="/(signup)" />;

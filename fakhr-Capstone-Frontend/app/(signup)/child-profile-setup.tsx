@@ -263,7 +263,7 @@ export default function ChildProfileSetupScreen() {
 
           <Pressable
             style={({ pressed }) => [styles.skipBtn, pressed && styles.pressed]}
-            onPress={() => router.replace("/(tabs)")}
+            onPress={() => router.replace("/(tabs)/home")}
           >
             <Text style={styles.skipText}>Skip for now</Text>
           </Pressable>

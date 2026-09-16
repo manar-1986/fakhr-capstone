@@ -180,7 +180,7 @@ export default function SchoolsScreen() {
       router.back();
       return;
     }
-    router.replace("/(tabs)");
+    router.replace("/(tabs)/home");
   };
 
   const openSchool = (school: SchoolRow) => {

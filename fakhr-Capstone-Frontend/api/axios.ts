@@ -1,7 +1,7 @@
 import axios from "axios";
-import * as SecureStore from "expo-secure-store";
 import Constants from "expo-constants";
 import { Platform } from "react-native";
+import * as SecureStore from "../utils/secureStorage";
 
 /** Ensure base URL ends with /api (no trailing slash before it). */
 function normalizeApiBase(url: string): string {
@@ -31,9 +31,11 @@ function getExpoMetroHost(): string | null {
 
 /**
  * Resolve API base URL.
+ * - Web (browser on this machine): localhost:8000. A LAN IP in .env is for Expo Go;
+ *   the browser cannot use that host if the IP is stale or the API is only on loopback.
  * - Physical device (Expo Go): EXPO_PUBLIC_API_URL, or the same LAN IP Metro uses.
  * - iOS Simulator / Android Emulator (dev): 127.0.0.1 or 10.0.2.2 so a stale hotspot IP in .env does not break requests.
- *   Set EXPO_PUBLIC_API_STRICT=1 to force using EXPO_PUBLIC_API_URL on simulators (e.g. API on another machine).
+ *   Set EXPO_PUBLIC_API_STRICT=1 to force using EXPO_PUBLIC_API_URL (e.g. API on another machine).
  *
  * Do not use Constants.isDevice — it is gone in current Expo and was always false,
  * which sent real phones to 127.0.0.1 (the phone itself).
@@ -49,15 +51,16 @@ const getApiUrl = () => {
     return normalizeApiBase(explicit);
   }
 
+  if (Platform.OS === "web") {
+    return normalizeApiBase("http://localhost:8000");
+  }
+
   if (isDev && runningOnSimulator) {
     if (Platform.OS === "ios") {
       return normalizeApiBase("http://127.0.0.1:8000");
     }
     if (Platform.OS === "android") {
       return normalizeApiBase("http://10.0.2.2:8000");
-    }
-    if (Platform.OS === "web") {
-      return normalizeApiBase(explicit || "http://localhost:8000");
     }
   }
 

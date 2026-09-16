@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useMutation } from "@tanstack/react-query";
 import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
-import * as SecureStore from "expo-secure-store";
+import * as SecureStore from "../../utils/secureStorage";
 import { useState } from "react";
 import {
   Alert,
@@ -52,7 +52,7 @@ export default function LoginScreen() {
         );
         setUser(data.user);
       }
-      router.replace("/(tabs)");
+      router.replace("/(tabs)/home");
     },
     onError: (error: any) => {
       const errorMessage = error?.message || error?.response?.data?.message || "Invalid credentials. Please try again.";

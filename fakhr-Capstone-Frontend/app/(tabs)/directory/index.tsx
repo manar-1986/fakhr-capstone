@@ -56,7 +56,7 @@ export default function CentersAndProfessionalsScreen() {
             style={({ pressed }) => [styles.headerIconBtn, pressed && styles.pressed]}
             onPress={() => {
               if (router.canGoBack()) router.back();
-              else router.replace("/(tabs)");
+              else router.replace("/(tabs)/home");
             }}
           >
             <Ionicons name="chevron-back" size={24} color={c.text} />

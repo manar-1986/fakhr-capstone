@@ -136,7 +136,7 @@ export default function DisabilityCategoriesScreen() {
       router.back();
       return;
     }
-    router.replace("/(tabs)");
+    router.replace("/(tabs)/home");
   };
 
   const openCategory = (item: Category) => {
