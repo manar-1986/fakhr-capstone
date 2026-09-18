@@ -53,6 +53,12 @@ export default function ResourcesLayout() {
         }}
       />
       <Stack.Screen
+        name="disability-details"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="resource-content"
         options={{
           headerShown: true,

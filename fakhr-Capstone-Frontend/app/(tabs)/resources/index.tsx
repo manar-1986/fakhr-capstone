@@ -141,11 +141,8 @@ export default function DisabilityCategoriesScreen() {
 
   const openCategory = (item: Category) => {
     router.push({
-      pathname: "/(tabs)/resources/resource-content",
-      params: {
-        resource: item.resource ?? item.id,
-        type: "videos",
-      },
+      pathname: "/(tabs)/resources/disability-details",
+      params: { id: item.id },
     });
   };
 

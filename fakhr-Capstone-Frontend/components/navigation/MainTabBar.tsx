@@ -11,17 +11,51 @@ const colors = {
   border: "#ECEEF3",
 };
 
+type TabRoute = "home" | "plan" | "discover" | "profile";
+
 type TabDef = {
   key: string;
   label: string;
   icon: React.ComponentProps<typeof Ionicons>["name"];
   iconFocused: React.ComponentProps<typeof Ionicons>["name"];
-  routeName: "home" | "profile";
+  routeName: TabRoute;
+  href: "/(tabs)/home" | "/(tabs)/plan" | "/(tabs)/discover" | "/(tabs)/profile";
 };
 
+/** RTL visual order is right-to-left via row-reverse: Home, Plan, Explore, Profile. */
 const TABS: TabDef[] = [
-  { key: "home", label: "الرئيسية", icon: "home-outline", iconFocused: "home", routeName: "home" },
-  { key: "profile", label: "حسابي", icon: "person-outline", iconFocused: "person", routeName: "profile" },
+  {
+    key: "home",
+    label: "الرئيسية",
+    icon: "home-outline",
+    iconFocused: "home",
+    routeName: "home",
+    href: "/(tabs)/home",
+  },
+  {
+    key: "plan",
+    label: "خطتي",
+    icon: "flag-outline",
+    iconFocused: "flag",
+    routeName: "plan",
+    href: "/(tabs)/plan",
+  },
+  {
+    key: "discover",
+    label: "استكشف",
+    icon: "compass-outline",
+    iconFocused: "compass",
+    routeName: "discover",
+    href: "/(tabs)/discover",
+  },
+  {
+    key: "profile",
+    label: "حسابي",
+    icon: "person-outline",
+    iconFocused: "person",
+    routeName: "profile",
+    href: "/(tabs)/profile",
+  },
 ];
 
 type MainTabBarProps = {
@@ -67,7 +101,12 @@ export function MainTabBar({ state, navigation }: MainTabBarProps) {
       canPreventDefault: true,
     });
     if (!event.defaultPrevented) {
-      router.navigate(`/(tabs)/${tab.routeName}`);
+      // Plan is a stack; replace so خطتي always opens index (weekly plan), not nested Progress.
+      if (tab.routeName === "plan") {
+        router.replace(tab.href);
+        return;
+      }
+      router.navigate(tab.href);
     }
   };
 
@@ -119,17 +158,18 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row-reverse",
     alignItems: "center",
+    width: "100%",
   },
   tab: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 6,
+    paddingVertical: 8,
   },
   label: {
     fontSize: 11,
     fontWeight: "600",
-    marginTop: 2,
+    marginTop: 4,
     writingDirection: "rtl",
   },
 });

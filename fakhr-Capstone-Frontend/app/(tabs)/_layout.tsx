@@ -8,7 +8,8 @@ export const unstable_settings = {
 };
 
 /**
- * Main tabs: Home, Discover, Library, Profile.
+ * Main tabs: Home, Plan, Explore (discover), Profile.
+ * Directory/services remain routed from Home, not from the tab bar.
  */
 export default function TabsLayout() {
   const { t } = useTranslation();
@@ -23,7 +24,8 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen name="home" options={{ title: t("tabs.home") }} />
-      <Tabs.Screen name="discover" options={{ href: null }} />
+      <Tabs.Screen name="plan" options={{ title: "خطتي" }} />
+      <Tabs.Screen name="discover" options={{ title: "استكشف" }} />
       <Tabs.Screen
         name="profile"
         options={{
@@ -32,16 +34,15 @@ export default function TabsLayout() {
         }}
       />
 
-      <Tabs.Screen name="community" options={{ title: "المجتمع" }} />
-      <Tabs.Screen name="directory" options={{ title: "الدليل" }} />
-      <Tabs.Screen name="bookings" options={{ title: "مواعيدي" }} />
+      <Tabs.Screen name="directory" options={{ href: null }} />
+      <Tabs.Screen name="community" options={{ href: null }} />
+      <Tabs.Screen name="bookings" options={{ href: null }} />
       <Tabs.Screen name="library" options={{ href: null }} />
-      <Tabs.Screen name="documents" options={{ title: "المستندات" }} />
-      <Tabs.Screen name="plan" options={{ title: "الخطة" }} />
-      <Tabs.Screen name="resources" options={{ title: "فئات الإعاقة" }} />
-      <Tabs.Screen name="services" options={{ title: "الخدمات المنزلية" }} />
-      <Tabs.Screen name="products" options={{ title: "المنتجات" }} />
-      <Tabs.Screen name="professionals" options={{ title: "المتخصصون" }} />
+      <Tabs.Screen name="documents" options={{ href: null }} />
+      <Tabs.Screen name="resources" options={{ href: null }} />
+      <Tabs.Screen name="services" options={{ href: null }} />
+      <Tabs.Screen name="products" options={{ href: null }} />
+      <Tabs.Screen name="professionals" options={{ href: null }} />
     </Tabs>
   );
 }

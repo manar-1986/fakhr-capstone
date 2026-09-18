@@ -1,14 +1,20 @@
 import { Stack } from "expo-router";
 import { colors, typography } from "../../../theme";
 
+export const unstable_settings = {
+  initialRouteName: "index",
+};
+
 /**
- * Plan Stack Layout — Care Path screens with back button
+ * Plan stack: weekly child plan is the tab root (index).
+ * Nested English Progress / Check-in screens stay available from the plan itself.
  */
 export default function PlanLayout() {
   return (
     <Stack
+      initialRouteName="index"
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
         headerTitle: "",
         headerStyle: {
           backgroundColor: colors.background,
@@ -19,12 +25,7 @@ export default function PlanLayout() {
         animation: "slide_from_right",
       }}
     >
-      <Stack.Screen
-        name="index"
-        options={{
-          headerShown: false,
-        }}
-      />
+      <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen
         name="task-details"
         options={{

@@ -32,6 +32,15 @@ const colors = {
   white: "#FFFFFF",
 };
 
+/** RN Alert.alert is a no-op on web, so failed login looked like the button did nothing. */
+function notify(title: string, message: string) {
+  if (Platform.OS === "web") {
+    window.alert(`${title}\n${message}`);
+    return;
+  }
+  Alert.alert(title, message);
+}
+
 export default function LoginScreen() {
   const router = useRouter();
   const { setUser } = useAuth();
@@ -56,13 +65,13 @@ export default function LoginScreen() {
     },
     onError: (error: any) => {
       const errorMessage = error?.message || error?.response?.data?.message || "Invalid credentials. Please try again.";
-      Alert.alert("Login Failed", errorMessage);
+      notify("Login Failed", errorMessage);
     },
   });
 
   const handleLogin = () => {
     if (!email || !password) {
-      Alert.alert("خطأ", "يرجى تعبئة جميع الحقول");
+      notify("خطأ", "يرجى تعبئة جميع الحقول");
       return;
     }
     loginMutation.mutate({ email, password });

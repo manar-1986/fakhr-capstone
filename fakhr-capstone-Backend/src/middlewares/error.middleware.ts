@@ -65,6 +65,15 @@ export const errorHandler = (
     return;
   }
 
+  // Invalid JSON body (express.json) — was reported as Internal server error on POST /api/auth/login
+  if (err instanceof SyntaxError && "body" in err) {
+    res.status(HTTP_STATUS.BAD_REQUEST).json({
+      success: false,
+      error: "Invalid JSON in request body",
+    });
+    return;
+  }
+
   // Default error response
   res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
     success: false,
