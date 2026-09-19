@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLanguage } from "../../../context/LanguageContext";
+import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 import type { AppLanguage } from "../../../i18n";
 
 const colors = {
@@ -124,14 +125,20 @@ export default function SettingsScreen() {
           }}
           showsVerticalScrollIndicator={false}
         >
-          <Text
-            style={[
-              styles.title,
-              { fontSize: ms(24), lineHeight: ms(32), marginBottom: ms(22) },
-            ]}
-          >
-            الإعدادات
-          </Text>
+          <View style={[styles.header, { height: ms(44), marginBottom: ms(22) }]}>
+            <HeaderBackButton
+              color={colors.title}
+              fallbackHref="/(tabs)/profile"
+            />
+            <Text
+              style={[
+                styles.title,
+                { fontSize: ms(24), lineHeight: ms(32) },
+              ]}
+            >
+              الإعدادات
+            </Text>
+          </View>
 
           {rows.map((row, index) => (
             <Pressable
@@ -252,6 +259,10 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
+  },
+  header: {
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontWeight: "800",

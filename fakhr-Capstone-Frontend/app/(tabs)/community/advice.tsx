@@ -15,15 +15,18 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { libraryColors as c } from "../../../constants/libraryTheme";
 import { useLanguage } from "../../../context/LanguageContext";
+import { tryNavigateToDisabilityServices } from "../../../utils/disabilityFlowNav";
 
 export default function AdviceReplyScreen() {
   const { t } = useTranslation();
   const { isRTL } = useLanguage();
   const reverseRows = isRTL !== I18nManager.isRTL;
   const router = useRouter();
-  const { postId, preview } = useLocalSearchParams<{
+  const { postId, preview, disabilityId, disabilityName } = useLocalSearchParams<{
     postId?: string;
     preview?: string;
+    disabilityId?: string;
+    disabilityName?: string;
   }>();
 
   const previewText = (() => {
@@ -37,13 +40,29 @@ export default function AdviceReplyScreen() {
   })();
   const [reply, setReply] = useState("");
 
+  const goBack = () => {
+    if (
+      tryNavigateToDisabilityServices(router, {
+        disabilityId,
+        disabilityName,
+      })
+    ) {
+      return;
+    }
+    if (typeof router.canGoBack === "function" && router.canGoBack()) {
+      router.back();
+      return;
+    }
+    router.navigate("/(tabs)/home");
+  };
+
   const submit = () => {
     if (!reply.trim()) {
       Alert.alert(t("community.adviceTitle"), t("community.adviceEmpty"));
       return;
     }
     Alert.alert(t("community.adviceSent"), t("community.adviceSentBody"), [
-      { text: t("community.ok"), onPress: () => router.back() },
+      { text: t("community.ok"), onPress: goBack },
     ]);
   };
 
@@ -51,7 +70,7 @@ export default function AdviceReplyScreen() {
     <SafeAreaView style={styles.safe} edges={["top", "bottom"]}>
       <View style={[styles.header, reverseRows && styles.rowReverse]}>
         <Pressable
-          onPress={() => router.back()}
+          onPress={goBack}
           style={styles.back}
           accessibilityRole="button"
           accessibilityLabel={t("common.back")}
@@ -152,7 +171,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   submit: {
-    backgroundColor: c.primary,
+    backgroundColor: c.brand,
     borderRadius: 999,
     paddingVertical: 16,
     alignItems: "center",

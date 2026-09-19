@@ -22,6 +22,7 @@ import { PostCard } from "../../../components/community/PostCard";
 import { SafeBanner } from "../../../components/community/SafeBanner";
 import type { CommunityCategoryId, CommunityPost } from "../../../components/community/types";
 import { libraryColors as c } from "../../../constants/libraryTheme";
+import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 import { useLanguage } from "../../../context/LanguageContext";
 
 const HEADER_AVATAR =
@@ -64,6 +65,7 @@ export default function ParentCommunityScreen() {
   const listHeader = (
     <>
       <View style={[styles.topHeader, reverseRows && styles.rowReverse]}>
+        <HeaderBackButton variant="inline" color={c.text} />
         <View style={[styles.brandRow, reverseRows && styles.rowReverse]}>
           <View style={styles.brandIcon}>
             <Ionicons name="people" size={20} color={c.white} />
@@ -234,7 +236,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: c.primary,
+    backgroundColor: c.brand,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -327,7 +329,7 @@ const styles = StyleSheet.create({
     color: c.textMuted,
   },
   modalPrimary: {
-    backgroundColor: c.primary,
+    backgroundColor: c.brand,
     borderRadius: 999,
     paddingVertical: 12,
     paddingHorizontal: 22,

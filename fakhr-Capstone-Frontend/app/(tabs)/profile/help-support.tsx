@@ -12,6 +12,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 
 const colors = {
   bg: "#FFFFFF",
@@ -97,14 +98,20 @@ export default function HelpSupportScreen() {
           }}
           showsVerticalScrollIndicator={false}
         >
-          <Text
-            style={[
-              styles.title,
-              { fontSize: ms(24), lineHeight: ms(32), marginBottom: ms(22) },
-            ]}
-          >
-            المساعدة والدعم
-          </Text>
+          <View style={[styles.header, { height: ms(44), marginBottom: ms(22) }]}>
+            <HeaderBackButton
+              color={colors.title}
+              fallbackHref="/(tabs)/profile"
+            />
+            <Text
+              style={[
+                styles.title,
+                { fontSize: ms(24), lineHeight: ms(32) },
+              ]}
+            >
+              المساعدة والدعم
+            </Text>
+          </View>
 
           {rows.map((row, index) => (
             <Pressable
@@ -161,6 +168,10 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
+  },
+  header: {
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontWeight: "800",

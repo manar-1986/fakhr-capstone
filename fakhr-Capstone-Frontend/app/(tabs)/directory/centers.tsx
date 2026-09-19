@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { centersListQueryKey, getCenters } from "../../../api/directory.api";
+import { DisabilityAwareHeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 import type { HealthCenter } from "../../../types/directory.types";
 
 const colors = {
@@ -216,6 +217,7 @@ export default function CentersScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={[styles.header, { height: ms(44), marginBottom: ms(10) }]}>
+          <DisabilityAwareHeaderBackButton color={colors.title} />
           <Text style={[styles.title, { fontSize: ms(26), lineHeight: ms(34) }]}>
             المراكز
           </Text>

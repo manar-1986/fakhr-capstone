@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { DisabilityAwareHeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 
 const colors = {
   bg: "#FFFFFF",
@@ -136,18 +137,20 @@ export default function ProductsScreen() {
           }}
           showsVerticalScrollIndicator={false}
         >
-          <Text
-            style={[
-              styles.title,
-              {
-                fontSize: ms(24),
-                lineHeight: ms(32),
-                marginBottom: ms(16),
-              },
-            ]}
-          >
-            المنتجات
-          </Text>
+          <View style={[styles.header, { height: ms(44), marginBottom: ms(16) }]}>
+            <DisabilityAwareHeaderBackButton color={colors.title} />
+            <Text
+              style={[
+                styles.title,
+                {
+                  fontSize: ms(24),
+                  lineHeight: ms(32),
+                },
+              ]}
+            >
+              المنتجات
+            </Text>
+          </View>
 
           <View
             style={[
@@ -308,6 +311,10 @@ const styles = StyleSheet.create({
   scroll: {
     flex: 1,
     width: "100%",
+  },
+  header: {
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontWeight: "800",

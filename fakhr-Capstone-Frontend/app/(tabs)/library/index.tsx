@@ -27,6 +27,7 @@ import type {
   LibraryVideoItem,
 } from "../../../components/library/types";
 import { libraryColors as c } from "../../../constants/libraryTheme";
+import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 
 export default function LibraryScreen() {
   const [search, setSearch] = useState("");
@@ -60,12 +61,7 @@ export default function LibraryScreen() {
         {/* Header */}
         <View style={styles.headerRow}>
           <View style={styles.headerSide}>
-            <Pressable
-              style={({ pressed }) => [styles.headerIconBtn, pressed && styles.pressed]}
-              onPress={() => Alert.alert("Menu", "Navigation menu (coming soon).")}
-            >
-              <Ionicons name="menu" size={22} color={c.text} />
-            </Pressable>
+            <HeaderBackButton variant="inline" color={c.text} />
           </View>
           <Text style={styles.headerTitle}>Fakhr Library</Text>
           <View style={[styles.headerSide, styles.headerSideRight]}>

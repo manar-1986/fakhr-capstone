@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../../../context/AuthContext";
+import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 
 const colors = {
   bg: "#FFFFFF",
@@ -133,14 +134,20 @@ export default function LogoutConfirmScreen() {
           }}
           showsVerticalScrollIndicator={false}
         >
-          <Text
-            style={[
-              styles.title,
-              { fontSize: ms(32), lineHeight: ms(42), marginBottom: ms(40) },
-            ]}
-          >
-            تسجيل الخروج
-          </Text>
+          <View style={[styles.header, { height: ms(44), marginBottom: ms(40) }]}>
+            <HeaderBackButton
+              color={colors.title}
+              fallbackHref="/(tabs)/profile"
+            />
+            <Text
+              style={[
+                styles.title,
+                { fontSize: ms(32), lineHeight: ms(42) },
+              ]}
+            >
+              تسجيل الخروج
+            </Text>
+          </View>
 
           <View style={{ alignSelf: "center" }}>
             <LogoutDoorIcon size={ms(186)} />
@@ -212,6 +219,10 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
+  },
+  header: {
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontWeight: "800",

@@ -1,4 +1,5 @@
 import { Stack } from "expo-router";
+import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 import { colors, typography } from "../../../theme";
 
 export const unstable_settings = {
@@ -10,6 +11,10 @@ export const unstable_settings = {
  * Nested English Progress / Check-in screens stay available from the plan itself.
  */
 export default function PlanLayout() {
+  const backButton = () => (
+    <HeaderBackButton variant="inline" fallbackHref="/(tabs)/plan" />
+  );
+
   return (
     <Stack
       initialRouteName="index"
@@ -31,6 +36,7 @@ export default function PlanLayout() {
         options={{
           headerShown: true,
           headerTitle: "Task Details",
+          headerLeft: backButton,
           headerTitleStyle: {
             fontSize: typography.h2,
             fontWeight: typography.weightBold,
@@ -43,6 +49,7 @@ export default function PlanLayout() {
         options={{
           headerShown: true,
           headerTitle: "Daily Check-In",
+          headerLeft: backButton,
           headerTitleStyle: {
             fontSize: typography.h2,
             fontWeight: typography.weightBold,
@@ -55,6 +62,7 @@ export default function PlanLayout() {
         options={{
           headerShown: true,
           headerTitle: "Progress",
+          headerLeft: backButton,
           headerTitleStyle: {
             fontSize: typography.h2,
             fontWeight: typography.weightBold,

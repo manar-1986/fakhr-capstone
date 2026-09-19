@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getProfessionals } from "../../../api/directory.api";
+import { DisabilityAwareHeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 import type { DirectoryListing } from "../../../components/directory/types";
 import type { Professional } from "../../../types/directory.types";
 
@@ -198,6 +199,7 @@ export default function ProfessionalsScreen() {
           showsVerticalScrollIndicator={false}
         >
           <View style={[styles.header, { height: ms(48), marginBottom: ms(10) }]}>
+            <DisabilityAwareHeaderBackButton color={colors.title} />
             <Text
               style={[styles.title, { fontSize: ms(22), lineHeight: ms(30) }]}
               numberOfLines={1}

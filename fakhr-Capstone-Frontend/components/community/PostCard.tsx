@@ -134,7 +134,7 @@ export function PostCard({ post, onReport }: Props) {
             <Ionicons
               name="chatbubble-ellipses-outline"
               size={18}
-              color={c.primary}
+              color={c.brand}
             />
             <Text style={styles.adviceText}>{t("community.giveAdvice")}</Text>
           </Pressable>
@@ -151,7 +151,7 @@ export function PostCard({ post, onReport }: Props) {
             <Ionicons
               name={liked ? "heart" : "heart-outline"}
               size={20}
-              color={c.primary}
+              color={c.brand}
             />
             <Text style={styles.footerCount}>{likes}</Text>
           </Pressable>
@@ -159,7 +159,7 @@ export function PostCard({ post, onReport }: Props) {
             style={[styles.footerItem, reverseRows && styles.rowReverse]}
             onPress={onComment}
           >
-            <Ionicons name="chatbubble-outline" size={20} color={c.primary} />
+            <Ionicons name="chatbubble-outline" size={20} color={c.brand} />
             <Text style={styles.footerCount}>{comments}</Text>
           </Pressable>
           <View style={styles.spacer} />
@@ -169,7 +169,7 @@ export function PostCard({ post, onReport }: Props) {
             accessibilityRole="button"
             accessibilityLabel={t("community.share")}
           >
-            <Ionicons name="share-social-outline" size={20} color={c.primary} />
+            <Ionicons name="share-social-outline" size={20} color={c.brand} />
           </Pressable>
         </View>
       )}
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
   flagBtn: { padding: 4 },
   badge: {
     alignSelf: "flex-start",
-    backgroundColor: c.primary,
+    backgroundColor: c.brand,
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 999,
@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
     marginStart: 6,
     fontSize: 14,
     fontWeight: "600",
-    color: c.primary,
+    color: c.brand,
   },
   spacer: { flex: 1 },
   adviceRow: {
@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
   adviceText: {
     fontSize: 14,
     fontWeight: "700",
-    color: c.primary,
+    color: c.brand,
   },
   responses: {
     fontSize: 13,

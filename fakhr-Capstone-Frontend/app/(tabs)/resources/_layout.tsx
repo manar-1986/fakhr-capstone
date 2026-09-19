@@ -1,21 +1,13 @@
-import { Ionicons } from "@expo/vector-icons";
-import { Stack, useRouter } from "expo-router";
-import { Pressable } from "react-native";
+import { Stack } from "expo-router";
+import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 import { colors, typography } from "../../../theme";
 
 /**
  * Resources Stack Layout — Documents screens with back button
  */
 export default function ResourcesLayout() {
-  const router = useRouter();
   const backButton = () => (
-    <Pressable
-      onPress={() => router.back()}
-      style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1, padding: 8 })}
-      hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-    >
-      <Ionicons name="arrow-back" size={24} color={colors.primary} />
-    </Pressable>
+    <HeaderBackButton variant="inline" fallbackHref="/(tabs)/resources" />
   );
 
   return (
@@ -54,6 +46,12 @@ export default function ResourcesLayout() {
       />
       <Stack.Screen
         name="disability-details"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="disability-services"
         options={{
           headerShown: false,
         }}

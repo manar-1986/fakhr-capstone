@@ -13,7 +13,7 @@ export function SafeBanner() {
   return (
     <View style={[styles.wrap, reverseRows && styles.rowReverse]}>
       <View style={styles.iconCircle}>
-        <Ionicons name="shield-checkmark" size={22} color={c.primary} />
+        <Ionicons name="shield-checkmark" size={22} color={c.brand} />
       </View>
       <View style={styles.textBlock}>
         <Text style={[styles.title, isRTL && styles.textRtl]}>

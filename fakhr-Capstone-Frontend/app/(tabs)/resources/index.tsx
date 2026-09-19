@@ -132,17 +132,16 @@ export default function DisabilityCategoriesScreen() {
   const ms = (n: number) => Math.round(n * s);
 
   const goBack = () => {
-    if (typeof router.canGoBack === "function" && router.canGoBack()) {
-      router.back();
-      return;
-    }
-    router.replace("/(tabs)/home");
+    router.navigate("/(tabs)/home");
   };
 
   const openCategory = (item: Category) => {
     router.push({
-      pathname: "/(tabs)/resources/disability-details",
-      params: { id: item.id },
+      pathname: "/(tabs)/resources/disability-services",
+      params: {
+        id: item.id,
+        name: item.label.replace(/\n/g, " "),
+      },
     });
   };
 

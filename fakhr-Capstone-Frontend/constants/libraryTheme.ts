@@ -3,6 +3,8 @@ import { signupColors } from "./signupTheme";
 /** Library + bottom tab chrome (aligned with signup / Child Profile purple system). */
 export const libraryColors = {
   ...signupColors,
+  /** Current Fakhr Home brand (`home.tsx` `brand` / `icon`). */
+  brand: "#6F80B4",
   textTertiary: "#8A8A8A",
   chipBg: "#EFEFF2",
   chipText: "#4A4A55",

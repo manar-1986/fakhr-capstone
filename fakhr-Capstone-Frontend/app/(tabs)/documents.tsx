@@ -9,6 +9,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { HeaderBackButton } from "../../components/navigation/HeaderBackButton";
 
 // Design system colors
 const colors = {
@@ -105,7 +106,10 @@ export default function ProfessionalsScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.title}>Professionals</Text>
+        <View style={styles.header}>
+          <HeaderBackButton color={colors.text} />
+          <Text style={styles.title}>Professionals</Text>
+        </View>
         <Text style={styles.subtitle}>
           Find specialists for your child&apos;s needs
         </Text>
@@ -199,14 +203,19 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingTop: 8,
     paddingBottom: 120,
+  },
+  header: {
+    height: 44,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8,
   },
   title: {
     fontSize: 28,
     fontWeight: "700",
     color: colors.text,
-    marginBottom: 8,
   },
   subtitle: {
     fontSize: 15,

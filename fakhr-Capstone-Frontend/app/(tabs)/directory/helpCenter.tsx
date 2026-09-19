@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { sendHelpMessage } from "../../../api/helpCenter.api";
+import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 
 const colors = {
   bg: "#FFFFFF",
@@ -110,7 +111,8 @@ export default function HelpCenterScreen() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={0}
       >
-        <View style={[styles.header, { height: ms(48), marginTop: ms(4) }]}>
+        <View style={[styles.header, { height: ms(48), marginTop: ms(4), paddingHorizontal: ms(18) }]}>
+          <HeaderBackButton color={colors.title} />
           <Text style={[styles.brand, { fontSize: ms(26), lineHeight: ms(34) }]}>
             فخر
           </Text>

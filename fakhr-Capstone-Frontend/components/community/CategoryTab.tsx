@@ -35,11 +35,11 @@ const styles = StyleSheet.create({
     marginEnd: 10,
     backgroundColor: c.white,
     borderWidth: 1,
-    borderColor: c.primary,
+    borderColor: c.brand,
   },
   chipSelected: {
-    backgroundColor: c.primary,
-    borderColor: c.primary,
+    backgroundColor: c.brand,
+    borderColor: c.brand,
   },
   label: {
     fontSize: 14,

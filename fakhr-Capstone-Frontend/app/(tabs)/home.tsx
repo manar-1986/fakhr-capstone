@@ -85,7 +85,7 @@ export default function HomeScreen() {
       icon: "accessibility-outline",
       color: colors.icon,
       href: "/resources",
-      onPress: () => router.navigate("/resources"),
+      onPress: () => router.push("/(tabs)/resources"),
     },
     {
       id: "schools",

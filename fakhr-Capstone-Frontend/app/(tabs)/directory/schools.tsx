@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useMemo, useState } from "react";
 import {
   Alert,
@@ -17,6 +17,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { centersListQueryKey, getCenters } from "../../../api/directory.api";
 import type { HealthCenter } from "../../../types/directory.types";
+import { tryNavigateToDisabilityServices } from "../../../utils/disabilityFlowNav";
 
 const colors = {
   bg: "#FFFFFF",
@@ -148,6 +149,10 @@ function centerIdOf(center?: HealthCenter) {
 
 export default function SchoolsScreen() {
   const router = useRouter();
+  const params = useLocalSearchParams<{
+    disabilityId?: string;
+    disabilityName?: string;
+  }>();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
   const s = contentW / DESIGN_W;
@@ -176,6 +181,9 @@ export default function SchoolsScreen() {
   }, [search, city, type, branch]);
 
   const goBack = () => {
+    if (tryNavigateToDisabilityServices(router, params)) {
+      return;
+    }
     if (typeof router.canGoBack === "function" && router.canGoBack()) {
       router.back();
       return;
