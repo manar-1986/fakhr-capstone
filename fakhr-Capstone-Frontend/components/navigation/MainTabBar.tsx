@@ -1,8 +1,10 @@
 import { Ionicons } from "@expo/vector-icons";
 import { usePathname, useRouter } from "expo-router";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useI18nLayout } from "../../hooks/useI18nLayout";
 
 const colors = {
   white: "#FFFFFF",
@@ -15,18 +17,17 @@ type TabRoute = "home" | "plan" | "discover" | "profile";
 
 type TabDef = {
   key: string;
-  label: string;
+  labelKey: string;
   icon: React.ComponentProps<typeof Ionicons>["name"];
   iconFocused: React.ComponentProps<typeof Ionicons>["name"];
   routeName: TabRoute;
   href: "/(tabs)/home" | "/(tabs)/plan" | "/(tabs)/discover" | "/(tabs)/profile";
 };
 
-/** RTL visual order is right-to-left via row-reverse: Home, Plan, Explore, Profile. */
 const TABS: TabDef[] = [
   {
     key: "home",
-    label: "الرئيسية",
+    labelKey: "tabs.home",
     icon: "home-outline",
     iconFocused: "home",
     routeName: "home",
@@ -34,7 +35,7 @@ const TABS: TabDef[] = [
   },
   {
     key: "plan",
-    label: "خطتي",
+    labelKey: "tabs.plan",
     icon: "flag-outline",
     iconFocused: "flag",
     routeName: "plan",
@@ -42,7 +43,7 @@ const TABS: TabDef[] = [
   },
   {
     key: "discover",
-    label: "استكشف",
+    labelKey: "tabs.explore",
     icon: "compass-outline",
     iconFocused: "compass",
     routeName: "discover",
@@ -50,7 +51,7 @@ const TABS: TabDef[] = [
   },
   {
     key: "profile",
-    label: "حسابي",
+    labelKey: "tabs.account",
     icon: "person-outline",
     iconFocused: "person",
     routeName: "profile",
@@ -73,6 +74,8 @@ type MainTabBarProps = {
 };
 
 export function MainTabBar({ state, navigation }: MainTabBarProps) {
+  const { t } = useTranslation();
+  const { tabRow, dir } = useI18nLayout();
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const pathname = usePathname();
@@ -112,15 +115,16 @@ export function MainTabBar({ state, navigation }: MainTabBarProps) {
 
   return (
     <View style={[styles.outer, { paddingBottom: bottomPad }]}>
-      <View style={[styles.row, { minHeight: barHeight }]}>
+      <View style={[styles.row, { minHeight: barHeight, flexDirection: tabRow }]}>
         {TABS.map((tab) => {
           const focused = isFocused(tab);
           const color = focused ? colors.active : colors.inactive;
+          const label = t(tab.labelKey);
           return (
             <Pressable
               key={tab.key}
               accessibilityRole="button"
-              accessibilityLabel={tab.label}
+              accessibilityLabel={label}
               onPress={() => onPressTab(tab)}
               style={styles.tab}
             >
@@ -129,8 +133,11 @@ export function MainTabBar({ state, navigation }: MainTabBarProps) {
                 size={22}
                 color={color}
               />
-              <Text style={[styles.label, { color }]} numberOfLines={1}>
-                {tab.label}
+              <Text
+                style={[styles.label, { color, writingDirection: dir }]}
+                numberOfLines={1}
+              >
+                {label}
               </Text>
             </Pressable>
           );
@@ -156,7 +163,6 @@ const styles = StyleSheet.create({
     elevation: Platform.OS === "android" ? 12 : 0,
   },
   row: {
-    flexDirection: "row-reverse",
     alignItems: "center",
     width: "100%",
   },
@@ -170,6 +176,5 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: "600",
     marginTop: 4,
-    writingDirection: "rtl",
   },
 });

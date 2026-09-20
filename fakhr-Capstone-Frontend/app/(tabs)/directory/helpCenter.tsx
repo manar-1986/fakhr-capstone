@@ -17,6 +17,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { sendHelpMessage } from "../../../api/helpCenter.api";
 import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
+import { useTranslation } from "react-i18next";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
 
 const colors = {
   bg: "#FFFFFF",
@@ -35,12 +37,12 @@ const colors = {
 
 const DESIGN_W = 390;
 
-const SUGGESTIONS = [
-  "ابحث عن مدرسة مناسبة",
-  "أفضل المراكز القريبة مني",
-  "أنشطة تناسب طفلي",
-  "نصائح للتعامل مع التوحد",
-];
+const SUGGESTION_KEYS = [
+  "copy.suggestSchool",
+  "copy.suggestCenters",
+  "copy.suggestActivities",
+  "copy.suggestAutism",
+] as const;
 
 const robot = require("../../../assets/images/fakhr-ai-robot.png");
 
@@ -51,6 +53,8 @@ interface Message {
 }
 
 export default function HelpCenterScreen() {
+  const { t } = useTranslation();
+  const { align } = useI18nLayout();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
   const s = contentW / DESIGN_W;
@@ -68,7 +72,7 @@ export default function HelpCenterScreen() {
         ...prev,
         {
           id: `${Date.now()}-ai`,
-          text: response.message || "أنا هنا للمساعدة!",
+          text: response.message || t("copy.hereToHelp"),
           isUser: false,
         },
       ]);
@@ -80,7 +84,7 @@ export default function HelpCenterScreen() {
           id: `${Date.now()}-err`,
           text:
             error?.message ||
-            "عذراً، لم أستطع معالجة طلبك. حاول مرة أخرى.",
+            t("copy.helpError"),
           isUser: false,
         },
       ]);
@@ -114,7 +118,7 @@ export default function HelpCenterScreen() {
         <View style={[styles.header, { height: ms(48), marginTop: ms(4), paddingHorizontal: ms(18) }]}>
           <HeaderBackButton color={colors.title} />
           <Text style={[styles.brand, { fontSize: ms(26), lineHeight: ms(34) }]}>
-            فخر
+            {t("ui.brand")}
           </Text>
         </View>
 
@@ -144,12 +148,12 @@ export default function HelpCenterScreen() {
                   marginBottom: ms(8),
                 }}
                 resizeMode="contain"
-                accessibilityLabel="فخر AI"
+                accessibilityLabel={`${t("ui.brand")} AI`}
               />
               <Text
                 style={[styles.welcome, { fontSize: ms(22), lineHeight: ms(32) }]}
               >
-                مرحباً! أنا فخر{" "}
+                {t("copy.hiFakhrAi")}{" "}
                 <Text style={{ writingDirection: "ltr" }}>AI</Text>
               </Text>
               <Text
@@ -163,13 +167,15 @@ export default function HelpCenterScreen() {
                   },
                 ]}
               >
-                كيف أقدر أساعدك اليوم؟
+                {t("copy.howHelpToday")}
               </Text>
               </View>
               <View style={{ width: "100%", gap: ms(10), marginTop: ms(8) }}>
-                {SUGGESTIONS.map((prompt) => (
+                {SUGGESTION_KEYS.map((key) => {
+                  const prompt = t(key);
+                  return (
                   <Pressable
-                    key={prompt}
+                    key={key}
                     onPress={() => sendText(prompt)}
                     disabled={sendMessageMutation.isPending}
                     style={({ pressed }) => [
@@ -190,7 +196,8 @@ export default function HelpCenterScreen() {
                       {prompt}
                     </Text>
                   </Pressable>
-                ))}
+                  );
+                })}
               </View>
             </View>
           ) : (
@@ -253,7 +260,7 @@ export default function HelpCenterScreen() {
               { width: ms(44), height: ms(44), borderRadius: ms(22) },
             ]}
             accessibilityRole="button"
-            accessibilityLabel="تسجيل صوتي"
+            accessibilityLabel={t("copy.voiceNote")}
           >
             <Ionicons
               name="mic-outline"
@@ -264,7 +271,7 @@ export default function HelpCenterScreen() {
           <TextInput
             value={inputText}
             onChangeText={setInputText}
-            placeholder="اكتب سؤالك هنا"
+            placeholder={t("copy.typeQuestion")}
             placeholderTextColor={colors.placeholder}
             style={[
               styles.input,
@@ -275,7 +282,7 @@ export default function HelpCenterScreen() {
                 paddingHorizontal: ms(16),
               },
             ]}
-            textAlign="right"
+            textAlign={align}
             returnKeyType="send"
             onSubmitEditing={handleSend}
             editable={!sendMessageMutation.isPending}
@@ -290,7 +297,7 @@ export default function HelpCenterScreen() {
               pressed && styles.pressed,
             ]}
             accessibilityRole="button"
-            accessibilityLabel="إرسال"
+            accessibilityLabel={t("copy.send")}
           >
             {sendMessageMutation.isPending ? (
               <ActivityIndicator size="small" color={colors.send} />

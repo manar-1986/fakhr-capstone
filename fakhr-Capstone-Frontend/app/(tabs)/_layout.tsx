@@ -24,8 +24,8 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen name="home" options={{ title: t("tabs.home") }} />
-      <Tabs.Screen name="plan" options={{ title: "خطتي" }} />
-      <Tabs.Screen name="discover" options={{ title: "استكشف" }} />
+      <Tabs.Screen name="plan" options={{ title: t("tabs.plan") }} />
+      <Tabs.Screen name="discover" options={{ title: t("tabs.explore") }} />
       <Tabs.Screen
         name="profile"
         options={{

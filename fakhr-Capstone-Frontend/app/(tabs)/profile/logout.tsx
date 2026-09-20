@@ -11,6 +11,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../../../context/AuthContext";
 import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
+import { useTranslation } from "react-i18next";
 
 const colors = {
   bg: "#FFFFFF",
@@ -111,6 +112,7 @@ function LogoutDoorIcon({ size }: { size: number }) {
 }
 
 export default function LogoutConfirmScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const { logout } = useAuth();
   const { width: windowWidth } = useWindowDimensions();
@@ -145,7 +147,7 @@ export default function LogoutConfirmScreen() {
                 { fontSize: ms(32), lineHeight: ms(42) },
               ]}
             >
-              تسجيل الخروج
+              {t("auth.signOut")}
             </Text>
           </View>
 
@@ -164,7 +166,7 @@ export default function LogoutConfirmScreen() {
               },
             ]}
           >
-            هل أنت متأكد من تسجيل الخروج؟
+            {t("ui.logoutConfirm")}
           </Text>
 
           <Pressable
@@ -179,10 +181,10 @@ export default function LogoutConfirmScreen() {
               pressed && styles.pressed,
             ]}
             accessibilityRole="button"
-            accessibilityLabel="تسجيل الخروج"
+            accessibilityLabel={t("auth.signOut")}
           >
             <Text style={[styles.logoutText, { fontSize: ms(22) }]}>
-              تسجيل الخروج
+              {t("auth.signOut")}
             </Text>
           </Pressable>
 
@@ -197,9 +199,9 @@ export default function LogoutConfirmScreen() {
               pressed && styles.pressed,
             ]}
             accessibilityRole="button"
-            accessibilityLabel="إلغاء"
+            accessibilityLabel={t("common.cancel")}
           >
-            <Text style={[styles.cancelText, { fontSize: ms(22) }]}>إلغاء</Text>
+            <Text style={[styles.cancelText, { fontSize: ms(22) }]}>{t("common.cancel")}</Text>
           </Pressable>
         </ScrollView>
       </View>

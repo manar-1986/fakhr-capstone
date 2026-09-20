@@ -13,6 +13,8 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { DisabilityAwareHeaderBackButton } from "../../../components/navigation/HeaderBackButton";
+import { useTranslation } from "react-i18next";
+import { knownText } from "../../../utils/knownText";
 import {
   getServices,
   HOME_SERVICES,
@@ -93,6 +95,7 @@ function mapService(service: Service, index: number): ServiceRow {
 }
 
 export default function ServicesScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
@@ -152,7 +155,7 @@ export default function ServicesScreen() {
                 },
               ]}
             >
-              الخدمات المنزلية
+              {t("ui.homeServicesOneLine")}
             </Text>
           </View>
 
@@ -187,7 +190,13 @@ export default function ServicesScreen() {
                   ]}
                   accessibilityRole="button"
                   accessibilityState={{ selected }}
-                  accessibilityLabel={item.label}
+                  accessibilityLabel={
+                    item.id === "all"
+                      ? t("ui.all")
+                      : item.id === "زراعية"
+                        ? t("ui.agricultural")
+                        : t("ui.cleaning")
+                  }
                 >
                   <Text
                     style={[
@@ -198,7 +207,11 @@ export default function ServicesScreen() {
                       },
                     ]}
                   >
-                    {item.label}
+                    {item.id === "all"
+                      ? t("ui.all")
+                      : item.id === "زراعية"
+                        ? t("ui.agricultural")
+                        : t("ui.cleaning")}
                   </Text>
                 </Pressable>
               );
@@ -224,7 +237,7 @@ export default function ServicesScreen() {
                   pressed && styles.pressed,
                 ]}
                 accessibilityRole="button"
-                accessibilityLabel={row.name}
+                accessibilityLabel={knownText(t, row.name)}
               >
                 <Image
                   source={source}
@@ -243,7 +256,7 @@ export default function ServicesScreen() {
                     ]}
                     numberOfLines={1}
                   >
-                    {row.name}
+                    {knownText(t, row.name)}
                   </Text>
                   {!!row.priceLabel && (
                     <View
@@ -290,10 +303,10 @@ export default function ServicesScreen() {
               pressed && styles.pressed,
             ]}
             accessibilityRole="button"
-            accessibilityLabel="عرض المزيد"
+            accessibilityLabel={t("ui.seeMore")}
           >
             <Text style={[styles.moreBtnText, { fontSize: ms(16) }]}>
-              عرض المزيد
+              {t("ui.seeMore")}
             </Text>
           </Pressable>
         </ScrollView>

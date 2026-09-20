@@ -6,8 +6,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { getCenterDetails } from "../../../api/directory.api";
 import { colors, sectionSpacing, spacing, typography } from "../../../theme";
 import { openInGoogleMaps } from "../../../utils/openMaps";
+import { useTranslation } from "react-i18next";
+import { knownText } from "../../../utils/knownText";
 
 export default function CenterDetailsScreen() {
+  const { t } = useTranslation();
   const { id } = useLocalSearchParams<{ id?: string }>();
   const router = useRouter();
 
@@ -54,7 +57,7 @@ export default function CenterDetailsScreen() {
     return (
       <SafeAreaView style={styles.wrapper} edges={["top"]}>
         <View style={styles.container}>
-          <Text style={styles.loadingText}>Loading...</Text>
+          <Text style={styles.loadingText}>{t("common.loading")}</Text>
         </View>
       </SafeAreaView>
     );
@@ -66,20 +69,20 @@ export default function CenterDetailsScreen() {
         <View style={[styles.container, styles.emptyState]}>
           <Ionicons name="medical-outline" size={48} color={colors.textMuted} />
           <Text style={styles.emptyTitle}>
-            {isError ? "Failed to load center" : "Center not found"}
+            {isError ? t("copy.failedLoadCenter") : t("copy.centerNotFound")}
           </Text>
           <Text style={styles.emptyText}>
-            {isError ? (error?.message || "Please try again later.") : "This center may no longer be available."}
+            {isError ? (error?.message || t("copy.tryLater")) : t("copy.centerUnavailable")}
           </Text>
           <View style={styles.errorActions}>
             {isError && (
               <Pressable onPress={() => refetch()} style={styles.retryButton}>
                 <Ionicons name="refresh" size={18} color="#FFFFFF" />
-                <Text style={styles.retryButtonText}>Retry</Text>
+                <Text style={styles.retryButtonText}>{t("common.retry")}</Text>
               </Pressable>
             )}
             <Pressable onPress={() => router.back()} style={styles.backButton}>
-              <Text style={styles.backButtonText}>Go Back</Text>
+              <Text style={styles.backButtonText}>{t("copy.goBack")}</Text>
             </Pressable>
           </View>
         </View>
@@ -87,7 +90,7 @@ export default function CenterDetailsScreen() {
     );
   }
 
-  const locationLine = [center.address, center.city]
+  const locationLine = [center.address, knownText(t, center.city)]
     .filter((p): p is string => typeof p === "string" && p.trim().length > 0)
     .join(", ");
   const lat = center.latitude;
@@ -105,7 +108,7 @@ export default function CenterDetailsScreen() {
     locationLine.length > 0;
   const locationPrimaryText =
     locationLine ||
-    (hasCoords ? "View on map" : center.mapUrl?.trim() ? center.name : "");
+    (hasCoords ? t("copy.viewOnMap") : center.mapUrl?.trim() ? center.name : "");
 
   return (
     <SafeAreaView style={styles.wrapper} edges={["top"]}>
@@ -119,7 +122,11 @@ export default function CenterDetailsScreen() {
           {center.type && (
             <View style={[styles.typeBadge, center.type === "public" ? styles.publicBadge : styles.privateBadge]}>
               <Text style={[styles.typeBadgeText, center.type === "public" ? styles.publicText : styles.privateText]}>
-                {center.type}
+                {center.type === "public" || center.type === "حكومي"
+                  ? t("copy.gov")
+                  : center.type === "private" || center.type === "خاص"
+                    ? t("copy.priv")
+                    : knownText(t, center.type)}
               </Text>
             </View>
           )}
@@ -130,9 +137,9 @@ export default function CenterDetailsScreen() {
             <Ionicons name="location-outline" size={20} color={colors.primary} />
             <View style={styles.locationContent}>
               <Text style={styles.address}>
-                {locationPrimaryText || "Tap to open in Google Maps"}
+                {locationPrimaryText || t("copy.tapMaps")}
               </Text>
-              <Text style={styles.openInMapsHint}>Tap to open in Google Maps</Text>
+              <Text style={styles.openInMapsHint}>{t("copy.tapMaps")}</Text>
             </View>
             <Ionicons name="open-outline" size={18} color={colors.primary} />
           </Pressable>
@@ -141,8 +148,8 @@ export default function CenterDetailsScreen() {
         <Pressable onPress={handleOpenGoogleSearch} style={styles.googleSearchRow}>
           <Ionicons name="search" size={20} color={colors.primary} />
           <View style={styles.locationContent}>
-            <Text style={styles.googleSearchText}>View more info on Google</Text>
-            <Text style={styles.openInMapsHint}>Search for reviews, website & more</Text>
+            <Text style={styles.googleSearchText}>{t("copy.viewGoogle")}</Text>
+            <Text style={styles.openInMapsHint}>{t("copy.searchReviewsMore")}</Text>
           </View>
           <Ionicons name="open-outline" size={18} color={colors.primary} />
         </Pressable>
@@ -162,29 +169,29 @@ export default function CenterDetailsScreen() {
         )}
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Operating Hours</Text>
+          <Text style={styles.sectionTitle}>{t("copy.workingHours")}</Text>
           <View style={styles.hoursRow}>
             <Ionicons name="time-outline" size={20} color={colors.primary} />
             <Text style={styles.hoursText}>
-              {center.operatingHours || "Contact the center for operating hours"}
+              {knownText(t, center.operatingHours) || t("copy.contactHours")}
             </Text>
           </View>
         </View>
 
         {center.description && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>About</Text>
-            <Text style={styles.description}>{center.description}</Text>
+            <Text style={styles.sectionTitle}>{t("copy.about")}</Text>
+            <Text style={styles.description}>{knownText(t, center.description)}</Text>
           </View>
         )}
 
         {center.specialties && center.specialties.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Specialties</Text>
+            <Text style={styles.sectionTitle}>{t("ui.specialty")}</Text>
             <View style={styles.servicesContainer}>
               {center.specialties.map((s) => (
                 <View key={s} style={styles.serviceChip}>
-                  <Text style={styles.serviceChipText}>{s}</Text>
+                  <Text style={styles.serviceChipText}>{knownText(t, s)}</Text>
                 </View>
               ))}
             </View>
@@ -194,7 +201,7 @@ export default function CenterDetailsScreen() {
         {center.address && (
           <Pressable onPress={handleOpenGoogleMaps} style={styles.mapLinkBtn}>
             <Ionicons name="map-outline" size={20} color={colors.primary} />
-            <Text style={styles.mapLinkText}>Open in Google Maps</Text>
+            <Text style={styles.mapLinkText}>{t("copy.openGoogleMaps")}</Text>
           </Pressable>
         )}
       </ScrollView>

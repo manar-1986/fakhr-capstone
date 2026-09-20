@@ -19,6 +19,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { login } from "../../api/auth.api";
 import { useAuth, USER_PROFILE_CACHE_KEY } from "../../context/AuthContext";
+import { useI18nLayout } from "../../hooks/useI18nLayout";
+import { useTranslation } from "react-i18next";
 
 const colors = {
   bg: "#FFFFFF",
@@ -42,6 +44,8 @@ function notify(title: string, message: string) {
 }
 
 export default function LoginScreen() {
+  const { t } = useTranslation();
+  const { align } = useI18nLayout();
   const router = useRouter();
   const { setUser } = useAuth();
   const [email, setEmail] = useState("");
@@ -71,7 +75,7 @@ export default function LoginScreen() {
 
   const handleLogin = () => {
     if (!email || !password) {
-      notify("خطأ", "يرجى تعبئة جميع الحقول");
+      notify(t("common.error"), t("auth.fillAllFields"));
       return;
     }
     loginMutation.mutate({ email, password });
@@ -107,7 +111,7 @@ export default function LoginScreen() {
               hitSlop={12}
               style={({ pressed }) => [styles.backBtn, pressed && styles.pressed]}
               accessibilityRole="button"
-              accessibilityLabel="رجوع"
+              accessibilityLabel={t("common.back")}
             >
               <Ionicons name="chevron-back" size={26} color={colors.text} />
             </Pressable>
@@ -115,33 +119,33 @@ export default function LoginScreen() {
               source={require("../../assets/images/fakhr-wordmark-blue.png")}
               style={styles.logo}
               resizeMode="contain"
-              accessibilityLabel="فخر"
+              accessibilityLabel={t("ui.brand")}
             />
           </View>
 
-          <Text style={styles.heading}>مرحباً بعودتك</Text>
+          <Text style={styles.heading}>{t("auth.welcomeBack")}</Text>
 
           <View style={styles.form}>
             <TextInput
               style={styles.input}
-              placeholder="البريد الإلكتروني"
+              placeholder={t("auth.email")}
               placeholderTextColor={colors.placeholder}
               value={email}
               onChangeText={setEmail}
               keyboardType="email-address"
               autoCapitalize="none"
-              textAlign="right"
+              textAlign={align}
             />
 
             <View style={styles.passwordWrap}>
               <TextInput
                 style={styles.passwordInput}
-                placeholder="كلمة المرور"
+                placeholder={t("auth.password")}
                 placeholderTextColor={colors.placeholder}
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry={!isPasswordVisible}
-                textAlign="right"
+                textAlign={align}
               />
               <Pressable
                 style={({ pressed }) => [
@@ -150,7 +154,7 @@ export default function LoginScreen() {
                 ]}
                 onPress={() => setIsPasswordVisible((prev) => !prev)}
                 accessibilityLabel={
-                  isPasswordVisible ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"
+                  isPasswordVisible ? t("auth.hidePassword") : t("auth.showPassword")
                 }
               >
                 <Ionicons
@@ -168,9 +172,9 @@ export default function LoginScreen() {
                 pressed && styles.pressed,
               ]}
               accessibilityRole="button"
-              accessibilityLabel="نسيت كلمة المرور؟"
+              accessibilityLabel={t("auth.forgotPassword")}
             >
-              <Text style={styles.forgotPassword}>نسيت كلمة المرور؟</Text>
+              <Text style={styles.forgotPassword}>{t("auth.forgotPassword")}</Text>
             </Pressable>
 
             <Pressable
@@ -181,14 +185,14 @@ export default function LoginScreen() {
               onPress={handleLogin}
               disabled={loginMutation.isPending}
               accessibilityRole="button"
-              accessibilityLabel="تسجيل الدخول"
+              accessibilityLabel={t("auth.signIn")}
             >
               <Text style={styles.btnPrimaryText}>
-                {loginMutation.isPending ? "جاري تسجيل الدخول..." : "تسجيل الدخول"}
+                {loginMutation.isPending ? t("ui.loginPending") : t("auth.signIn")}
               </Text>
             </Pressable>
 
-            <Text style={styles.dividerText}>أو الدخول عبر</Text>
+            <Text style={styles.dividerText}>{t("ui.orSignInWith")}</Text>
 
             <View style={styles.socialRow}>
               <Pressable
@@ -197,7 +201,7 @@ export default function LoginScreen() {
                   pressed && styles.pressed,
                 ]}
                 onPress={() =>
-                  Alert.alert("Google", "تسجيل الدخول عبر Google غير متاح حالياً.")
+                  Alert.alert("Google", t("ui.googleLoginSoon"))
                 }
                 accessibilityRole="button"
                 accessibilityLabel="Google"
@@ -210,7 +214,7 @@ export default function LoginScreen() {
                   pressed && styles.pressed,
                 ]}
                 onPress={() =>
-                  Alert.alert("Apple", "تسجيل الدخول عبر Apple غير متاح حالياً.")
+                  Alert.alert("Apple", t("ui.appleLoginSoon"))
                 }
                 accessibilityRole="button"
                 accessibilityLabel="Apple"
@@ -223,10 +227,10 @@ export default function LoginScreen() {
                   pressed && styles.pressed,
                 ]}
                 onPress={() =>
-                  Alert.alert("الحساب", "تسجيل الدخول عبر هذا الخيار غير متاح حالياً.")
+                  Alert.alert(t("ui.account"), t("ui.accountLoginSoon"))
                 }
                 accessibilityRole="button"
-                accessibilityLabel="تسجيل الدخول بالحساب"
+                accessibilityLabel={t("ui.account")}
               >
                 <View style={styles.personBadge}>
                   <Ionicons
@@ -240,14 +244,14 @@ export default function LoginScreen() {
           </View>
 
           <Text style={styles.footer}>
-            <Text style={styles.footerMuted}>ليس لديك حساب؟ </Text>
+            <Text style={styles.footerMuted}>{t("auth.dontHaveAccount")} </Text>
             <Text
               style={styles.footerLink}
               onPress={() => router.push("/(signup)")}
               accessibilityRole="link"
-              accessibilityLabel="إنشاء حساب"
+              accessibilityLabel={t("auth.createAccount")}
             >
-              إنشاء حساب
+              {t("auth.createAccount")}
             </Text>
           </Text>
         </ScrollView>

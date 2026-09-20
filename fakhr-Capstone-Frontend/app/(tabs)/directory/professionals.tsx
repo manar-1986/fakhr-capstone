@@ -17,6 +17,9 @@ import { getProfessionals } from "../../../api/directory.api";
 import { DisabilityAwareHeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 import type { DirectoryListing } from "../../../components/directory/types";
 import type { Professional } from "../../../types/directory.types";
+import { useTranslation } from "react-i18next";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { knownText } from "../../../utils/knownText";
 
 const colors = {
   bg: "#FFFFFF",
@@ -128,6 +131,8 @@ function mapApiProfessional(p: Professional, index: number): SpecialistRow {
 }
 
 export default function ProfessionalsScreen() {
+  const { t } = useTranslation();
+  const { align } = useI18nLayout();
   const router = useRouter();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
@@ -204,7 +209,7 @@ export default function ProfessionalsScreen() {
               style={[styles.title, { fontSize: ms(22), lineHeight: ms(30) }]}
               numberOfLines={1}
             >
-              الأطباء والمختصون
+              {t("ui.doctorsOneLine")}
             </Text>
           </View>
 
@@ -227,10 +232,10 @@ export default function ProfessionalsScreen() {
                 setSearch(value);
                 setVisibleCount(PAGE_SIZE);
               }}
-              placeholder="ابحث عن طبيب..."
+              placeholder={t("ui.searchDoctor")}
               placeholderTextColor={colors.placeholder}
               style={[styles.searchInput, { fontSize: ms(14) }]}
-              textAlign="right"
+              textAlign={align}
               returnKeyType="search"
             />
             <Ionicons
@@ -293,7 +298,7 @@ export default function ProfessionalsScreen() {
                       ]}
                       numberOfLines={1}
                     >
-                      {row.specialty}
+                      {knownText(t, row.specialty)}
                     </Text>
                     <View
                       style={[
@@ -340,10 +345,10 @@ export default function ProfessionalsScreen() {
               pressed && styles.pressed,
             ]}
             accessibilityRole="button"
-            accessibilityLabel="عرض المزيد"
+            accessibilityLabel={t("ui.seeMore")}
           >
             <Text style={[styles.moreBtnText, { fontSize: ms(16) }]}>
-              عرض المزيد
+              {t("ui.seeMore")}
             </Text>
           </Pressable>
         </ScrollView>

@@ -2,10 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 import { getTaskDetails } from "../../../api/care-path.api";
 import { colors, sectionSpacing, spacing, typography } from "../../../theme";
+import { knownText } from "../../../utils/knownText";
 
 export default function TaskDetailsScreen() {
+  const { t } = useTranslation();
   const { id } = useLocalSearchParams();
   const { data: task, isLoading } = useQuery({
     queryKey: ["task", id],
@@ -15,7 +18,7 @@ export default function TaskDetailsScreen() {
   if (isLoading) {
     return (
       <View style={styles.container}>
-        <Text>Loading...</Text>
+        <Text>{t("common.loading")}</Text>
       </View>
     );
   }
@@ -26,15 +29,15 @@ export default function TaskDetailsScreen() {
         style={styles.container}
         contentContainerStyle={styles.scrollContent}
       >
-        <Text style={styles.title}>{task?.title}</Text>
-        <Text style={styles.description}>{task?.description}</Text>
+        <Text style={styles.title}>{knownText(t, task?.title)}</Text>
+        <Text style={styles.description}>{knownText(t, task?.description)}</Text>
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Instructions</Text>
-          <Text style={styles.sectionContent}>{task?.instructions}</Text>
+          <Text style={styles.sectionTitle}>{t("copy.instructions")}</Text>
+          <Text style={styles.sectionContent}>{knownText(t, task?.instructions)}</Text>
         </View>
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Expected Outcome</Text>
-          <Text style={styles.sectionContent}>{task?.expectedOutcome}</Text>
+          <Text style={styles.sectionTitle}>{t("copy.expectedOutcome")}</Text>
+          <Text style={styles.sectionContent}>{knownText(t, task?.expectedOutcome)}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>

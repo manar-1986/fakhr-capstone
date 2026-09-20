@@ -1,6 +1,7 @@
 import type { ComponentProps } from "react";
 import type { Ionicons } from "@expo/vector-icons";
 import type { ExploreCategoryId } from "../components/explore/exploreDemoData";
+import { DISABILITY_GUIDES_EN } from "./disabilityGuidesEn";
 
 type IoniconName = ComponentProps<typeof Ionicons>["name"];
 
@@ -359,6 +360,13 @@ export const DISABILITY_GUIDES: Record<string, DisabilityGuide> = {
     ],
   },
 };
+
+export function localizeGuide(guide: DisabilityGuide, locale: string): DisabilityGuide {
+  if (!locale.startsWith("en")) return guide;
+  const en = DISABILITY_GUIDES_EN[guide.id];
+  if (!en) return guide;
+  return { ...guide, ...en };
+}
 
 export const DISABILITY_DISCLAIMER =
   "هذه المعلومات للتوعية ودعم الأسرة فقط، ولا تُعد تشخيصًا أو خطة علاج. القرار الأنسب لطفلك يضعه مختص مؤهل بعد تقييم مباشر.";

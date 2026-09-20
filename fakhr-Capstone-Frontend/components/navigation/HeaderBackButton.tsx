@@ -2,6 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter, type Href } from "expo-router";
 import React from "react";
 import { Pressable, StyleSheet } from "react-native";
+import { useTranslation } from "react-i18next";
 import {
   firstSearchParam,
   navigateToDisabilityServices,
@@ -25,6 +26,7 @@ export function HeaderBackButton({
   variant = "overlay",
   onPress,
 }: HeaderBackButtonProps) {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const goBack = () => {
@@ -48,7 +50,7 @@ export function HeaderBackButton({
         pressed && styles.pressed,
       ]}
       accessibilityRole="button"
-      accessibilityLabel="رجوع"
+      accessibilityLabel={t("common.back")}
     >
       <Ionicons name="chevron-back" size={size} color={color} />
     </Pressable>

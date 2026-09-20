@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 
 const colors = {
   bg: "#FFFFFF",
@@ -24,7 +25,7 @@ const DESIGN_W = 419;
 
 type ServiceCategory = {
   id: string;
-  label: string;
+  labelKey: string;
   icon: keyof typeof Ionicons.glyphMap;
   iconColor: string;
   backgroundColor: string;
@@ -40,7 +41,7 @@ type ServiceCategory = {
 const SERVICE_CATEGORIES: ServiceCategory[] = [
   {
     id: "centers",
-    label: "المراكز",
+    labelKey: "ui.centers",
     icon: "business-outline",
     iconColor: "#5C6BB3",
     backgroundColor: "#EBEEF9",
@@ -48,7 +49,7 @@ const SERVICE_CATEGORIES: ServiceCategory[] = [
   },
   {
     id: "professionals",
-    label: "الأطباء والمتخصصين",
+    labelKey: "ui.doctorsOneLine",
     icon: "person-outline",
     iconColor: "#3EC8B3",
     backgroundColor: "#E8F8F5",
@@ -56,7 +57,7 @@ const SERVICE_CATEGORIES: ServiceCategory[] = [
   },
   {
     id: "schools",
-    label: "المدارس",
+    labelKey: "ui.schools",
     icon: "school-outline",
     iconColor: "#4A7FA3",
     backgroundColor: "#E6F4FD",
@@ -64,7 +65,7 @@ const SERVICE_CATEGORIES: ServiceCategory[] = [
   },
   {
     id: "activities",
-    label: "الأنشطة والبرامج",
+    labelKey: "ui.activitiesOneLine",
     icon: "people-outline",
     iconColor: "#5C6BB3",
     backgroundColor: "#EBEEF9",
@@ -72,7 +73,7 @@ const SERVICE_CATEGORIES: ServiceCategory[] = [
   },
   {
     id: "consultations",
-    label: "الاستشارات",
+    labelKey: "ui.consultations",
     icon: "chatbubble-ellipses-outline",
     iconColor: "#7B6AA8",
     backgroundColor: "#EEEAF8",
@@ -80,7 +81,7 @@ const SERVICE_CATEGORIES: ServiceCategory[] = [
   },
   {
     id: "home-services",
-    label: "الخدمات المنزلية",
+    labelKey: "ui.homeServicesOneLine",
     icon: "home-outline",
     iconColor: "#3E7A9A",
     backgroundColor: "#E8F4FC",
@@ -88,7 +89,7 @@ const SERVICE_CATEGORIES: ServiceCategory[] = [
   },
   {
     id: "products",
-    label: "المنتجات",
+    labelKey: "ui.products",
     icon: "storefront-outline",
     iconColor: "#C45A78",
     backgroundColor: "#F8EEF4",
@@ -102,6 +103,7 @@ function firstParam(value?: string | string[]): string {
 }
 
 export default function DisabilityServicesScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const params = useLocalSearchParams<{ id?: string; name?: string }>();
   const { width: windowWidth } = useWindowDimensions();
@@ -112,8 +114,8 @@ export default function DisabilityServicesScreen() {
   const disabilityId = firstParam(params.id);
   const disabilityName = useMemo(() => {
     const raw = firstParam(params.name).trim();
-    return raw || "الخدمات";
-  }, [params.name]);
+    return raw || t("ui.services");
+  }, [params.name, t]);
 
   const goBack = () => {
     router.navigate("/(tabs)/resources");
@@ -151,7 +153,7 @@ export default function DisabilityServicesScreen() {
             hitSlop={12}
             style={({ pressed }) => [styles.backBtn, pressed && styles.pressed]}
             accessibilityRole="button"
-            accessibilityLabel="رجوع"
+            accessibilityLabel={t("common.back")}
           >
             <Ionicons name="chevron-back" size={ms(26)} color={colors.back} />
           </Pressable>
@@ -173,7 +175,7 @@ export default function DisabilityServicesScreen() {
             },
           ]}
         >
-          {"اختر نوع الخدمة المناسبة\nللفئة المحددة"}
+          {t("ui.chooseServiceType")}
         </Text>
 
         <View style={{ gap: ms(6) }}>
@@ -193,7 +195,7 @@ export default function DisabilityServicesScreen() {
                 pressed && styles.pressed,
               ]}
               accessibilityRole="button"
-              accessibilityLabel={item.label}
+              accessibilityLabel={t(item.labelKey)}
             >
               <Ionicons name={item.icon} size={ms(26)} color={item.iconColor} />
               <Text
@@ -202,7 +204,7 @@ export default function DisabilityServicesScreen() {
                   { fontSize: ms(14), lineHeight: ms(20) },
                 ]}
               >
-                {item.label}
+                {t(item.labelKey)}
               </Text>
               <Ionicons
                 name="chevron-forward"

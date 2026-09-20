@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 
 const colors = {
   bg: "#FFFFFF",
@@ -23,13 +24,14 @@ const DESIGN_W = 387;
 const ILLUSTRATION_W = 332;
 const ILLUSTRATION_H = 310;
 
-const FEATURES = [
-  "خدمات موثوقة ومعتمدة",
-  "سهولة الوصول والاستخدام",
-  "تجربة مخصصة لك",
-];
+const FEATURE_KEYS = [
+  "ui.trustedServices",
+  "ui.easyAccess",
+  "ui.tailoredExperience",
+] as const;
 
 export default function SignupWelcomeIntroScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const { role } = useLocalSearchParams<{ role?: string }>();
   const { width: windowWidth } = useWindowDimensions();
@@ -75,7 +77,7 @@ export default function SignupWelcomeIntroScreen() {
             },
           ]}
         >
-          مرحباً بك في فخر
+          {t("home.welcomeToFakhr")}
         </Text>
 
         <Image
@@ -87,7 +89,7 @@ export default function SignupWelcomeIntroScreen() {
             marginBottom: ms(18),
           }}
           resizeMode="contain"
-          accessibilityLabel="عائلة كويتية"
+          accessibilityLabel={t("ui.kuwaitiFamily")}
         />
 
         <Text
@@ -100,7 +102,7 @@ export default function SignupWelcomeIntroScreen() {
             },
           ]}
         >
-          كل ما تحتاجه في مكان واحد
+          {t("ui.everythingOnePlace")}
         </Text>
 
         <View
@@ -109,8 +111,8 @@ export default function SignupWelcomeIntroScreen() {
             { gap: ms(12), marginBottom: ms(28), width: ms(268) },
           ]}
         >
-          {FEATURES.map((label) => (
-            <View key={label} style={[styles.featureRow, { gap: ms(8) }]}>
+          {FEATURE_KEYS.map((key) => (
+            <View key={key} style={[styles.featureRow, { gap: ms(8) }]}>
               <Text
                 style={[
                   styles.featureText,
@@ -118,7 +120,7 @@ export default function SignupWelcomeIntroScreen() {
                 ]}
                 numberOfLines={1}
               >
-                {label}
+                {t(key)}
               </Text>
               <Text
                 style={[
@@ -143,10 +145,10 @@ export default function SignupWelcomeIntroScreen() {
             pressed && styles.pressed,
           ]}
           accessibilityRole="button"
-          accessibilityLabel="ابدأ الآن"
+          accessibilityLabel={t("ui.startNow")}
         >
           <Text style={[styles.primaryButtonText, { fontSize: ms(18) }]}>
-            ابدأ الآن
+            {t("ui.startNow")}
           </Text>
         </Pressable>
 
@@ -159,9 +161,9 @@ export default function SignupWelcomeIntroScreen() {
             pressed && styles.pressed,
           ]}
           accessibilityRole="button"
-          accessibilityLabel="تخطي"
+          accessibilityLabel={t("ui.skip")}
         >
-          <Text style={[styles.skipText, { fontSize: ms(17) }]}>تخطي</Text>
+          <Text style={[styles.skipText, { fontSize: ms(17) }]}>{t("ui.skip")}</Text>
         </Pressable>
       </View>
     </SafeAreaView>

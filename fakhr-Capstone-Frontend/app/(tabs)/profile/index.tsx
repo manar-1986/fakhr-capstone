@@ -32,10 +32,10 @@ const colors = {
 const DESIGN_W = 388;
 const avatarPhoto = require("../../../assets/images/profile-avatar.png");
 
-const ROLE_LABELS: Record<string, string> = {
-  parent: "ولي أمر",
-  individual: "مستخدم فردي",
-  organization: "جهة / مركز",
+const ROLE_KEYS: Record<string, string> = {
+  parent: "ui.parent",
+  individual: "ui.individualUser",
+  organization: "ui.organization",
 };
 
 type MenuItem = {
@@ -62,12 +62,12 @@ export default function ProfileTabScreen() {
     retry: false,
   });
 
-  const displayName = currentUser?.name || user?.name || "شيخة أحمد";
+  const displayName = currentUser?.name || user?.name || t("ui.demoFullName");
   const roleLabel = useMemo(() => {
     const role = (currentUser as { role?: string } | undefined)?.role;
-    if (role && ROLE_LABELS[role]) return ROLE_LABELS[role];
-    return "ولي أمر";
-  }, [currentUser]);
+    if (role && ROLE_KEYS[role]) return t(ROLE_KEYS[role]);
+    return t("ui.parent");
+  }, [currentUser, t]);
 
   const openNotifications = () => {
     Alert.alert(t("home.notifications"), t("home.newNotifications"));
@@ -80,58 +80,58 @@ export default function ProfileTabScreen() {
   const items: MenuItem[] = [
     {
       key: "personal",
-      label: "بياناتي الشخصية",
+      label: t("ui.myDetails"),
       icon: "person-outline",
       onPress: () => router.push("/(tabs)/profile/edit-profile"),
     },
     {
       key: "children",
-      label: "أطفالي",
+      label: t("ui.myChildren"),
       icon: "people-outline",
-      onPress: () => router.push("/(tabs)/profile/manage-children"),
+      onPress: () => router.push("/(tabs)/profile/edit-child-profile"),
     },
     {
       key: "bookings",
-      label: "مواعيدي",
+      label: t("ui.myAppointments"),
       icon: "calendar-outline",
       onPress: () => router.navigate("/bookings"),
     },
     {
       key: "advice",
-      label: "استشاراتي",
+      label: t("ui.myConsultations"),
       icon: "chatbubbles-outline",
       onPress: () => router.navigate("/community/advice"),
     },
     {
       key: "notifications",
-      label: "الإشعارات",
+      label: t("ui.notifications"),
       icon: "notifications-outline",
       badge: true,
       onPress: openNotifications,
     },
     {
       key: "offers",
-      label: "العروض والخصومات",
+      label: t("ui.offers"),
       icon: "pricetag-outline",
       onPress: () => router.navigate("/services"),
     },
     {
       key: "settings",
-      label: "الإعدادات",
+      label: t("settings.title"),
       icon: "settings-outline",
       onPress: () => router.push("/(tabs)/profile/settings"),
     },
     {
       key: "help",
-      label: "المساعدة والدعم",
+      label: t("ui.helpSupport"),
       icon: "headset-outline",
       onPress: () => router.push("/(tabs)/profile/help-support"),
     },
     {
       key: "about",
-      label: "عن فخر",
+      label: t("ui.aboutFakhr"),
       icon: "information-circle-outline",
-      onPress: () => Alert.alert("عن فخر"),
+      onPress: () => Alert.alert(t("ui.aboutFakhr")),
     },
   ];
 
@@ -224,11 +224,11 @@ export default function ProfileTabScreen() {
             pressed && styles.pressed,
           ]}
           accessibilityRole="button"
-          accessibilityLabel="تسجيل الخروج"
+          accessibilityLabel={t("auth.signOut")}
         >
           <Ionicons name="log-out-outline" size={ms(20)} color={colors.icon} />
           <Text style={[styles.logoutText, { fontSize: ms(16) }]}>
-            تسجيل الخروج
+            {t("auth.signOut")}
           </Text>
         </Pressable>
       </ScrollView>

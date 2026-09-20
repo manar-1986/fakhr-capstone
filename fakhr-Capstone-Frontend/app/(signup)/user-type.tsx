@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 
 const colors = {
   bg: "#FFFFFF",
@@ -28,8 +29,8 @@ const DESIGN_W = 387;
 
 type UserTypeOption = {
   key: "parent" | "individual" | "organization";
-  title: string;
-  description: string;
+  titleKey: string;
+  descriptionKey: string;
   backgroundColor: string;
   iconColor: string;
 };
@@ -37,28 +38,29 @@ type UserTypeOption = {
 const OPTIONS: UserTypeOption[] = [
   {
     key: "parent",
-    title: "ولي أمر",
-    description: "أبحث عن خدمات لطفلي",
+    titleKey: "ui.parent",
+    descriptionKey: "ui.parentDesc",
     backgroundColor: colors.cardParentBg,
     iconColor: colors.cardParentIcon,
   },
   {
     key: "individual",
-    title: "مستخدم فردي",
-    description: "أبحث عن خدمات لنفسي",
+    titleKey: "ui.individualUser",
+    descriptionKey: "ui.individualDesc",
     backgroundColor: colors.cardIndividualBg,
     iconColor: colors.cardIndividualIcon,
   },
   {
     key: "organization",
-    title: "جهة / مركز",
-    description: "أقدم خدمات ومنتجات",
+    titleKey: "ui.organization",
+    descriptionKey: "ui.orgDesc",
     backgroundColor: colors.cardOrgBg,
     iconColor: colors.cardOrgIcon,
   },
 ];
 
 export default function UserTypeSelectionScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
@@ -92,7 +94,7 @@ export default function UserTypeSelectionScreen() {
             },
           ]}
         >
-          اختر نوع المستخدم
+          {t("ui.chooseUserType")}
         </Text>
 
         <View style={{ gap: ms(18) }}>
@@ -112,7 +114,7 @@ export default function UserTypeSelectionScreen() {
                 pressed && styles.pressed,
               ]}
               accessibilityRole="button"
-              accessibilityLabel={`${option.title}. ${option.description}`}
+              accessibilityLabel={`${t(option.titleKey)}. ${t(option.descriptionKey)}`}
             >
               <View style={styles.cardRow}>
                 <View style={[styles.iconSlot, { width: ms(64) }]}>
@@ -139,7 +141,7 @@ export default function UserTypeSelectionScreen() {
                       },
                     ]}
                   >
-                    {option.title}
+                    {t(option.titleKey)}
                   </Text>
                   <Text
                     style={[
@@ -147,7 +149,7 @@ export default function UserTypeSelectionScreen() {
                       { fontSize: ms(14), lineHeight: ms(22) },
                     ]}
                   >
-                    {option.description}
+                    {t(option.descriptionKey)}
                   </Text>
                 </View>
               </View>

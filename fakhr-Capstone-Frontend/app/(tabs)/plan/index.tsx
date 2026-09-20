@@ -29,6 +29,7 @@ import {
   parseStoredDate,
 } from "../../../constants/childProfileOptions";
 import { getMockBookings } from "../../../utils/mockBookingsStore";
+import { knownText } from "../../../utils/knownText";
 
 const colors = {
   bg: "#EEF0F8",
@@ -53,13 +54,13 @@ const colors = {
 const DESIGN_W = 390;
 
 const WEEK_DAYS = [
-  { key: 6, label: "السبت" },
-  { key: 0, label: "الأحد" },
-  { key: 1, label: "الاثنين" },
-  { key: 2, label: "الثلاثاء" },
-  { key: 3, label: "الأربعاء" },
-  { key: 4, label: "الخميس" },
-  { key: 5, label: "الجمعة" },
+  { key: 6, labelKey: "planUi.sat" },
+  { key: 0, labelKey: "planUi.sun" },
+  { key: 1, labelKey: "planUi.mon" },
+  { key: 2, labelKey: "planUi.tue" },
+  { key: 3, labelKey: "planUi.wed" },
+  { key: 4, labelKey: "planUi.thu" },
+  { key: 5, labelKey: "planUi.fri" },
 ] as const;
 
 const AR_MONTHS = [
@@ -104,10 +105,10 @@ function startOfSaturdayWeek(date: Date): Date {
   return copy;
 }
 
-function formatWeekRange(start: Date): string {
+function formatWeekRange(start: Date, months: string[]): string {
   const end = new Date(start);
   end.setDate(start.getDate() + 6);
-  const month = AR_MONTHS[end.getMonth()] ?? "";
+  const month = months[end.getMonth()] ?? "";
   return `${start.getDate()} - ${end.getDate()} ${month}`;
 }
 
@@ -140,11 +141,11 @@ function childTags(child: Child, t: (key: string) => string): string[] {
     const raw = String(item).trim();
     if (!raw) return;
     const mapped = DIAGNOSIS_AR[raw.toLowerCase()];
-    tags.push(mapped || raw);
+    tags.push(knownText(t, mapped || raw));
   });
   asIdList(child.areasOfFocus).forEach((id) => {
     const mapped = TAG_BY_FOCUS[id];
-    if (mapped) tags.push(mapped);
+    if (mapped) tags.push(knownText(t, mapped));
     else {
       const area = FOCUS_AREAS.find((f) => f.id === id);
       tags.push(area ? t(area.labelKey) : id);
@@ -162,7 +163,7 @@ function weeklyGoalsText(child: Child | undefined, t: (key: string) => string): 
       const goal = SUPPORT_GOALS.find((g) => g.id === id);
       return goal ? t(goal.labelKey) : id;
     })
-    .join("، ");
+    .join(", ");
 }
 
 function taskIcon(task: CarePathTask): React.ComponentProps<typeof Ionicons>["name"] {
@@ -182,10 +183,10 @@ function taskIcon(task: CarePathTask): React.ComponentProps<typeof Ionicons>["na
   return "checkbox-outline";
 }
 
-function helpfulnessLabel(task: CarePathTask): string | null {
+function helpfulnessLabel(task: CarePathTask, t: (key: string) => string): string | null {
   const hay = `${task.note ?? ""} ${task.expectedOutcome ?? ""}`.toLowerCase();
-  if (hay.includes("very") || hay.includes("جدا")) return "مفيد جداً";
-  if (hay.includes("helpful") || hay.includes("مفيد")) return "مفيد";
+  if (hay.includes("very") || hay.includes("جدا")) return t("copy.veryHelpful");
+  if (hay.includes("helpful") || hay.includes("مفيد")) return t("copy.helpful");
   return null;
 }
 
@@ -245,6 +246,7 @@ export default function PlanScreen() {
   const s = contentW / DESIGN_W;
   const ms = (n: number) => Math.round(n * s);
 
+  const months = (t("planUi.months", { returnObjects: true }) as string[]) ?? [];
   const today = useMemo(() => new Date(), []);
   const [selectedDay, setSelectedDay] = useState<number>(today.getDay());
   const weekStart = useMemo(() => startOfSaturdayWeek(today), [today]);
@@ -304,8 +306,12 @@ export default function PlanScreen() {
   });
 
   const displayChild = child ?? (useDemo ? DEMO_CHILD : undefined);
-  const tags = useDemo ? DEMO_TAGS : displayChild ? childTags(displayChild, t) : [];
-  const goals = useDemo ? DEMO_GOALS : weeklyGoalsText(child, t);
+  const tags = useDemo
+    ? DEMO_TAGS.map((tag) => knownText(t, tag))
+    : displayChild
+      ? childTags(displayChild, t)
+      : [];
+  const goals = useDemo ? knownText(t, DEMO_GOALS) : weeklyGoalsText(child, t);
   const age = useDemo ? 6 : displayChild ? childAge(displayChild) : undefined;
   const loading = childrenLoading || (Boolean(child?.id) && planLoading);
   const initials = displayChild?.name?.trim()?.slice(0, 1) ?? "";
@@ -331,11 +337,11 @@ export default function PlanScreen() {
             hitSlop={10}
             style={({ pressed }) => [styles.backBtn, pressed && styles.pressed]}
             accessibilityRole="button"
-            accessibilityLabel="رجوع"
+            accessibilityLabel={t("common.back")}
           >
             <Ionicons name="chevron-back" size={ms(22)} color={colors.title} />
           </Pressable>
-          <Text style={[styles.pageTitle, { fontSize: ms(22) }]}>خطة الطفل</Text>
+          <Text style={[styles.pageTitle, { fontSize: ms(22) }]}>{t("ui.childPlan")}</Text>
         </View>
 
         <View style={[styles.card, { padding: ms(14), marginBottom: ms(12) }]}>
@@ -363,14 +369,14 @@ export default function PlanScreen() {
                       router.push(`/(tabs)/profile/edit-child-profile?id=${displayChild.id}`);
                     }}
                     hitSlop={8}
-                    accessibilityLabel="تعديل"
+                    accessibilityLabel={t("ui.edit")}
                   >
                     <Ionicons name="pencil-outline" size={ms(18)} color={colors.primary} />
                   </Pressable>
                   <View style={styles.profileText}>
                     <Text style={[styles.childName, { fontSize: ms(18) }]}>{displayChild.name}</Text>
                     <Text style={[styles.childAge, { fontSize: ms(13) }]}>
-                      {age != null ? `${age} سنوات` : "العمر غير محدد"}
+                      {age != null ? t("ui.years", { count: age }) : t("ui.ageUnknown")}
                     </Text>
                   </View>
                 </View>
@@ -383,19 +389,19 @@ export default function PlanScreen() {
                     ))}
                   </View>
                 ) : (
-                  <Text style={styles.emptyInline}>لا توجد تصنيفات بعد</Text>
+                  <Text style={styles.emptyInline}>{t("copy.noTagsYet")}</Text>
                 )}
               </View>
             </View>
           ) : (
             <View>
-              <Text style={styles.emptyTitle}>لا يوجد ملف طفل</Text>
-              <Text style={styles.emptyBody}>أضف ملف طفل لعرض الخطة الأسبوعية.</Text>
+              <Text style={styles.emptyTitle}>{t("copy.noChildProfile")}</Text>
+              <Text style={styles.emptyBody}>{t("copy.addChildForPlan")}</Text>
               <Pressable
                 onPress={() => router.push("/(tabs)/profile/manage-children")}
                 style={styles.emptyCta}
               >
-                <Text style={styles.emptyCtaText}>إدارة الأطفال</Text>
+                <Text style={styles.emptyCtaText}>{t("copy.manageChildren")}</Text>
               </Pressable>
             </View>
           )}
@@ -406,11 +412,11 @@ export default function PlanScreen() {
             <View style={styles.dateChip}>
               <Ionicons name="calendar-outline" size={ms(14)} color={colors.primary} />
               <Text style={[styles.dateChipText, { fontSize: ms(12) }]}>
-                {formatWeekRange(weekStart)}
+                {formatWeekRange(weekStart, months)}
               </Text>
             </View>
             <View style={styles.sectionTitleRow}>
-              <Text style={[styles.sectionTitle, { fontSize: ms(16) }]}>الخطة الأسبوعية</Text>
+              <Text style={[styles.sectionTitle, { fontSize: ms(16) }]}>{t("planUi.weeklyPlan")}</Text>
               <Ionicons name="calendar" size={ms(16)} color={colors.primary} />
             </View>
           </View>
@@ -439,7 +445,7 @@ export default function PlanScreen() {
                     ]}
                     numberOfLines={1}
                   >
-                    {day.label}
+                    {t(day.labelKey)}
                   </Text>
                 </Pressable>
               );
@@ -448,7 +454,7 @@ export default function PlanScreen() {
 
           <View style={[styles.goalsCard, { padding: ms(12), marginBottom: ms(16) }]}>
             <View style={styles.sectionTitleRow}>
-              <Text style={[styles.sectionTitle, { fontSize: ms(15) }]}>أهداف الأسبوع</Text>
+              <Text style={[styles.sectionTitle, { fontSize: ms(15) }]}>{t("planUi.weeklyGoals")}</Text>
               <Ionicons name="disc-outline" size={ms(16)} color={colors.primary} />
             </View>
             <View style={styles.goalsBody}>
@@ -459,13 +465,13 @@ export default function PlanScreen() {
                 style={{ opacity: 0.55 }}
               />
               <Text style={[styles.goalsText, { fontSize: ms(13), lineHeight: ms(22) }]}>
-                {goals || "ستظهر أهداف طفلك هنا عند إضافتها في ملف الطفل."}
+                {goals || t("ui.childGoalsPlaceholder")}
               </Text>
             </View>
           </View>
 
           <View style={[styles.tasksHead, { marginBottom: ms(10) }]}>
-            <Text style={[styles.sectionTitle, { fontSize: ms(15) }]}>مهام اليوم</Text>
+            <Text style={[styles.sectionTitle, { fontSize: ms(15) }]}>{t("copy.todaysTasks")}</Text>
             <Ionicons name="checkbox" size={ms(16)} color={colors.primary} />
           </View>
 
@@ -473,8 +479,8 @@ export default function PlanScreen() {
             <ActivityIndicator color={colors.primary} style={{ marginVertical: 12 }} />
           ) : dayTasks.length ? (
             dayTasks.map((task) => {
-              const helpful = helpfulnessLabel(task);
-              const note = task.instructions || task.note;
+              const helpful = helpfulnessLabel(task, t);
+              const note = knownText(t, task.instructions || task.note);
               return (
                 <View key={task.id} style={[styles.taskCard, { padding: ms(12), marginBottom: ms(10) }]}>
                   <View style={styles.taskTop}>
@@ -482,12 +488,12 @@ export default function PlanScreen() {
                       {task.status === "completed" ? (
                         <View style={[styles.statusPill, styles.statusDone]}>
                           <Ionicons name="checkmark-circle" size={14} color={colors.done} />
-                          <Text style={[styles.statusText, { color: colors.done }]}>تم</Text>
+                          <Text style={[styles.statusText, { color: colors.done }]}>{t("copy.done")}</Text>
                         </View>
                       ) : task.status === "skipped" ? (
                         <View style={[styles.statusPill, styles.statusSkip]}>
                           <Ionicons name="remove-circle-outline" size={14} color={colors.skip} />
-                          <Text style={[styles.statusText, { color: colors.skip }]}>تخطي</Text>
+                          <Text style={[styles.statusText, { color: colors.skip }]}>{t("copy.skip")}</Text>
                         </View>
                       ) : (
                         <View style={styles.pendingActions}>
@@ -499,7 +505,7 @@ export default function PlanScreen() {
                             style={[styles.statusPill, styles.statusDone]}
                           >
                             <Ionicons name="checkmark-circle" size={14} color={colors.done} />
-                            <Text style={[styles.statusText, { color: colors.done }]}>تم</Text>
+                            <Text style={[styles.statusText, { color: colors.done }]}>{t("copy.done")}</Text>
                           </Pressable>
                           <Pressable
                             onPress={() => {
@@ -509,7 +515,7 @@ export default function PlanScreen() {
                             style={[styles.statusPill, styles.statusSkip]}
                           >
                             <Ionicons name="remove-circle-outline" size={14} color={colors.skip} />
-                            <Text style={[styles.statusText, { color: colors.skip }]}>تخطي</Text>
+                            <Text style={[styles.statusText, { color: colors.skip }]}>{t("copy.skip")}</Text>
                           </Pressable>
                         </View>
                       )}
@@ -529,11 +535,11 @@ export default function PlanScreen() {
                       ) : null}
                     </View>
                     <View style={styles.taskMain}>
-                      <Text style={[styles.taskTitle, { fontSize: ms(14) }]}>{task.title}</Text>
+                      <Text style={[styles.taskTitle, { fontSize: ms(14) }]}>{knownText(t, task.title)}</Text>
                       {task.description ? (
                         <Text style={[styles.taskDesc, { fontSize: ms(12) }]} numberOfLines={2}>
-                          {task.description}
-                          {task.frequency ? ` • ${task.frequency}` : ""}
+                          {knownText(t, task.description)}
+                          {task.frequency ? ` • ${knownText(t, task.frequency)}` : ""}
                         </Text>
                       ) : null}
                     </View>
@@ -546,7 +552,7 @@ export default function PlanScreen() {
             })
           ) : (
             <View style={[styles.emptyBox, { marginBottom: ms(10) }]}>
-              <Text style={styles.emptyBody}>لا توجد مهام لهذا اليوم بعد.</Text>
+              <Text style={styles.emptyBody}>{t("ui.noTasksToday")}</Text>
             </View>
           )}
 
@@ -556,26 +562,26 @@ export default function PlanScreen() {
                 onPress={() => router.navigate("/(tabs)/bookings")}
                 style={styles.detailsLink}
                 accessibilityRole="button"
-                accessibilityLabel="عرض التفاصيل"
+                accessibilityLabel={t("ui.viewDetails")}
               >
                 <Ionicons name="chevron-back" size={16} color={colors.primary} />
-                <Text style={styles.detailsLinkText}>عرض التفاصيل</Text>
+                <Text style={styles.detailsLinkText}>{t("ui.viewDetails")}</Text>
               </Pressable>
               <View style={styles.taskMain}>
-                <Text style={[styles.taskTitle, { fontSize: ms(14) }]}>مواعيد الطبيب</Text>
+                <Text style={[styles.taskTitle, { fontSize: ms(14) }]}>{t("copy.doctorAppointments")}</Text>
                 {appointment ? (
                   <>
-                    <Text style={styles.taskDesc}>{appointment.listingName}</Text>
+                    <Text style={styles.taskDesc}>{knownText(t, appointment.listingName)}</Text>
                     <Text style={styles.taskDesc}>
-                      {appointment.dateLabel}
-                      {appointment.timeLabel ? ` • ${appointment.timeLabel}` : ""}
+                      {knownText(t, appointment.dateLabel)}
+                      {appointment.timeLabel ? ` • ${knownText(t, appointment.timeLabel)}` : ""}
                     </Text>
                     {appointment.notes ? (
-                      <Text style={styles.taskDesc}>{appointment.notes}</Text>
+                      <Text style={styles.taskDesc}>{knownText(t, appointment.notes)}</Text>
                     ) : null}
                   </>
                 ) : (
-                  <Text style={styles.taskDesc}>لا توجد مواعيد محفوظة حالياً.</Text>
+                  <Text style={styles.taskDesc}>{t("copy.noSavedAppointments")}</Text>
                 )}
               </View>
               <View style={styles.taskIconWrap}>
@@ -588,7 +594,7 @@ export default function PlanScreen() {
             <View style={styles.progressBlock}>
               <View style={styles.progressLabelRow}>
                 <Ionicons name="stats-chart-outline" size={16} color={colors.primary} />
-                <Text style={styles.progressLabel}>نسبة التقدم هذا الأسبوع</Text>
+                <Text style={styles.progressLabel}>{t("copy.weekProgress")}</Text>
               </View>
               <Text style={[styles.percent, { fontSize: ms(22) }]}>{percent}%</Text>
               <View style={styles.progressTrack}>
@@ -601,13 +607,13 @@ export default function PlanScreen() {
             >
               <View style={styles.evalTitleRow}>
                 <Ionicons name="star-outline" size={16} color={colors.primary} />
-                <Text style={styles.evalTitle}>تقييم الأسبوع</Text>
+                <Text style={styles.evalTitle}>{t("planUi.weeklyEval")}</Text>
                 <Ionicons name="chevron-back" size={14} color={colors.muted} />
               </View>
               <Text style={styles.evalMeta}>
                 {totalCount
-                  ? `أكمل ${completedCount} من أصل ${totalCount} مهام`
-                  : "لا يوجد تقييم بعد"}
+                  ? t("planUi.completedOf", { done: completedCount, total: totalCount })
+                  : t("ui.noRatingYet")}
               </Text>
             </Pressable>
           </View>
@@ -625,10 +631,10 @@ export default function PlanScreen() {
           <Ionicons name="chevron-back" size={18} color={colors.muted} />
           <View style={{ flex: 1 }}>
             <Text style={[styles.sectionTitle, { fontSize: ms(14) }]}>
-              التحديث التلقائي للخطة القادمة
+              {t("copy.autoUpdateTitle")}
             </Text>
             <Text style={[styles.taskDesc, { marginTop: 4 }]}>
-              سيتم تعديل الخطة الأسبوعية بناءً على تقدم طفلك
+              {t("copy.autoUpdateBody")}
             </Text>
           </View>
           <Ionicons name="sparkles-outline" size={18} color={colors.primary} />

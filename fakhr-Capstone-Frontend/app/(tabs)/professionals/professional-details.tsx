@@ -16,6 +16,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getProfessionalDetails } from "../../../api/directory.api";
 import type { Professional } from "../../../types/directory.types";
 import { openInGoogleMaps, toFiniteNumber } from "../../../utils/openMaps";
+import { useTranslation } from "react-i18next";
+import { knownText } from "../../../utils/knownText";
 
 // Design system colors
 const colors = {
@@ -52,6 +54,7 @@ function canOpenCenterInMaps(p: Professional): boolean {
 }
 
 export default function ProfessionalDetailsScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const { id } = useLocalSearchParams();
 
@@ -66,14 +69,14 @@ export default function ProfessionalDetailsScreen() {
   const handleBookAppointment = () => {
     if (!professional) return;
     Alert.alert(
-      "Book Appointment",
-      `Would you like to book an appointment with ${professional.name}?`,
+      t("copy.bookAppointment"),
+      t("copy.bookWithName", { name: professional.name }),
       [
-        { text: "Cancel", style: "cancel" },
+        { text: t("common.cancel"), style: "cancel" },
         {
-          text: "Confirm Booking",
+          text: t("copy.confirmBooking"),
           onPress: () => {
-            Alert.alert("Success", "Your appointment request has been sent!");
+            Alert.alert(t("copy.success"), t("copy.bookingRequestSent"));
           },
         },
       ]
@@ -91,12 +94,12 @@ export default function ProfessionalDetailsScreen() {
           >
             <Ionicons name="arrow-back" size={24} color={colors.text} />
           </Pressable>
-          <Text style={styles.headerTitle}>Professional Profile</Text>
+          <Text style={styles.headerTitle}>{t("copy.proProfile")}</Text>
           <View style={styles.headerRight} />
         </View>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={colors.primary} />
-          <Text style={styles.loadingText}>Loading professional details...</Text>
+          <Text style={styles.loadingText}>{t("copy.loadingPro")}</Text>
         </View>
       </SafeAreaView>
     );
@@ -113,17 +116,17 @@ export default function ProfessionalDetailsScreen() {
           >
             <Ionicons name="arrow-back" size={24} color={colors.text} />
           </Pressable>
-          <Text style={styles.headerTitle}>Professional Profile</Text>
+          <Text style={styles.headerTitle}>{t("copy.proProfile")}</Text>
           <View style={styles.headerRight} />
         </View>
         <View style={styles.errorContainer}>
           <Ionicons name="alert-circle-outline" size={48} color={colors.textMuted} />
-          <Text style={styles.errorText}>Professional not found</Text>
+          <Text style={styles.errorText}>{t("copy.proNotFound")}</Text>
           <Text style={styles.errorSubtext}>
-            {error ? "Failed to load professional details" : "The professional you're looking for doesn't exist"}
+            {error ? t("copy.failedLoadPro") : t("copy.proMissing")}
           </Text>
           <Pressable style={styles.backButton} onPress={() => router.back()}>
-            <Text style={styles.backButtonText}>Go Back</Text>
+            <Text style={styles.backButtonText}>{t("copy.goBack")}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -140,7 +143,7 @@ export default function ProfessionalDetailsScreen() {
         >
           <Ionicons name="arrow-back" size={24} color={colors.text} />
         </Pressable>
-        <Text style={styles.headerTitle}>Professional Profile</Text>
+        <Text style={styles.headerTitle}>{t("copy.proProfile")}</Text>
         <Pressable style={styles.shareBtn}>
           <Ionicons name="share-outline" size={22} color={colors.text} />
         </Pressable>
@@ -171,7 +174,7 @@ export default function ProfessionalDetailsScreen() {
 
           <Text style={styles.professionalName}>{professional.name}</Text>
           <Text style={[styles.specialtyLabel, { color: professional.color }]}>
-            {professional.specialtyLabel}
+            {knownText(t, professional.specialtyLabel)}
           </Text>
 
           {/* Stats Row */}
@@ -181,7 +184,7 @@ export default function ProfessionalDetailsScreen() {
                 <Ionicons name="star" size={18} color="#F5A623" />
               </View>
               <Text style={styles.statValue}>{professional.rating}</Text>
-              <Text style={styles.statLabel}>{professional.reviews} reviews</Text>
+              <Text style={styles.statLabel}>{t("copy.reviewsCount", { count: professional.reviews })}</Text>
             </View>
             <View style={styles.statDivider} />
             <View style={styles.statItem}>
@@ -189,7 +192,7 @@ export default function ProfessionalDetailsScreen() {
                 <Ionicons name="briefcase-outline" size={18} color={colors.primary} />
               </View>
               <Text style={styles.statValue}>{professional.experience}</Text>
-              <Text style={styles.statLabel}>Experience</Text>
+              <Text style={styles.statLabel}>{t("copy.experience")}</Text>
             </View>
             <View style={styles.statDivider} />
             <View style={styles.statItem}>
@@ -199,7 +202,7 @@ export default function ProfessionalDetailsScreen() {
               <Text style={styles.statValue} numberOfLines={1} ellipsizeMode="tail">
                 {professional.centerName || "—"}
               </Text>
-              <Text style={styles.statLabel}>Center</Text>
+              <Text style={styles.statLabel}>{t("copy.center")}</Text>
             </View>
           </View>
         </View>
@@ -229,11 +232,11 @@ export default function ProfessionalDetailsScreen() {
             >
               <Ionicons name="location-outline" size={20} color={colors.primary} />
               <View style={styles.quickInfoContent}>
-                <Text style={styles.quickInfoLabel}>Center Location</Text>
+                <Text style={styles.quickInfoLabel}>{t("copy.centerLocation")}</Text>
                 <Text style={styles.quickInfoValue}>
                   {professional.centerAddress || professional.location || professional.centerName || "—"}
                 </Text>
-                <Text style={styles.mapsHint}>Tap to open in Maps</Text>
+                <Text style={styles.mapsHint}>{t("copy.tapMapsShort")}</Text>
               </View>
               <Ionicons name="open-outline" size={18} color={colors.textMuted} />
             </Pressable>
@@ -241,7 +244,7 @@ export default function ProfessionalDetailsScreen() {
             <View style={styles.quickInfoRow}>
               <Ionicons name="location-outline" size={20} color={colors.textMuted} />
               <View style={styles.quickInfoContent}>
-                <Text style={styles.quickInfoLabel}>Center Location</Text>
+                <Text style={styles.quickInfoLabel}>{t("copy.centerLocation")}</Text>
                 <Text style={styles.quickInfoValue}>
                   {professional.centerAddress || professional.location || "—"}
                 </Text>
@@ -255,7 +258,7 @@ export default function ProfessionalDetailsScreen() {
             const centerEmail = professional.centerEmail?.toString?.()?.trim();
             const contactPhone = phone || centerPhone;
             const contactEmail = email || centerEmail;
-            const contactLabel = phone || email ? "Contact Professional" : "Contact via Center";
+            const contactLabel = phone || email ? t("copy.contactProfessional") : t("copy.contactViaCenter");
             const contactValue = contactPhone || contactEmail || "—";
             if (!contactValue || contactValue === "—") return null;
             return (
@@ -282,7 +285,7 @@ export default function ProfessionalDetailsScreen() {
 
         {/* About Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>About</Text>
+          <Text style={styles.sectionTitle}>{t("copy.about")}</Text>
           <Text style={styles.bioText}>{professional.bio}</Text>
         </View>
 
@@ -351,7 +354,7 @@ export default function ProfessionalDetailsScreen() {
           ]}
           onPress={handleBookAppointment}
         >
-          <Text style={styles.bookButtonText}>Book Appointment</Text>
+          <Text style={styles.bookButtonText}>{t("copy.bookAppointment")}</Text>
           <Ionicons name="arrow-forward" size={18} color="#FFFFFF" />
         </Pressable>
       </View>

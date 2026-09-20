@@ -19,6 +19,8 @@ import { getCenterDetails } from "../../../api/directory.api";
 import type { DirectoryListing } from "../../../components/directory/types";
 import type { HealthCenter } from "../../../types/directory.types";
 import { openInGoogleMaps } from "../../../utils/openMaps";
+import { useTranslation } from "react-i18next";
+import { knownText } from "../../../utils/knownText";
 
 const colors = {
   bg: "#FFFFFF",
@@ -55,14 +57,14 @@ type TabKey = "about" | "gallery" | "programs" | "location" | "reviews";
 
 const TABS: {
   key: TabKey;
-  label: string;
+  labelKey: string;
   icon: React.ComponentProps<typeof Ionicons>["name"];
 }[] = [
-  { key: "about", label: "نبذة", icon: "id-card-outline" },
-  { key: "gallery", label: "المعرض", icon: "images-outline" },
-  { key: "programs", label: "البرامج", icon: "apps-outline" },
-  { key: "location", label: "الموقع", icon: "star-outline" },
-  { key: "reviews", label: "التقييمات", icon: "star-outline" },
+  { key: "about", labelKey: "copy.about", icon: "id-card-outline" },
+  { key: "gallery", labelKey: "copy.gallery", icon: "images-outline" },
+  { key: "programs", labelKey: "copy.programs", icon: "apps-outline" },
+  { key: "location", labelKey: "copy.location", icon: "star-outline" },
+  { key: "reviews", labelKey: "copy.reviews", icon: "star-outline" },
 ];
 
 function parseSchool(raw: string | string[] | undefined): SchoolPayload | null {
@@ -80,13 +82,14 @@ function parseSchool(raw: string | string[] | undefined): SchoolPayload | null {
   }
 }
 
-function typeLabel(type?: string) {
-  if (type === "public" || type === "حكومي") return "حكومي";
-  if (type === "private" || type === "خاص") return "خاص";
-  return type || "خاص";
+function typeLabel(type: string | undefined, t: (key: string) => string) {
+  if (type === "public" || type === "حكومي") return t("copy.gov");
+  if (type === "private" || type === "خاص") return t("copy.priv");
+  return type ? knownText(t, type) : t("copy.priv");
 }
 
 export default function SchoolDetailsScreen() {
+  const { t, i18n } = useTranslation();
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { width: windowWidth } = useWindowDimensions();
@@ -121,7 +124,13 @@ export default function SchoolDetailsScreen() {
   const ageRange = passed?.ageRange || "3 - 18 سنة";
   const stage = passed?.stage || "ابتدائي - ثانوي";
   const hours = passed?.hours || center?.operatingHours || "7:30 ص - 1:30 م";
-  const kind = typeLabel(center?.type || passed?.type);
+  const kind = typeLabel(center?.type || passed?.type, t);
+  const cityLabel = knownText(t, city);
+  const specialtyLabel = knownText(t, specialty);
+  const aboutText = knownText(t, about);
+  const ageLabel = knownText(t, ageRange);
+  const stageLabel = knownText(t, stage);
+  const hoursLabel = knownText(t, hours);
   const phone = center?.phone != null ? String(center.phone) : "";
 
   const goBack = () => {
@@ -134,7 +143,7 @@ export default function SchoolDetailsScreen() {
 
   const handleCall = () => {
     if (!phone) {
-      Alert.alert("اتصال", "رقم الهاتف غير متوفر حالياً.");
+      Alert.alert(t("copy.callTitle"), t("copy.phoneUnavailable"));
       return;
     }
     Linking.openURL(`tel:${phone.replace(/\s/g, "")}`).catch(() => {});
@@ -185,11 +194,11 @@ export default function SchoolDetailsScreen() {
     label: string;
     value: string;
   }[] = [
-    { icon: "home-outline", label: "الفئة العمرية", value: ageRange },
-    { icon: "reader-outline", label: "المرحلة", value: stage },
-    { icon: "apps-outline", label: "النوع", value: kind },
-    { icon: "time-outline", label: "ساعات العمل", value: hours },
-    { icon: "location-outline", label: "الموقع", value: city },
+    { icon: "home-outline", label: t("copy.ageGroup"), value: ageLabel },
+    { icon: "reader-outline", label: t("copy.stage"), value: stageLabel },
+    { icon: "apps-outline", label: t("ui.type"), value: kind },
+    { icon: "time-outline", label: t("copy.workingHours"), value: hoursLabel },
+    { icon: "location-outline", label: t("copy.location"), value: cityLabel },
   ];
 
   return (
@@ -210,7 +219,7 @@ export default function SchoolDetailsScreen() {
             hitSlop={12}
             style={({ pressed }) => [styles.headerBtn, pressed && styles.pressed]}
             accessibilityRole="button"
-            accessibilityLabel="رجوع"
+            accessibilityLabel={t("common.back")}
           >
             <Ionicons name="chevron-back" size={ms(26)} color={colors.back} />
           </Pressable>
@@ -219,7 +228,7 @@ export default function SchoolDetailsScreen() {
             hitSlop={12}
             style={({ pressed }) => [styles.headerBtn, pressed && styles.pressed]}
             accessibilityRole="button"
-            accessibilityLabel="مشاركة"
+            accessibilityLabel={t("copy.share")}
           >
             <Ionicons name="person-add-outline" size={ms(22)} color={colors.icon} />
           </Pressable>
@@ -249,7 +258,7 @@ export default function SchoolDetailsScreen() {
             { fontSize: ms(13), lineHeight: ms(20), marginTop: ms(2) },
           ]}
         >
-          {`${city} - ${specialty}`}
+          {`${cityLabel} - ${specialtyLabel}`}
         </Text>
         <View style={[styles.ratingRow, { marginTop: ms(6), gap: ms(5) }]}>
           <Ionicons name="star" size={ms(15)} color={colors.star} />
@@ -272,11 +281,11 @@ export default function SchoolDetailsScreen() {
                 pressed && styles.pressed,
               ]}
               accessibilityRole="button"
-              accessibilityLabel={item.label}
+              accessibilityLabel={t(item.labelKey)}
             >
               <Ionicons name={item.icon} size={ms(22)} color={colors.icon} />
               <Text style={[styles.tabLabel, { fontSize: ms(11), marginTop: ms(4) }]}>
-                {item.label}
+                {t(item.labelKey)}
               </Text>
             </Pressable>
           ))}
@@ -284,7 +293,7 @@ export default function SchoolDetailsScreen() {
 
         {tab === "about" ? (
           <AboutBlock
-            about={about}
+            about={aboutText}
             infoRows={infoRows}
             ms={ms}
           />
@@ -293,7 +302,7 @@ export default function SchoolDetailsScreen() {
         {tab === "programs" ? (
           <View style={{ marginTop: ms(18) }}>
             <Text style={[styles.sectionTitle, { fontSize: ms(20), lineHeight: ms(28) }]}>
-              البرامج
+              {t("copy.programs")}
             </Text>
             <Text
               style={[
@@ -302,8 +311,10 @@ export default function SchoolDetailsScreen() {
               ]}
             >
               {(center?.specialties && center.specialties.length > 0
-                ? center.specialties.join("، ")
-                : passed?.branch) || specialty}
+                ? center.specialties.map((item) => knownText(t, item)).join(
+                    i18n.language.startsWith("en") ? ", " : "، ",
+                  )
+                : knownText(t, passed?.branch)) || specialtyLabel}
             </Text>
           </View>
         ) : null}
@@ -321,10 +332,10 @@ export default function SchoolDetailsScreen() {
         {tab === "location" ? (
           <View style={{ marginTop: ms(18) }}>
             <Text style={[styles.sectionTitle, { fontSize: ms(20), lineHeight: ms(28) }]}>
-              الموقع
+              {t("copy.location")}
             </Text>
             <Text style={[styles.body, { fontSize: ms(14), lineHeight: ms(24), marginTop: ms(8) }]}>
-              {city}
+              {cityLabel}
               {center?.address ? `\n${center.address}` : ""}
             </Text>
           </View>
@@ -343,10 +354,10 @@ export default function SchoolDetailsScreen() {
               pressed && styles.pressed,
             ]}
             accessibilityRole="button"
-            accessibilityLabel="اتصال"
+            accessibilityLabel={t("copy.call")}
           >
             <Ionicons name="call-outline" size={ms(18)} color={colors.icon} />
-            <Text style={[styles.contactLabel, { fontSize: ms(15) }]}>اتصال</Text>
+            <Text style={[styles.contactLabel, { fontSize: ms(15) }]}>{t("copy.call")}</Text>
           </Pressable>
           <Pressable
             onPress={handleOpenGoogleMaps}
@@ -356,10 +367,10 @@ export default function SchoolDetailsScreen() {
               pressed && styles.pressed,
             ]}
             accessibilityRole="button"
-            accessibilityLabel="الموقع"
+            accessibilityLabel={t("copy.location")}
           >
             <Ionicons name="location-outline" size={ms(18)} color={colors.icon} />
-            <Text style={[styles.contactLabel, { fontSize: ms(15) }]}>الموقع</Text>
+            <Text style={[styles.contactLabel, { fontSize: ms(15) }]}>{t("copy.location")}</Text>
           </Pressable>
         </View>
       </ScrollView>
@@ -383,9 +394,9 @@ export default function SchoolDetailsScreen() {
             pressed && styles.pressed,
           ]}
           accessibilityRole="button"
-          accessibilityLabel="حجز موعد"
+          accessibilityLabel={t("copy.bookAppointment")}
         >
-          <Text style={[styles.ctaText, { fontSize: ms(18) }]}>حجز موعد</Text>
+          <Text style={[styles.ctaText, { fontSize: ms(18) }]}>{t("copy.bookAppointment")}</Text>
         </Pressable>
       </View>
       </View>
@@ -406,10 +417,11 @@ function AboutBlock({
   }[];
   ms: (n: number) => number;
 }) {
+  const { t } = useTranslation();
   return (
     <View style={{ marginTop: ms(18) }}>
       <Text style={[styles.sectionTitle, { fontSize: ms(20), lineHeight: ms(28) }]}>
-        نبذة عن المدرسة
+        {t("copy.aboutSchool")}
       </Text>
       <Text
         style={[
@@ -445,11 +457,12 @@ function ReviewsBlock({
   reviews: number;
   ms: (n: number) => number;
 }) {
+  const { t } = useTranslation();
   const list = center?.reviews ?? [];
   return (
     <View style={{ marginTop: ms(18) }}>
       <Text style={[styles.sectionTitle, { fontSize: ms(20), lineHeight: ms(28) }]}>
-        التقييمات
+        {t("copy.reviews")}
       </Text>
       <View style={[styles.ratingRow, { marginTop: ms(8), gap: ms(5) }]}>
         <Ionicons name="star" size={ms(15)} color={colors.star} />

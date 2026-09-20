@@ -20,6 +20,8 @@ import {
   type ExploreCategoryId,
   type WeeklyContentItem,
 } from "../../../components/explore/exploreDemoData";
+import { useTranslation } from "react-i18next";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
 
 const colors = {
   bg: "#F7F8FC",
@@ -40,6 +42,8 @@ const colors = {
 const DESIGN_W = 390;
 
 export default function ExploreScreen() {
+  const { t } = useTranslation();
+  const { align, isRTL } = useI18nLayout();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth || WEB_PHONE_WIDTH, WEB_PHONE_WIDTH);
   const s = contentW / DESIGN_W;
@@ -49,26 +53,59 @@ export default function ExploreScreen() {
   const [categoryId, setCategoryId] = useState<ExploreCategoryId>("all");
   const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
 
-  const query = search.trim();
+  const categoryLabel = (id: ExploreCategoryId) => {
+    const keys: Record<ExploreCategoryId, string> = {
+      all: "exploreUi.allTopics",
+      sensory: "exploreUi.sensory",
+      "life-skills": "exploreUi.lifeSkills",
+      communication: "exploreUi.communication",
+      behavior: "exploreUi.behavior",
+    };
+    return t(keys[id]);
+  };
+
+  const weeklyTitle = (item: WeeklyContentItem) => t(`exploreUi.${item.id}`);
+  const weeklyBadge = (item: WeeklyContentItem) => t(`exploreUi.${item.kind}`);
+
+  const articleCopy = (id: string) => {
+    if (id === "a1") {
+      return {
+        title: t("exploreUi.a1Title"),
+        subtitle: t("exploreUi.a1Sub"),
+        readTime: t("exploreUi.a1Read"),
+      };
+    }
+    return {
+      title: t("exploreUi.a2Title"),
+      subtitle: t("exploreUi.a2Sub"),
+      readTime: t("exploreUi.a2Read"),
+    };
+  };
+
+  const query = search.trim().toLowerCase();
 
   const weeklyItems = useMemo(() => {
     return WEEKLY_CONTENT.filter((item) => {
       const inCategory =
         categoryId === "all" || item.categoryIds.includes(categoryId);
-      const inSearch = !query || item.title.includes(query);
+      const title = t(`exploreUi.${item.id}`).toLowerCase();
+      const inSearch = !query || title.includes(query);
       return inCategory && inSearch;
     });
-  }, [categoryId, query]);
+  }, [categoryId, query, t]);
 
   const articles = useMemo(() => {
     return EXPLORE_ARTICLES.filter((item) => {
       const inCategory =
         categoryId === "all" || item.categoryIds.includes(categoryId);
+      const copy = articleCopy(item.id);
       const inSearch =
-        !query || item.title.includes(query) || item.subtitle.includes(query);
+        !query ||
+        copy.title.toLowerCase().includes(query) ||
+        copy.subtitle.toLowerCase().includes(query);
       return inCategory && inSearch;
     });
-  }, [categoryId, query]);
+  }, [categoryId, query, t]);
 
   const toggleSaved = (id: string) => {
     setSavedIds((prev) => {
@@ -100,16 +137,16 @@ export default function ExploreScreen() {
       >
         <View style={styles.brandRow}>
           <View style={styles.brandTextCol}>
-            <Text style={[styles.brandName, { fontSize: ms(15) }]}>فخر</Text>
+            <Text style={[styles.brandName, { fontSize: ms(15) }]}>{t("ui.brand")}</Text>
             <Text style={[styles.brandTag, { fontSize: ms(10) }]}>
-              معك .. لفرص أكبر
+              {t("exploreUi.tagline")}
             </Text>
           </View>
           <Image
             source={require("../../../assets/images/fakhr-wordmark-blue.png")}
             style={{ width: ms(28), height: ms(34) }}
             resizeMode="contain"
-            accessibilityLabel="فخر"
+            accessibilityLabel={t("ui.brand")}
           />
         </View>
 
@@ -119,7 +156,7 @@ export default function ExploreScreen() {
             { fontSize: ms(34), lineHeight: ms(44), marginTop: ms(4) },
           ]}
         >
-          استكشف
+          {t("tabs.explore")}
         </Text>
         <Text
           style={[
@@ -127,7 +164,7 @@ export default function ExploreScreen() {
             { fontSize: ms(13), lineHeight: ms(20), marginBottom: ms(14) },
           ]}
         >
-          محتوى وأنشطة مناسبة لاحتياجات طفلك
+          {t("exploreUi.subtitle")}
         </Text>
 
         <View
@@ -145,10 +182,10 @@ export default function ExploreScreen() {
           <TextInput
             value={search}
             onChangeText={setSearch}
-            placeholder="ابحث عن موضوع، مهارة أو نشاط..."
+            placeholder={t("ui.exploreSearch")}
             placeholderTextColor={colors.placeholder}
             style={[styles.searchInput, { fontSize: ms(13) }]}
-            textAlign="right"
+            textAlign={align}
             returnKeyType="search"
           />
         </View>
@@ -162,7 +199,7 @@ export default function ExploreScreen() {
                 onPress={() => setCategoryId(cat.id)}
                 style={styles.categoryItem}
                 accessibilityRole="button"
-                accessibilityLabel={cat.label.replace("\n", " ")}
+                accessibilityLabel={categoryLabel(cat.id).replace("\n", " ")}
                 accessibilityState={{ selected }}
               >
                 <View
@@ -190,7 +227,7 @@ export default function ExploreScreen() {
                     },
                   ]}
                 >
-                  {cat.label}
+                  {categoryLabel(cat.id)}
                 </Text>
               </Pressable>
             );
@@ -219,7 +256,7 @@ export default function ExploreScreen() {
                 { fontSize: ms(18), lineHeight: ms(26), marginBottom: ms(6) },
               ]}
             >
-              {FEATURED_CARD.title}
+              {t("exploreUi.featuredTitle")}
             </Text>
             <Text
               style={[
@@ -227,7 +264,7 @@ export default function ExploreScreen() {
                 { fontSize: ms(11), lineHeight: ms(17), marginBottom: ms(12) },
               ]}
             >
-              {FEATURED_CARD.subtitle}
+              {t("exploreUi.featuredSubtitle")}
             </Text>
             <Pressable
               style={({ pressed }) => [
@@ -240,11 +277,11 @@ export default function ExploreScreen() {
                 pressed && styles.pressed,
               ]}
               accessibilityRole="button"
-              accessibilityLabel={FEATURED_CARD.cta}
+              accessibilityLabel={t("exploreUi.featuredCta")}
             >
               <Ionicons name="chevron-back" size={ms(14)} color={colors.white} />
               <Text style={[styles.featuredCtaText, { fontSize: ms(12) }]}>
-                {FEATURED_CARD.cta}
+                {t("exploreUi.featuredCta")}
               </Text>
             </Pressable>
           </View>
@@ -252,7 +289,7 @@ export default function ExploreScreen() {
 
         <View style={[styles.sectionHeader, { marginBottom: ms(12) }]}>
           <Text style={[styles.sectionTitle, { fontSize: ms(16) }]}>
-            محتوى مميز هذا الأسبوع
+            {t("exploreUi.weeklyFeatured")}
           </Text>
           <Text style={[styles.sparkle, { fontSize: ms(14) }]}>✨</Text>
         </View>
@@ -260,7 +297,7 @@ export default function ExploreScreen() {
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={{ direction: "rtl" }}
+          style={{ direction: isRTL ? "rtl" : "ltr" }}
           contentContainerStyle={[
             styles.weeklyRow,
             { paddingBottom: ms(4), gap: ms(12) },
@@ -272,6 +309,9 @@ export default function ExploreScreen() {
               item={item}
               width={weeklyCardW}
               ms={ms}
+              title={weeklyTitle(item)}
+              badge={weeklyBadge(item)}
+              saveLabel={t("ui.save")}
               saved={savedIds.has(item.id)}
               onToggleSave={() => toggleSaved(item.id)}
             />
@@ -284,15 +324,17 @@ export default function ExploreScreen() {
             { marginTop: ms(22), marginBottom: ms(12) },
           ]}
         >
-          <Pressable accessibilityRole="button" accessibilityLabel="عرض الكل">
-            <Text style={[styles.viewAll, { fontSize: ms(13) }]}>عرض الكل</Text>
+          <Pressable accessibilityRole="button" accessibilityLabel={t("exploreUi.viewAll")}>
+            <Text style={[styles.viewAll, { fontSize: ms(13) }]}>{t("exploreUi.viewAll")}</Text>
           </Pressable>
           <Text style={[styles.sectionTitle, { fontSize: ms(16) }]}>
-            مقالات ونصائح
+            {t("exploreUi.articlesTips")}
           </Text>
         </View>
 
-        {articles.map((article) => (
+        {articles.map((article) => {
+          const copy = articleCopy(article.id);
+          return (
           <Pressable
             key={article.id}
             style={[
@@ -304,7 +346,7 @@ export default function ExploreScreen() {
               },
             ]}
             accessibilityRole="button"
-            accessibilityLabel={article.title}
+            accessibilityLabel={copy.title}
           >
             <Ionicons name="chevron-back" size={ms(18)} color={colors.placeholder} />
             <Image
@@ -324,7 +366,7 @@ export default function ExploreScreen() {
                   { fontSize: ms(13), lineHeight: ms(20) },
                 ]}
               >
-                {article.title}
+                {copy.title}
               </Text>
               <Text
                 style={[
@@ -332,11 +374,11 @@ export default function ExploreScreen() {
                   { fontSize: ms(11), lineHeight: ms(16), marginTop: ms(2) },
                 ]}
               >
-                {article.subtitle}
+                {copy.subtitle}
               </Text>
               <View style={styles.readRow}>
                 <Text style={[styles.readTime, { fontSize: ms(11) }]}>
-                  {article.readTime}
+                  {copy.readTime}
                 </Text>
                 <Ionicons
                   name="time-outline"
@@ -346,7 +388,8 @@ export default function ExploreScreen() {
               </View>
             </View>
           </Pressable>
-        ))}
+          );
+        })}
       </ScrollView>
     </SafeAreaView>
   );
@@ -356,12 +399,18 @@ function WeeklyCard({
   item,
   width,
   ms,
+  title,
+  badge,
+  saveLabel,
   saved,
   onToggleSave,
 }: {
   item: WeeklyContentItem;
   width: number;
   ms: (n: number) => number;
+  title: string;
+  badge: string;
+  saveLabel: string;
   saved: boolean;
   onToggleSave: () => void;
 }) {
@@ -374,7 +423,7 @@ function WeeklyCard({
           resizeMode="cover"
         />
         <View style={[styles.badge, { top: ms(8), right: ms(8), borderRadius: ms(8) }]}>
-          <Text style={[styles.badgeText, { fontSize: ms(10) }]}>{item.badge}</Text>
+          <Text style={[styles.badgeText, { fontSize: ms(10) }]}>{badge}</Text>
         </View>
         {item.duration ? (
           <View
@@ -394,13 +443,13 @@ function WeeklyCard({
           style={[styles.weeklyTitle, { fontSize: ms(12), lineHeight: ms(18) }]}
           numberOfLines={2}
         >
-          {item.title}
+          {title}
         </Text>
         <Pressable
           onPress={onToggleSave}
           hitSlop={8}
           accessibilityRole="button"
-          accessibilityLabel="حفظ"
+          accessibilityLabel={saveLabel}
         >
           <Ionicons
             name={saved ? "bookmark" : "bookmark-outline"}

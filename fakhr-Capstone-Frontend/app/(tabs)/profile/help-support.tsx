@@ -45,44 +45,44 @@ export default function HelpSupportScreen() {
   const rows: HelpRow[] = [
     {
       key: "faq",
-      label: "الأسئلة الشائعة",
+      label: t("ui.faq"),
       icon: "help-circle-outline",
       onPress: () =>
-        Alert.alert("الأسئلة الشائعة", t("community.safetyBody")),
+        Alert.alert(t("ui.faq"), t("community.safetyBody")),
     },
     {
       key: "contact",
-      label: "تواصل معنا",
+      label: t("ui.contactUs"),
       icon: "chatbubble-ellipses-outline",
       onPress: () => router.push("/(tabs)/directory/helpCenter"),
     },
     {
       key: "report",
-      label: "الإبلاغ عن مشكلة",
+      label: t("ui.reportIssue"),
       icon: "alert-circle-outline",
       onPress: () =>
-        Alert.alert(t("community.reportContent"), t("community.reportPostBy", { name: "فخر" })),
+        Alert.alert(t("community.reportContent"), t("community.reportPostBy", { name: t("ui.brand") })),
     },
     {
       key: "feedback",
-      label: "مقترحات وآراء",
+      label: t("ui.feedback"),
       icon: "chatbox-ellipses-outline",
       onPress: () =>
-        Alert.alert("مقترحات وآراء", t("community.commentThanks")),
+        Alert.alert(t("ui.feedback"), t("community.commentThanks")),
     },
     {
       key: "privacy",
-      label: "سياسة الخصوصية",
+      label: t("ui.privacyPolicy"),
       icon: "document-text-outline",
       onPress: () =>
         Alert.alert(t("auth.privacyPolicy"), t("community.safetyBody")),
     },
     {
       key: "terms",
-      label: "الشروط والأحكام",
+      label: t("ui.termsAndConditions"),
       icon: "information-circle-outline",
       onPress: () =>
-        Alert.alert("الشروط والأحكام", t("community.safetyBody")),
+        Alert.alert(t("ui.termsAndConditions"), t("community.safetyBody")),
     },
   ];
 
@@ -109,7 +109,7 @@ export default function HelpSupportScreen() {
                 { fontSize: ms(24), lineHeight: ms(32) },
               ]}
             >
-              المساعدة والدعم
+              {t("ui.helpSupport")}
             </Text>
           </View>
 

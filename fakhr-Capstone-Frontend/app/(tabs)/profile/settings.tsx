@@ -17,6 +17,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useLanguage } from "../../../context/LanguageContext";
 import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 import type { AppLanguage } from "../../../i18n";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
 
 const colors = {
   bg: "#FFFFFF",
@@ -48,6 +49,7 @@ export default function SettingsScreen() {
   const router = useRouter();
   const { t } = useTranslation();
   const { locale, setLocale } = useLanguage();
+  const { align, dir, tabRow } = useI18nLayout();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
   const s = contentW / DESIGN_W;
@@ -69,46 +71,46 @@ export default function SettingsScreen() {
   const rows: SettingsRow[] = [
     {
       key: "general",
-      label: "الإعدادات العامة",
+      label: t("ui.generalSettings"),
       icon: "settings-outline",
       onPress: () => router.push("/(tabs)/profile/edit-profile"),
     },
     {
       key: "privacy",
-      label: "الخصوصية والأمان",
+      label: t("ui.privacySecurity"),
       icon: "lock-closed-outline",
       onPress: () =>
         Alert.alert(t("settings.privacy"), t("community.privacyAlert")),
     },
     {
       key: "language",
-      label: "اللغة",
+      label: t("settings.language"),
       icon: "globe-outline",
       showLanguage: true,
       onPress: () => setLanguageModalVisible(true),
     },
     {
       key: "notifications",
-      label: "تفضيلات الإشعارات",
+      label: t("ui.notificationPrefs"),
       icon: "notifications-outline",
       onPress: () =>
         Alert.alert(t("home.notifications"), t("home.newNotifications")),
     },
     {
       key: "password",
-      label: "تغيير كلمة المرور",
+      label: t("ui.changePassword"),
       icon: "person-circle-outline",
       onPress: () => router.push("/(auth)/forgot-password"),
     },
     {
       key: "delete",
-      label: "حذف الحساب",
+      label: t("ui.deleteAccount"),
       icon: "trash-outline",
       iconColor: colors.delete,
       onPress: () =>
-        Alert.alert("حذف الحساب", "هل أنت متأكد من رغبتك في حذف الحساب؟", [
-          { text: "إلغاء", style: "cancel" },
-          { text: "حذف", style: "destructive" },
+        Alert.alert(t("ui.deleteAccount"), t("ui.deleteAccountConfirm"), [
+          { text: t("common.cancel"), style: "cancel" },
+          { text: t("common.delete"), style: "destructive" },
         ]),
     },
   ];
@@ -136,7 +138,7 @@ export default function SettingsScreen() {
                 { fontSize: ms(24), lineHeight: ms(32) },
               ]}
             >
-              الإعدادات
+              {t("settings.title")}
             </Text>
           </View>
 
@@ -150,8 +152,7 @@ export default function SettingsScreen() {
                   minHeight: ms(56),
                   paddingVertical: ms(14),
                   gap: ms(12),
-                  flexDirection: "row-reverse",
-                  flexDirection: "row",
+                  flexDirection: tabRow,
                 },
                 index < rows.length - 1 && styles.rowBorder,
                 pressed && styles.pressed,
@@ -166,7 +167,7 @@ export default function SettingsScreen() {
                 size={ms(22)}
                 color={row.iconColor || colors.icon}
               />
-              <Text style={[styles.rowLabel, { fontSize: ms(16) }]}>
+              <Text style={[styles.rowLabel, { fontSize: ms(16), textAlign: align, writingDirection: dir }]}>
                 {row.label}
               </Text>
               {row.showLanguage ? (
@@ -210,7 +211,7 @@ export default function SettingsScreen() {
               accessibilityRole="button"
               accessibilityState={{ selected: locale === "en" }}
             >
-              <Text style={styles.optionLabel}>{t("settings.english")}</Text>
+              <Text style={styles.optionLabel}>{t("settings.english", { lng: "en" })}</Text>
               {locale === "en" ? (
                 <Ionicons name="checkmark" size={22} color={colors.icon} />
               ) : (
@@ -282,8 +283,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: "700",
     color: colors.label,
-    textAlign: "right",
-    writingDirection: "rtl",
   },
   langValue: {
     fontWeight: "500",

@@ -121,8 +121,8 @@ void i18n.use(initReactI18next).init({
     en: { translation: en },
     ar: { translation: ar },
   },
-  lng: getDeviceLanguage(),
-  fallbackLng: "en",
+  lng: "ar",
+  fallbackLng: "ar",
   supportedLngs: ["en", "ar"],
   nonExplicitSupportedLngs: true,
   load: "languageOnly",
@@ -160,7 +160,7 @@ export async function resolveStoredOrDeviceLanguage(
   } catch {
     /* ignore */
   }
-  return getDeviceLanguage(locales);
+  return "ar";
 }
 
 export const setLocale = (locale: AppLanguage) => {

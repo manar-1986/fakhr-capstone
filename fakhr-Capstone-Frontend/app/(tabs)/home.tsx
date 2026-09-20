@@ -18,6 +18,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { getCurrentUser } from "../../api/users.api";
 import { WEB_PHONE_WIDTH } from "../../components/layout/WebAppShell";
 import { useAuth } from "../../context/AuthContext";
+import { useI18nLayout } from "../../hooks/useI18nLayout";
 
 const colors = {
   bg: "#FFFFFF",
@@ -47,6 +48,7 @@ type ServiceItem = {
 
 export default function HomeScreen() {
   const { t } = useTranslation();
+  const { align } = useI18nLayout();
   const router = useRouter();
   const { user } = useAuth();
   const { width: windowWidth } = useWindowDimensions();
@@ -65,9 +67,9 @@ export default function HomeScreen() {
   const userName = currentUser?.name || user?.name || "";
   const firstName = useMemo(() => {
     const name = userName.trim();
-    if (!name) return "شيخة";
+    if (!name) return t("ui.demoName");
     return name.split(/\s+/)[0];
-  }, [userName]);
+  }, [userName, t]);
 
   const padX = ms(20);
   const gridGap = ms(10);
@@ -81,7 +83,7 @@ export default function HomeScreen() {
   const services: ServiceItem[] = [
     {
       id: "disability",
-      label: "فئات الإعاقة\nتعرف إلى إعاقة",
+      label: t("ui.disabilityCategories"),
       icon: "accessibility-outline",
       color: colors.icon,
       href: "/resources",
@@ -89,7 +91,7 @@ export default function HomeScreen() {
     },
     {
       id: "schools",
-      label: "المدارس",
+      label: t("ui.schools"),
       icon: "school-outline",
       color: colors.icon,
       href: "/directory/schools",
@@ -97,7 +99,7 @@ export default function HomeScreen() {
     },
     {
       id: "centers",
-      label: "المراكز",
+      label: t("ui.centers"),
       icon: "business-outline",
       color: colors.icon,
       href: "/directory/centers",
@@ -105,7 +107,7 @@ export default function HomeScreen() {
     },
     {
       id: "doctors",
-      label: "الأطباء\nومتخصصين",
+      label: t("ui.doctors"),
       icon: "person-outline",
       color: colors.specialist,
       href: "/directory/professionals",
@@ -113,7 +115,7 @@ export default function HomeScreen() {
     },
     {
       id: "activities",
-      label: "الأنشطة\nوالبرامج",
+      label: t("ui.activities"),
       icon: "people-outline",
       color: colors.icon,
       href: "/services",
@@ -121,7 +123,7 @@ export default function HomeScreen() {
     },
     {
       id: "products",
-      label: "المنتجات\nالمنزلية",
+      label: t("ui.homeProducts"),
       icon: "storefront-outline",
       color: colors.icon,
       href: "/products",
@@ -129,7 +131,7 @@ export default function HomeScreen() {
     },
     {
       id: "homeServices",
-      label: "الخدمات\nالمنزلية",
+      label: t("ui.homeServices"),
       icon: "home-outline",
       color: colors.icon,
       href: "/services",
@@ -137,7 +139,7 @@ export default function HomeScreen() {
     },
     {
       id: "consultations",
-      label: "الاستشارات",
+      label: t("ui.consultations"),
       icon: "chatbubble-ellipses-outline",
       color: colors.icon,
       href: "/community/advice",
@@ -169,7 +171,7 @@ export default function HomeScreen() {
             hitSlop={10}
             style={({ pressed }) => [styles.iconBtn, styles.iconLeft, pressed && styles.pressed]}
             accessibilityRole="button"
-            accessibilityLabel="الإشعارات"
+            accessibilityLabel={t("ui.notifications")}
           >
             <Ionicons name="notifications-outline" size={ms(24)} color={colors.title} />
           </Pressable>
@@ -177,14 +179,14 @@ export default function HomeScreen() {
             source={require("../../assets/images/fakhr-wordmark-blue.png")}
             style={{ width: ms(42), height: ms(52) }}
             resizeMode="contain"
-            accessibilityLabel="فخر"
+            accessibilityLabel={t("ui.brand")}
           />
           <Pressable
             onPress={() => {}}
             hitSlop={10}
             style={({ pressed }) => [styles.iconBtn, styles.iconRight, pressed && styles.pressed]}
             accessibilityRole="button"
-            accessibilityLabel="تحديث"
+            accessibilityLabel={t("ui.refresh")}
           >
             <Ionicons name="refresh-outline" size={ms(24)} color={colors.title} />
           </Pressable>
@@ -193,18 +195,18 @@ export default function HomeScreen() {
         <Text
           style={[
             styles.greeting,
-            { fontSize: ms(26), lineHeight: ms(34), marginTop: ms(4) },
+            { fontSize: ms(26), lineHeight: ms(34), marginTop: ms(4), textAlign: "center" },
           ]}
         >
-          {`مرحباً ${firstName}`}
+          {t("ui.helloName", { name: firstName })}
         </Text>
         <Text
           style={[
             styles.helpLine,
-            { fontSize: ms(14), lineHeight: ms(22), marginBottom: ms(14) },
+            { fontSize: ms(14), lineHeight: ms(22), marginBottom: ms(14), textAlign: "center" },
           ]}
         >
-          كيف يمكننا مساعدتك اليوم؟
+          {t("ui.helpToday")}
         </Text>
 
         <Pressable
@@ -222,10 +224,10 @@ export default function HomeScreen() {
           <TextInput
             value={search}
             onChangeText={setSearch}
-            placeholder="ابحث عن خدمة، جهة، أو منتج"
+            placeholder={t("ui.searchHome")}
             placeholderTextColor={colors.placeholder}
             style={[styles.searchInput, { fontSize: ms(14) }]}
-            textAlign="right"
+            textAlign={align}
             returnKeyType="search"
             onSubmitEditing={openSearch}
             onFocus={openSearch}
@@ -246,7 +248,7 @@ export default function HomeScreen() {
         >
           <View style={styles.heroTextCol}>
             <Text style={[styles.heroTitle, { fontSize: ms(20), lineHeight: ms(28) }]}>
-              {"كل ما تحتاجه\nفي مكان واحد"}
+              {t("ui.heroTitle")}
             </Text>
             <Pressable
               onPress={() => router.navigate("/directory")}
@@ -256,9 +258,9 @@ export default function HomeScreen() {
                 pressed && styles.pressed,
               ]}
               accessibilityRole="button"
-              accessibilityLabel="اكتشف الآن"
+              accessibilityLabel={t("ui.discoverNow")}
             >
-              <Text style={[styles.heroBtnText, { fontSize: ms(13) }]}>اكتشف الآن</Text>
+              <Text style={[styles.heroBtnText, { fontSize: ms(13) }]}>{t("ui.discoverNow")}</Text>
             </Pressable>
           </View>
           <Image
@@ -328,7 +330,7 @@ export default function HomeScreen() {
         >
           <View style={styles.aiTextCol}>
             <Text style={[styles.aiTitle, { fontSize: ms(28), lineHeight: ms(36) }]}>
-              اسأل فخر
+              {t("ui.askFakhr")}
             </Text>
             <Text
               style={[
@@ -336,7 +338,7 @@ export default function HomeScreen() {
                 { fontSize: ms(13), lineHeight: ms(20), marginBottom: ms(12) },
               ]}
             >
-              مساعدك الذكي على مدار الساعة
+              {t("ui.aiSubtitle")}
             </Text>
             <Pressable
               onPress={() => router.push("/(tabs)/directory/helpCenter")}
@@ -346,9 +348,9 @@ export default function HomeScreen() {
                 pressed && styles.pressed,
               ]}
               accessibilityRole="button"
-              accessibilityLabel="ابدأ المحادثة"
+              accessibilityLabel={t("ui.startChat")}
             >
-              <Text style={[styles.aiBtnText, { fontSize: ms(14) }]}>ابدأ المحادثة</Text>
+              <Text style={[styles.aiBtnText, { fontSize: ms(14) }]}>{t("ui.startChat")}</Text>
             </Pressable>
           </View>
           <Image
@@ -398,13 +400,11 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     color: colors.title,
     textAlign: "center",
-    writingDirection: "rtl",
   },
   helpLine: {
     fontWeight: "500",
     color: colors.subtitle,
     textAlign: "center",
-    writingDirection: "rtl",
   },
   searchBar: {
     flexDirection: "row",
@@ -417,7 +417,6 @@ const styles = StyleSheet.create({
     flex: 1,
     color: colors.title,
     paddingVertical: 8,
-    writingDirection: "rtl",
   },
   hero: {
     backgroundColor: colors.brand,

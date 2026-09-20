@@ -17,6 +17,9 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import type { DirectoryListing } from "../../../components/directory/types";
 import { saveMockBooking } from "../../../utils/mockBookingsStore";
+import { useTranslation } from "react-i18next";
+import { knownText } from "../../../utils/knownText";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
 
 const colors = {
   bg: "#FFFFFF",
@@ -34,35 +37,10 @@ const colors = {
 const DESIGN_W = 390;
 
 const STEPS = [
-  { n: 1, label: "الخدمة" },
-  { n: 2, label: "الموعد" },
-  { n: 3, label: "التأكيد" },
-  { n: 4, label: "التأكيد" },
-];
-
-const AR_DAYS = [
-  "الأحد",
-  "الاثنين",
-  "الثلاثاء",
-  "الأربعاء",
-  "الخميس",
-  "الجمعة",
-  "السبت",
-];
-
-const AR_MONTHS = [
-  "يناير",
-  "فبراير",
-  "مارس",
-  "أبريل",
-  "مايو",
-  "يونيو",
-  "يوليو",
-  "أغسطس",
-  "سبتمبر",
-  "أكتوبر",
-  "نوفمبر",
-  "ديسمبر",
+  { n: 1, labelKey: "copy.service" },
+  { n: 2, labelKey: "copy.appointment" },
+  { n: 3, labelKey: "copy.confirmation" },
+  { n: 4, labelKey: "copy.confirmation" },
 ];
 
 const TIME_SLOTS = [
@@ -89,11 +67,11 @@ function parseListing(raw: string | string[] | undefined): DirectoryListing | nu
   }
 }
 
-function formatTimeAr(slot: string) {
+function formatTimeLocalized(slot: string, t: (key: string) => string) {
   const [time, period] = slot.split(" ");
   const [h, m] = time.split(":");
   const hour = String(parseInt(h, 10));
-  const suffix = period === "PM" ? "م" : "ص";
+  const suffix = period === "PM" ? t("copy.pm") : t("copy.am");
   return `${hour}:${m} ${suffix}`;
 }
 
@@ -126,6 +104,8 @@ function shiftCalendarStamp(stamp: string, minutes: number) {
 }
 
 export default function BookingScreen() {
+  const { t } = useTranslation();
+  const { align } = useI18nLayout();
   const router = useRouter();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
@@ -136,6 +116,8 @@ export default function BookingScreen() {
   const listing = useMemo(() => parseListing(itemParam), [itemParam]);
 
   const dateOptions = useMemo(() => {
+    const days = (t("copy.days", { returnObjects: true }) as string[]) ?? [];
+    const months = (t("planUi.months", { returnObjects: true }) as string[]) ?? [];
     const out: {
       key: string;
       day: string;
@@ -150,13 +132,13 @@ export default function BookingScreen() {
       const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
       out.push({
         key,
-        day: AR_DAYS[d.getDay()],
+        day: days[d.getDay()] ?? "",
         date: String(d.getDate()),
-        month: AR_MONTHS[d.getMonth()],
+        month: months[d.getMonth()] ?? "",
       });
     }
     return out;
-  }, []);
+  }, [t]);
 
   const [phase, setPhase] = useState<1 | 2 | 3>(1);
   const [selectedDateKey, setSelectedDateKey] = useState(
@@ -167,7 +149,7 @@ export default function BookingScreen() {
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
 
-  const providerName = listing?.name || "مؤسسة فاطمة";
+  const providerName = knownText(t, listing?.name) || t("copy.fatimaOrg");
   const activeStep = phase === 1 ? 1 : 2;
 
   const selectedDateLabel = useMemo(() => {
@@ -183,15 +165,17 @@ export default function BookingScreen() {
     return `${opt.day} ${opt.date} ${opt.month} ${year}`;
   }, [dateOptions, selectedDateKey]);
 
-  const appointmentType =
-    listing?.subtitle?.trim() || listing?.tags?.[0] || "جلسة تخاطب";
+  const appointmentType = knownText(
+    t,
+    listing?.subtitle?.trim() || listing?.tags?.[0] || "",
+  ) || t("copy.speechSession");
   const confirmationTime = selectedTime
-    ? `الساعة: ${formatTimeAr(selectedTime)}`
+    ? t("copy.timePrefix", { time: formatTimeLocalized(selectedTime, t) })
     : "";
 
   const goNext = () => {
     if (!selectedTime) {
-      Alert.alert("مطلوب", "يرجى اختيار وقت الموعد.");
+      Alert.alert(t("copy.required"), t("copy.timeRequired"));
       return;
     }
     setPhase(2);
@@ -199,15 +183,15 @@ export default function BookingScreen() {
 
   const confirm = () => {
     if (!listing) {
-      Alert.alert("خطأ", "تعذر تحميل بيانات الحجز.");
+      Alert.alert(t("common.error"), t("copy.bookingLoadError"));
       return;
     }
     if (!patientName.trim() || !phone.trim()) {
-      Alert.alert("مطلوب", "يرجى إدخال الاسم الكامل ورقم الهاتف.");
+      Alert.alert(t("copy.required"), t("copy.namePhoneRequired"));
       return;
     }
     if (!selectedTime) {
-      Alert.alert("مطلوب", "يرجى اختيار وقت الموعد.");
+      Alert.alert(t("copy.required"), t("copy.timeRequired"));
       return;
     }
     saveMockBooking({
@@ -262,7 +246,7 @@ export default function BookingScreen() {
             <Text
               style={[styles.title, { fontSize: ms(24), lineHeight: ms(32) }]}
             >
-              تأكيد الحجز
+              {t("copy.confirmBooking")}
             </Text>
 
             <View
@@ -281,7 +265,7 @@ export default function BookingScreen() {
                 hitSlop={12}
                 style={({ pressed }) => [pressed && styles.pressed]}
                 accessibilityRole="button"
-                accessibilityLabel="رجوع"
+                accessibilityLabel={t("common.back")}
               >
                 <Ionicons
                   name="chevron-back"
@@ -294,7 +278,7 @@ export default function BookingScreen() {
                 hitSlop={12}
                 style={({ pressed }) => [pressed && styles.pressed]}
                 accessibilityRole="button"
-                accessibilityLabel="التالي"
+                accessibilityLabel={t("copy.next")}
               >
                 <Ionicons
                   name="chevron-forward"
@@ -326,7 +310,7 @@ export default function BookingScreen() {
                 { fontSize: ms(22), lineHeight: ms(32), marginBottom: ms(12) },
               ]}
             >
-              تم حجز موعدك بنجاح
+              {t("copy.bookingSuccess")}
             </Text>
             <Text
               style={[
@@ -383,10 +367,10 @@ export default function BookingScreen() {
                 pressed && styles.pressed,
               ]}
               accessibilityRole="button"
-              accessibilityLabel="إضافة إلى التقويم"
+              accessibilityLabel={t("copy.addToCalendar")}
             >
               <Text style={[styles.nextText, { fontSize: ms(17) }]}>
-                إضافة إلى التقويم
+                {t("copy.addToCalendar")}
               </Text>
             </Pressable>
             <Pressable
@@ -401,10 +385,10 @@ export default function BookingScreen() {
                 pressed && styles.pressed,
               ]}
               accessibilityRole="button"
-              accessibilityLabel="عرض مواعيدي"
+              accessibilityLabel={t("copy.viewMyAppointments")}
             >
               <Text style={[styles.nextText, { fontSize: ms(17) }]}>
-                عرض مواعيدي
+                {t("copy.viewMyAppointments")}
               </Text>
             </Pressable>
           </ScrollView>
@@ -425,7 +409,7 @@ export default function BookingScreen() {
           <Text
             style={[styles.title, { fontSize: ms(24), lineHeight: ms(32) }]}
           >
-            حجز موعد
+            {t("copy.bookAppointment")}
           </Text>
 
           <View
@@ -481,7 +465,7 @@ export default function BookingScreen() {
                       active ? styles.stepLabelActive : styles.stepLabelIdle,
                     ]}
                   >
-                    {step.label}
+                    {t(step.labelKey)}
                   </Text>
                 </View>
               );
@@ -592,7 +576,7 @@ export default function BookingScreen() {
                         pressed && styles.pressed,
                       ]}
                       accessibilityRole="button"
-                      accessibilityLabel={formatTimeAr(slot)}
+                      accessibilityLabel={formatTimeLocalized(slot, t)}
                     >
                       <Text
                         style={[
@@ -601,7 +585,7 @@ export default function BookingScreen() {
                           sel && styles.timeTextSel,
                         ]}
                       >
-                        {formatTimeAr(slot)}
+                        {formatTimeLocalized(slot, t)}
                       </Text>
                     </Pressable>
                   );
@@ -618,16 +602,16 @@ export default function BookingScreen() {
               >
                 {providerName}
               </Text>
-              <Text style={styles.inputLabel}>الاسم الكامل</Text>
+              <Text style={styles.inputLabel}>{t("auth.fullName")}</Text>
               <TextInput
                 style={styles.input}
-                placeholder="أدخل الاسم الكامل"
+                placeholder={t("auth.enterFullName")}
                 placeholderTextColor={colors.muted}
                 value={patientName}
                 onChangeText={setPatientName}
-                textAlign="right"
+                textAlign={align}
               />
-              <Text style={styles.inputLabel}>رقم الهاتف</Text>
+              <Text style={styles.inputLabel}>{t("auth.phone")}</Text>
               <TextInput
                 style={styles.input}
                 placeholder="05xxxxxxxx"
@@ -635,17 +619,17 @@ export default function BookingScreen() {
                 keyboardType="phone-pad"
                 value={phone}
                 onChangeText={setPhone}
-                textAlign="right"
+                textAlign={align}
               />
-              <Text style={styles.inputLabel}>ملاحظات (اختياري)</Text>
+              <Text style={styles.inputLabel}>{t("copy.notesOptional")}</Text>
               <TextInput
                 style={[styles.input, styles.textArea]}
-                placeholder="أي معلومات إضافية"
+                placeholder={t("copy.additionalInfo")}
                 placeholderTextColor={colors.muted}
                 value={notes}
                 onChangeText={setNotes}
                 multiline
-                textAlign="right"
+                textAlign={align}
                 textAlignVertical="top"
               />
             </View>
@@ -663,10 +647,10 @@ export default function BookingScreen() {
               pressed && styles.pressed,
             ]}
             accessibilityRole="button"
-            accessibilityLabel={phase === 1 ? "التالي" : "تأكيد الحجز"}
+            accessibilityLabel={phase === 1 ? t("copy.next") : t("copy.confirmBooking")}
           >
             <Text style={[styles.nextText, { fontSize: ms(18) }]}>
-              {phase === 1 ? "التالي" : "تأكيد الحجز"}
+              {phase === 1 ? t("copy.next") : t("copy.confirmBooking")}
             </Text>
           </Pressable>
         </ScrollView>

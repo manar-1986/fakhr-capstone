@@ -16,6 +16,8 @@ import { getProfessionalDetails } from "../../../api/directory.api";
 import type { Professional } from "../../../types/directory.types";
 import { colors, sectionSpacing, spacing, typography } from "../../../theme";
 import { openInGoogleMaps, toFiniteNumber } from "../../../utils/openMaps";
+import { useTranslation } from "react-i18next";
+import { knownText } from "../../../utils/knownText";
 
 function openCenterInGoogleMaps(p: Professional) {
   void openInGoogleMaps({
@@ -39,6 +41,7 @@ function canOpenCenterInMaps(p: Professional): boolean {
 }
 
 export default function ProfessionalDetailsScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const { id } = useLocalSearchParams();
 
@@ -92,12 +95,12 @@ export default function ProfessionalDetailsScreen() {
           >
             <Ionicons name="arrow-back" size={24} color={colors.text} />
           </Pressable>
-          <Text style={styles.headerTitle}>Professional Profile</Text>
+          <Text style={styles.headerTitle}>{t("copy.proProfile")}</Text>
           <View style={styles.headerRight} />
         </View>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={colors.primary} />
-          <Text style={styles.loadingText}>Loading professional details...</Text>
+          <Text style={styles.loadingText}>{t("copy.loadingPro")}</Text>
         </View>
       </SafeAreaView>
     );
@@ -113,17 +116,17 @@ export default function ProfessionalDetailsScreen() {
           >
             <Ionicons name="arrow-back" size={24} color={colors.text} />
           </Pressable>
-          <Text style={styles.headerTitle}>Professional Profile</Text>
+          <Text style={styles.headerTitle}>{t("copy.proProfile")}</Text>
           <View style={styles.headerRight} />
         </View>
         <View style={styles.errorContainer}>
           <Ionicons name="alert-circle-outline" size={48} color={colors.textMuted} />
-          <Text style={styles.errorText}>Professional not found</Text>
+          <Text style={styles.errorText}>{t("copy.proNotFound")}</Text>
           <Text style={styles.errorSubtext}>
-            {error ? "Failed to load professional details" : "The professional you're looking for doesn't exist"}
+            {error ? t("copy.failedLoadPro") : t("copy.proMissing")}
           </Text>
           <Pressable style={styles.backButton} onPress={() => router.back()}>
-            <Text style={styles.backButtonText}>Go Back</Text>
+            <Text style={styles.backButtonText}>{t("copy.goBack")}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -140,7 +143,7 @@ export default function ProfessionalDetailsScreen() {
         >
           <Ionicons name="arrow-back" size={24} color={colors.text} />
         </Pressable>
-        <Text style={styles.headerTitle}>Professional Profile</Text>
+        <Text style={styles.headerTitle}>{t("copy.proProfile")}</Text>
         <Pressable style={styles.shareBtn}>
           <Ionicons name="share-outline" size={22} color={colors.text} />
         </Pressable>
@@ -155,27 +158,27 @@ export default function ProfessionalDetailsScreen() {
         
         {/* Specialty */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Specialty</Text>
+          <Text style={styles.sectionTitle}>{t("ui.specialty")}</Text>
           <View style={styles.specialtyBadge}>
-            <Text style={styles.specialtyText}>{professional?.specialty}</Text>
+            <Text style={styles.specialtyText}>{knownText(t, professional?.specialty)}</Text>
           </View>
         </View>
 
         {/* Rating */}
         {professional?.rating !== undefined && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Rating</Text>
+            <Text style={styles.sectionTitle}>{t("ui.rating")}</Text>
             {renderStars(professional.rating)}
           </View>
         )}
 
         {/* Contact Information */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Contact</Text>
+          <Text style={styles.sectionTitle}>{t("copy.contact")}</Text>
           {(professional.phone?.trim() ||
             professional.centerPhone?.toString?.()?.trim()) && (
             <TouchableOpacity style={styles.infoRow} onPress={handleCall}>
-              <Text style={styles.infoLabel}>Phone</Text>
+              <Text style={styles.infoLabel}>{t("auth.phone")}</Text>
               <Text style={styles.infoLink}>
                 📞{" "}
                 {professional.phone?.trim() || professional.centerPhone}
@@ -185,7 +188,7 @@ export default function ProfessionalDetailsScreen() {
           {(professional.email?.trim() ||
             professional.centerEmail?.toString?.()?.trim()) && (
             <TouchableOpacity style={styles.infoRow} onPress={handleEmail}>
-              <Text style={styles.infoLabel}>Email</Text>
+              <Text style={styles.infoLabel}>{t("auth.email")}</Text>
               <Text style={styles.infoLink}>
                 ✉️ {professional.email?.trim() || professional.centerEmail}
               </Text>
@@ -199,7 +202,7 @@ export default function ProfessionalDetailsScreen() {
           professional.centerName ||
           canOpenCenterInMaps(professional)) && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Location</Text>
+            <Text style={styles.sectionTitle}>{t("copy.location")}</Text>
             {canOpenCenterInMaps(professional) ? (
               <TouchableOpacity
                 style={styles.mapsRow}
@@ -222,7 +225,7 @@ export default function ProfessionalDetailsScreen() {
                     professional.location.trim() && (
                     <Text style={styles.cityText}>{professional.location}</Text>
                   )}
-                <Text style={styles.mapsHint}>Tap to open in Maps</Text>
+                <Text style={styles.mapsHint}>{t("copy.tapMapsShort")}</Text>
               </TouchableOpacity>
             ) : (
               <>
@@ -243,7 +246,7 @@ export default function ProfessionalDetailsScreen() {
         {/* Description */}
         {professional?.bio && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>About</Text>
+            <Text style={styles.sectionTitle}>{t("copy.about")}</Text>
             <Text style={styles.bioText}>{professional.bio}</Text>
           </View>
         )} 

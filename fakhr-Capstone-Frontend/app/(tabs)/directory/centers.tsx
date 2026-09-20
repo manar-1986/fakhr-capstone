@@ -17,6 +17,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { centersListQueryKey, getCenters } from "../../../api/directory.api";
 import { DisabilityAwareHeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 import type { HealthCenter } from "../../../types/directory.types";
+import { useTranslation } from "react-i18next";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { knownText } from "../../../utils/knownText";
 
 const colors = {
   bg: "#FFFFFF",
@@ -130,6 +133,8 @@ function centerIdOf(center?: HealthCenter) {
 }
 
 export default function CentersScreen() {
+  const { t } = useTranslation();
+  const { align } = useI18nLayout();
   const router = useRouter();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
@@ -179,24 +184,36 @@ export default function CentersScreen() {
 
   const pickerTitle =
     picker === "specialty"
-      ? "التخصص"
+      ? t("ui.specialty")
       : picker === "type"
-        ? "النوع"
-        : "التقييم";
+        ? t("ui.type")
+        : t("ui.rating");
 
   const pickerOptions =
     picker === "specialty"
       ? SPECIALTY_OPTIONS.map((label) => ({
-          label,
+          label: label === "الكل" ? t("ui.all") : knownText(t, label),
           onSelect: () => setSpecialty(label),
         }))
       : picker === "type"
         ? TYPE_OPTIONS.map((item) => ({
-            label: item.label,
+            label:
+              item.value === "all"
+                ? t("ui.all")
+                : item.value === "private"
+                  ? t("ui.private")
+                  : t("ui.public"),
             onSelect: () => setType(item.value),
           }))
         : RATING_OPTIONS.map((item) => ({
-            label: item.label,
+            label:
+              item.value === "all"
+                ? t("ui.all")
+                : item.value === "high"
+                  ? t("ui.highestRated")
+                  : item.value === "4.5"
+                    ? t("ui.rating45")
+                    : t("ui.rating40"),
             onSelect: () => setRatingFilter(item.value),
           }));
 
@@ -219,7 +236,7 @@ export default function CentersScreen() {
         <View style={[styles.header, { height: ms(44), marginBottom: ms(10) }]}>
           <DisabilityAwareHeaderBackButton color={colors.title} />
           <Text style={[styles.title, { fontSize: ms(26), lineHeight: ms(34) }]}>
-            المراكز
+            {t("ui.centers")}
           </Text>
         </View>
 
@@ -242,10 +259,10 @@ export default function CentersScreen() {
               setSearch(value);
               setVisibleCount(PAGE_SIZE);
             }}
-            placeholder="ابحث عن مركز..."
+            placeholder={t("ui.searchCenter")}
             placeholderTextColor={colors.placeholder}
             style={[styles.searchInput, { fontSize: ms(14) }]}
-            textAlign="right"
+            textAlign={align}
             returnKeyType="search"
           />
           <Ionicons
@@ -267,21 +284,21 @@ export default function CentersScreen() {
         >
           <View style={styles.chipWrap}>
             <FilterChip
-              label="التقييم"
+              label={t("ui.rating")}
               size={ms}
               onPress={() => setPicker("rating")}
             />
           </View>
           <View style={styles.chipWrap}>
             <FilterChip
-              label="النوع"
+              label={t("ui.type")}
               size={ms}
               onPress={() => setPicker("type")}
             />
           </View>
           <View style={styles.chipWrap}>
             <FilterChip
-              label="التخصص"
+              label={t("ui.specialty")}
               size={ms}
               onPress={() => setPicker("specialty")}
             />
@@ -338,7 +355,7 @@ export default function CentersScreen() {
                       },
                     ]}
                   >
-                    {center.specialty}
+                    {knownText(t, center.specialty)}
                   </Text>
                   <View
                     style={[
@@ -385,10 +402,10 @@ export default function CentersScreen() {
             pressed && styles.pressed,
           ]}
           accessibilityRole="button"
-          accessibilityLabel="عرض المزيد"
+          accessibilityLabel={t("ui.seeMore")}
         >
           <Text style={[styles.moreBtnText, { fontSize: ms(16) }]}>
-            عرض المزيد
+            {t("ui.seeMore")}
           </Text>
         </Pressable>
       </ScrollView>

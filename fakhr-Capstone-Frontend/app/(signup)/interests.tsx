@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 
 const colors = {
   bg: "#FFFFFF",
@@ -27,23 +28,24 @@ const DESIGN_W = 405;
 
 type Interest = {
   id: string;
-  label: string;
+  labelKey: string;
   icon: keyof typeof Ionicons.glyphMap;
 };
 
 const INTERESTS: Interest[] = [
-  { id: "apps", label: "التطبيقات", icon: "grid-outline" },
-  { id: "centers", label: "المراكز", icon: "business-outline" },
-  { id: "doctors", label: "الأطباء", icon: "person-outline" },
-  { id: "events", label: "الفعاليات", icon: "people-outline" },
-  { id: "products", label: "المنتجات", icon: "bag-handle-outline" },
-  { id: "institutes", label: "المعاهد", icon: "home-outline" },
-  { id: "consultations", label: "الاستشارات", icon: "chatbubble-ellipses-outline" },
-  { id: "services", label: "خدمات", icon: "extension-puzzle-outline" },
-  { id: "education", label: "تثقيف وتعليم", icon: "play-circle-outline" },
+  { id: "apps", labelKey: "ui.apps", icon: "grid-outline" },
+  { id: "centers", labelKey: "ui.centers", icon: "business-outline" },
+  { id: "doctors", labelKey: "ui.doctorsShort", icon: "person-outline" },
+  { id: "events", labelKey: "ui.events", icon: "people-outline" },
+  { id: "products", labelKey: "ui.products", icon: "bag-handle-outline" },
+  { id: "institutes", labelKey: "ui.institutes", icon: "home-outline" },
+  { id: "consultations", labelKey: "ui.consultations", icon: "chatbubble-ellipses-outline" },
+  { id: "services", labelKey: "ui.servicesShort", icon: "extension-puzzle-outline" },
+  { id: "education", labelKey: "ui.education", icon: "play-circle-outline" },
 ];
 
 export default function InterestsSelectionScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const { role } = useLocalSearchParams<{ role?: string }>();
   const { width: windowWidth } = useWindowDimensions();
@@ -100,7 +102,7 @@ export default function InterestsSelectionScreen() {
             },
           ]}
         >
-          اختر ما يهمك
+          {t("ui.chooseInterests")}
         </Text>
         <Text
           style={[
@@ -112,7 +114,7 @@ export default function InterestsSelectionScreen() {
             },
           ]}
         >
-          {"حدد اهتماماتك لنقدم لك\nتجربة مخصصة"}
+          {t("ui.pickInterestsSub")}
         </Text>
 
         <View style={[styles.grid, { gap }]}>
@@ -136,7 +138,7 @@ export default function InterestsSelectionScreen() {
                 ]}
                 accessibilityRole="button"
                 accessibilityState={{ selected: isOn }}
-                accessibilityLabel={item.label}
+                accessibilityLabel={t(item.labelKey)}
               >
                 <Ionicons
                   name={item.icon}
@@ -154,7 +156,7 @@ export default function InterestsSelectionScreen() {
                   ]}
                   numberOfLines={1}
                 >
-                  {item.label}
+                  {t(item.labelKey)}
                 </Text>
               </Pressable>
             );
@@ -173,10 +175,10 @@ export default function InterestsSelectionScreen() {
               pressed && styles.pressed,
             ]}
             accessibilityRole="button"
-            accessibilityLabel="حفظ ومتابعة"
+            accessibilityLabel={t("ui.saveContinue")}
           >
             <Text style={[styles.primaryButtonText, { fontSize: ms(18) }]}>
-              حفظ ومتابعة
+              {t("ui.saveContinue")}
             </Text>
           </Pressable>
         </View>

@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { DisabilityAwareHeaderBackButton } from "../../../components/navigation/HeaderBackButton";
+import { useTranslation } from "react-i18next";
+import { knownText } from "../../../utils/knownText";
 
 const colors = {
   bg: "#FFFFFF",
@@ -109,6 +111,7 @@ const PRODUCTS: ProductRow[] = [
 ];
 
 export default function ProductsScreen() {
+  const { t } = useTranslation();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
   const s = contentW / DESIGN_W;
@@ -148,7 +151,7 @@ export default function ProductsScreen() {
                 },
               ]}
             >
-              المنتجات
+              {t("ui.products")}
             </Text>
           </View>
 
@@ -183,7 +186,13 @@ export default function ProductsScreen() {
                   ]}
                   accessibilityRole="button"
                   accessibilityState={{ selected }}
-                  accessibilityLabel={item.label}
+                  accessibilityLabel={
+                    item.id === "all"
+                      ? t("ui.all")
+                      : item.id === "أدوات تعليمية"
+                        ? t("ui.educationalTools")
+                        : t("ui.supplies")
+                  }
                 >
                   <Text
                     style={[
@@ -194,7 +203,11 @@ export default function ProductsScreen() {
                       },
                     ]}
                   >
-                    {item.label}
+                    {item.id === "all"
+                      ? t("ui.all")
+                      : item.id === "أدوات تعليمية"
+                        ? t("ui.educationalTools")
+                        : t("ui.supplies")}
                   </Text>
                 </Pressable>
               );
@@ -221,7 +234,7 @@ export default function ProductsScreen() {
                   pressed && styles.pressed,
                 ]}
                 accessibilityRole="button"
-                accessibilityLabel={row.name}
+                accessibilityLabel={knownText(t, row.name)}
               >
                 <Image
                   source={photo}
@@ -240,7 +253,7 @@ export default function ProductsScreen() {
                     ]}
                     numberOfLines={1}
                   >
-                    {row.name}
+                    {knownText(t, row.name)}
                   </Text>
                   <View
                     style={[
@@ -285,10 +298,10 @@ export default function ProductsScreen() {
               pressed && styles.pressed,
             ]}
             accessibilityRole="button"
-            accessibilityLabel="عرض المزيد"
+            accessibilityLabel={t("ui.seeMore")}
           >
             <Text style={[styles.moreBtnText, { fontSize: ms(16) }]}>
-              عرض المزيد
+              {t("ui.seeMore")}
             </Text>
           </Pressable>
         </ScrollView>

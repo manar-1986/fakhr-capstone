@@ -18,6 +18,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { centersListQueryKey, getCenters } from "../../../api/directory.api";
 import type { HealthCenter } from "../../../types/directory.types";
 import { tryNavigateToDisabilityServices } from "../../../utils/disabilityFlowNav";
+import { useTranslation } from "react-i18next";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { knownText } from "../../../utils/knownText";
 
 const colors = {
   bg: "#FFFFFF",
@@ -148,6 +151,8 @@ function centerIdOf(center?: HealthCenter) {
 }
 
 export default function SchoolsScreen() {
+  const { t } = useTranslation();
+  const { align } = useI18nLayout();
   const router = useRouter();
   const params = useLocalSearchParams<{
     disabilityId?: string;
@@ -204,18 +209,26 @@ export default function SchoolsScreen() {
   };
 
   const pickerTitle =
-    picker === "city" ? "المنطقة" : picker === "type" ? "النوع" : "الفرع";
+    picker === "city" ? t("ui.area") : picker === "type" ? t("ui.type") : t("ui.branch");
 
   const pickerOptions =
     picker === "city"
-      ? CITY_OPTIONS.map((label) => ({ label, onSelect: () => setCity(label) }))
+      ? CITY_OPTIONS.map((label) => ({
+          label: label === "الكل" ? t("ui.all") : knownText(t, label),
+          onSelect: () => setCity(label),
+        }))
       : picker === "type"
         ? TYPE_OPTIONS.map((item) => ({
-            label: item.label,
+            label:
+              item.value === "all"
+                ? t("ui.all")
+                : item.value === "private"
+                  ? t("ui.private")
+                  : t("ui.public"),
             onSelect: () => setType(item.value),
           }))
         : BRANCH_OPTIONS.map((label) => ({
-            label,
+            label: label === "الكل" ? t("ui.all") : knownText(t, label),
             onSelect: () => setBranch(label),
           }));
 
@@ -247,12 +260,12 @@ export default function SchoolsScreen() {
             hitSlop={12}
             style={({ pressed }) => [styles.backBtn, pressed && styles.pressed]}
             accessibilityRole="button"
-            accessibilityLabel="رجوع"
+            accessibilityLabel={t("common.back")}
           >
             <Ionicons name="chevron-back" size={ms(26)} color={colors.back} />
           </Pressable>
           <Text style={[styles.title, { fontSize: ms(24), lineHeight: ms(32) }]}>
-            المدارس
+            {t("ui.schools")}
           </Text>
         </View>
 
@@ -270,10 +283,10 @@ export default function SchoolsScreen() {
           <TextInput
             value={search}
             onChangeText={setSearch}
-            placeholder="ابحث عن مدرسة..."
+            placeholder={t("ui.searchSchool")}
             placeholderTextColor={colors.placeholder}
             style={[styles.searchInput, { fontSize: ms(13) }]}
-            textAlign="right"
+            textAlign={align}
             returnKeyType="search"
           />
           <Ionicons
@@ -285,24 +298,24 @@ export default function SchoolsScreen() {
 
         <View style={[styles.filterRow, { marginBottom: ms(14), gap: ms(6) }]}>
           <FilterChip
-            label="المنطقة"
+            label={t("ui.area")}
             size={ms}
             onPress={() => setPicker("city")}
           />
           <FilterChip
-            label="النوع"
+            label={t("ui.type")}
             size={ms}
             onPress={() => setPicker("type")}
           />
           <FilterChip
-            label="الفرع"
+            label={t("ui.branch")}
             size={ms}
             onPress={() => setPicker("branch")}
           />
           <Pressable
             onPress={() => {
               resetFilters();
-              Alert.alert("الفلاتر", "تم مسح عوامل التصفية.");
+              Alert.alert(t("ui.filters"), t("ui.filtersCleared"));
             }}
             style={({ pressed }) => [
               styles.filterIconBtn,
@@ -314,7 +327,7 @@ export default function SchoolsScreen() {
               pressed && styles.pressed,
             ]}
             accessibilityRole="button"
-            accessibilityLabel="الفلاتر"
+            accessibilityLabel={t("ui.filters")}
           >
             <Ionicons name="options-outline" size={ms(18)} color={colors.filter} />
           </Pressable>
@@ -362,7 +375,7 @@ export default function SchoolsScreen() {
                     },
                   ]}
                 >
-                  {school.city}
+                  {knownText(t, school.city)}
                 </Text>
                 <View style={[styles.ratingRow, { marginTop: ms(4), gap: ms(4) }]}>
                   <Ionicons name="star" size={ms(13)} color={colors.star} />

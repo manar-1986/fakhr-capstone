@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 import type { ResourceType } from "../../../constants/resources";
 
 const colors = {
@@ -125,11 +126,14 @@ const CATEGORIES: Category[] = [
 ];
 
 export default function DisabilityCategoriesScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
   const s = contentW / DESIGN_W;
   const ms = (n: number) => Math.round(n * s);
+
+  const categoryLabel = (item: Category) => t(`disabilities.${item.id}`);
 
   const goBack = () => {
     router.navigate("/(tabs)/home");
@@ -140,7 +144,7 @@ export default function DisabilityCategoriesScreen() {
       pathname: "/(tabs)/resources/disability-services",
       params: {
         id: item.id,
-        name: item.label.replace(/\n/g, " "),
+        name: categoryLabel(item).replace(/\n/g, " "),
       },
     });
   };
@@ -166,7 +170,7 @@ export default function DisabilityCategoriesScreen() {
             hitSlop={12}
             style={({ pressed }) => [styles.backBtn, pressed && styles.pressed]}
             accessibilityRole="button"
-            accessibilityLabel="رجوع"
+            accessibilityLabel={t("common.back")}
           >
             <Ionicons name="chevron-back" size={ms(26)} color={colors.back} />
           </Pressable>
@@ -176,7 +180,7 @@ export default function DisabilityCategoriesScreen() {
               { fontSize: ms(24), lineHeight: ms(32) },
             ]}
           >
-            فئات الإعاقة
+            {t("ui.categoriesTitle")}
           </Text>
         </View>
 
@@ -190,7 +194,7 @@ export default function DisabilityCategoriesScreen() {
             },
           ]}
         >
-          {"اختر الفئة المناسبة للحصول على\nالخدمات والمعلومات الملائمة"}
+          {t("ui.chooseCategory")}
         </Text>
 
         <View style={{ gap: ms(6) }}>
@@ -210,7 +214,7 @@ export default function DisabilityCategoriesScreen() {
                 pressed && styles.pressed,
               ]}
               accessibilityRole="button"
-              accessibilityLabel={item.label.replace("\n", " ")}
+              accessibilityLabel={categoryLabel(item).replace("\n", " ")}
             >
               <Ionicons name={item.icon} size={ms(26)} color={item.iconColor} />
               <Text
@@ -219,7 +223,7 @@ export default function DisabilityCategoriesScreen() {
                   { fontSize: ms(14), lineHeight: ms(20) },
                 ]}
               >
-                {item.label}
+                {categoryLabel(item)}
               </Text>
               <Ionicons
                 name="chevron-forward"
@@ -244,14 +248,14 @@ export default function DisabilityCategoriesScreen() {
             pressed && styles.pressed,
           ]}
           accessibilityRole="button"
-          accessibilityLabel="لست متأكداً من الفئة؟"
+          accessibilityLabel={t("ui.unsureCategory")}
         >
           <View style={styles.helpTextCol}>
             <Text style={[styles.helpTitle, { fontSize: ms(15), lineHeight: ms(22) }]}>
-              لست متأكداً من الفئة؟
+              {t("ui.unsureCategory")}
             </Text>
             <Text style={[styles.helpSub, { fontSize: ms(12), lineHeight: ms(18) }]}>
-              مساعدتك في تحديد الفئة المناسبة
+              {t("ui.unsureHelp")}
             </Text>
           </View>
           <View

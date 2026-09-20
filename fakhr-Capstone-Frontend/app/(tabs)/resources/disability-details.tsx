@@ -12,9 +12,10 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { WEB_PHONE_WIDTH } from "../../../components/layout/WebAppShell";
 import {
-  DISABILITY_DISCLAIMER,
   DISABILITY_GUIDES,
+  localizeGuide,
 } from "../../../constants/disabilityGuides";
+import { useTranslation } from "react-i18next";
 
 const colors = {
   bg: "#F7F8FC",
@@ -34,6 +35,7 @@ const colors = {
 const DESIGN_W = 390;
 
 export default function DisabilityDetailsScreen() {
+  const { t, i18n } = useTranslation();
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id?: string }>();
   const { width: windowWidth } = useWindowDimensions();
@@ -42,9 +44,9 @@ export default function DisabilityDetailsScreen() {
   const ms = (n: number) => Math.round(n * s);
 
   const guide = useMemo(() => {
-    if (id && DISABILITY_GUIDES[id]) return DISABILITY_GUIDES[id];
-    return DISABILITY_GUIDES.autism;
-  }, [id]);
+    const base = id && DISABILITY_GUIDES[id] ? DISABILITY_GUIDES[id] : DISABILITY_GUIDES.autism;
+    return localizeGuide(base, i18n.language);
+  }, [id, i18n.language]);
 
   const goBack = () => {
     if (typeof router.canGoBack === "function" && router.canGoBack()) {
@@ -89,7 +91,7 @@ export default function DisabilityDetailsScreen() {
             hitSlop={12}
             style={({ pressed }) => [styles.backBtn, pressed && styles.pressed]}
             accessibilityRole="button"
-            accessibilityLabel="رجوع"
+            accessibilityLabel={t("common.back")}
           >
             <Ionicons name="chevron-back" size={ms(26)} color={colors.back} />
           </Pressable>
@@ -97,7 +99,7 @@ export default function DisabilityDetailsScreen() {
             style={[styles.headerTitle, { fontSize: ms(18), lineHeight: ms(26) }]}
             numberOfLines={1}
           >
-            تعرف إلى الإعاقة
+            {t("copy.knowDisability")}
           </Text>
         </View>
 
@@ -135,25 +137,25 @@ export default function DisabilityDetailsScreen() {
           </Text>
         </View>
 
-        <Section title="تعريف مبسط" ms={ms}>
+        <Section title={t("copy.simpleDef")} ms={ms}>
           <Text style={[styles.body, { fontSize: ms(14), lineHeight: ms(24) }]}>
             {guide.definition}
           </Text>
         </Section>
 
-        <Section title="العلامات والخصائص الشائعة" ms={ms}>
+        <Section title={t("copy.commonSigns")} ms={ms}>
           {guide.signs.map((item) => (
             <Bullet key={item} text={item} ms={ms} />
           ))}
         </Section>
 
-        <Section title="متى أطلب تقييماً من مختص؟" ms={ms}>
+        <Section title={t("copy.whenToSeek")} ms={ms}>
           {guide.whenToSeek.map((item) => (
             <Bullet key={item} text={item} ms={ms} />
           ))}
         </Section>
 
-        <Section title="كيف أساعد طفلي في المنزل؟" ms={ms}>
+        <Section title={t("copy.helpAtHome")} ms={ms}>
           {guide.homeSupport.map((item) => (
             <Bullet key={item} text={item} ms={ms} />
           ))}
@@ -171,7 +173,7 @@ export default function DisabilityDetailsScreen() {
         >
           <View style={styles.disclaimerHead}>
             <Text style={[styles.disclaimerTitle, { fontSize: ms(13) }]}>
-              ملاحظة مهمة
+              {t("copy.importantNote")}
             </Text>
             <Ionicons name="information-circle" size={ms(18)} color={colors.brand} />
           </View>
@@ -181,7 +183,7 @@ export default function DisabilityDetailsScreen() {
               { fontSize: ms(13), lineHeight: ms(22), marginTop: ms(6) },
             ]}
           >
-            {DISABILITY_DISCLAIMER}
+            {t("copy.disclaimer")}
           </Text>
         </View>
 
@@ -193,11 +195,11 @@ export default function DisabilityDetailsScreen() {
             pressed && styles.pressed,
           ]}
           accessibilityRole="button"
-          accessibilityLabel="البحث عن مختص"
+          accessibilityLabel={t("copy.findSpecialist")}
         >
           <Ionicons name="search-outline" size={ms(18)} color={colors.white} />
           <Text style={[styles.primaryBtnText, { fontSize: ms(15) }]}>
-            البحث عن مختص
+            {t("copy.findSpecialist")}
           </Text>
         </Pressable>
 
@@ -213,11 +215,11 @@ export default function DisabilityDetailsScreen() {
             pressed && styles.pressed,
           ]}
           accessibilityRole="button"
-          accessibilityLabel="استكشف محتوى متعلق"
+          accessibilityLabel={t("copy.relatedContent")}
         >
           <Ionicons name="compass-outline" size={ms(18)} color={colors.brand} />
           <Text style={[styles.secondaryBtnText, { fontSize: ms(15) }]}>
-            استكشف محتوى متعلق
+            {t("copy.relatedContent")}
           </Text>
         </Pressable>
       </ScrollView>

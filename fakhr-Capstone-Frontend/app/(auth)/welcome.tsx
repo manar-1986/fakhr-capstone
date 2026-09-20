@@ -4,6 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
 import { I18nManager, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 
 const colors = {
   bg: "#6F80B4",
@@ -15,6 +16,7 @@ const colors = {
 const DESIGN_W = 379;
 
 export default function WelcomeScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
@@ -39,7 +41,7 @@ export default function WelcomeScreen() {
               source={require("../../assets/images/fakhr-wordmark.png")}
               style={styles.logo}
               contentFit="contain"
-              accessibilityLabel="فخر"
+              accessibilityLabel={t("ui.brand")}
             />
           </View>
           <Text
@@ -48,7 +50,7 @@ export default function WelcomeScreen() {
               { fontSize: ms(22), lineHeight: ms(36) },
             ]}
           >
-            {"منصة ذكية لخدمة\nذوي الاحتياجات الخاصة\nو أسرهم"}
+            {t("ui.welcomeTagline")}
           </Text>
         </View>
 
@@ -65,10 +67,10 @@ export default function WelcomeScreen() {
             onPress={handleGetStarted}
             activeOpacity={0.85}
             accessibilityRole="button"
-            accessibilityLabel="إنشاء حساب جديد"
+            accessibilityLabel={t("ui.createNewAccount")}
           >
             <Text style={[styles.primaryButtonText, { fontSize: ms(17) }]}>
-              إنشاء حساب جديد
+              {t("ui.createNewAccount")}
             </Text>
           </TouchableOpacity>
 
@@ -83,10 +85,10 @@ export default function WelcomeScreen() {
             onPress={handleAlreadyHaveAccount}
             activeOpacity={0.85}
             accessibilityRole="button"
-            accessibilityLabel="تسجيل الدخول"
+            accessibilityLabel={t("auth.signIn")}
           >
             <Text style={[styles.secondaryButtonText, { fontSize: ms(17) }]}>
-              تسجيل الدخول
+              {t("auth.signIn")}
             </Text>
           </TouchableOpacity>
         </View>
@@ -105,13 +107,13 @@ export default function WelcomeScreen() {
               color={colors.white}
             />
             <Text style={[styles.featureText, { fontSize: ms(13), lineHeight: ms(20) }]}>
-              {"موثوقة لحماية\nالبيانات"}
+              {t("ui.trustedData")}
             </Text>
           </View>
           <View style={styles.feature}>
             <Ionicons name="flash" size={ms(34)} color={colors.white} />
             <Text style={[styles.featureText, { fontSize: ms(13), lineHeight: ms(20) }]}>
-              {"سهولة\nوسرعة"}
+              {t("ui.easyFast")}
             </Text>
           </View>
           <View style={styles.feature}>
@@ -121,7 +123,7 @@ export default function WelcomeScreen() {
               color={colors.white}
             />
             <Text style={[styles.featureText, { fontSize: ms(13), lineHeight: ms(20) }]}>
-              {"متنوعة\nللخدمات"}
+              {t("ui.diverseServices")}
             </Text>
           </View>
         </View>

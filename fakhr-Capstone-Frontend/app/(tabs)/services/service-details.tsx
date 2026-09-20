@@ -13,6 +13,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useQuery } from "@tanstack/react-query";
 import { getServiceById } from "../../../api/services.api";
+import { useTranslation } from "react-i18next";
+import { knownText } from "../../../utils/knownText";
 
 // Design system colors
 const colors = {
@@ -28,6 +30,7 @@ const colors = {
 };
 
 export default function ServiceDetailsScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const params = useLocalSearchParams<{ id?: string | string[] }>();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
@@ -53,12 +56,12 @@ export default function ServiceDetailsScreen() {
           >
             <Ionicons name="arrow-back" size={24} color={colors.text} />
           </Pressable>
-          <Text style={styles.headerTitle}>Service Details</Text>
+          <Text style={styles.headerTitle}>{t("copy.serviceDetails")}</Text>
           <View style={styles.headerRight} />
         </View>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={colors.primary} />
-          <Text style={styles.loadingText}>Loading service details...</Text>
+          <Text style={styles.loadingText}>{t("copy.loadingService")}</Text>
         </View>
       </SafeAreaView>
     );
@@ -78,19 +81,19 @@ export default function ServiceDetailsScreen() {
           >
             <Ionicons name="arrow-back" size={24} color={colors.text} />
           </Pressable>
-          <Text style={styles.headerTitle}>Service Details</Text>
+          <Text style={styles.headerTitle}>{t("copy.serviceDetails")}</Text>
           <View style={styles.headerRight} />
         </View>
         <View style={styles.errorContainer}>
           <Ionicons name="alert-circle-outline" size={48} color={colors.textMuted} />
           <Text style={styles.errorText}>
-            {error ? "Failed to load service" : "Service not found"}
+            {error ? t("copy.failedLoadService") : t("copy.serviceNotFound")}
           </Text>
           <Pressable
             style={styles.backButton}
             onPress={() => router.back()}
           >
-            <Text style={styles.backButtonText}>Go Back</Text>
+            <Text style={styles.backButtonText}>{t("copy.goBack")}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -121,11 +124,11 @@ export default function ServiceDetailsScreen() {
 
   const handleBookService = () => {
     Alert.alert(
-      "Book Service",
-      `Would you like to find providers for ${service.name}?`,
+      t("copy.bookService"),
+      t("copy.findProvidersFor", { name: knownText(t, service.name) }),
       [
-        { text: "Cancel", style: "cancel" },
-        { text: "Find Providers", onPress: handleViewProviders },
+        { text: t("common.cancel"), style: "cancel" },
+        { text: t("copy.findProviders"), onPress: handleViewProviders },
       ]
     );
   };
@@ -143,7 +146,7 @@ export default function ServiceDetailsScreen() {
         >
           <Ionicons name="arrow-back" size={24} color={colors.text} />
         </Pressable>
-        <Text style={styles.headerTitle}>Service Details</Text>
+        <Text style={styles.headerTitle}>{t("copy.serviceDetails")}</Text>
         <View style={styles.headerRight} />
       </View>
 
@@ -166,9 +169,9 @@ export default function ServiceDetailsScreen() {
               color={service.color}
             />
           </View>
-          <Text style={styles.serviceName}>{service.name}</Text>
+          <Text style={styles.serviceName}>{knownText(t, service.name)}</Text>
           <View style={styles.categoryBadge}>
-            <Text style={styles.categoryText}>{service.category}</Text>
+            <Text style={styles.categoryText}>{knownText(t, service.category)}</Text>
           </View>
 
           {/* Rating */}
@@ -184,7 +187,7 @@ export default function ServiceDetailsScreen() {
               ))}
             </View>
             <Text style={styles.ratingText}>
-              {service.rating} ({service.reviews} reviews)
+              {service.rating} ({t("copy.reviewsCount", { count: service.reviews })})
             </Text>
           </View>
         </View>
@@ -193,32 +196,32 @@ export default function ServiceDetailsScreen() {
         <View style={styles.statsCard}>
           <View style={styles.statBox}>
             <Ionicons name="time-outline" size={22} color={colors.primary} />
-            <Text style={styles.statLabel}>Duration</Text>
+            <Text style={styles.statLabel}>{t("copy.duration")}</Text>
             <Text style={styles.statValue}>{service.duration}</Text>
           </View>
           <View style={styles.statDivider} />
           <View style={styles.statBox}>
             <Ionicons name="calendar-outline" size={22} color={colors.primary} />
-            <Text style={styles.statLabel}>Frequency</Text>
+            <Text style={styles.statLabel}>{t("copy.frequency")}</Text>
             <Text style={styles.statValue}>{service.frequency}</Text>
           </View>
           <View style={styles.statDivider} />
           <View style={styles.statBox}>
             <Ionicons name="people-outline" size={22} color={colors.primary} />
-            <Text style={styles.statLabel}>Age Range</Text>
+            <Text style={styles.statLabel}>{t("copy.ageGroup")}</Text>
             <Text style={styles.statValue}>{service.ageRange}</Text>
           </View>
         </View>
 
         {/* About Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>About This Service</Text>
+          <Text style={styles.sectionTitle}>{t("copy.aboutService")}</Text>
           <Text style={styles.longDescription}>{service.longDescription}</Text>
         </View>
 
         {/* Benefits Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Key Benefits</Text>
+          <Text style={styles.sectionTitle}>{t("copy.keyBenefits")}</Text>
           <View style={styles.benefitsList}>
             {service.benefits.map((benefit, index) => (
               <View key={index} style={styles.benefitItem}>
@@ -238,7 +241,7 @@ export default function ServiceDetailsScreen() {
         {/* Providers Card */}
         <View style={styles.providersCard}>
           <View style={styles.providersInfo}>
-            <Text style={styles.providersTitle}>Available Providers</Text>
+            <Text style={styles.providersTitle}>{t("copy.availableProviders")}</Text>
             <Text style={styles.providersCount}>
               {service.providers} certified specialists in your area
             </Text>
@@ -250,7 +253,7 @@ export default function ServiceDetailsScreen() {
             ]}
             onPress={handleViewProviders}
           >
-            <Text style={styles.viewProvidersBtnText}>View All</Text>
+            <Text style={styles.viewProvidersBtnText}>{t("home.viewAll")}</Text>
             <Ionicons name="arrow-forward" size={16} color={colors.primary} />
           </Pressable>
         </View>
@@ -259,8 +262,8 @@ export default function ServiceDetailsScreen() {
       {/* Bottom CTA */}
       <View style={styles.bottomCTA}>
         <View style={styles.priceInfo}>
-          <Text style={styles.priceLabel}>Starting from</Text>
-          <Text style={styles.priceValue}>Free consultation</Text>
+          <Text style={styles.priceLabel}>{t("copy.startingFrom")}</Text>
+          <Text style={styles.priceValue}>{t("copy.freeConsult")}</Text>
         </View>
         <Pressable
           style={({ pressed }) => [
@@ -269,7 +272,7 @@ export default function ServiceDetailsScreen() {
           ]}
           onPress={handleBookService}
         >
-          <Text style={styles.bookButtonText}>Book Now</Text>
+          <Text style={styles.bookButtonText}>{t("copy.bookNow")}</Text>
           <Ionicons name="arrow-forward" size={18} color="#FFFFFF" />
         </Pressable>
       </View>

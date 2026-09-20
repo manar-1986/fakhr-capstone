@@ -21,6 +21,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { register } from "../../api/auth.api";
 import { useAuth, USER_PROFILE_CACHE_KEY } from "../../context/AuthContext";
+import { useI18nLayout } from "../../hooks/useI18nLayout";
 
 const colors = {
   bg: "#FFFFFF",
@@ -33,6 +34,7 @@ const colors = {
 
 export function CreateAccountScreen() {
   const { t } = useTranslation();
+  const { align } = useI18nLayout();
   const router = useRouter();
   const { setUser } = useAuth();
   const [name, setName] = useState("");
@@ -114,62 +116,62 @@ export function CreateAccountScreen() {
             source={require("../../assets/images/fakhr-wordmark-blue.png")}
             style={styles.logo}
             resizeMode="contain"
-            accessibilityLabel="فخر"
+            accessibilityLabel={t("ui.brand")}
           />
 
-          <Text style={styles.heading}>إنشاء حساب جديد</Text>
+          <Text style={styles.heading}>{t("signup.headerTitle")}</Text>
 
           <TextInput
             style={styles.input}
-            placeholder="الاسم الكامل"
+            placeholder={t("auth.fullName")}
             placeholderTextColor={colors.placeholder}
             value={name}
             onChangeText={setName}
             autoCapitalize="words"
             autoCorrect={false}
-            textAlign="right"
+            textAlign={align}
           />
 
           <TextInput
             style={styles.input}
-            placeholder="البريد الإلكتروني"
+            placeholder={t("auth.email")}
             placeholderTextColor={colors.placeholder}
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
             autoCapitalize="none"
             autoCorrect={false}
-            textAlign="right"
+            textAlign={align}
           />
 
           <TextInput
             style={styles.input}
-            placeholder="رقم الجوال"
+            placeholder={t("copy.mobileNumber")}
             placeholderTextColor={colors.placeholder}
             value={phone}
             onChangeText={setPhone}
             keyboardType="phone-pad"
-            textAlign="right"
+            textAlign={align}
           />
 
           <TextInput
             style={styles.input}
-            placeholder="كلمة المرور"
+            placeholder={t("auth.password")}
             placeholderTextColor={colors.placeholder}
             value={password}
             onChangeText={setPassword}
             secureTextEntry
-            textAlign="right"
+            textAlign={align}
           />
 
           <TextInput
             style={styles.input}
-            placeholder="تأكيد كلمة المرور"
+            placeholder={t("auth.confirmPassword")}
             placeholderTextColor={colors.placeholder}
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             secureTextEntry
-            textAlign="right"
+            textAlign={align}
           />
 
           <Pressable
@@ -177,9 +179,9 @@ export function CreateAccountScreen() {
             onPress={() => setAgreedToTerms((v) => !v)}
             accessibilityRole="checkbox"
             accessibilityState={{ checked: agreedToTerms }}
-            accessibilityLabel="أوافق على الشروط والأحكام"
+            accessibilityLabel={t("copy.agreeTerms")}
           >
-            <Text style={styles.termsText}>أوافق على الشروط والأحكام</Text>
+            <Text style={styles.termsText}>{t("copy.agreeTerms")}</Text>
             <View
               style={[
                 styles.checkbox,
@@ -201,24 +203,24 @@ export function CreateAccountScreen() {
             onPress={handleSignUp}
             disabled={registerMutation.isPending}
             accessibilityRole="button"
-            accessibilityLabel="إنشاء حساب"
+            accessibilityLabel={t("auth.createAccount")}
           >
             {registerMutation.isPending ? (
               <ActivityIndicator color={colors.white} />
             ) : (
-              <Text style={styles.btnPrimaryText}>إنشاء حساب</Text>
+              <Text style={styles.btnPrimaryText}>{t("auth.createAccount")}</Text>
             )}
           </Pressable>
 
           <Text style={styles.footer}>
-            <Text style={styles.footerMuted}>لديك حساب؟ </Text>
+            <Text style={styles.footerMuted}>{t("copy.haveAccount")} </Text>
             <Text
               style={styles.footerLink}
               onPress={() => router.push("/(auth)/login")}
               accessibilityRole="link"
-              accessibilityLabel="تسجيل الدخول"
+              accessibilityLabel={t("signup.logIn")}
             >
-              تسجيل الدخول
+              {t("signup.logIn")}
             </Text>
           </Text>
         </ScrollView>
