@@ -4,7 +4,6 @@ import React from "react";
 import {
   Alert,
   KeyboardAvoidingView,
-  Modal,
   Platform,
   Pressable,
   ScrollView,
@@ -15,24 +14,151 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import { createChild } from "../../../api/children.api";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { colors } from "../../../theme";
 
-// Design system colors
-const colors = {
-  bgApp: "#FAF9F6",
-  bgCard: "#FFFFFF",
-  primary: "#7FB77E",
-  primaryLight: "#E8F5E8",
-  secondary: "#5F8F8B",
-  text: "#2F2F2F",
-  textSecondary: "#4A4A4A",
-  textMuted: "#8A8A8A",
-  border: "rgba(0, 0, 0, 0.08)",
-  error: "#D9534F",
-  errorLight: "#FDECEA",
-};
+const WHEEL_ITEM_H = 36;
+const WHEEL_VISIBLE = 5;
+const WHEEL_H = WHEEL_ITEM_H * WHEEL_VISIBLE;
+const MIN_YEAR = 1900;
+
+function daysInMonth(year: number, monthIndex: number) {
+  return new Date(year, monthIndex + 1, 0).getDate();
+}
+
+function clampDob(year: number, monthIndex: number, day: number) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const maxDay = daysInMonth(year, monthIndex);
+  const next = new Date(year, monthIndex, Math.min(day, maxDay));
+  next.setHours(0, 0, 0, 0);
+  return next > today ? today : next;
+}
+
+function parseDobString(value: string): Date | null {
+  const parts = value.split("/");
+  if (parts.length !== 3) return null;
+  const day = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10) - 1;
+  const year = parseInt(parts[2], 10);
+  if (!day || month < 0 || !year) return null;
+  return clampDob(year, month, day);
+}
+
+function WheelColumn({
+  values,
+  selectedIndex,
+  onChange,
+  flex = 1,
+}: {
+  values: string[];
+  selectedIndex: number;
+  onChange: (index: number) => void;
+  flex?: number;
+}) {
+  const pad = WHEEL_ITEM_H * 2;
+  const scrollRef = React.useRef<ScrollView>(null);
+  const lastIndex = React.useRef(selectedIndex);
+
+  const scrollToIndex = (index: number, animated: boolean) => {
+    scrollRef.current?.scrollTo({
+      y: Math.max(0, index) * WHEEL_ITEM_H,
+      animated,
+    });
+  };
+
+  React.useEffect(() => {
+    lastIndex.current = selectedIndex;
+    const t = setTimeout(() => scrollToIndex(selectedIndex, false), 30);
+    return () => clearTimeout(t);
+    // Center once when the column mounts or its options change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values.length]);
+
+  const commitOffset = (y: number) => {
+    const index = Math.max(
+      0,
+      Math.min(values.length - 1, Math.round(y / WHEEL_ITEM_H))
+    );
+    if (index === lastIndex.current) return;
+    lastIndex.current = index;
+    onChange(index);
+  };
+
+  return (
+    <View style={[wheelStyles.column, { flex }]}>
+      <ScrollView
+        ref={scrollRef}
+        style={wheelStyles.scroll}
+        showsVerticalScrollIndicator={false}
+        snapToInterval={WHEEL_ITEM_H}
+        snapToAlignment="start"
+        decelerationRate="fast"
+        nestedScrollEnabled
+        scrollEventThrottle={16}
+        onMomentumScrollEnd={(e) =>
+          commitOffset(e.nativeEvent.contentOffset.y)
+        }
+        onScrollEndDrag={(e) => commitOffset(e.nativeEvent.contentOffset.y)}
+        contentContainerStyle={{ paddingVertical: pad }}
+      >
+        {values.map((label, index) => (
+          <View key={`${label}-${index}`} style={wheelStyles.item}>
+            <Text
+              style={[
+                wheelStyles.itemText,
+                index === selectedIndex && wheelStyles.itemTextActive,
+              ]}
+              numberOfLines={1}
+            >
+              {label}
+            </Text>
+          </View>
+        ))}
+      </ScrollView>
+    </View>
+  );
+}
+
+const wheelStyles = StyleSheet.create({
+  column: {
+    height: WHEEL_H,
+    overflow: "hidden",
+  },
+  scroll: {
+    height: WHEEL_H,
+    ...(Platform.OS === "web"
+      ? ({
+          overflowY: "auto",
+          overflowX: "hidden",
+          scrollSnapType: "y mandatory",
+        } as object)
+      : null),
+  },
+  item: {
+    height: WHEEL_ITEM_H,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 2,
+    ...(Platform.OS === "web"
+      ? ({ scrollSnapAlign: "start", scrollSnapStop: "always" } as object)
+      : null),
+  },
+  itemText: {
+    fontSize: 17,
+    lineHeight: WHEEL_ITEM_H,
+    color: colors.textMuted,
+    textAlign: "center",
+    width: "100%",
+  },
+  itemTextActive: {
+    color: colors.text,
+    fontWeight: "600",
+  },
+});
 
 // Form steps
 const STEPS = [
@@ -69,6 +195,8 @@ const COMMON_ALLERGIES = [
 
 export default function AddChildScreen() {
   const router = useRouter();
+  const { t, i18n } = useTranslation();
+  const { tabRow } = useI18nLayout();
   const [currentStep, setCurrentStep] = React.useState(1);
   const [showDatePicker, setShowDatePicker] = React.useState(false);
   const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
@@ -118,52 +246,66 @@ export default function AddChildScreen() {
     return age;
   };
 
-  // Handle date picker change
-  const handleDateChange = (event: any, date?: Date) => {
-    if (Platform.OS === "android") {
-      setShowDatePicker(false);
-      if (date) {
-        setSelectedDate(date);
-        setFormData((prev) => ({ ...prev, dateOfBirth: formatDate(date) }));
-      }
-    } else if (Platform.OS === "ios") {
-      // On iOS, update selected date in real-time as user scrolls
-      if (date) {
-        setSelectedDate(date);
-      }
+  const today = React.useMemo(() => {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    return d;
+  }, []);
+
+  const pickerDate = selectedDate ?? today;
+  const pickerYear = pickerDate.getFullYear();
+  const pickerMonth = pickerDate.getMonth();
+  const pickerDay = pickerDate.getDate();
+
+  const yearValues = React.useMemo(() => {
+    const years: number[] = [];
+    for (let y = today.getFullYear(); y >= MIN_YEAR; y -= 1) years.push(y);
+    return years;
+  }, [today]);
+
+  const monthValues = React.useMemo(() => {
+    const count =
+      pickerYear === today.getFullYear() ? today.getMonth() + 1 : 12;
+    return Array.from({ length: count }, (_, i) => i);
+  }, [pickerYear, today]);
+
+  const dayValues = React.useMemo(() => {
+    let max = daysInMonth(pickerYear, pickerMonth);
+    if (
+      pickerYear === today.getFullYear() &&
+      pickerMonth === today.getMonth()
+    ) {
+      max = today.getDate();
     }
+    return Array.from({ length: max }, (_, i) => i + 1);
+  }, [pickerYear, pickerMonth, today]);
+
+  const monthLabels = React.useMemo(() => {
+    const localeTag = i18n.language?.startsWith("ar") ? "ar" : "en";
+    return monthValues.map((m) =>
+      new Date(2000, m, 1).toLocaleDateString(localeTag, { month: "short" })
+    );
+  }, [monthValues, i18n.language]);
+
+  const setPickerParts = (year: number, monthIndex: number, day: number) => {
+    setSelectedDate(clampDob(year, monthIndex, day));
   };
 
-  // Open date picker
   const openDatePicker = () => {
-    // Initialize with current date if no date is selected
-    if (!selectedDate) {
-      setSelectedDate(new Date());
-    }
+    const parsed = parseDobString(formData.dateOfBirth);
+    setSelectedDate(parsed ?? selectedDate ?? today);
     setShowDatePicker(true);
   };
 
-  // Confirm date on iOS
   const confirmDate = () => {
-    if (selectedDate) {
-      setFormData((prev) => ({ ...prev, dateOfBirth: formatDate(selectedDate) }));
-    }
+    const next = selectedDate ?? today;
+    setFormData((prev) => ({ ...prev, dateOfBirth: formatDate(next) }));
     setShowDatePicker(false);
   };
 
-  // Cancel date picker on iOS
   const cancelDatePicker = () => {
-    // Reset to previous date if user cancels
-    if (formData.dateOfBirth) {
-      // Parse existing date if available
-      const parts = formData.dateOfBirth.split("/");
-      if (parts.length === 3) {
-        const day = parseInt(parts[0], 10);
-        const month = parseInt(parts[1], 10) - 1;
-        const year = parseInt(parts[2], 10);
-        setSelectedDate(new Date(year, month, day));
-      }
-    }
+    const parsed = parseDobString(formData.dateOfBirth);
+    setSelectedDate(parsed);
     setShowDatePicker(false);
   };
 
@@ -393,48 +535,6 @@ export default function AddChildScreen() {
           </Text>
           <Ionicons name="calendar-outline" size={20} color={colors.textMuted} />
         </Pressable>
-        {Platform.OS === "ios" && showDatePicker && (
-          <Modal
-            transparent
-            animationType="slide"
-            visible={showDatePicker}
-            onRequestClose={cancelDatePicker}
-          >
-            <View style={styles.datePickerModal}>
-              <View style={styles.datePickerContainer}>
-                <View style={styles.datePickerHeader}>
-                  <Pressable onPress={cancelDatePicker}>
-                    <Text style={styles.datePickerButton}>Cancel</Text>
-                  </Pressable>
-                  <Text style={styles.datePickerTitle}>Select Date</Text>
-                  <Pressable onPress={confirmDate}>
-                    <Text style={[styles.datePickerButton, styles.datePickerButtonConfirm]}>
-                      Done
-                    </Text>
-                  </Pressable>
-                </View>
-                <DateTimePicker
-                  value={selectedDate || new Date()}
-                  mode="date"
-                  display="spinner"
-                  onChange={handleDateChange}
-                  maximumDate={new Date()}
-                  minimumDate={new Date(1900, 0, 1)}
-                />
-              </View>
-            </View>
-          </Modal>
-        )}
-        {Platform.OS === "android" && showDatePicker && (
-          <DateTimePicker
-            value={selectedDate || new Date()}
-            mode="date"
-            display="default"
-            onChange={handleDateChange}
-            maximumDate={new Date()}
-            minimumDate={new Date(1900, 0, 1)}
-          />
-        )}
       </View>
 
       <View style={styles.inputGroup}>
@@ -862,6 +962,59 @@ export default function AddChildScreen() {
           />
         </Pressable>
       </View>
+
+      {showDatePicker ? (
+        <View style={styles.pickerOverlay} pointerEvents="box-none">
+          <Pressable style={styles.pickerDim} onPress={cancelDatePicker} />
+          <View style={styles.pickerSheet}>
+            <View style={[styles.datePickerHeader, { flexDirection: tabRow }]}>
+              <Pressable onPress={cancelDatePicker} hitSlop={8}>
+                <Text style={styles.datePickerButton}>{t("common.cancel")}</Text>
+              </Pressable>
+              <Text style={styles.datePickerTitle}>{t("editProfile.dateOfBirth")}</Text>
+              <Pressable onPress={confirmDate} hitSlop={8}>
+                <Text style={[styles.datePickerButton, styles.datePickerButtonConfirm]}>
+                  {t("common.done")}
+                </Text>
+              </Pressable>
+            </View>
+            <View style={styles.wheelsWrap}>
+              <View pointerEvents="none" style={styles.selectionBar} />
+              <View style={styles.wheelRow}>
+                <WheelColumn
+                  key={`day-${showDatePicker}-${dayValues.length}`}
+                  flex={0.75}
+                  values={dayValues.map((d) => d.toString().padStart(2, "0"))}
+                  selectedIndex={Math.max(0, dayValues.indexOf(pickerDay))}
+                  onChange={(index) =>
+                    setPickerParts(pickerYear, pickerMonth, dayValues[index])
+                  }
+                />
+                <WheelColumn
+                  key={`month-${showDatePicker}-${monthValues.length}`}
+                  flex={1.2}
+                  values={monthLabels}
+                  selectedIndex={Math.max(0, monthValues.indexOf(pickerMonth))}
+                  onChange={(index) =>
+                    setPickerParts(pickerYear, monthValues[index], pickerDay)
+                  }
+                />
+                <WheelColumn
+                  key={`year-${showDatePicker}`}
+                  flex={0.9}
+                  values={yearValues.map(String)}
+                  selectedIndex={Math.max(0, yearValues.indexOf(pickerYear))}
+                  onChange={(index) =>
+                    setPickerParts(yearValues[index], pickerMonth, pickerDay)
+                  }
+                />
+              </View>
+              <View pointerEvents="none" style={styles.fadeTop} />
+              <View pointerEvents="none" style={styles.fadeBottom} />
+            </View>
+          </View>
+        </View>
+      ) : null}
     </SafeAreaView>
   );
 }
@@ -870,6 +1023,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.bgApp,
+    position: "relative",
   },
   // Header
   header: {
@@ -1040,13 +1194,31 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     paddingBottom: 40,
   },
+  pickerOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: "flex-end",
+    zIndex: 30,
+  },
+  pickerDim: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(26, 28, 41, 0.32)",
+  },
+  pickerSheet: {
+    backgroundColor: colors.bgCard,
+    borderTopLeftRadius: 14,
+    borderTopRightRadius: 14,
+    paddingBottom: 10,
+    width: "100%",
+    maxWidth: "100%",
+    alignSelf: "stretch",
+  },
   datePickerHeader: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: colors.border,
   },
   datePickerTitle: {
@@ -1062,6 +1234,44 @@ const styles = StyleSheet.create({
   datePickerButtonConfirm: {
     color: colors.primary,
     fontWeight: "600",
+  },
+  wheelRow: {
+    flexDirection: "row",
+    alignItems: "stretch",
+    height: WHEEL_H,
+  },
+  wheelsWrap: {
+    height: WHEEL_H,
+    overflow: "hidden",
+    position: "relative",
+  },
+  selectionBar: {
+    position: "absolute",
+    left: 12,
+    right: 12,
+    top: WHEEL_ITEM_H * 2,
+    height: WHEEL_ITEM_H,
+    borderRadius: 8,
+    backgroundColor: "rgba(110, 124, 175, 0.12)",
+    zIndex: 1,
+  },
+  fadeTop: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    height: WHEEL_ITEM_H * 2,
+    backgroundColor: "rgba(255,255,255,0.55)",
+    zIndex: 2,
+  },
+  fadeBottom: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: WHEEL_ITEM_H * 2,
+    backgroundColor: "rgba(255,255,255,0.55)",
+    zIndex: 2,
   },
   textArea: {
     minHeight: 100,

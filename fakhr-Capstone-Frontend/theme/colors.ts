@@ -1,48 +1,63 @@
 /**
- * Fakhr — Colors
+ * Fakhr brand colors — the only product chrome palette.
  *
- * DESIGN DIRECTION:
- * - Calm, soft, minimal, mobile-first
- * - Primary: #7FB77E (sage green)
- * - Background: #FAF9F6 (off-white)
- * - Secondary: #5F8F8B (teal)
- * - Text: #2F2F2F (dark gray)
+ * #6E7CAF  primary actions, icons, selected states
+ * #8B91AF  muted text, secondary
+ * #AAB3D6  soft fills, highlights
+ * #BCC3D8  pale borders, washes
+ *
+ * Surfaces/text neutrals match the current Fakhr UI (white + dark navy).
+ * Do not reintroduce sage green (#7FB77E) or old off-white (#FAF9F6).
  */
 
+export const brand = {
+  primary: "#6E7CAF",
+  muted: "#8B91AF",
+  soft: "#AAB3D6",
+  pale: "#BCC3D8",
+} as const;
+
 export const colors = {
-  // Surfaces — soft, warm, minimal
-  background: "#FAF9F6",         // off-white
+  brand: brand.primary,
+  brandMuted: brand.muted,
+  brandSoft: brand.soft,
+  brandPale: brand.pale,
+
+  primary: brand.primary,
+  primaryLight: brand.soft,
+  primaryMuted: brand.muted,
+  primarySoft: brand.pale,
+  primaryHover: brand.muted,
+
+  secondary: brand.muted,
+  secondaryLight: brand.pale,
+  accent: brand.soft,
+
+  background: "#FFFFFF",
   backgroundCard: "#FFFFFF",
   backgroundElevated: "#FFFFFF",
-  backgroundSecondary: "#EDE7DB", // beige
+  backgroundSecondary: brand.pale,
+  backgroundWash: brand.pale,
+  bgApp: "#FFFFFF",
+  bgCard: "#FFFFFF",
+  white: "#FFFFFF",
 
-  // Primary (sage green — calm, natural)
-  primary: "#7FB77E",
-  primaryLight: "#A8D4A7",
-  primaryMuted: "#6A9E69",
+  text: "#1A1C29",
+  textSecondary: "#3D4A78",
+  textMuted: brand.muted,
+  textLight: brand.muted,
+  textTertiary: brand.muted,
 
-  // Secondary (teal — complementary)
-  secondary: "#5F8F8B",
-  secondaryLight: "#8FBAB7",
+  border: brand.pale,
+  borderLight: "#EEF0F5",
+  divider: "#EEF0F5",
+  chevron: brand.pale,
 
-  // Text — clear hierarchy
-  text: "#2F2F2F",
-  textSecondary: "#4A4A4A",
-  textMuted: "#6B6B6B",
-  textLight: "#8A8A8A",
-
-  // UI — soft borders
-  border: "#EDE7DB",
-  borderLight: "#F5F3EF",
-
-  // Semantic
-  success: "#7FB77E",
+  success: brand.primary,
   error: "#D9534F",
   errorLight: "#FDECEA",
-  warning: "#E8A838",
-  info: "#5F8F8B",
-
-  // Specific
+  warning: "#DCAC2E",
+  info: brand.muted,
   signOut: "#D9534F",
-  accent: "#7FB77E",
+  star: "#DCAC2E",
 } as const;

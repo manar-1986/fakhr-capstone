@@ -22,19 +22,20 @@ import {
 } from "../../../components/explore/exploreDemoData";
 import { useTranslation } from "react-i18next";
 import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { colors as palette } from "../../../theme";
 
 const colors = {
-  bg: "#F7F8FC",
-  white: "#FFFFFF",
-  title: "#3B4A8A",
-  heading: "#3D4A86",
-  subtitle: "#8A90A8",
-  body: "#4A5168",
-  brand: "#6F80B4",
-  searchBg: "#FFFFFF",
-  searchBorder: "#E8EBF3",
-  placeholder: "#A8AEBF",
-  cardBorder: "#EEF0F6",
+  bg: palette.borderLight,
+  white: palette.white,
+  title: palette.textSecondary,
+  heading: palette.textSecondary,
+  subtitle: palette.textMuted,
+  body: palette.textSecondary,
+  brand: palette.primary,
+  searchBg: palette.white,
+  searchBorder: palette.border,
+  placeholder: palette.textLight,
+  cardBorder: palette.borderLight,
   badgeBg: "rgba(255,255,255,0.92)",
   durationBg: "rgba(35,40,55,0.72)",
 };
@@ -546,7 +547,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "#EEF1FA",
     overflow: "hidden",
-    shadowColor: "#6F80B4",
+    shadowColor: "#6E7CAF",
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.12,
     shadowRadius: 14,

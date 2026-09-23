@@ -11,18 +11,20 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../context/AuthContext";
+import { colors as palette } from "../../theme";
 
 const colors = {
-  bg: "#FFFFFF",
-  title: "#19181E",
-  cardTitle: "#19181E",
-  cardDesc: "#6A6D76",
-  cardParentBg: "#EBEEF9",
-  cardParentIcon: "#5C6BB3",
-  cardIndividualBg: "#EEF9F3",
-  cardIndividualIcon: "#3FA67C",
-  cardOrgBg: "#FEF5EB",
-  cardOrgIcon: "#E8913C",
+  bg: palette.background,
+  title: palette.text,
+  cardTitle: palette.text,
+  cardDesc: palette.textMuted,
+  cardParentBg: palette.brandPale,
+  cardParentIcon: palette.primary,
+  cardIndividualBg: palette.brandSoft,
+  cardIndividualIcon: palette.primaryMuted,
+  cardOrgBg: palette.borderLight,
+  cardOrgIcon: palette.primary,
 };
 
 const DESIGN_W = 387;
@@ -61,6 +63,7 @@ const OPTIONS: UserTypeOption[] = [
 
 export default function UserTypeSelectionScreen() {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const router = useRouter();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
@@ -68,7 +71,11 @@ export default function UserTypeSelectionScreen() {
   const ms = (n: number) => Math.round(n * s);
 
   const onSelect = (key: UserTypeOption["key"]) => {
-    router.push(`/(signup)/intro?role=${key}`);
+    if (user) {
+      router.push(`/(signup)/intro?role=${key}`);
+      return;
+    }
+    router.push("/(auth)/login");
   };
 
   return (

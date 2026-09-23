@@ -11,13 +11,14 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
+import { colors as palette } from "../../theme";
 
 const colors = {
-  bg: "#FFFFFF",
-  title: "#1A1C29",
-  body: "#3A3D4A",
-  brand: "#6F80B4",
-  white: "#FFFFFF",
+  bg: palette.background,
+  title: palette.text,
+  body: palette.text,
+  brand: palette.primary,
+  white: palette.white,
 };
 
 const DESIGN_W = 387;

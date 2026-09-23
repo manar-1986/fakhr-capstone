@@ -19,20 +19,21 @@ import { sendHelpMessage } from "../../../api/helpCenter.api";
 import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 import { useTranslation } from "react-i18next";
 import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { colors as palette } from "../../../theme";
 
 const colors = {
-  bg: "#FFFFFF",
-  title: "#1A1C29",
-  subtitle: "#3A4060",
-  placeholder: "#A8ABB4",
-  border: "#E6E8EE",
-  promptBg: "#E8EBF5",
-  promptText: "#3A4060",
-  icon: "#6E81BB",
-  send: "#6E81BB",
-  userBubble: "#6E81BB",
-  aiBubble: "#F4F5F8",
-  white: "#FFFFFF",
+  bg: palette.background,
+  title: palette.text,
+  subtitle: palette.textSecondary,
+  placeholder: palette.textLight,
+  border: palette.border,
+  promptBg: palette.brandPale,
+  promptText: palette.textSecondary,
+  icon: palette.primary,
+  send: palette.primary,
+  userBubble: palette.primary,
+  aiBubble: palette.borderLight,
+  white: palette.white,
 };
 
 const DESIGN_W = 390;

@@ -11,14 +11,15 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
+import { colors as palette } from "../../../theme";
 
 const colors = {
-  bg: "#FFFFFF",
-  title: "#1A1C29",
-  subtitle: "#6A6D76",
-  chevron: "#9AA0B3",
-  back: "#3A4060",
-  white: "#FFFFFF",
+  bg: palette.background,
+  title: palette.text,
+  subtitle: palette.textMuted,
+  chevron: palette.chevron,
+  back: palette.textSecondary,
+  white: palette.white,
 };
 
 const DESIGN_W = 419;
@@ -43,7 +44,7 @@ const SERVICE_CATEGORIES: ServiceCategory[] = [
     id: "centers",
     labelKey: "ui.centers",
     icon: "business-outline",
-    iconColor: "#5C6BB3",
+    iconColor: "#6E7CAF",
     backgroundColor: "#EBEEF9",
     pathname: "/(tabs)/directory/centers",
   },
@@ -51,8 +52,8 @@ const SERVICE_CATEGORIES: ServiceCategory[] = [
     id: "professionals",
     labelKey: "ui.doctorsOneLine",
     icon: "person-outline",
-    iconColor: "#3EC8B3",
-    backgroundColor: "#E8F8F5",
+    iconColor: "#6E7CAF",
+    backgroundColor: "#BCC3D8",
     pathname: "/(tabs)/directory/professionals",
   },
   {
@@ -67,7 +68,7 @@ const SERVICE_CATEGORIES: ServiceCategory[] = [
     id: "activities",
     labelKey: "ui.activitiesOneLine",
     icon: "people-outline",
-    iconColor: "#5C6BB3",
+    iconColor: "#6E7CAF",
     backgroundColor: "#EBEEF9",
     pathname: "/(tabs)/services",
   },

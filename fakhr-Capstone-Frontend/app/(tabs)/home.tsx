@@ -19,20 +19,21 @@ import { getCurrentUser } from "../../api/users.api";
 import { WEB_PHONE_WIDTH } from "../../components/layout/WebAppShell";
 import { useAuth } from "../../context/AuthContext";
 import { useI18nLayout } from "../../hooks/useI18nLayout";
+import { colors as palette } from "../../theme";
 
 const colors = {
-  bg: "#FFFFFF",
-  title: "#1A1C29",
-  subtitle: "#6E7479",
-  brand: "#6F80B4",
-  icon: "#6F80B4",
-  specialist: "#3EC8B3",
-  placeholder: "#A8ABB4",
-  searchBg: "#F4F5F8",
-  searchBorder: "#E6E8EE",
-  white: "#FFFFFF",
-  bannerBtn: "#F4F6FB",
-  bannerBtnText: "#5A6480",
+  bg: palette.background,
+  title: palette.text,
+  subtitle: palette.textMuted,
+  brand: palette.primary,
+  icon: palette.primary,
+  specialist: palette.primary,
+  placeholder: palette.textLight,
+  searchBg: palette.borderLight,
+  searchBorder: palette.border,
+  white: palette.white,
+  bannerBtn: palette.borderLight,
+  bannerBtnText: palette.textSecondary,
 };
 
 const DESIGN_W = 437;

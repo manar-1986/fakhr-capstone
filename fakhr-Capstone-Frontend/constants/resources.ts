@@ -2,6 +2,8 @@
  * Resource data and category config - shared across home and resource screens
  */
 
+import { colors } from "../theme";
+
 export type ResourceType = "add" | "adhd" | "autism";
 export type ContentType = "videos" | "articles" | "podcasts" | "guides";
 
@@ -284,8 +286,8 @@ export const RESOURCE_CATEGORIES: Record<
   articles: {
     title: "Articles",
     icon: "document-text",
-    color: "#5F8F8B",
-    bgColor: "#E8F0EF",
+    color: colors.primary,
+    bgColor: colors.brandPale,
   },
   guides: {
     title: "Guides & Resources",

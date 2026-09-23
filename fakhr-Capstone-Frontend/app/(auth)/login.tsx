@@ -21,17 +21,18 @@ import { login } from "../../api/auth.api";
 import { useAuth, USER_PROFILE_CACHE_KEY } from "../../context/AuthContext";
 import { useI18nLayout } from "../../hooks/useI18nLayout";
 import { useTranslation } from "react-i18next";
+import { colors as palette } from "../../theme";
 
 const colors = {
-  bg: "#FFFFFF",
-  primary: "#6E81BB",
-  text: "#1E2030",
-  textMuted: "#8A8D99",
-  placeholder: "#A8ABB4",
-  border: "#E6E6EA",
-  socialBorder: "#E0E0E4",
-  forgot: "#6A6B82",
-  white: "#FFFFFF",
+  bg: palette.background,
+  primary: palette.primary,
+  text: palette.text,
+  textMuted: palette.textMuted,
+  placeholder: palette.textLight,
+  border: palette.border,
+  socialBorder: palette.border,
+  forgot: palette.textSecondary,
+  white: palette.white,
 };
 
 /** RN Alert.alert is a no-op on web, so failed login looked like the button did nothing. */

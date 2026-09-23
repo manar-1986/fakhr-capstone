@@ -18,17 +18,18 @@ import { useLanguage } from "../../../context/LanguageContext";
 import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 import type { AppLanguage } from "../../../i18n";
 import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { colors as palette } from "../../../theme";
 
 const colors = {
-  bg: "#FFFFFF",
-  title: "#3D4A78",
-  label: "#3D4A78",
-  icon: "#6E7CAF",
-  chevron: "#C5CAD8",
-  muted: "#8B91AF",
-  divider: "#EEF0F5",
+  bg: palette.background,
+  title: palette.textSecondary,
+  label: palette.textSecondary,
+  icon: palette.primary,
+  chevron: palette.chevron,
+  muted: palette.textMuted,
+  divider: palette.divider,
   delete: "#D95B73",
-  white: "#FFFFFF",
+  white: palette.white,
   overlay: "rgba(26, 28, 41, 0.4)",
 };
 

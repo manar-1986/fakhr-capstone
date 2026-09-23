@@ -12,20 +12,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useQuery } from "@tanstack/react-query";
 import { getProfessionals } from "../../../api/directory.api";
-
-
-// Design system colors
-const colors = {
-  bgApp: "#FAF9F6",
-  bgCard: "#FFFFFF",
-  primary: "#7FB77E",
-  primaryLight: "#E8F5E8",
-  secondary: "#5F8F8B",
-  text: "#2F2F2F",
-  textSecondary: "#4A4A4A",
-  textMuted: "#8A8A8A",
-  border: "rgba(0, 0, 0, 0.06)",
-};
+import { colors } from "../../../theme";
 
 // Specializations for filtering
 const SPECIALIZATIONS = [

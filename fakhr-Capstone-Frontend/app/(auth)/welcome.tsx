@@ -5,12 +5,13 @@ import { useRouter } from "expo-router";
 import { I18nManager, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
+import { colors as palette } from "../../theme";
 
 const colors = {
-  bg: "#6F80B4",
-  white: "#FFFFFF",
+  bg: palette.primary,
+  white: palette.white,
   buttonFill: "#F9FDFE",
-  buttonText: "#55576A",
+  buttonText: palette.textSecondary,
 };
 
 const DESIGN_W = 379;
@@ -24,7 +25,7 @@ export default function WelcomeScreen() {
   const ms = (n: number) => Math.round(n * s);
 
   const handleGetStarted = () => {
-    router.replace("/(signup)");
+    router.push("/(signup)/user-type");
   };
 
   const handleAlreadyHaveAccount = () => {

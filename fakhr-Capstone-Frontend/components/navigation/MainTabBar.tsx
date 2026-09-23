@@ -5,12 +5,13 @@ import { useTranslation } from "react-i18next";
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useI18nLayout } from "../../hooks/useI18nLayout";
+import { colors as palette } from "../../theme";
 
 const colors = {
-  white: "#FFFFFF",
-  active: "#6F80B4",
-  inactive: "#3A3D4A",
-  border: "#ECEEF3",
+  white: palette.white,
+  active: palette.primary,
+  inactive: palette.text,
+  border: palette.borderLight,
 };
 
 type TabRoute = "home" | "plan" | "discover" | "profile";

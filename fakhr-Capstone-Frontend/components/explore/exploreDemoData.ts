@@ -49,8 +49,8 @@ export const EXPLORE_CATEGORIES: ExploreCategory[] = [
     id: "all",
     label: "جميع\nالمواضيع",
     icon: "book-outline",
-    backgroundColor: "#D8EFE8",
-    iconColor: "#4AA38A",
+    backgroundColor: "#BCC3D8",
+    iconColor: "#8B91AF",
   },
   {
     id: "sensory",
@@ -71,7 +71,7 @@ export const EXPLORE_CATEGORIES: ExploreCategory[] = [
     label: "التواصل\nوالنطق",
     icon: "extension-puzzle-outline",
     backgroundColor: "#DDE4F8",
-    iconColor: "#6F80B4",
+    iconColor: "#6E7CAF",
   },
   {
     id: "behavior",

@@ -11,17 +11,18 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
+import { colors as palette } from "../../theme";
 
 const colors = {
-  bg: "#FFFFFF",
-  title: "#1A1C29",
-  subtitle: "#6E7479",
-  brand: "#6F80B4",
-  icon: "#6F80B4",
-  cardBorder: "#D8DCE8",
-  cardBg: "#FFFFFF",
-  cardSelectedBg: "#EBEEF9",
-  white: "#FFFFFF",
+  bg: palette.background,
+  title: palette.text,
+  subtitle: palette.textMuted,
+  brand: palette.primary,
+  icon: palette.primary,
+  cardBorder: palette.border,
+  cardBg: palette.backgroundCard,
+  cardSelectedBg: palette.brandPale,
+  white: palette.white,
 };
 
 const DESIGN_W = 405;

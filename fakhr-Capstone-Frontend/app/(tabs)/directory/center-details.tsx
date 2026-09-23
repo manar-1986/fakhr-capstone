@@ -67,7 +67,7 @@ export default function CenterDetailsScreen() {
     return (
       <SafeAreaView style={styles.wrapper} edges={["top"]}>
         <View style={[styles.container, styles.emptyState]}>
-          <Ionicons name="medical-outline" size={48} color={colors.textMuted} />
+          <Ionicons name="medical-outline" size={48} color={colors.primary} />
           <Text style={styles.emptyTitle}>
             {isError ? t("copy.failedLoadCenter") : t("copy.centerNotFound")}
           </Text>
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: typography.h3,
     fontWeight: typography.weightBold,
-    color: colors.text,
+    color: colors.primary,
     marginTop: spacing.md,
     marginBottom: spacing.xs,
   },
@@ -300,11 +300,11 @@ const styles = StyleSheet.create({
   backButton: {
     paddingVertical: 10,
     paddingHorizontal: 20,
-    backgroundColor: "#f3f4f6",
+    backgroundColor: colors.brandPale,
     borderRadius: 8,
   },
   backButtonText: {
-    color: "#374151",
+    color: colors.primary,
     fontWeight: "500",
   },
   header: {
@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   publicBadge: {
-    backgroundColor: "#dcfce7",
+    backgroundColor: "#BCC3D8",
   },
   privateBadge: {
     backgroundColor: "#fef3c7",
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
     textTransform: "capitalize",
   },
   publicText: {
-    color: "#15803d",
+    color: "#6E7CAF",
   },
   privateText: {
     color: "#b45309",
@@ -508,28 +508,28 @@ const styles = StyleSheet.create({
       marginTop: spacing.lg,
       paddingVertical: spacing.md,
       paddingHorizontal: spacing.lg,
-      backgroundColor: "#f0fdf4",
+      backgroundColor: "#BCC3D8",
       borderRadius: 8,
       alignSelf: "flex-start",
       borderWidth: 1,
-      borderColor: "#86efac",
+      borderColor: "#AAB3D6",
     },
     mapLinkText: {
-      color: "#15803d",
+      color: "#6E7CAF",
       fontWeight: "500",
       fontSize: 14,
     },
     secondaryButton: {
-      backgroundColor: "#f0fdf4",
+      backgroundColor: "#BCC3D8",
       paddingVertical: 16,
       borderRadius: 12,
       alignItems: "center",
       borderWidth: 1,
-      borderColor: "#86efac",
+      borderColor: "#AAB3D6",
       marginTop: 12,
     },
     secondaryButtonText: {
-      color: "#15803d",
+      color: "#6E7CAF",
       fontSize: 16,
       fontWeight: "600",
     },

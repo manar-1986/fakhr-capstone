@@ -12,16 +12,17 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import type { ResourceType } from "../../../constants/resources";
+import { colors as palette } from "../../../theme";
 
 const colors = {
-  bg: "#FFFFFF",
-  title: "#1A1C29",
-  subtitle: "#6A6D76",
-  chevron: "#9AA0B3",
-  back: "#3A4060",
-  helpBg: "#EEF5FD",
-  helpIcon: "#6F80B4",
-  white: "#FFFFFF",
+  bg: palette.background,
+  title: palette.text,
+  subtitle: palette.textMuted,
+  chevron: palette.chevron,
+  back: palette.textSecondary,
+  helpBg: palette.brandPale,
+  helpIcon: palette.primary,
+  white: palette.white,
 };
 
 const DESIGN_W = 419;
@@ -40,7 +41,7 @@ const CATEGORIES: Category[] = [
     id: "autism",
     label: "اضطراب طيف التوحد\n(ASD)",
     icon: "people-outline",
-    iconColor: "#5C6BB3",
+    iconColor: "#6E7CAF",
     backgroundColor: "#EBEEF9",
     resource: "autism",
   },
@@ -78,15 +79,15 @@ const CATEGORIES: Category[] = [
     id: "hearing",
     label: "الإعاقة السمعية",
     icon: "ear-outline",
-    iconColor: "#5B8FB0",
-    backgroundColor: "#E4F6F4",
+    iconColor: "#8B91AF",
+    backgroundColor: "#BCC3D8",
   },
   {
     id: "vision",
     label: "الإعاقة البصرية",
     icon: "eye-outline",
-    iconColor: "#3D9B78",
-    backgroundColor: "#E6F8F0",
+    iconColor: "#6E7CAF",
+    backgroundColor: "#BCC3D8",
   },
   {
     id: "speech",
@@ -106,15 +107,15 @@ const CATEGORIES: Category[] = [
     id: "multiple",
     label: "إعاقات متعددة",
     icon: "people-outline",
-    iconColor: "#3AA89A",
-    backgroundColor: "#E8F6F4",
+    iconColor: "#8B91AF",
+    backgroundColor: "#BCC3D8",
   },
   {
     id: "developmental",
     label: "التأخر النمائي",
     icon: "flower-outline",
-    iconColor: "#4EA077",
-    backgroundColor: "#E6F9F1",
+    iconColor: "#8B91AF",
+    backgroundColor: "#BCC3D8",
   },
   {
     id: "mental",

@@ -17,18 +17,11 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { register } from "../../api/auth.api";
 import { useAuth, USER_PROFILE_CACHE_KEY } from "../../context/AuthContext";
+import { colors as palette } from "../../theme";
 
-// Design system colors
 const colors = {
-  bgApp: "#FAF9F6",
+  ...palette,
   bgCard: "rgba(255, 255, 255, 0.6)",
-  primary: "#7FB77E",
-  primaryHover: "#6A9E69",
-  primarySoft: "#E8F0E8",
-  text: "#2F2F2F",
-  textSecondary: "#4A4A4A",
-  textTertiary: "#8A8A8A",
-  border: "rgba(0, 0, 0, 0.06)",
 };
 
 export default function RegisterScreen() {

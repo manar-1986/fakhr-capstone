@@ -25,7 +25,7 @@ export const DISABILITY_GUIDES: Record<string, DisabilityGuide> = {
     name: "اضطراب طيف التوحد",
     shortName: "طيف التوحد",
     icon: "people-outline",
-    iconColor: "#5C6BB3",
+    iconColor: "#6E7CAF",
     backgroundColor: "#EBEEF9",
     exploreCategory: "communication",
     definition:
@@ -169,8 +169,8 @@ export const DISABILITY_GUIDES: Record<string, DisabilityGuide> = {
     name: "الإعاقة السمعية",
     shortName: "الإعاقة السمعية",
     icon: "ear-outline",
-    iconColor: "#5B8FB0",
-    backgroundColor: "#E4F6F4",
+    iconColor: "#8B91AF",
+    backgroundColor: "#BCC3D8",
     exploreCategory: "sensory",
     definition:
       "الإعاقة السمعية تعني فقدانًا جزئيًا أو كليًا للسمع، وقد تؤثر على اكتساب اللغة والتواصل الاجتماعي. الاكتشاف المبكر واستخدام المعينات أو لغة الإشارة أو وسائل التواصل البصري يحدث فرقًا كبيرًا.",
@@ -197,8 +197,8 @@ export const DISABILITY_GUIDES: Record<string, DisabilityGuide> = {
     name: "الإعاقة البصرية",
     shortName: "الإعاقة البصرية",
     icon: "eye-outline",
-    iconColor: "#3D9B78",
-    backgroundColor: "#E6F8F0",
+    iconColor: "#6E7CAF",
+    backgroundColor: "#BCC3D8",
     exploreCategory: "sensory",
     definition:
       "الإعاقة البصرية تتراوح بين ضعف البصر والفقدان الكامل. تؤثر على الاستكشاف، القراءة، والتنقل، ويمكن دعم الطفل بتكييف الإضاءة، التباين، الأدوات المساعدة، والتدريب على الحركة الآمنة.",
@@ -281,8 +281,8 @@ export const DISABILITY_GUIDES: Record<string, DisabilityGuide> = {
     name: "إعاقات متعددة",
     shortName: "إعاقات متعددة",
     icon: "people-outline",
-    iconColor: "#3AA89A",
-    backgroundColor: "#E8F6F4",
+    iconColor: "#8B91AF",
+    backgroundColor: "#BCC3D8",
     exploreCategory: "all",
     definition:
       "الإعاقات المتعددة تعني وجود أكثر من إعاقة معًا، مثل تداخل صعوبة حركية مع تواصل أو سمع. يحتاج الطفل غالبًا إلى فريق متعدد التخصصات وخطة مرنة تراعي أولوية السلامة والتواصل ثم التعلم.",
@@ -308,8 +308,8 @@ export const DISABILITY_GUIDES: Record<string, DisabilityGuide> = {
     name: "التأخر النمائي",
     shortName: "التأخر النمائي",
     icon: "flower-outline",
-    iconColor: "#4EA077",
-    backgroundColor: "#E6F9F1",
+    iconColor: "#8B91AF",
+    backgroundColor: "#BCC3D8",
     exploreCategory: "all",
     definition:
       "التأخر النمائي يعني أن الطفل لم يصل بعد إلى مهارات متوقعة لعمره في مجال أو أكثر: الحركة، اللغة، الإدراك، أو التفاعل الاجتماعي. قد يكون مؤقتًا أو مؤشرًا لحاجة تقييم أشمل.",

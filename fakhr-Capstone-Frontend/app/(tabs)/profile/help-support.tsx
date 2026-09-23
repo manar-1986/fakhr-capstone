@@ -13,14 +13,15 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
+import { colors as palette } from "../../../theme";
 
 const colors = {
-  bg: "#FFFFFF",
-  title: "#3D4A78",
-  label: "#3D4A78",
-  icon: "#6E7CAF",
-  chevron: "#C5CAD8",
-  divider: "#EEF0F5",
+  bg: palette.background,
+  title: palette.textSecondary,
+  label: palette.textSecondary,
+  icon: palette.primary,
+  chevron: palette.chevron,
+  divider: palette.divider,
 };
 
 const DESIGN_W = 390;

@@ -21,19 +21,20 @@ import { tryNavigateToDisabilityServices } from "../../../utils/disabilityFlowNa
 import { useTranslation } from "react-i18next";
 import { useI18nLayout } from "../../../hooks/useI18nLayout";
 import { knownText } from "../../../utils/knownText";
+import { colors as palette } from "../../../theme";
 
 const colors = {
-  bg: "#FFFFFF",
-  title: "#1A1C29",
-  subtitle: "#8B91AF",
-  back: "#3A4060",
-  filter: "#3A4060",
-  placeholder: "#A8ABB4",
-  searchBorder: "#E6E8EE",
-  chipBorder: "#D8DCE8",
-  star: "#DCAC2E",
+  bg: palette.background,
+  title: palette.text,
+  subtitle: palette.textMuted,
+  back: palette.textSecondary,
+  filter: palette.textSecondary,
+  placeholder: palette.textLight,
+  searchBorder: palette.border,
+  chipBorder: palette.border,
+  star: palette.star,
   overlay: "rgba(26, 28, 41, 0.35)",
-  white: "#FFFFFF",
+  white: palette.white,
 };
 
 const DESIGN_W = 423;

@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { colors } from "../../theme";
 
 type Props = {
   icon?: React.ReactNode;
@@ -22,7 +23,7 @@ export default function CenteredInfo({ icon, title, subtitle }: Props) {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#FAF9F6",
+    backgroundColor: colors.background,
     paddingHorizontal: 20,
     justifyContent: "center",
   },
@@ -42,12 +43,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: "600",
-    color: "#2F2F2F",
+    color: colors.text,
     textAlign: "center",
   },
   subtitle: {
     fontSize: 14,
-    color: "#4A4A4A",
+    color: colors.textSecondary,
     textAlign: "center",
     lineHeight: 20,
     maxWidth: 320,

@@ -8,7 +8,9 @@ import {
   navigateToDisabilityServices,
 } from "../../utils/disabilityFlowNav";
 
-const DEFAULT_COLOR = "#3A4060";
+import { colors } from "../../theme";
+
+const DEFAULT_COLOR = colors.textSecondary;
 const DEFAULT_SIZE = 26;
 
 type HeaderBackButtonProps = {

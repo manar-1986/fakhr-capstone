@@ -12,14 +12,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../../../context/AuthContext";
 import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 import { useTranslation } from "react-i18next";
+import { colors as palette } from "../../../theme";
 
 const colors = {
-  bg: "#FFFFFF",
-  title: "#3D4A78",
-  icon: "#7B88B8",
+  bg: palette.background,
+  title: palette.textSecondary,
+  icon: palette.primary,
   logout: "#E45454",
-  cancelBg: "#EEF1F8",
-  white: "#FFFFFF",
+  cancelBg: palette.borderLight,
+  white: palette.white,
 };
 
 const DESIGN_W = 390;

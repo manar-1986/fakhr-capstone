@@ -16,20 +16,21 @@ import {
   localizeGuide,
 } from "../../../constants/disabilityGuides";
 import { useTranslation } from "react-i18next";
+import { colors as palette } from "../../../theme";
 
 const colors = {
-  bg: "#F7F8FC",
-  white: "#FFFFFF",
-  title: "#3B4A8A",
-  heading: "#3D4A86",
-  body: "#4A5168",
-  muted: "#8A90A8",
-  brand: "#6F80B4",
-  brandSoft: "#EEF1FA",
-  cardBorder: "#EEF0F6",
-  disclaimerBg: "#F4F1FB",
-  disclaimerBorder: "#D9D4EE",
-  back: "#3A4060",
+  bg: palette.borderLight,
+  white: palette.white,
+  title: palette.textSecondary,
+  heading: palette.textSecondary,
+  body: palette.textSecondary,
+  muted: palette.textMuted,
+  brand: palette.primary,
+  brandSoft: palette.brandPale,
+  cardBorder: palette.borderLight,
+  disclaimerBg: palette.brandPale,
+  disclaimerBorder: palette.border,
+  back: palette.textSecondary,
 };
 
 const DESIGN_W = 390;

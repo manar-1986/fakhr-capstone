@@ -20,18 +20,19 @@ import {
   HOME_SERVICES,
   type Service,
 } from "../../../api/services.api";
+import { colors as palette } from "../../../theme";
 
 const colors = {
-  bg: "#FFFFFF",
-  title: "#2C3558",
-  text: "#2C3558",
-  selected: "#6E7CAF",
-  unselectedBg: "#EEF0F6",
-  unselectedText: "#5A6178",
-  star: "#F4C430",
-  chevron: "#C5C7CE",
-  divider: "#F0F1F4",
-  white: "#FFFFFF",
+  bg: palette.background,
+  title: palette.textSecondary,
+  text: palette.textSecondary,
+  selected: palette.primary,
+  unselectedBg: palette.borderLight,
+  unselectedText: palette.textSecondary,
+  star: palette.star,
+  chevron: palette.chevron,
+  divider: palette.divider,
+  white: palette.white,
 };
 
 const DESIGN_W = 390;

@@ -18,19 +18,7 @@ import type { Professional } from "../../../types/directory.types";
 import { openInGoogleMaps, toFiniteNumber } from "../../../utils/openMaps";
 import { useTranslation } from "react-i18next";
 import { knownText } from "../../../utils/knownText";
-
-// Design system colors
-const colors = {
-  bgApp: "#FAF9F6",
-  bgCard: "#FFFFFF",
-  primary: "#7FB77E",
-  primaryLight: "#E8F5E8",
-  secondary: "#5F8F8B",
-  text: "#2F2F2F",
-  textSecondary: "#4A4A4A",
-  textMuted: "#8A8A8A",
-  border: "rgba(0, 0, 0, 0.06)",
-};
+import { colors } from "../../../theme";
 
 function openCenterInGoogleMaps(p: Professional) {
   void openInGoogleMaps({

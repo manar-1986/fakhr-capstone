@@ -16,17 +16,18 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getCurrentUser } from "../../../api/users.api";
 import { useAuth } from "../../../context/AuthContext";
+import { colors as palette } from "../../../theme";
 
 const colors = {
-  bg: "#FFFFFF",
-  title: "#1A1C29",
-  subtitle: "#8B91AF",
-  icon: "#6E7CAF",
-  chevron: "#C5CAD8",
-  divider: "#EEF0F5",
-  logoutBg: "#EEF1F8",
+  bg: palette.background,
+  title: palette.text,
+  subtitle: palette.textMuted,
+  icon: palette.primary,
+  chevron: palette.chevron,
+  divider: palette.divider,
+  logoutBg: palette.borderLight,
   badge: "#E23D3D",
-  white: "#FFFFFF",
+  white: palette.white,
 };
 
 const DESIGN_W = 388;
@@ -267,7 +268,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: "#EEF0F5",
+    borderColor: colors.divider,
   },
   row: {
     flexDirection: "row",

@@ -22,14 +22,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { register } from "../../api/auth.api";
 import { useAuth, USER_PROFILE_CACHE_KEY } from "../../context/AuthContext";
 import { useI18nLayout } from "../../hooks/useI18nLayout";
+import { colors as palette } from "../../theme";
 
 const colors = {
-  bg: "#FFFFFF",
-  primary: "#6E81BB",
-  text: "#1E2030",
-  placeholder: "#A8ABB4",
-  border: "#E6E6EA",
-  white: "#FFFFFF",
+  bg: palette.background,
+  primary: palette.primary,
+  text: palette.text,
+  placeholder: palette.textLight,
+  border: palette.border,
+  white: palette.white,
 };
 
 export function CreateAccountScreen() {

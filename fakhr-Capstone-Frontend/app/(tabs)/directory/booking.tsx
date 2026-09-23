@@ -20,18 +20,19 @@ import { saveMockBooking } from "../../../utils/mockBookingsStore";
 import { useTranslation } from "react-i18next";
 import { knownText } from "../../../utils/knownText";
 import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { colors as palette } from "../../../theme";
 
 const colors = {
-  bg: "#FFFFFF",
-  title: "#3D4A78",
-  muted: "#A8ABB4",
-  line: "#D8DCE8",
-  cardBorder: "#E6E8EE",
-  selected: "#7B88B8",
-  white: "#FFFFFF",
-  success: "#3CCF7A",
-  chevron: "#8B91AF",
-  timeMuted: "#8B91AF",
+  bg: palette.background,
+  title: palette.textSecondary,
+  muted: palette.textLight,
+  line: palette.border,
+  cardBorder: palette.border,
+  selected: palette.primary,
+  white: palette.white,
+  success: palette.success,
+  chevron: palette.textMuted,
+  timeMuted: palette.textMuted,
 };
 
 const DESIGN_W = 390;

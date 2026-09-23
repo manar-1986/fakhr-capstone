@@ -5,6 +5,7 @@ import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
+  Image,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -30,25 +31,30 @@ import {
 } from "../../../constants/childProfileOptions";
 import { getMockBookings } from "../../../utils/mockBookingsStore";
 import { knownText } from "../../../utils/knownText";
+import { colors as palette } from "../../../theme";
+
+const CHILD_PHOTO = require("../../../assets/images/home-hero-girl.png");
 
 const colors = {
-  bg: "#EEF0F8",
-  headerWash: "#E4E8F6",
-  title: "#4F5C9A",
-  titleDark: "#3A4578",
-  muted: "#8B91AF",
-  body: "#5A6280",
-  primary: "#6F80B4",
-  primarySoft: "#EBEEF9",
-  white: "#FFFFFF",
-  cardBorder: "#E6E8F2",
-  chipIdle: "#F4F5FB",
-  done: "#3ECF8E",
-  doneBg: "#E8F9F0",
-  skip: "#A8ABB4",
-  skipBg: "#F3F4F7",
-  progressTrack: "#E6E8F2",
-  progressFill: "#8B96C9",
+  bg: "#EEF1F8",
+  headerWash: "#E4E9F6",
+  blob: "#D7DEF0",
+  blobSoft: "#E8ECF7",
+  title: "#3D4A86",
+  titleDark: "#3D4A78",
+  muted: palette.textMuted,
+  body: "#5A6490",
+  primary: palette.primary,
+  primarySoft: "#EEF1FA",
+  white: palette.white,
+  cardBorder: "#E6EAF4",
+  chipIdle: "#F2F4FA",
+  done: "#3DCE8A",
+  doneBg: "#E7F8F0",
+  skip: "#9AA0B8",
+  skipBg: "#F1F2F6",
+  progressTrack: "#E4E8F2",
+  progressFill: palette.brandSoft,
 };
 
 const DESIGN_W = 390;
@@ -62,21 +68,6 @@ const WEEK_DAYS = [
   { key: 4, labelKey: "planUi.thu" },
   { key: 5, labelKey: "planUi.fri" },
 ] as const;
-
-const AR_MONTHS = [
-  "يناير",
-  "فبراير",
-  "مارس",
-  "أبريل",
-  "مايو",
-  "يونيو",
-  "يوليو",
-  "أغسطس",
-  "سبتمبر",
-  "أكتوبر",
-  "نوفمبر",
-  "ديسمبر",
-];
 
 const TAG_BY_FOCUS: Record<string, string> = {
   speech: "تواصل",
@@ -110,14 +101,6 @@ function formatWeekRange(start: Date, months: string[]): string {
   end.setDate(start.getDate() + 6);
   const month = months[end.getMonth()] ?? "";
   return `${start.getDate()} - ${end.getDate()} ${month}`;
-}
-
-function sameCalendarDay(a: Date, b: Date): boolean {
-  return (
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate()
-  );
 }
 
 function childAge(child: Child): number | undefined {
@@ -201,13 +184,13 @@ const DEMO_CHILD: Child = {
 const DEMO_TAGS = ["تأخر نمائي", "تواصل", "حسي", "سلوكي"];
 
 const DEMO_GOALS =
-  "تحسين التواصل اليومي، تعزيز اللعب التفاعلي، وتنظيم الاستجابة الحسية خلال الأسبوع.";
+  "تحسين مهارات التواصل، وزيادة التركيز على المهام اليومية، وتعزيز الاستقلالية.";
 
 const DEMO_TASKS: CarePathTask[] = [
   {
     id: "demo-task-speech",
     title: "تمرين النطق",
-    description: "تكرار كلمات بسيطة لمدة 10 دقائق",
+    description: "التمرين لمدة 10 دقائق",
     category: "speech",
     status: "completed",
     expectedOutcome: "مفيد جداً",
@@ -215,26 +198,27 @@ const DEMO_TASKS: CarePathTask[] = [
   {
     id: "demo-task-play",
     title: "لعب تفاعلي",
-    description: "لعبة تبادل الأدوار مع الوالدين",
+    description: "اللعب بالمكعبات لمدة 15 دقيقة",
     category: "play",
-    status: "pending",
+    status: "skipped",
+    note: "كان متعب اليوم",
+    instructions: "كان متعب اليوم",
   },
   {
     id: "demo-task-sensory",
     title: "نشاط حسي",
-    description: "تمرين حسي لليدين باستخدام الرمل",
+    description: "استخدام كرة الضغط لمدة 5 دقائق",
     category: "sensory",
-    status: "skipped",
-    note: "سيتم المحاولة غداً",
-    instructions: "سيتم المحاولة غداً",
+    status: "completed",
+    expectedOutcome: "مفيد",
   },
 ];
 
 const DEMO_APPOINTMENT = {
-  listingName: "عيادة علاج النطق",
-  dateLabel: "الأحد ٢٠ سبتمبر",
-  timeLabel: "٤:٠٠ م",
-  notes: "موعد طبيب تجريبي",
+  listingName: "د. أحمد – علاج وظيفي",
+  dateLabel: "الأحد 20 سبتمبر",
+  timeLabel: "5:00 مساءً",
+  notes: "",
 };
 
 export default function PlanScreen() {
@@ -317,49 +301,96 @@ export default function PlanScreen() {
   const initials = displayChild?.name?.trim()?.slice(0, 1) ?? "";
 
   const padX = ms(16);
+  const avatarSize = ms(68);
 
   return (
     <SafeAreaView style={styles.safe} edges={["top"]}>
-      <View style={[styles.headerWash, { height: ms(86) }]} />
+      <View pointerEvents="none" style={StyleSheet.absoluteFill}>
+        <View style={[styles.headerWash, { height: ms(168) }]} />
+        <View
+          style={[
+            styles.blob,
+            {
+              width: ms(220),
+              height: ms(220),
+              borderRadius: ms(110),
+              top: ms(-78),
+              right: ms(-70),
+              backgroundColor: colors.blob,
+            },
+          ]}
+        />
+        <View
+          style={[
+            styles.blob,
+            {
+              width: ms(160),
+              height: ms(160),
+              borderRadius: ms(80),
+              top: ms(-36),
+              left: ms(-58),
+              backgroundColor: colors.blobSoft,
+            },
+          ]}
+        />
+      </View>
+
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={{
           width: contentW,
           alignSelf: "center",
           paddingHorizontal: padX,
-          paddingBottom: ms(120),
+          paddingBottom: ms(168),
         }}
         showsVerticalScrollIndicator={false}
       >
-        <View style={[styles.headerRow, { marginBottom: ms(14), minHeight: ms(40) }]}>
+        <View style={[styles.headerRow, { marginTop: ms(4), marginBottom: ms(16), minHeight: ms(44) }]}>
           <Pressable
             onPress={() => router.navigate("/(tabs)/home")}
             hitSlop={10}
-            style={({ pressed }) => [styles.backBtn, pressed && styles.pressed]}
+            style={({ pressed }) => [
+              styles.backBtn,
+              { width: ms(36), height: ms(36), borderRadius: ms(18) },
+              pressed && styles.pressed,
+            ]}
             accessibilityRole="button"
             accessibilityLabel={t("common.back")}
           >
-            <Ionicons name="chevron-back" size={ms(22)} color={colors.title} />
+            <Ionicons name="chevron-back" size={ms(20)} color={colors.titleDark} />
           </Pressable>
-          <Text style={[styles.pageTitle, { fontSize: ms(22) }]}>{t("ui.childPlan")}</Text>
+          <Text style={[styles.pageTitle, { fontSize: ms(24) }]}>{t("ui.childPlan")}</Text>
         </View>
 
-        <View style={[styles.card, { padding: ms(14), marginBottom: ms(12) }]}>
+        <View
+          style={[
+            styles.card,
+            styles.profileCard,
+            { padding: ms(16), marginBottom: ms(14), borderRadius: ms(24) },
+          ]}
+        >
           {childrenLoading ? (
             <ActivityIndicator color={colors.primary} />
           ) : displayChild ? (
             <View style={styles.profileRow}>
               <View
                 style={[
-                  styles.avatar,
+                  styles.avatarRing,
                   {
-                    width: ms(64),
-                    height: ms(64),
-                    borderRadius: ms(32),
+                    width: avatarSize,
+                    height: avatarSize,
+                    borderRadius: avatarSize / 2,
+                    borderWidth: ms(3),
                   },
                 ]}
               >
-                <Text style={[styles.avatarLetter, { fontSize: ms(24) }]}>{initials}</Text>
+                {useDemo ? (
+                  <Image source={CHILD_PHOTO} style={styles.avatarImg} />
+                ) : (
+                  <View style={styles.avatarFallback}>
+                    <Text style={[styles.avatarLetter, { fontSize: ms(24) }]}>{initials}</Text>
+                  </View>
+                )}
               </View>
               <View style={styles.profileMain}>
                 <View style={styles.profileTop}>
@@ -369,12 +400,13 @@ export default function PlanScreen() {
                       router.push(`/(tabs)/profile/edit-child-profile?id=${displayChild.id}`);
                     }}
                     hitSlop={8}
+                    style={styles.editBtn}
                     accessibilityLabel={t("ui.edit")}
                   >
                     <Ionicons name="pencil-outline" size={ms(18)} color={colors.primary} />
                   </Pressable>
                   <View style={styles.profileText}>
-                    <Text style={[styles.childName, { fontSize: ms(18) }]}>{displayChild.name}</Text>
+                    <Text style={[styles.childName, { fontSize: ms(20) }]}>{displayChild.name}</Text>
                     <Text style={[styles.childAge, { fontSize: ms(13) }]}>
                       {age != null ? t("ui.years", { count: age }) : t("ui.ageUnknown")}
                     </Text>
@@ -407,7 +439,7 @@ export default function PlanScreen() {
           )}
         </View>
 
-        <View style={[styles.card, { padding: ms(14), marginBottom: ms(12) }]}>
+        <View style={[styles.card, { padding: ms(16), marginBottom: ms(14), borderRadius: ms(24) }]}>
           <View style={styles.sectionHead}>
             <View style={styles.dateChip}>
               <Ionicons name="calendar-outline" size={ms(14)} color={colors.primary} />
@@ -416,12 +448,12 @@ export default function PlanScreen() {
               </Text>
             </View>
             <View style={styles.sectionTitleRow}>
-              <Text style={[styles.sectionTitle, { fontSize: ms(16) }]}>{t("planUi.weeklyPlan")}</Text>
               <Ionicons name="calendar" size={ms(16)} color={colors.primary} />
+              <Text style={[styles.sectionTitle, { fontSize: ms(16) }]}>{t("planUi.weeklyPlan")}</Text>
             </View>
           </View>
 
-          <View style={[styles.daysRow, { marginTop: ms(12), marginBottom: ms(14) }]}>
+          <View style={[styles.daysRow, { marginTop: ms(14), marginBottom: ms(16) }]}>
             {WEEK_DAYS.map((day) => {
               const selected = selectedDay === day.key;
               return (
@@ -431,8 +463,8 @@ export default function PlanScreen() {
                   style={[
                     styles.dayChip,
                     {
-                      minHeight: ms(32),
-                      paddingHorizontal: ms(8),
+                      minHeight: ms(34),
+                      paddingHorizontal: ms(4),
                     },
                     selected && styles.dayChipOn,
                   ]}
@@ -452,27 +484,30 @@ export default function PlanScreen() {
             })}
           </View>
 
-          <View style={[styles.goalsCard, { padding: ms(12), marginBottom: ms(16) }]}>
+          <View style={[styles.goalsCard, { padding: ms(14), marginBottom: ms(18), borderRadius: ms(18) }]}>
             <View style={styles.sectionTitleRow}>
-              <Text style={[styles.sectionTitle, { fontSize: ms(15) }]}>{t("planUi.weeklyGoals")}</Text>
               <Ionicons name="disc-outline" size={ms(16)} color={colors.primary} />
+              <Text style={[styles.sectionTitle, { fontSize: ms(15) }]}>{t("planUi.weeklyGoals")}</Text>
             </View>
             <View style={styles.goalsBody}>
-              <Ionicons
-                name="leaf-outline"
-                size={ms(42)}
-                color={colors.primary}
-                style={{ opacity: 0.55 }}
-              />
               <Text style={[styles.goalsText, { fontSize: ms(13), lineHeight: ms(22) }]}>
                 {goals || t("ui.childGoalsPlaceholder")}
               </Text>
+              <View style={[styles.plantWrap, { width: ms(72), height: ms(72) }]}>
+                <Ionicons name="leaf" size={ms(28)} color={colors.primary} style={{ opacity: 0.35 }} />
+                <Ionicons
+                  name="leaf-outline"
+                  size={ms(40)}
+                  color={colors.primary}
+                  style={{ opacity: 0.7, marginTop: -8 }}
+                />
+              </View>
             </View>
           </View>
 
-          <View style={[styles.tasksHead, { marginBottom: ms(10) }]}>
-            <Text style={[styles.sectionTitle, { fontSize: ms(15) }]}>{t("copy.todaysTasks")}</Text>
+          <View style={[styles.tasksHead, { marginBottom: ms(12) }]}>
             <Ionicons name="checkbox" size={ms(16)} color={colors.primary} />
+            <Text style={[styles.sectionTitle, { fontSize: ms(15) }]}>{t("copy.todaysTasks")}</Text>
           </View>
 
           {loading ? (
@@ -482,17 +517,23 @@ export default function PlanScreen() {
               const helpful = helpfulnessLabel(task, t);
               const note = knownText(t, task.instructions || task.note);
               return (
-                <View key={task.id} style={[styles.taskCard, { padding: ms(12), marginBottom: ms(10) }]}>
+                <View
+                  key={task.id}
+                  style={[
+                    styles.taskCard,
+                    { padding: ms(14), marginBottom: ms(10), borderRadius: ms(18) },
+                  ]}
+                >
                   <View style={styles.taskTop}>
-                    <View style={styles.taskStatusCol}>
+                    <View style={[styles.taskStatusCol, { maxWidth: ms(108) }]}>
                       {task.status === "completed" ? (
                         <View style={[styles.statusPill, styles.statusDone]}>
-                          <Ionicons name="checkmark-circle" size={14} color={colors.done} />
+                          <Ionicons name="checkmark-circle" size={15} color={colors.done} />
                           <Text style={[styles.statusText, { color: colors.done }]}>{t("copy.done")}</Text>
                         </View>
                       ) : task.status === "skipped" ? (
                         <View style={[styles.statusPill, styles.statusSkip]}>
-                          <Ionicons name="remove-circle-outline" size={14} color={colors.skip} />
+                          <Ionicons name="remove-circle-outline" size={15} color={colors.skip} />
                           <Text style={[styles.statusText, { color: colors.skip }]}>{t("copy.skip")}</Text>
                         </View>
                       ) : (
@@ -504,7 +545,7 @@ export default function PlanScreen() {
                             }}
                             style={[styles.statusPill, styles.statusDone]}
                           >
-                            <Ionicons name="checkmark-circle" size={14} color={colors.done} />
+                            <Ionicons name="checkmark-circle" size={15} color={colors.done} />
                             <Text style={[styles.statusText, { color: colors.done }]}>{t("copy.done")}</Text>
                           </Pressable>
                           <Pressable
@@ -514,7 +555,7 @@ export default function PlanScreen() {
                             }}
                             style={[styles.statusPill, styles.statusSkip]}
                           >
-                            <Ionicons name="remove-circle-outline" size={14} color={colors.skip} />
+                            <Ionicons name="remove-circle-outline" size={15} color={colors.skip} />
                             <Text style={[styles.statusText, { color: colors.skip }]}>{t("copy.skip")}</Text>
                           </Pressable>
                         </View>
@@ -535,7 +576,7 @@ export default function PlanScreen() {
                       ) : null}
                     </View>
                     <View style={styles.taskMain}>
-                      <Text style={[styles.taskTitle, { fontSize: ms(14) }]}>{knownText(t, task.title)}</Text>
+                      <Text style={[styles.taskTitle, { fontSize: ms(15) }]}>{knownText(t, task.title)}</Text>
                       {task.description ? (
                         <Text style={[styles.taskDesc, { fontSize: ms(12) }]} numberOfLines={2}>
                           {knownText(t, task.description)}
@@ -543,7 +584,12 @@ export default function PlanScreen() {
                         </Text>
                       ) : null}
                     </View>
-                    <View style={styles.taskIconWrap}>
+                    <View
+                      style={[
+                        styles.taskIconWrap,
+                        { width: ms(40), height: ms(40), borderRadius: ms(14) },
+                      ]}
+                    >
                       <Ionicons name={taskIcon(task)} size={ms(18)} color={colors.primary} />
                     </View>
                   </View>
@@ -556,7 +602,12 @@ export default function PlanScreen() {
             </View>
           )}
 
-          <View style={[styles.taskCard, { padding: ms(12), marginBottom: ms(14) }]}>
+          <View
+            style={[
+              styles.taskCard,
+              { padding: ms(14), marginBottom: ms(18), borderRadius: ms(18) },
+            ]}
+          >
             <View style={styles.taskTop}>
               <Pressable
                 onPress={() => router.navigate("/(tabs)/bookings")}
@@ -568,7 +619,7 @@ export default function PlanScreen() {
                 <Text style={styles.detailsLinkText}>{t("ui.viewDetails")}</Text>
               </Pressable>
               <View style={styles.taskMain}>
-                <Text style={[styles.taskTitle, { fontSize: ms(14) }]}>{t("copy.doctorAppointments")}</Text>
+                <Text style={[styles.taskTitle, { fontSize: ms(15) }]}>{t("copy.doctorAppointments")}</Text>
                 {appointment ? (
                   <>
                     <Text style={styles.taskDesc}>{knownText(t, appointment.listingName)}</Text>
@@ -576,31 +627,23 @@ export default function PlanScreen() {
                       {knownText(t, appointment.dateLabel)}
                       {appointment.timeLabel ? ` • ${knownText(t, appointment.timeLabel)}` : ""}
                     </Text>
-                    {appointment.notes ? (
-                      <Text style={styles.taskDesc}>{knownText(t, appointment.notes)}</Text>
-                    ) : null}
                   </>
                 ) : (
                   <Text style={styles.taskDesc}>{t("copy.noSavedAppointments")}</Text>
                 )}
               </View>
-              <View style={styles.taskIconWrap}>
+              <View
+                style={[
+                  styles.taskIconWrap,
+                  { width: ms(40), height: ms(40), borderRadius: ms(14) },
+                ]}
+              >
                 <Ionicons name="calendar-outline" size={ms(18)} color={colors.primary} />
               </View>
             </View>
           </View>
 
           <View style={styles.bottomStats}>
-            <View style={styles.progressBlock}>
-              <View style={styles.progressLabelRow}>
-                <Ionicons name="stats-chart-outline" size={16} color={colors.primary} />
-                <Text style={styles.progressLabel}>{t("copy.weekProgress")}</Text>
-              </View>
-              <Text style={[styles.percent, { fontSize: ms(22) }]}>{percent}%</Text>
-              <View style={styles.progressTrack}>
-                <View style={[styles.progressFill, { width: `${percent}%` }]} />
-              </View>
-            </View>
             <Pressable
               onPress={() => router.push("/(tabs)/plan/progress")}
               style={styles.evalBlock}
@@ -616,6 +659,16 @@ export default function PlanScreen() {
                   : t("ui.noRatingYet")}
               </Text>
             </Pressable>
+            <View style={styles.progressBlock}>
+              <View style={styles.progressLabelRow}>
+                <Ionicons name="stats-chart-outline" size={16} color={colors.primary} />
+                <Text style={styles.progressLabel}>{t("copy.weekProgress")}</Text>
+              </View>
+              <Text style={[styles.percent, { fontSize: ms(22) }]}>{percent}%</Text>
+              <View style={styles.progressTrack}>
+                <View style={[styles.progressFill, { width: `${percent}%` }]} />
+              </View>
+            </View>
           </View>
         </View>
 
@@ -624,7 +677,7 @@ export default function PlanScreen() {
           style={({ pressed }) => [
             styles.card,
             styles.updateCard,
-            { padding: ms(14) },
+            { padding: ms(16), borderRadius: ms(22) },
             pressed && styles.pressed,
           ]}
         >
@@ -655,8 +708,12 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     backgroundColor: colors.headerWash,
-    borderBottomLeftRadius: 36,
-    borderBottomRightRadius: 36,
+    borderBottomLeftRadius: 48,
+    borderBottomRightRadius: 48,
+  },
+  blob: {
+    position: "absolute",
+    opacity: 0.9,
   },
   scroll: {
     flex: 1,
@@ -667,10 +724,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   backBtn: {
-    width: 36,
-    height: 36,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "rgba(255,255,255,0.72)",
   },
   pageTitle: {
     flex: 1,
@@ -681,24 +737,35 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: colors.white,
-    borderRadius: 22,
-    borderWidth: 1,
-    borderColor: colors.cardBorder,
-    shadowColor: "#6F80B4",
-    shadowOpacity: 0.08,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 2,
+    borderRadius: 24,
+    shadowColor: "#6E7CAF",
+    shadowOpacity: 0.1,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 3,
+  },
+  profileCard: {
+    backgroundColor: colors.white,
   },
   profileRow: {
     flexDirection: "row-reverse",
-    alignItems: "flex-start",
+    alignItems: "center",
     gap: 12,
   },
-  avatar: {
+  avatarRing: {
+    overflow: "hidden",
+    borderColor: colors.primarySoft,
     backgroundColor: colors.primarySoft,
+  },
+  avatarImg: {
+    width: "100%",
+    height: "100%",
+  },
+  avatarFallback: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: colors.primarySoft,
   },
   avatarLetter: {
     color: colors.primary,
@@ -711,6 +778,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "space-between",
+  },
+  editBtn: {
+    paddingTop: 2,
   },
   profileText: {
     flex: 1,
@@ -775,6 +845,7 @@ const styles = StyleSheet.create({
   daysRow: {
     flexDirection: "row-reverse",
     justifyContent: "space-between",
+    alignItems: "center",
     gap: 4,
   },
   dayChip: {
@@ -796,14 +867,17 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   goalsCard: {
-    backgroundColor: "#F7F8FD",
-    borderRadius: 18,
+    backgroundColor: colors.primarySoft,
   },
   goalsBody: {
     flexDirection: "row-reverse",
     alignItems: "center",
-    gap: 12,
+    gap: 10,
     marginTop: 8,
+  },
+  plantWrap: {
+    alignItems: "center",
+    justifyContent: "center",
   },
   goalsText: {
     flex: 1,
@@ -818,20 +892,21 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   taskCard: {
+    backgroundColor: colors.white,
     borderWidth: 1,
     borderColor: colors.cardBorder,
-    borderRadius: 18,
-    backgroundColor: colors.white,
+    shadowColor: "#6E7CAF",
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 1,
   },
   taskTop: {
-    flexDirection: "row-reverse",
+    flexDirection: "row",
     alignItems: "center",
     gap: 10,
   },
   taskIconWrap: {
-    width: 36,
-    height: 36,
-    borderRadius: 12,
     backgroundColor: colors.primarySoft,
     alignItems: "center",
     justifyContent: "center",
@@ -855,7 +930,7 @@ const styles = StyleSheet.create({
   taskStatusCol: {
     alignItems: "flex-start",
     gap: 6,
-    maxWidth: 92,
+    minWidth: 76,
   },
   statusPill: {
     flexDirection: "row-reverse",
@@ -895,16 +970,17 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   noteText: {
-    flex: 1,
+    flexShrink: 1,
     fontSize: 10,
     color: colors.muted,
     textAlign: "right",
     writingDirection: "rtl",
   },
   detailsLink: {
-    flexDirection: "row-reverse",
+    flexDirection: "row",
     alignItems: "center",
     gap: 2,
+    minWidth: 76,
   },
   detailsLinkText: {
     color: colors.primary,
@@ -918,7 +994,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   progressBlock: {
-    flex: 1.2,
+    flex: 1.25,
   },
   progressLabelRow: {
     flexDirection: "row-reverse",
@@ -935,7 +1011,7 @@ const styles = StyleSheet.create({
   percent: {
     color: colors.titleDark,
     fontWeight: "800",
-    textAlign: "right",
+    textAlign: "left",
     writingDirection: "rtl",
     marginBottom: 6,
   },
@@ -1013,7 +1089,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   emptyBox: {
-    backgroundColor: "#F7F8FD",
+    backgroundColor: colors.primarySoft,
     borderRadius: 14,
     padding: 12,
   },

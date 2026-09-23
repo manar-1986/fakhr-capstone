@@ -20,18 +20,19 @@ import type { Professional } from "../../../types/directory.types";
 import { useTranslation } from "react-i18next";
 import { useI18nLayout } from "../../../hooks/useI18nLayout";
 import { knownText } from "../../../utils/knownText";
+import { colors as palette } from "../../../theme";
 
 const colors = {
-  bg: "#FFFFFF",
-  title: "#1A1C29",
-  subtitle: "#8B91AF",
-  placeholder: "#A8ABB4",
-  searchBorder: "#E6E8EE",
-  star: "#DCAC2E",
-  chevron: "#B2B1B5",
-  button: "#7182B6",
-  avatarBg: "#E8E9EE",
-  white: "#FFFFFF",
+  bg: palette.background,
+  title: palette.text,
+  subtitle: palette.textMuted,
+  placeholder: palette.textLight,
+  searchBorder: palette.border,
+  star: palette.star,
+  chevron: palette.chevron,
+  button: palette.primary,
+  avatarBg: palette.borderLight,
+  white: palette.white,
 };
 
 const DESIGN_W = 390;

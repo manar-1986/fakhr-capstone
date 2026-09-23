@@ -21,19 +21,20 @@ import type { HealthCenter } from "../../../types/directory.types";
 import { openInGoogleMaps } from "../../../utils/openMaps";
 import { useTranslation } from "react-i18next";
 import { knownText } from "../../../utils/knownText";
+import { colors as palette } from "../../../theme";
 
 const colors = {
-  bg: "#FFFFFF",
-  title: "#1A1C29",
-  body: "#2C3150",
-  subtitle: "#8B91AF",
-  icon: "#6E7CAF",
-  brand: "#6F80B4",
-  star: "#DCAC2E",
-  border: "#D8DCE8",
-  tabBorder: "#E6E8F0",
-  white: "#FFFFFF",
-  back: "#3A4060",
+  bg: palette.background,
+  title: palette.text,
+  body: palette.text,
+  subtitle: palette.textMuted,
+  icon: palette.primary,
+  brand: palette.primary,
+  star: palette.star,
+  border: palette.border,
+  tabBorder: palette.borderLight,
+  white: palette.white,
+  back: palette.textSecondary,
 };
 
 const DESIGN_W = 435;

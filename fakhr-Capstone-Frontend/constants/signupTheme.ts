@@ -1,21 +1,25 @@
+import { brand, colors } from "../theme/colors";
+
 /**
- * Shared visual tokens for the signup / onboarding stack (Create Account + Child Profile).
+ * Shared visual tokens for signup / Child Profile / library chrome.
+ * Always derived from the central Fakhr palette so language or screen
+ * copies cannot drift back to the old green theme.
  */
 export const signupColors = {
-  bgApp: "#F9F9F9",
-  primary: "#949AB1",
-  primaryDark: "#7A8199",
-  text: "#1F2430",
-  textMuted: "#6B7280",
-  textLight: "#9CA3AF",
-  white: "#FFFFFF",
+  bgApp: colors.background,
+  primary: colors.primary,
+  primaryDark: colors.primaryMuted,
+  text: colors.text,
+  textMuted: colors.textMuted,
+  textLight: colors.textLight,
+  white: colors.white,
   border: "rgba(0, 0, 0, 0.06)",
   inputBorder: "rgba(0, 0, 0, 0.08)",
-  borderLight: "#E0E0E0",
+  borderLight: colors.borderLight,
   googleBlue: "#4285F4",
   facebookBlue: "#1877F2",
-  progressTrack: "#E8E9EF",
-  selectedCardBg: "rgba(148, 154, 177, 0.14)",
-  illustrationBg: "#ECECEF",
+  progressTrack: brand.pale,
+  selectedCardBg: "rgba(110, 124, 175, 0.14)",
+  illustrationBg: brand.pale,
   overlay: "rgba(0, 0, 0, 0.35)",
 };
