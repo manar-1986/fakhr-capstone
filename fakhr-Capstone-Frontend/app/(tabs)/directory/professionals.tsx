@@ -17,9 +17,10 @@ import { getProfessionals } from "../../../api/directory.api";
 import { DisabilityAwareHeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 import type { DirectoryListing } from "../../../components/directory/types";
 import type { Professional } from "../../../types/directory.types";
+import { BILINGUAL_DOCTORS } from "../../../constants/professionalBilingual";
 import { useTranslation } from "react-i18next";
 import { useI18nLayout } from "../../../hooks/useI18nLayout";
-import { knownText } from "../../../utils/knownText";
+import { doctorLocaleText } from "../../../utils/professionalBilingual";
 import { colors as palette } from "../../../theme";
 
 const colors = {
@@ -47,72 +48,26 @@ const PHOTOS = [
 
 type SpecialistRow = {
   id?: string;
-  name: string;
-  specialty: string;
+  nameAr: string;
+  nameEn: string;
+  specialtyAr: string;
+  specialtyEn: string;
   rating: number;
   reviews: number;
   photoIndex: number;
   imageUri?: string;
 };
 
-const FALLBACK: SpecialistRow[] = [
-  {
-    id: "doc-1",
-    name: "د. نورة الشمري",
-    specialty: "اختصاصية نفسية",
-    rating: 4.9,
-    reviews: 73,
-    photoIndex: 0,
-  },
-  {
-    id: "doc-2",
-    name: "د. أحمد المطيري",
-    specialty: "استشاري أطفال",
-    rating: 4.8,
-    reviews: 68,
-    photoIndex: 1,
-  },
-  {
-    id: "doc-3",
-    name: "د. فاطمة العلي",
-    specialty: "اختصاصية نطق ولغة",
-    rating: 4.7,
-    reviews: 55,
-    photoIndex: 2,
-  },
-  {
-    id: "doc-4",
-    name: "د. سالم الحربي",
-    specialty: "استشاري أعصاب",
-    rating: 4.9,
-    reviews: 50,
-    photoIndex: 3,
-  },
-  {
-    id: "doc-5",
-    name: "د. خالد العنزي",
-    specialty: "أخصائي علاج وظيفي",
-    rating: 4.6,
-    reviews: 41,
-    photoIndex: 1,
-  },
-  {
-    id: "doc-6",
-    name: "د. مريم السالم",
-    specialty: "استشارية تغذية",
-    rating: 4.8,
-    reviews: 37,
-    photoIndex: 0,
-  },
-  {
-    id: "doc-7",
-    name: "د. يوسف العتيبي",
-    specialty: "أخصائي سلوكي",
-    rating: 4.5,
-    reviews: 29,
-    photoIndex: 3,
-  },
-];
+const FALLBACK: SpecialistRow[] = BILINGUAL_DOCTORS.map((doc, index) => ({
+  id: doc.id,
+  nameAr: doc.nameAr,
+  nameEn: doc.nameEn,
+  specialtyAr: doc.specialtyAr,
+  specialtyEn: doc.specialtyEn,
+  rating: doc.rating,
+  reviews: doc.reviews,
+  photoIndex: index % PHOTOS.length,
+}));
 
 function professionalId(p: Professional) {
   return p.id || (p as { _id?: string })._id;
@@ -122,8 +77,10 @@ function mapApiProfessional(p: Professional, index: number): SpecialistRow {
   const uri = p.image?.trim();
   return {
     id: professionalId(p),
-    name: p.name,
-    specialty: p.specialtyLabel || p.specialty || "",
+    nameAr: p.nameAr,
+    nameEn: p.nameEn,
+    specialtyAr: p.specialtyAr || p.specialtyLabelAr,
+    specialtyEn: p.specialtyEn || p.specialtyLabelEn,
     rating: typeof p.rating === "number" ? p.rating : 0,
     reviews: typeof p.reviews === "number" ? p.reviews : 0,
     photoIndex: index % PHOTOS.length,
@@ -133,7 +90,7 @@ function mapApiProfessional(p: Professional, index: number): SpecialistRow {
 
 export default function ProfessionalsScreen() {
   const { t } = useTranslation();
-  const { align } = useI18nLayout();
+  const { align, isRTL, dir } = useI18nLayout();
   const router = useRouter();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
@@ -155,10 +112,12 @@ export default function ProfessionalsScreen() {
     if (apiPros && apiPros.length > 0) {
       return apiPros.map(mapApiProfessional);
     }
-    const q = search.trim();
+    const q = search.trim().toLowerCase();
     if (!q) return FALLBACK;
-    return FALLBACK.filter(
-      (row) => row.name.includes(q) || row.specialty.includes(q),
+    return FALLBACK.filter((row) =>
+      `${row.nameAr} ${row.nameEn} ${row.specialtyAr} ${row.specialtyEn}`
+        .toLowerCase()
+        .includes(q),
     );
   }, [apiPros, search]);
 
@@ -173,13 +132,19 @@ export default function ProfessionalsScreen() {
     const listing: DirectoryListing = {
       id,
       kind: "doctor",
-      name: row.name,
-      subtitle: row.specialty,
+      name: row.nameAr,
+      nameAr: row.nameAr,
+      nameEn: row.nameEn,
+      subtitle: row.specialtyAr,
+      subtitleAr: row.specialtyAr,
+      subtitleEn: row.specialtyEn,
       status: "OPEN",
       locationLine: "",
       rating: row.rating.toFixed(1),
       imageUrl: row.imageUri || "",
-      tags: row.specialty ? [row.specialty] : [],
+      tags: [row.specialtyEn || row.specialtyAr],
+      tagsAr: [row.specialtyAr],
+      tagsEn: [row.specialtyEn],
       phone: "",
     };
     router.push({
@@ -207,7 +172,10 @@ export default function ProfessionalsScreen() {
           <View style={[styles.header, { height: ms(48), marginBottom: ms(10) }]}>
             <DisabilityAwareHeaderBackButton color={colors.title} />
             <Text
-              style={[styles.title, { fontSize: ms(22), lineHeight: ms(30) }]}
+              style={[
+                styles.title,
+                { fontSize: ms(22), lineHeight: ms(30), writingDirection: dir },
+              ]}
               numberOfLines={1}
             >
               {t("ui.doctorsOneLine")}
@@ -235,7 +203,7 @@ export default function ProfessionalsScreen() {
               }}
               placeholder={t("ui.searchDoctor")}
               placeholderTextColor={colors.placeholder}
-              style={[styles.searchInput, { fontSize: ms(14) }]}
+              style={[styles.searchInput, { fontSize: ms(14), writingDirection: dir }]}
               textAlign={align}
               returnKeyType="search"
             />
@@ -254,7 +222,7 @@ export default function ProfessionalsScreen() {
                 : PHOTOS[row.photoIndex % PHOTOS.length];
               return (
                 <Pressable
-                  key={`${row.id ?? row.name}-${index}`}
+                  key={`${row.id ?? row.nameEn}-${index}`}
                   onPress={() => openProfessional(row, index)}
                   style={({ pressed }) => [
                     styles.row,
@@ -266,7 +234,11 @@ export default function ProfessionalsScreen() {
                     pressed && styles.pressed,
                   ]}
                   accessibilityRole="button"
-                  accessibilityLabel={row.name}
+                  accessibilityLabel={doctorLocaleText(
+                    isRTL,
+                    { ar: row.nameAr, en: row.nameEn },
+                    t,
+                  )}
                 >
                   <Image
                     source={source}
@@ -278,15 +250,20 @@ export default function ProfessionalsScreen() {
                     }}
                     resizeMode="cover"
                   />
-                  <View style={styles.info}>
+                    <View style={[styles.info, { alignItems: isRTL ? "flex-end" : "flex-start" }]}>
                     <Text
                       style={[
                         styles.name,
-                        { fontSize: ms(16), lineHeight: ms(22) },
+                        {
+                          fontSize: ms(16),
+                          lineHeight: ms(22),
+                          textAlign: align,
+                          writingDirection: dir,
+                        },
                       ]}
                       numberOfLines={1}
                     >
-                      {row.name}
+                      {doctorLocaleText(isRTL, { ar: row.nameAr, en: row.nameEn }, t)}
                     </Text>
                     <Text
                       style={[
@@ -295,11 +272,17 @@ export default function ProfessionalsScreen() {
                           fontSize: ms(12),
                           lineHeight: ms(18),
                           marginTop: ms(1),
+                          textAlign: align,
+                          writingDirection: dir,
                         },
                       ]}
                       numberOfLines={1}
                     >
-                      {knownText(t, row.specialty)}
+                      {doctorLocaleText(
+                        isRTL,
+                        { ar: row.specialtyAr, en: row.specialtyEn },
+                        t,
+                      )}
                     </Text>
                     <View
                       style={[

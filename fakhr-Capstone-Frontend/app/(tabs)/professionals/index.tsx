@@ -13,6 +13,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useQuery } from "@tanstack/react-query";
 import { getProfessionals } from "../../../api/directory.api";
 import { colors } from "../../../theme";
+import { useTranslation } from "react-i18next";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { doctorLocaleText } from "../../../utils/professionalBilingual";
 
 // Specializations for filtering
 const SPECIALIZATIONS = [
@@ -24,9 +27,23 @@ const SPECIALIZATIONS = [
   { id: "educational", label: "Educational", icon: "school-outline" },
 ];
 
+const SPECIALIZATION_KEYS: Record<string, string> = {
+  all: "ui.all",
+  speech: "copy.speech",
+  behavioral: "copy.behavioral",
+  occupational: "copy.ot",
+  physical: "copy.pt",
+  educational: "copy.educationalSupport",
+};
+
 const VALID_SPECIALTIES = ["speech", "behavioral", "occupational", "physical", "educational"];
 
 export default function ProfessionalsScreen() {
+  const { t } = useTranslation();
+  const { isRTL } = useI18nLayout();
+  const loc = (ar?: string, en?: string, legacy?: string) =>
+    doctorLocaleText(isRTL, { ar, en, legacy }, t);
+  const specLabel = (id: string) => t(SPECIALIZATION_KEYS[id] || id);
   const router = useRouter();
   const { search: searchParam, specialty: specialtyParam } = useLocalSearchParams<{
     search?: string;
@@ -114,9 +131,9 @@ export default function ProfessionalsScreen() {
             </View>
           )}
           <View style={styles.headerText}>
-            <Text style={styles.title}>Professionals</Text>
+            <Text style={styles.title}>{t("directory.healthcareProfessionals")}</Text>
             <Text style={styles.subtitle}>
-              Find specialists for your child&apos;s needs
+              {t("copy.findSpecialists")}
             </Text>
           </View>
         </View>
@@ -127,8 +144,8 @@ export default function ProfessionalsScreen() {
             <Ionicons name="filter" size={18} color={colors.primary} />
             <Text style={styles.searchHintText}>
               {searchQuery
-                ? `Showing providers for: ${searchQuery}`
-                : `Showing ${SPECIALIZATIONS.find((s) => s.id === selectedFilter)?.label || selectedFilter} specialists`}
+                ? t("copy.showingProviders", { query: searchQuery })
+                : t("copy.showingSpecialty", { specialty: specLabel(selectedFilter) })}
             </Text>
             <Pressable
               onPress={() => {
@@ -138,18 +155,18 @@ export default function ProfessionalsScreen() {
               }}
               hitSlop={8}
             >
-              <Text style={styles.clearSearchText}>Clear</Text>
+              <Text style={styles.clearSearchText}>{t("copy.clearFilter")}</Text>
             </Pressable>
           </View>
         ) : (
           <Pressable style={styles.searchBar}>
             <Ionicons name="search-outline" size={20} color={colors.textMuted} />
-            <Text style={styles.searchPlaceholder}>Search professionals...</Text>
+            <Text style={styles.searchPlaceholder}>{t("copy.searchProfessionalsPlaceholder")}</Text>
           </Pressable>
         )}
 
         {/* Filter Section */}
-        <Text style={styles.sectionLabel}>Filter by Specialization</Text>
+        <Text style={styles.sectionLabel}>{t("copy.filterBySpecialty")}</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -177,7 +194,7 @@ export default function ProfessionalsScreen() {
                   selectedFilter === spec.id && styles.filterChipTextActive,
                 ]}
               >
-                {spec.label}
+                {specLabel(spec.id)}
               </Text>
               {spec.id !== "all" && (
                 <View
@@ -204,7 +221,7 @@ export default function ProfessionalsScreen() {
         {isLoading && (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color={colors.primary} />
-            <Text style={styles.loadingText}>Loading professionals...</Text>
+            <Text style={styles.loadingText}>{t("directory.loadingProfessionals")}</Text>
           </View>
         )}
 
@@ -212,8 +229,8 @@ export default function ProfessionalsScreen() {
         {error && (
           <View style={styles.errorContainer}>
             <Ionicons name="alert-circle-outline" size={48} color={colors.textMuted} />
-            <Text style={styles.errorText}>Failed to load professionals</Text>
-            <Text style={styles.errorSubtext}>Please try again later</Text>
+            <Text style={styles.errorText}>{t("copy.failedLoadPro")}</Text>
+            <Text style={styles.errorSubtext}>{t("common.tryAgain")}</Text>
           </View>
         )}
 
@@ -222,12 +239,13 @@ export default function ProfessionalsScreen() {
           <>
             <View style={styles.resultsHeader}>
               <Text style={styles.resultsCount}>
-                {filteredProfessionals.length} professional
-                {filteredProfessionals.length !== 1 ? "s" : ""} found
+                {filteredProfessionals.length === 1
+                  ? t("copy.professionalFoundOne")
+                  : t("copy.professionalsFound", { count: filteredProfessionals.length })}
               </Text>
               <Pressable style={styles.sortButton}>
                 <Ionicons name="funnel-outline" size={16} color={colors.textSecondary} />
-                <Text style={styles.sortButtonText}>Sort</Text>
+                <Text style={styles.sortButtonText}>{t("copy.sort")}</Text>
               </Pressable>
             </View>
 
@@ -238,15 +256,15 @@ export default function ProfessionalsScreen() {
                   <View style={styles.emptyIconWrap}>
                     <Ionicons name="search-outline" size={32} color={colors.primary} />
                   </View>
-                  <Text style={styles.emptyTitle}>No professionals found</Text>
+                  <Text style={styles.emptyTitle}>{t("copy.noProfessionalsFound")}</Text>
                   <Text style={styles.emptySubtitle}>
-                    Try selecting a different specialization
+                    {t("copy.tryDifferentSpecialty")}
                   </Text>
                   <Pressable
                     style={styles.resetButton}
                     onPress={() => setSelectedFilter("all")}
                   >
-                    <Text style={styles.resetButtonText}>Show All</Text>
+                    <Text style={styles.resetButtonText}>{t("copy.showAll")}</Text>
                   </Pressable>
                 </View>
               ) : (
@@ -267,7 +285,11 @@ export default function ProfessionalsScreen() {
                       ]}
                     >
                       <Text style={[styles.avatarText, { color: professional.color }]}>
-                        {professional.name.split(" ").slice(1, 3).map(n => n[0]).join("")}
+                        {loc(professional.nameAr, professional.nameEn, professional.name)
+                          .split(" ")
+                          .slice(1, 3)
+                          .map((n) => n[0])
+                          .join("")}
                       </Text>
                       {professional.verified && (
                         <View style={styles.verifiedBadge}>
@@ -279,10 +301,16 @@ export default function ProfessionalsScreen() {
                     {/* Content */}
                     <View style={styles.professionalContent}>
                       <View style={styles.nameRow}>
-                        <Text style={styles.professionalName}>{professional.name}</Text>
+                        <Text style={styles.professionalName}>
+                          {loc(professional.nameAr, professional.nameEn, professional.name)}
+                        </Text>
                       </View>
                       <Text style={[styles.specialtyLabel, { color: professional.color }]}>
-                        {professional.specialtyLabel}
+                        {loc(
+                          professional.specialtyLabelAr,
+                          professional.specialtyLabelEn,
+                          professional.specialtyLabel,
+                        )}
                       </Text>
 
                       {/* Meta Row */}
@@ -293,7 +321,13 @@ export default function ProfessionalsScreen() {
                           <Text style={styles.reviewsText}>({professional.reviews})</Text>
                         </View>
                         <View style={styles.metaDot} />
-                        <Text style={styles.experienceText}>{professional.experience}</Text>
+                        <Text style={styles.experienceText}>
+                          {loc(
+                            professional.experienceAr,
+                            professional.experienceEn,
+                            professional.experience,
+                          )}
+                        </Text>
                       </View>
 
                       {/* Availability */}
@@ -301,16 +335,24 @@ export default function ProfessionalsScreen() {
                         <View
                           style={[
                             styles.availabilityDot,
-                            professional.availability && typeof professional.availability === "string" && professional.availability.includes("today") && styles.availabilityDotActive,
+                            (professional.availabilityEn || professional.availability || "")
+                              .toLowerCase()
+                              .includes("today") && styles.availabilityDotActive,
                           ]}
                         />
                         <Text
                           style={[
                             styles.availabilityText,
-                            professional.availability && typeof professional.availability === "string" && professional.availability.includes("today") && styles.availabilityTextActive,
+                            (professional.availabilityEn || professional.availability || "")
+                              .toLowerCase()
+                              .includes("today") && styles.availabilityTextActive,
                           ]}
                         >
-                          {professional.availability || "Not available"}
+                          {loc(
+                            professional.availabilityAr,
+                            professional.availabilityEn,
+                            professional.availability,
+                          ) || t("copy.notAvailable")}
                         </Text>
                       </View>
                     </View>

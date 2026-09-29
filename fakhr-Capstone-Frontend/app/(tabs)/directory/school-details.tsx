@@ -21,6 +21,13 @@ import type { HealthCenter } from "../../../types/directory.types";
 import { openInGoogleMaps } from "../../../utils/openMaps";
 import { useTranslation } from "react-i18next";
 import { knownText } from "../../../utils/knownText";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import {
+  BILINGUAL_SCHOOLS,
+  containsArabic,
+  directoryText,
+  type BilingualSchool,
+} from "../../../constants/directoryBilingual";
 import { colors as palette } from "../../../theme";
 
 const colors = {
@@ -40,21 +47,36 @@ const colors = {
 const DESIGN_W = 435;
 const heroPhoto = require("../../../assets/images/school-details-hero.png");
 
-type SchoolPayload = {
-  name: string;
-  city: string;
-  rating: number;
-  reviews: number;
-  type: "public" | "private";
-  branch: string;
-  specialty: string;
-  about: string;
-  ageRange: string;
-  stage: string;
-  hours: string;
-};
-
 type TabKey = "about" | "gallery" | "programs" | "location" | "reviews";
+
+function parseSchool(raw: string | string[] | undefined): BilingualSchool | null {
+  const s = Array.isArray(raw) ? raw[0] : raw;
+  if (!s) return null;
+  const tryParse = (x: string) => JSON.parse(x) as BilingualSchool | Record<string, string>;
+  try {
+    const parsed = tryParse(decodeURIComponent(s));
+    return normalizeSchool(parsed);
+  } catch {
+    try {
+      return normalizeSchool(tryParse(s));
+    } catch {
+      return null;
+    }
+  }
+}
+
+function normalizeSchool(parsed: BilingualSchool | Record<string, string> | null): BilingualSchool | null {
+  if (!parsed || typeof parsed !== "object") return null;
+  if ("nameAr" in parsed && "nameEn" in parsed) return parsed as BilingualSchool;
+  const name = "name" in parsed ? String(parsed.name) : "";
+  return BILINGUAL_SCHOOLS.find((school) => school.nameAr === name || school.nameEn === name) ?? null;
+}
+
+function typeLabel(type: string | undefined, t: (key: string) => string) {
+  if (type === "public" || type === "حكومي") return t("copy.gov");
+  if (type === "private" || type === "خاص") return t("copy.priv");
+  return t("copy.priv");
+}
 
 const TABS: {
   key: TabKey;
@@ -68,29 +90,9 @@ const TABS: {
   { key: "reviews", labelKey: "copy.reviews", icon: "star-outline" },
 ];
 
-function parseSchool(raw: string | string[] | undefined): SchoolPayload | null {
-  const s = Array.isArray(raw) ? raw[0] : raw;
-  if (!s) return null;
-  const tryParse = (x: string) => JSON.parse(x) as SchoolPayload;
-  try {
-    return tryParse(decodeURIComponent(s));
-  } catch {
-    try {
-      return tryParse(s);
-    } catch {
-      return null;
-    }
-  }
-}
-
-function typeLabel(type: string | undefined, t: (key: string) => string) {
-  if (type === "public" || type === "حكومي") return t("copy.gov");
-  if (type === "private" || type === "خاص") return t("copy.priv");
-  return type ? knownText(t, type) : t("copy.priv");
-}
-
 export default function SchoolDetailsScreen() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const { isRTL, dir } = useI18nLayout();
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { width: windowWidth } = useWindowDimensions();
@@ -112,26 +114,30 @@ export default function SchoolDetailsScreen() {
     retry: 1,
   });
 
-  const name = passed?.name || center?.name || "مدرسة النور للتربية الخاصة";
-  const city = passed?.city || center?.city || "حولي";
-  const specialty =
-    passed?.specialty || center?.specialties?.[0] || "صعوبات التعلم";
+  const fallback = BILINGUAL_SCHOOLS[0];
+  const loc = (ar: string, en: string) => (isRTL ? ar : en);
+  const name = passed
+    ? loc(passed.nameAr, passed.nameEn)
+    : directoryText(center?.name, isRTL, (v) => knownText(t, v)) || loc(fallback.nameAr, fallback.nameEn);
+  const cityLabel = passed
+    ? loc(passed.cityAr, passed.cityEn)
+    : directoryText(center?.city, isRTL, (v) => knownText(t, v)) || loc(fallback.cityAr, fallback.cityEn);
+  const specialtyLabel = passed
+    ? loc(passed.specialtyAr, passed.specialtyEn)
+    : directoryText(center?.specialties?.[0], isRTL, (v) => knownText(t, v)) ||
+      loc(fallback.specialtyAr, fallback.specialtyEn);
   const rating = passed?.rating ?? center?.rating ?? 4.8;
   const reviews = passed?.reviews ?? center?.reviews?.length ?? 128;
-  const about =
-    passed?.about ||
-    center?.description ||
-    "تقدم تعليماً متخصصاً وشاملاً للأطفال من ذوي الاحتياجات الخاصة، مع بيئة آمنة ومحفزة وبرامج تربوية متخصصة";
-  const ageRange = passed?.ageRange || "3 - 18 سنة";
-  const stage = passed?.stage || "ابتدائي - ثانوي";
-  const hours = passed?.hours || center?.operatingHours || "7:30 ص - 1:30 م";
+  const aboutText = passed
+    ? loc(passed.aboutAr, passed.aboutEn)
+    : directoryText(center?.description, isRTL, (v) => knownText(t, v)) || loc(fallback.aboutAr, fallback.aboutEn);
+  const ageLabel = passed ? loc(passed.ageRangeAr, passed.ageRangeEn) : loc(fallback.ageRangeAr, fallback.ageRangeEn);
+  const stageLabel = passed ? loc(passed.stageAr, passed.stageEn) : loc(fallback.stageAr, fallback.stageEn);
+  const hoursLabel = passed
+    ? loc(passed.hoursAr, passed.hoursEn)
+    : directoryText(center?.operatingHours, isRTL, (v) => knownText(t, v)) || loc(fallback.hoursAr, fallback.hoursEn);
   const kind = typeLabel(center?.type || passed?.type, t);
-  const cityLabel = knownText(t, city);
-  const specialtyLabel = knownText(t, specialty);
-  const aboutText = knownText(t, about);
-  const ageLabel = knownText(t, ageRange);
-  const stageLabel = knownText(t, stage);
-  const hoursLabel = knownText(t, hours);
+  const addressLabel = directoryText(center?.address, isRTL, (v) => knownText(t, v));
   const phone = center?.phone != null ? String(center.phone) : "";
 
   const goBack = () => {
@@ -151,20 +157,20 @@ export default function SchoolDetailsScreen() {
   };
 
   const handleOpenGoogleMaps = () => {
-    const line = [center?.address, city]
+    const line = [addressLabel, cityLabel]
       .filter((p): p is string => typeof p === "string" && p.trim().length > 0)
       .join(", ");
     void openInGoogleMaps({
       mapUrl: center?.mapUrl,
       latitude: center?.latitude,
       longitude: center?.longitude,
-      addressLine: line || city,
+      addressLine: line || cityLabel,
       placeName: name,
     });
   };
 
   const handleShare = () => {
-    Share.share({ message: `${name}\n${city} - ${specialty}` }).catch(() => {});
+    Share.share({ message: `${name}\n${cityLabel} - ${specialtyLabel}` }).catch(() => {});
   };
 
   const handleBook = () => {
@@ -172,12 +178,20 @@ export default function SchoolDetailsScreen() {
       id: id || center?.id || "school",
       kind: "center",
       name,
-      subtitle: specialty,
+      nameAr: passed?.nameAr ?? fallback.nameAr,
+      nameEn: passed?.nameEn ?? fallback.nameEn,
+      subtitle: specialtyLabel,
+      subtitleAr: passed?.specialtyAr ?? fallback.specialtyAr,
+      subtitleEn: passed?.specialtyEn ?? fallback.specialtyEn,
       status: "OPEN",
-      locationLine: city,
+      locationLine: cityLabel,
+      locationLineAr: passed?.cityAr ?? fallback.cityAr,
+      locationLineEn: passed?.cityEn ?? fallback.cityEn,
       rating: String(rating),
       imageUrl: "",
-      tags: center?.specialties ?? [],
+      tags: (center?.specialties ?? [])
+        .map((item) => directoryText(item, isRTL, (v) => knownText(t, v)))
+        .filter(Boolean),
       phone: phone || "",
     };
     router.push({
@@ -203,7 +217,7 @@ export default function SchoolDetailsScreen() {
   ];
 
   return (
-    <SafeAreaView style={styles.safe} edges={["top"]}>
+    <SafeAreaView style={[styles.safe, { direction: isRTL ? "rtl" : "ltr" }]} edges={["top"]}>
       <View style={[styles.page, { width: contentW }]}>
       <View style={styles.scrollWrap}>
       <ScrollView
@@ -248,7 +262,13 @@ export default function SchoolDetailsScreen() {
         <Text
           style={[
             styles.name,
-            { fontSize: ms(22), lineHeight: ms(32), marginTop: ms(14) },
+            {
+              fontSize: ms(22),
+              lineHeight: ms(32),
+              marginTop: ms(14),
+              textAlign: isRTL ? "right" : "left",
+              writingDirection: dir,
+            },
           ]}
         >
           {name}
@@ -256,19 +276,25 @@ export default function SchoolDetailsScreen() {
         <Text
           style={[
             styles.sub,
-            { fontSize: ms(13), lineHeight: ms(20), marginTop: ms(2) },
+            {
+              fontSize: ms(13),
+              lineHeight: ms(20),
+              marginTop: ms(2),
+              textAlign: isRTL ? "right" : "left",
+              writingDirection: dir,
+            },
           ]}
         >
           {`${cityLabel} - ${specialtyLabel}`}
         </Text>
-        <View style={[styles.ratingRow, { marginTop: ms(6), gap: ms(5) }]}>
+        <View style={[styles.ratingRow, { marginTop: ms(6), gap: ms(5), justifyContent: isRTL ? "flex-end" : "flex-start" }]}>
           <Ionicons name="star" size={ms(15)} color={colors.star} />
           <Text style={[styles.ratingText, { fontSize: ms(13) }]}>
             {`${Number(rating).toFixed(1)} (${reviews})`}
           </Text>
         </View>
 
-        <View style={[styles.tabs, { marginTop: ms(16), gap: ms(8) }]}>
+        <View style={[styles.tabs, { marginTop: ms(16), gap: ms(8), flexDirection: isRTL ? "row-reverse" : "row" }]}>
           {TABS.map((item) => (
             <Pressable
               key={item.key}
@@ -285,7 +311,7 @@ export default function SchoolDetailsScreen() {
               accessibilityLabel={t(item.labelKey)}
             >
               <Ionicons name={item.icon} size={ms(22)} color={colors.icon} />
-              <Text style={[styles.tabLabel, { fontSize: ms(11), marginTop: ms(4) }]}>
+              <Text style={[styles.tabLabel, { fontSize: ms(11), marginTop: ms(4), writingDirection: dir }]}>
                 {t(item.labelKey)}
               </Text>
             </Pressable>
@@ -297,25 +323,36 @@ export default function SchoolDetailsScreen() {
             about={aboutText}
             infoRows={infoRows}
             ms={ms}
+            isRTL={isRTL}
+            dir={dir}
           />
         ) : null}
 
         {tab === "programs" ? (
           <View style={{ marginTop: ms(18) }}>
-            <Text style={[styles.sectionTitle, { fontSize: ms(20), lineHeight: ms(28) }]}>
+            <Text style={[styles.sectionTitle, { fontSize: ms(20), lineHeight: ms(28), textAlign: isRTL ? "right" : "left", writingDirection: dir }]}>
               {t("copy.programs")}
             </Text>
             <Text
               style={[
                 styles.body,
-                { fontSize: ms(14), lineHeight: ms(24), marginTop: ms(8) },
+                {
+                  fontSize: ms(14),
+                  lineHeight: ms(24),
+                  marginTop: ms(8),
+                  textAlign: isRTL ? "right" : "left",
+                  writingDirection: dir,
+                },
               ]}
             >
               {(center?.specialties && center.specialties.length > 0
-                ? center.specialties.map((item) => knownText(t, item)).join(
-                    i18n.language.startsWith("en") ? ", " : "، ",
-                  )
-                : knownText(t, passed?.branch)) || specialtyLabel}
+                ? center.specialties
+                    .map((item) => directoryText(item, isRTL, (v) => knownText(t, v)))
+                    .filter(Boolean)
+                    .join(isRTL ? "، " : ", ")
+                : passed
+                  ? loc(passed.branchAr, passed.branchEn)
+                  : specialtyLabel) || specialtyLabel}
             </Text>
           </View>
         ) : null}
@@ -332,18 +369,18 @@ export default function SchoolDetailsScreen() {
 
         {tab === "location" ? (
           <View style={{ marginTop: ms(18) }}>
-            <Text style={[styles.sectionTitle, { fontSize: ms(20), lineHeight: ms(28) }]}>
+            <Text style={[styles.sectionTitle, { fontSize: ms(20), lineHeight: ms(28), textAlign: isRTL ? "right" : "left", writingDirection: dir }]}>
               {t("copy.location")}
             </Text>
-            <Text style={[styles.body, { fontSize: ms(14), lineHeight: ms(24), marginTop: ms(8) }]}>
+            <Text style={[styles.body, { fontSize: ms(14), lineHeight: ms(24), marginTop: ms(8), textAlign: isRTL ? "right" : "left", writingDirection: dir }]}>
               {cityLabel}
-              {center?.address ? `\n${center.address}` : ""}
+              {addressLabel ? `\n${addressLabel}` : ""}
             </Text>
           </View>
         ) : null}
 
         {tab === "reviews" ? (
-          <ReviewsBlock center={center} rating={rating} reviews={reviews} ms={ms} />
+          <ReviewsBlock center={center} rating={rating} reviews={reviews} ms={ms} isRTL={isRTL} dir={dir} />
         ) : null}
 
         <View style={[styles.contactRow, { marginTop: ms(18), gap: ms(10) }]}>
@@ -358,7 +395,7 @@ export default function SchoolDetailsScreen() {
             accessibilityLabel={t("copy.call")}
           >
             <Ionicons name="call-outline" size={ms(18)} color={colors.icon} />
-            <Text style={[styles.contactLabel, { fontSize: ms(15) }]}>{t("copy.call")}</Text>
+            <Text style={[styles.contactLabel, { fontSize: ms(15), writingDirection: dir }]}>{t("copy.call")}</Text>
           </Pressable>
           <Pressable
             onPress={handleOpenGoogleMaps}
@@ -371,7 +408,7 @@ export default function SchoolDetailsScreen() {
             accessibilityLabel={t("copy.location")}
           >
             <Ionicons name="location-outline" size={ms(18)} color={colors.icon} />
-            <Text style={[styles.contactLabel, { fontSize: ms(15) }]}>{t("copy.location")}</Text>
+            <Text style={[styles.contactLabel, { fontSize: ms(15), writingDirection: dir }]}>{t("copy.location")}</Text>
           </Pressable>
         </View>
       </ScrollView>
@@ -397,7 +434,7 @@ export default function SchoolDetailsScreen() {
           accessibilityRole="button"
           accessibilityLabel={t("copy.bookAppointment")}
         >
-          <Text style={[styles.ctaText, { fontSize: ms(18) }]}>{t("copy.bookAppointment")}</Text>
+          <Text style={[styles.ctaText, { fontSize: ms(18), writingDirection: dir }]}>{t("copy.bookAppointment")}</Text>
         </Pressable>
       </View>
       </View>
@@ -409,6 +446,8 @@ function AboutBlock({
   about,
   infoRows,
   ms,
+  isRTL,
+  dir,
 }: {
   about: string;
   infoRows: {
@@ -417,26 +456,28 @@ function AboutBlock({
     value: string;
   }[];
   ms: (n: number) => number;
+  isRTL: boolean;
+  dir: "rtl" | "ltr";
 }) {
   const { t } = useTranslation();
   return (
     <View style={{ marginTop: ms(18) }}>
-      <Text style={[styles.sectionTitle, { fontSize: ms(20), lineHeight: ms(28) }]}>
+      <Text style={[styles.sectionTitle, { fontSize: ms(20), lineHeight: ms(28), textAlign: isRTL ? "right" : "left", writingDirection: dir }]}>
         {t("copy.aboutSchool")}
       </Text>
       <Text
         style={[
           styles.body,
-          { fontSize: ms(14), lineHeight: ms(24), marginTop: ms(8) },
+          { fontSize: ms(14), lineHeight: ms(24), marginTop: ms(8), textAlign: isRTL ? "right" : "left", writingDirection: dir },
         ]}
       >
         {about}
       </Text>
       <View style={{ marginTop: ms(16), gap: ms(12) }}>
         {infoRows.map((row) => (
-          <View key={row.label} style={styles.infoRow}>
+          <View key={row.label} style={[styles.infoRow, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
             <Ionicons name={row.icon} size={ms(18)} color={colors.icon} />
-            <Text style={[styles.infoText, { fontSize: ms(14), lineHeight: ms(22) }]}>
+            <Text style={[styles.infoText, { fontSize: ms(14), lineHeight: ms(22), textAlign: isRTL ? "right" : "left", writingDirection: dir }]}>
               {row.label}:{" "}
               <Text style={styles.infoValue}>{row.value}</Text>
             </Text>
@@ -452,33 +493,43 @@ function ReviewsBlock({
   rating,
   reviews,
   ms,
+  isRTL,
+  dir,
 }: {
   center?: HealthCenter;
   rating: number;
   reviews: number;
   ms: (n: number) => number;
+  isRTL: boolean;
+  dir: "rtl" | "ltr";
 }) {
   const { t } = useTranslation();
   const list = center?.reviews ?? [];
   return (
     <View style={{ marginTop: ms(18) }}>
-      <Text style={[styles.sectionTitle, { fontSize: ms(20), lineHeight: ms(28) }]}>
+      <Text style={[styles.sectionTitle, { fontSize: ms(20), lineHeight: ms(28), textAlign: isRTL ? "right" : "left", writingDirection: dir }]}>
         {t("copy.reviews")}
       </Text>
-      <View style={[styles.ratingRow, { marginTop: ms(8), gap: ms(5) }]}>
+      <View style={[styles.ratingRow, { marginTop: ms(8), gap: ms(5), justifyContent: isRTL ? "flex-end" : "flex-start" }]}>
         <Ionicons name="star" size={ms(15)} color={colors.star} />
         <Text style={[styles.ratingText, { fontSize: ms(13) }]}>
           {`${Number(rating).toFixed(1)} (${reviews})`}
         </Text>
       </View>
-      {list.map((item) => (
+      {list.map((item) => {
+        const comment = directoryText(item.comment, isRTL, (v) => knownText(t, v));
+        const userName = directoryText(item.userName, isRTL, (v) => knownText(t, v));
+        if (!isRTL && (containsArabic(comment) || containsArabic(userName))) return null;
+        if (!comment && !userName) return null;
+        return (
         <View key={item.id} style={{ marginTop: ms(12) }}>
-          <Text style={[styles.infoText, { fontSize: ms(14) }]}>{item.userName}</Text>
-          <Text style={[styles.body, { fontSize: ms(13), lineHeight: ms(20) }]}>
-            {item.comment}
+          <Text style={[styles.infoText, { fontSize: ms(14), textAlign: isRTL ? "right" : "left", writingDirection: dir }]}>{userName}</Text>
+          <Text style={[styles.body, { fontSize: ms(13), lineHeight: ms(20), textAlign: isRTL ? "right" : "left", writingDirection: dir }]}>
+            {comment}
           </Text>
         </View>
-      ))}
+        );
+      })}
     </View>
   );
 }
@@ -516,20 +567,14 @@ const styles = StyleSheet.create({
   name: {
     fontWeight: "800",
     color: colors.title,
-    textAlign: "right",
-    writingDirection: "rtl",
   },
   sub: {
     fontWeight: "500",
     color: colors.subtitle,
-    textAlign: "right",
-    writingDirection: "rtl",
   },
   ratingRow: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-end",
-    flexDirection: "row",
   },
   ratingText: {
     fontWeight: "600",
@@ -537,7 +582,6 @@ const styles = StyleSheet.create({
     writingDirection: "ltr",
   },
   tabs: {
-    flexDirection: "row",
     flexDirection: "row",
   },
   tab: {
@@ -552,22 +596,16 @@ const styles = StyleSheet.create({
   tabLabel: {
     fontWeight: "700",
     color: colors.icon,
-    writingDirection: "rtl",
   },
   sectionTitle: {
     fontWeight: "800",
     color: colors.title,
-    textAlign: "right",
-    writingDirection: "rtl",
   },
   body: {
     fontWeight: "500",
     color: colors.body,
-    textAlign: "right",
-    writingDirection: "rtl",
   },
   infoRow: {
-    flexDirection: "row-reverse",
     alignItems: "center",
     gap: 8,
   },
@@ -575,8 +613,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: "600",
     color: colors.body,
-    textAlign: "right",
-    writingDirection: "rtl",
   },
   infoValue: {
     fontWeight: "600",
@@ -600,7 +636,6 @@ const styles = StyleSheet.create({
   contactLabel: {
     fontWeight: "700",
     color: colors.icon,
-    writingDirection: "rtl",
   },
   ctaWrap: {
     backgroundColor: colors.bg,
@@ -614,7 +649,6 @@ const styles = StyleSheet.create({
   ctaText: {
     fontWeight: "800",
     color: colors.white,
-    writingDirection: "rtl",
   },
   pressed: {
     opacity: 0.88,

@@ -2,7 +2,9 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 import { submitCheckIn } from "../../../api/care-path.api";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
 import {
   colors,
   radius,
@@ -12,6 +14,8 @@ import {
 } from "../../../theme";
 
 export default function CheckInScreen() {
+  const { t } = useTranslation();
+  const { align, dir, isRTL } = useI18nLayout();
   const [notes, setNotes] = useState("");
   const rating = 0;
 
@@ -30,19 +34,19 @@ export default function CheckInScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={["top"]}>
-      <Text style={styles.title}>Daily Check-In</Text>
-      <Text style={styles.label}>How did today go?</Text>
+    <SafeAreaView style={[styles.container, { direction: isRTL ? "rtl" : "ltr" }]} edges={["top"]}>
+      <Text style={[styles.title, { textAlign: align, writingDirection: dir }]}>{t("care.dailyCheckIn")}</Text>
+      <Text style={[styles.label, { textAlign: align, writingDirection: dir }]}>{t("care.howDidTodayGo")}</Text>
       <TextInput
-        style={[styles.input, styles.textArea]}
-        placeholder="Enter your notes..."
+        style={[styles.input, styles.textArea, { textAlign: align, writingDirection: dir }]}
+        placeholder={t("care.enterNotes")}
         placeholderTextColor={colors.textLight}
         value={notes}
         onChangeText={setNotes}
         multiline
       />
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Submit</Text>
+        <Text style={styles.buttonText}>{t("care.submit")}</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

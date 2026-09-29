@@ -1,4 +1,5 @@
 import { HealthCenter, Professional } from "../types/directory.types";
+import { normalizeProfessional } from "../utils/professionalBilingual";
 import instance from "./axios";
 
 
@@ -155,7 +156,7 @@ export const getProfessionals = async (filters?: ProfessionalFilters): Promise<P
   const data = (response as unknown as { success: boolean; data: { professionals: Professional[]; count: number } }).data;
   // Ensure we return an array
   if (Array.isArray(data.professionals)) {
-    return data.professionals;
+    return data.professionals.map(normalizeProfessional);
   }
   return [];
 };
@@ -203,5 +204,6 @@ export const getCenterDetails = async (centerId: string): Promise<HealthCenter> 
 export const getProfessionalDetails = async (professionalId: string): Promise<Professional> => {
   const response = await instance.get<{ success: boolean; data: { professional: Professional } }>(`/directory/professionals/${professionalId}`);
   // axios interceptor returns response.data directly, so response is already the full response object
-  return (response as unknown as { success: boolean; data: { professional: Professional } }).data.professional;
+  const professional = (response as unknown as { success: boolean; data: { professional: Professional } }).data.professional;
+  return normalizeProfessional(professional);
 };

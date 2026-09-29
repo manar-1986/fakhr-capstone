@@ -28,6 +28,36 @@ export interface Review {
 
 export interface Professional {
   id: string;
+  /** Required bilingual fields — every current and future doctor must include both locales. */
+  nameAr: string;
+  nameEn: string;
+  specialtyAr: string;
+  specialtyEn: string;
+  specialtyLabelAr: string;
+  specialtyLabelEn: string;
+  bioAr: string;
+  bioEn: string;
+  locationAr: string;
+  locationEn: string;
+  availabilityAr: string;
+  availabilityEn: string;
+  nextAvailableAr: string;
+  nextAvailableEn: string;
+  experienceAr: string;
+  experienceEn: string;
+  educationAr: string[];
+  educationEn: string[];
+  certificationsAr: string[];
+  certificationsEn: string[];
+  languagesAr: string[];
+  languagesEn: string[];
+  servicesAr: string[];
+  servicesEn: string[];
+  centerNameAr: string;
+  centerNameEn: string;
+  centerAddressAr: string;
+  centerAddressEn: string;
+  /** Legacy single-locale mirrors. Screens must use *Ar/*En + doctorLocaleText, never English←Arabic fallback. */
   name: string;
   specialty: string;
   specialtyLabel: string;

@@ -73,12 +73,22 @@ export const generateCarePath = async ({
     carePathId: carePath._id,
     week: t.week,
     title: t.title,
+    titleAr: t.titleAr,
+    titleEn: t.titleEn,
     description: t.description,
+    descriptionAr: t.descriptionAr,
+    descriptionEn: t.descriptionEn,
     instructions: t.instructions,
+    instructionsAr: t.instructionsAr,
+    instructionsEn: t.instructionsEn,
     expectedOutcome: t.expectedOutcome,
+    expectedOutcomeAr: t.expectedOutcomeAr,
+    expectedOutcomeEn: t.expectedOutcomeEn,
     category: t.category,
     difficulty: t.difficulty,
     frequency: t.frequency,
+    frequencyAr: t.frequencyAr,
+    frequencyEn: t.frequencyEn,
     status: "pending",
     dueDate: new Date(Date.now() + t.week * 7 * 24 * 60 * 60 * 1000),
   }));
@@ -138,6 +148,11 @@ export const completeTask = async ({
 
   task.status = "completed";
   task.completedAt = new Date();
+  if (note) {
+    task.note = note;
+    if (/[\u0600-\u06FF]/.test(note)) task.noteAr = note;
+    else task.noteEn = note;
+  }
   await task.save();
 
   // If all tasks done or skipped => complete carePath
@@ -167,6 +182,11 @@ export const skipTask = async ({
 
   task.status = "skipped";
   task.completedAt = new Date();
+  if (note) {
+    task.note = note;
+    if (/[\u0600-\u06FF]/.test(note)) task.noteAr = note;
+    else task.noteEn = note;
+  }
   await task.save();
 
   const remaining = await Task.countDocuments({

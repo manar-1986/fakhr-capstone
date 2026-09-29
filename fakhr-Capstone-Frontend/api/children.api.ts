@@ -9,12 +9,16 @@ export interface Medication {
 export interface Child {
   id: string;
   name: string;
+  nameAr?: string;
+  nameEn?: string;
   age?: number;
   gender?: string;
   dateOfBirth?: string;
   diagnosis?: string[] | string;
   diagnoses?: string[]; // Alias for diagnosis
   medicalHistory?: string;
+  medicalHistoryAr?: string;
+  medicalHistoryEn?: string;
   medications?: Medication[] | string;
   allergies?: string[] | string;
   areasOfFocus?: string[];

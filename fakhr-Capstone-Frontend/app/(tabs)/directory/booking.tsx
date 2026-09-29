@@ -1,13 +1,10 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import {
   Alert,
-  Linking,
-  Platform,
   Pressable,
   ScrollView,
-  Share,
   StyleSheet,
   Text,
   TextInput,
@@ -15,10 +12,12 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 import type { DirectoryListing } from "../../../components/directory/types";
 import { saveMockBooking } from "../../../utils/mockBookingsStore";
-import { useTranslation } from "react-i18next";
-import { knownText } from "../../../utils/knownText";
+import { addAppointmentToDeviceCalendar } from "../../../utils/addAppointmentToCalendar";
+import { listingLocaleName, listingLocaleSubtitle } from "../../../utils/professionalBilingual";
+import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 import { useI18nLayout } from "../../../hooks/useI18nLayout";
 import { colors as palette } from "../../../theme";
 
@@ -86,27 +85,15 @@ function slotToHours(slot: string | null) {
   return { h, m };
 }
 
-function buildCalendarStamp(dateKey: string, slot: string | null) {
-  if (!dateKey) return "";
+function appointmentDateTime(dateKey: string, slot: string | null) {
   const { h, m } = slotToHours(slot);
-  const ymd = dateKey.replace(/-/g, "");
-  return `${ymd}T${String(h).padStart(2, "0")}${String(m).padStart(2, "0")}00`;
-}
-
-function shiftCalendarStamp(stamp: string, minutes: number) {
-  const y = Number(stamp.slice(0, 4));
-  const mo = Number(stamp.slice(4, 6)) - 1;
-  const d = Number(stamp.slice(6, 8));
-  const h = Number(stamp.slice(9, 11));
-  const mi = Number(stamp.slice(11, 13));
-  const dt = new Date(y, mo, d, h, mi + minutes, 0);
-  const ymd = `${dt.getFullYear()}${String(dt.getMonth() + 1).padStart(2, "0")}${String(dt.getDate()).padStart(2, "0")}`;
-  return `${ymd}T${String(dt.getHours()).padStart(2, "0")}${String(dt.getMinutes()).padStart(2, "0")}00`;
+  const [year, month, day] = dateKey.split("-").map((part) => Number(part));
+  return new Date(year, (month || 1) - 1, day || 1, h, m, 0, 0);
 }
 
 export default function BookingScreen() {
   const { t } = useTranslation();
-  const { align } = useI18nLayout();
+  const { align, isRTL } = useI18nLayout();
   const router = useRouter();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
@@ -149,8 +136,11 @@ export default function BookingScreen() {
   const [patientName, setPatientName] = useState("");
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
+  const calendarBusy = useRef(false);
 
-  const providerName = knownText(t, listing?.name) || t("copy.fatimaOrg");
+  const providerName = listing
+    ? listingLocaleName(listing, isRTL, t)
+    : t("copy.fatimaOrg");
   const activeStep = phase === 1 ? 1 : 2;
 
   const selectedDateLabel = useMemo(() => {
@@ -166,10 +156,9 @@ export default function BookingScreen() {
     return `${opt.day} ${opt.date} ${opt.month} ${year}`;
   }, [dateOptions, selectedDateKey]);
 
-  const appointmentType = knownText(
-    t,
-    listing?.subtitle?.trim() || listing?.tags?.[0] || "",
-  ) || t("copy.speechSession");
+  const appointmentType = listing
+    ? listingLocaleSubtitle(listing, isRTL, t) || t("copy.speechSession")
+    : t("copy.speechSession");
   const confirmationTime = selectedTime
     ? t("copy.timePrefix", { time: formatTimeLocalized(selectedTime, t) })
     : "";
@@ -196,8 +185,11 @@ export default function BookingScreen() {
       return;
     }
     saveMockBooking({
-      listingName: listing.name,
+      listingName: listing.nameAr || listing.nameEn || listing.name,
+      listingNameAr: listing.nameAr,
+      listingNameEn: listing.nameEn,
       dateLabel: `${selectedDateLabel} (${selectedDateKey})`,
+      dateKey: selectedDateKey,
       timeLabel: selectedTime,
       patientName: patientName.trim(),
       phone: phone.trim(),
@@ -206,25 +198,52 @@ export default function BookingScreen() {
     setPhase(3);
   };
 
-  const addToCalendar = () => {
-    const summary = `${appointmentType} — ${providerName}`;
-    const details = [appointmentType, confirmationDateLabel, confirmationTime, providerName]
-      .filter(Boolean)
-      .join("\n");
-    const start = buildCalendarStamp(selectedDateKey, selectedTime);
-    const end = start ? shiftCalendarStamp(start, 60) : "";
-    const calUrl =
-      start && end
-        ? `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(summary)}&details=${encodeURIComponent(details)}&dates=${start}/${end}`
-        : "";
-
-    if (Platform.OS === "web" && calUrl) {
-      Linking.openURL(calUrl).catch(() => {
-        Share.share({ message: details, title: summary }).catch(() => {});
-      });
-      return;
+  const addToCalendar = async () => {
+    if (calendarBusy.current || !selectedDateKey || !selectedTime) return;
+    calendarBusy.current = true;
+    const start = appointmentDateTime(selectedDateKey, selectedTime);
+    const end = new Date(start.getTime() + 60 * 60 * 1000);
+    const location = listing
+      ? listingLocaleName(
+          {
+            name: listing.locationLine,
+            nameAr: listing.locationLineAr,
+            nameEn: listing.locationLineEn,
+          },
+          isRTL,
+          t,
+        )
+      : "";
+    const notesLines = [
+      appointmentType,
+      confirmationDateLabel,
+      confirmationTime,
+      location,
+      t("copy.calendarBookedViaFakhr"),
+      notes.trim(),
+    ].filter((line) => line && line.trim());
+    try {
+      await addAppointmentToDeviceCalendar(
+        {
+          title: t("copy.calendarEventTitle", { name: providerName }),
+          notes: notesLines.join("\n"),
+          location,
+          start,
+          end,
+          duplicateKey: `${listing?.id ?? providerName}|${selectedDateKey}|${selectedTime}`,
+          webSummary: t("copy.calendarEventTitle", { name: providerName }),
+        },
+        {
+          permissionDenied: t("copy.calendarPermissionDenied"),
+          alreadyAdded: t("copy.calendarAlreadyAdded"),
+          added: t("copy.calendarAdded"),
+          error: t("copy.calendarError"),
+          ok: t("common.done"),
+        },
+      );
+    } finally {
+      calendarBusy.current = false;
     }
-    Share.share({ message: details, title: summary }).catch(() => {});
   };
 
   const viewAppointments = () => {
@@ -234,6 +253,9 @@ export default function BookingScreen() {
   return (
     <SafeAreaView style={styles.safe} edges={["top"]}>
       <View style={[styles.column, { width: contentW }]}>
+        <View style={[styles.header, { height: ms(48) }]}>
+          <HeaderBackButton color={colors.title} onPress={() => router.back()} />
+        </View>
         {phase === 3 ? (
           <ScrollView
             style={styles.scroll}
@@ -670,6 +692,11 @@ const styles = StyleSheet.create({
   column: {
     flex: 1,
     maxWidth: 430,
+  },
+  header: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
   },
   scroll: {
     flex: 1,

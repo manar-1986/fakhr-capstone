@@ -8,6 +8,7 @@ import {
   navigateToDisabilityServices,
 } from "../../utils/disabilityFlowNav";
 
+import { useI18nLayout } from "../../hooks/useI18nLayout";
 import { colors } from "../../theme";
 
 const DEFAULT_COLOR = colors.textSecondary;
@@ -30,6 +31,7 @@ export function HeaderBackButton({
 }: HeaderBackButtonProps) {
   const { t } = useTranslation();
   const router = useRouter();
+  const { isRTL } = useI18nLayout();
 
   const goBack = () => {
     if (onPress) {
@@ -48,7 +50,9 @@ export function HeaderBackButton({
       onPress={goBack}
       hitSlop={12}
       style={({ pressed }) => [
-        variant === "inline" ? styles.inline : styles.overlay,
+        variant === "inline"
+          ? styles.inline
+          : [styles.overlay, isRTL ? styles.overlayRtl : styles.overlayLtr],
         pressed && styles.pressed,
       ]}
       accessibilityRole="button"
@@ -84,13 +88,18 @@ export function DisabilityAwareHeaderBackButton(props: Omit<HeaderBackButtonProp
 const styles = StyleSheet.create({
   overlay: {
     position: "absolute",
-    left: 0,
     top: 0,
     bottom: 0,
     width: 40,
     alignItems: "center",
     justifyContent: "center",
     zIndex: 2,
+  },
+  overlayLtr: {
+    left: 0,
+  },
+  overlayRtl: {
+    right: 0,
   },
   inline: {
     width: 40,

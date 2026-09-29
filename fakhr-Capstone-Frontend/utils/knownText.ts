@@ -1,6 +1,17 @@
 /** Maps static Arabic frontend copy to i18n keys. Unmapped values (names) pass through. */
 const KNOWN: Record<string, string> = {
-  "الاستشارات النفسية": "copy.psychConsult",
+  "مركز خطوة للتأهيل": "copy.centerKhatwa",
+  "مركز كيان": "copy.centerKayan",
+  "مركز فنون": "copy.centerFunoon",
+  "مركز تنمية الطفل": "copy.centerChildDev",
+  "مركز الأمل للتنمية": "copy.centerAmalDev",
+  "مركز نور الحياة": "copy.centerNoor",
+  "مركز بداية": "copy.centerBidaya",
+  "مدرسة النور للتربية الخاصة": "copy.schoolNoor",
+  "مدرسة الأمل الشاملة": "copy.schoolAmal",
+  "مدرسة البيان الخاصة": "copy.schoolBayan",
+  "مدرسة التميز العالمية": "copy.schoolTamayoz",
+  "مدرسة الكويت للصم": "copy.schoolDeaf",
   "العلاج الوظيفي": "copy.ot",
   "العلاج الطبيعي": "copy.pt",
   "التدخل المبكر": "copy.earlyIntervention",
@@ -77,7 +88,18 @@ const KNOWN: Record<string, string> = {
   "موعد طبيب تجريبي": "copy.demoApptNotes",
   "تحسين التواصل اليومي، تعزيز اللعب التفاعلي، وتنظيم الاستجابة الحسية خلال الأسبوع.":
     "copy.demoGoals",
-  "جلسة تخاطب": "copy.speechSession",
+  "تحسين مهارات التواصل، وزيادة التركيز على المهام اليومية، وتعزيز الاستقلالية.":
+    "copy.demoGoalsSkills",
+  "التمرين لمدة 10 دقائق": "copy.speechMins10",
+  "اللعب بالمكعبات لمدة 15 دقيقة": "copy.playBlocks15",
+  "استخدام كرة الضغط لمدة 5 دقائق": "copy.pressureBall5",
+  "كان متعب اليوم": "copy.wasTiredToday",
+  "د. أحمد – علاج وظيفي": "copy.demoOtDoctor",
+  "الأحد 20 سبتمبر": "copy.demoApptDateSun20",
+  "5:00 مساءً": "copy.demoApptTime5pm",
+  "العلاج السلوكي": "copy.homeTherapyBehavioral",
+  "العلاج الوظيفي": "copy.homeTherapyOccupational",
+  "علاج النطق": "copy.homeTherapySpeech",
   "مؤسسة فاطمة": "copy.fatimaOrg",
 };
 

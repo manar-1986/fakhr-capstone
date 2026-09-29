@@ -1,8 +1,15 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { libraryColors as c } from "../../constants/libraryTheme";
+import { useI18nLayout } from "../../hooks/useI18nLayout";
+import {
+  doctorLocaleList,
+  listingLocaleName,
+  listingLocaleSubtitle,
+} from "../../utils/professionalBilingual";
 import type { DirectoryListing } from "./types";
 
 export type ListingCardProps = {
@@ -16,7 +23,26 @@ export function DirectoryListingCard({
   onBookAppointment,
   onCall,
 }: ListingCardProps) {
-  const visibleTags = item.tags.slice(0, 2);
+  const { t } = useTranslation();
+  const { isRTL } = useI18nLayout();
+  const displayName = listingLocaleName(item, isRTL, t);
+  const displaySubtitle = listingLocaleSubtitle(item, isRTL, t);
+  const displayLocation = listingLocaleName(
+    {
+      name: item.locationLine,
+      nameAr: item.locationLineAr,
+      nameEn: item.locationLineEn,
+    },
+    isRTL,
+    t,
+  );
+  const visibleTags = doctorLocaleList(
+    isRTL,
+    item.tagsAr,
+    item.tagsEn,
+    t,
+    item.tags,
+  ).slice(0, 2);
   const more = item.moreTagCount;
 
   return (
@@ -37,7 +63,7 @@ export function DirectoryListingCard({
       <View style={styles.body}>
         <View style={styles.titleRow}>
           <Text style={styles.name} numberOfLines={2}>
-            {item.name}
+            {displayName}
           </Text>
           <View
             style={[
@@ -56,11 +82,11 @@ export function DirectoryListingCard({
           </View>
         </View>
 
-        <Text style={styles.subtitle}>{item.subtitle}</Text>
+        <Text style={styles.subtitle}>{displaySubtitle}</Text>
 
         <View style={styles.locRow}>
           <Ionicons name="location-outline" size={16} color={c.textMuted} />
-          <Text style={styles.locText}>{item.locationLine}</Text>
+          <Text style={styles.locText}>{displayLocation}</Text>
         </View>
 
         <View style={styles.tagsRow}>
@@ -81,7 +107,7 @@ export function DirectoryListingCard({
             style={({ pressed }) => [styles.primaryBtn, pressed && styles.pressed]}
             onPress={onBookAppointment}
           >
-            <Text style={styles.primaryBtnText}>Book Appointment</Text>
+            <Text style={styles.primaryBtnText}>{t("copy.bookAppointment")}</Text>
           </Pressable>
           <Pressable
             style={({ pressed }) => [styles.phoneBtn, pressed && styles.pressed]}

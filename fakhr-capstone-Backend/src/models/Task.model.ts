@@ -6,12 +6,25 @@ export interface ITask extends Document {
   carePathId: mongoose.Types.ObjectId;
   week: number;
   title: string;
+  titleAr?: string;
+  titleEn?: string;
   description: string;
+  descriptionAr?: string;
+  descriptionEn?: string;
   instructions?: string;
+  instructionsAr?: string;
+  instructionsEn?: string;
   expectedOutcome?: string;
+  expectedOutcomeAr?: string;
+  expectedOutcomeEn?: string;
   category?: string;
   difficulty?: "beginner" | "intermediate" | "advanced";
   frequency?: string;
+  frequencyAr?: string;
+  frequencyEn?: string;
+  note?: string;
+  noteAr?: string;
+  noteEn?: string;
 
   status: TaskStatus;
   completedAt?: Date;
@@ -27,12 +40,25 @@ const TaskSchema = new Schema<ITask>(
     week: { type: Number, required: true, min: 1 },
 
     title: { type: String, required: true },
+    titleAr: { type: String },
+    titleEn: { type: String },
     description: { type: String, required: true },
+    descriptionAr: { type: String },
+    descriptionEn: { type: String },
     instructions: { type: String },
+    instructionsAr: { type: String },
+    instructionsEn: { type: String },
     expectedOutcome: { type: String },
+    expectedOutcomeAr: { type: String },
+    expectedOutcomeEn: { type: String },
     category: { type: String },
     difficulty: { type: String, enum: ["beginner", "intermediate", "advanced"] },
     frequency: { type: String },
+    frequencyAr: { type: String },
+    frequencyEn: { type: String },
+    note: { type: String },
+    noteAr: { type: String },
+    noteEn: { type: String },
 
     status: {
       type: String,

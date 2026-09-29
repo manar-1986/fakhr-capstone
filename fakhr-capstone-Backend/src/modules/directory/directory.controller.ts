@@ -172,9 +172,17 @@ export const getProfessionals = async (req: Request, res: Response, next: NextFu
       const q = String(search).trim();
       filter.$or = [
         { name: { $regex: q, $options: "i" } },
+        { nameAr: { $regex: q, $options: "i" } },
+        { nameEn: { $regex: q, $options: "i" } },
         { specialtyLabel: { $regex: q, $options: "i" } },
+        { specialtyLabelAr: { $regex: q, $options: "i" } },
+        { specialtyLabelEn: { $regex: q, $options: "i" } },
         { bio: { $regex: q, $options: "i" } },
+        { bioAr: { $regex: q, $options: "i" } },
+        { bioEn: { $regex: q, $options: "i" } },
         { location: { $regex: q, $options: "i" } },
+        { locationAr: { $regex: q, $options: "i" } },
+        { locationEn: { $regex: q, $options: "i" } },
         { services: { $in: [new RegExp(q, "i")] } },
       ];
     }

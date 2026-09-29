@@ -14,7 +14,7 @@ const colors = {
   border: palette.borderLight,
 };
 
-type TabRoute = "home" | "plan" | "discover" | "profile";
+type TabRoute = "home" | "plan" | "services" | "profile";
 
 type TabDef = {
   key: string;
@@ -22,7 +22,7 @@ type TabDef = {
   icon: React.ComponentProps<typeof Ionicons>["name"];
   iconFocused: React.ComponentProps<typeof Ionicons>["name"];
   routeName: TabRoute;
-  href: "/(tabs)/home" | "/(tabs)/plan" | "/(tabs)/discover" | "/(tabs)/profile";
+  href: "/(tabs)/home" | "/(tabs)/plan" | "/(tabs)/services" | "/(tabs)/profile";
 };
 
 const TABS: TabDef[] = [
@@ -43,12 +43,12 @@ const TABS: TabDef[] = [
     href: "/(tabs)/plan",
   },
   {
-    key: "discover",
-    labelKey: "tabs.explore",
-    icon: "compass-outline",
-    iconFocused: "compass",
-    routeName: "discover",
-    href: "/(tabs)/discover",
+    key: "activities",
+    labelKey: "tabs.activities",
+    icon: "people-outline",
+    iconFocused: "people",
+    routeName: "services",
+    href: "/(tabs)/services",
   },
   {
     key: "profile",

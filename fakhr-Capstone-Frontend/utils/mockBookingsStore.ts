@@ -1,11 +1,20 @@
 export type MockBookingRecord = {
   id: string;
   listingName: string;
+  listingNameAr?: string;
+  listingNameEn?: string;
   dateLabel: string;
+  dateLabelAr?: string;
+  dateLabelEn?: string;
+  dateKey?: string;
   timeLabel: string;
+  timeLabelAr?: string;
+  timeLabelEn?: string;
   patientName: string;
   phone: string;
   notes?: string;
+  notesAr?: string;
+  notesEn?: string;
   createdAt: string;
 };
 

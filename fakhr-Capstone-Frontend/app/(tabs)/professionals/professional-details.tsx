@@ -17,7 +17,12 @@ import { getProfessionalDetails } from "../../../api/directory.api";
 import type { Professional } from "../../../types/directory.types";
 import { openInGoogleMaps, toFiniteNumber } from "../../../utils/openMaps";
 import { useTranslation } from "react-i18next";
-import { knownText } from "../../../utils/knownText";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import {
+  centerLocale,
+  doctorLocaleList,
+  doctorLocaleText,
+} from "../../../utils/professionalBilingual";
 import { colors } from "../../../theme";
 
 function openCenterInGoogleMaps(p: Professional) {
@@ -25,8 +30,8 @@ function openCenterInGoogleMaps(p: Professional) {
     mapUrl: p.centerMapUrl,
     latitude: p.centerLatitude,
     longitude: p.centerLongitude,
-    addressLine: p.centerAddress || p.location,
-    placeName: p.centerName,
+    addressLine: p.centerAddressEn || p.centerAddress || p.locationEn || p.location,
+    placeName: p.centerNameEn || p.centerName,
   });
 }
 
@@ -43,8 +48,13 @@ function canOpenCenterInMaps(p: Professional): boolean {
 
 export default function ProfessionalDetailsScreen() {
   const { t } = useTranslation();
+  const { isRTL } = useI18nLayout();
   const router = useRouter();
   const { id } = useLocalSearchParams();
+  const loc = (ar?: string, en?: string, legacy?: string) =>
+    doctorLocaleText(isRTL, { ar, en, legacy }, t);
+  const locCenter = (ar?: string, en?: string, legacy?: string) =>
+    centerLocale(isRTL, ar ?? "", en ?? "", legacy, t);
 
   // Fetch professional details from API
   const { data: professional, isLoading, error } = useQuery({
@@ -58,7 +68,7 @@ export default function ProfessionalDetailsScreen() {
     if (!professional) return;
     Alert.alert(
       t("copy.bookAppointment"),
-      t("copy.bookWithName", { name: professional.name }),
+      t("copy.bookWithName", { name: loc(professional.nameAr, professional.nameEn, professional.name) }),
       [
         { text: t("common.cancel"), style: "cancel" },
         {
@@ -151,7 +161,11 @@ export default function ProfessionalDetailsScreen() {
             ]}
           >
             <Text style={[styles.heroAvatarText, { color: professional.color }]}>
-              {professional.name.split(" ").slice(1, 3).map(n => n[0]).join("")}
+              {loc(professional.nameAr, professional.nameEn, professional.name)
+                .split(" ")
+                .slice(1, 3)
+                .map((n) => n[0])
+                .join("")}
             </Text>
             {professional.verified && (
               <View style={styles.verifiedBadgeLarge}>
@@ -160,9 +174,15 @@ export default function ProfessionalDetailsScreen() {
             )}
           </View>
 
-          <Text style={styles.professionalName}>{professional.name}</Text>
+          <Text style={styles.professionalName}>
+            {loc(professional.nameAr, professional.nameEn, professional.name)}
+          </Text>
           <Text style={[styles.specialtyLabel, { color: professional.color }]}>
-            {knownText(t, professional.specialtyLabel)}
+            {loc(
+              professional.specialtyLabelAr,
+              professional.specialtyLabelEn,
+              professional.specialtyLabel,
+            )}
           </Text>
 
           {/* Stats Row */}
@@ -179,7 +199,9 @@ export default function ProfessionalDetailsScreen() {
               <View style={styles.statIconWrap}>
                 <Ionicons name="briefcase-outline" size={18} color={colors.primary} />
               </View>
-              <Text style={styles.statValue}>{professional.experience}</Text>
+              <Text style={styles.statValue}>
+                {loc(professional.experienceAr, professional.experienceEn, professional.experience)}
+              </Text>
               <Text style={styles.statLabel}>{t("copy.experience")}</Text>
             </View>
             <View style={styles.statDivider} />
@@ -188,7 +210,7 @@ export default function ProfessionalDetailsScreen() {
                 <Ionicons name="business-outline" size={18} color={colors.secondary} />
               </View>
               <Text style={styles.statValue} numberOfLines={1} ellipsizeMode="tail">
-                {professional.centerName || "—"}
+                {locCenter(professional.centerNameAr, professional.centerNameEn, professional.centerName) || "—"}
               </Text>
               <Text style={styles.statLabel}>{t("copy.center")}</Text>
             </View>
@@ -200,15 +222,17 @@ export default function ProfessionalDetailsScreen() {
           <View style={styles.quickInfoRow}>
             <Ionicons name="calendar-outline" size={20} color={colors.primary} />
             <View style={styles.quickInfoContent}>
-              <Text style={styles.quickInfoLabel}>Next Available</Text>
-              <Text style={styles.quickInfoValue}>{professional.nextAvailable}</Text>
+              <Text style={styles.quickInfoLabel}>{t("copy.nextAvailableLabel")}</Text>
+              <Text style={styles.quickInfoValue}>
+                {loc(professional.nextAvailableAr, professional.nextAvailableEn, professional.nextAvailable)}
+              </Text>
             </View>
           </View>
           <View style={styles.quickInfoDivider} />
           <View style={styles.quickInfoRow}>
             <Ionicons name="cash-outline" size={20} color={colors.primary} />
             <View style={styles.quickInfoContent}>
-              <Text style={styles.quickInfoLabel}>Consultation Fee</Text>
+              <Text style={styles.quickInfoLabel}>{t("copy.consultationFeeLabel")}</Text>
               <Text style={styles.quickInfoValue}>{professional.consultationFee}</Text>
             </View>
           </View>
@@ -222,7 +246,11 @@ export default function ProfessionalDetailsScreen() {
               <View style={styles.quickInfoContent}>
                 <Text style={styles.quickInfoLabel}>{t("copy.centerLocation")}</Text>
                 <Text style={styles.quickInfoValue}>
-                  {professional.centerAddress || professional.location || professional.centerName || "—"}
+                  {locCenter(
+                    professional.centerAddressAr || professional.locationAr,
+                    professional.centerAddressEn || professional.locationEn,
+                    professional.centerAddress || professional.location || professional.centerName,
+                  ) || "—"}
                 </Text>
                 <Text style={styles.mapsHint}>{t("copy.tapMapsShort")}</Text>
               </View>
@@ -234,7 +262,11 @@ export default function ProfessionalDetailsScreen() {
               <View style={styles.quickInfoContent}>
                 <Text style={styles.quickInfoLabel}>{t("copy.centerLocation")}</Text>
                 <Text style={styles.quickInfoValue}>
-                  {professional.centerAddress || professional.location || "—"}
+                  {locCenter(
+                    professional.centerAddressAr || professional.locationAr,
+                    professional.centerAddressEn || professional.locationEn,
+                    professional.centerAddress || professional.location,
+                  ) || "—"}
                 </Text>
               </View>
             </View>
@@ -274,14 +306,22 @@ export default function ProfessionalDetailsScreen() {
         {/* About Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t("copy.about")}</Text>
-          <Text style={styles.bioText}>{professional.bio}</Text>
+          <Text style={styles.bioText}>
+            {loc(professional.bioAr, professional.bioEn, professional.bio)}
+          </Text>
         </View>
 
         {/* Services Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Services Offered</Text>
+          <Text style={styles.sectionTitle}>{t("copy.servicesOffered")}</Text>
           <View style={styles.servicesList}>
-            {professional.services.map((service, index) => (
+            {doctorLocaleList(
+              isRTL,
+              professional.servicesAr,
+              professional.servicesEn,
+              t,
+              professional.services,
+            ).map((service, index) => (
               <View key={index} style={styles.serviceItem}>
                 <View style={[styles.serviceDot, { backgroundColor: professional.color }]} />
                 <Text style={styles.serviceText}>{service}</Text>
@@ -292,8 +332,14 @@ export default function ProfessionalDetailsScreen() {
 
         {/* Education Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Education</Text>
-          {professional.education.map((edu, index) => (
+          <Text style={styles.sectionTitle}>{t("community.education")}</Text>
+          {doctorLocaleList(
+            isRTL,
+            professional.educationAr,
+            professional.educationEn,
+            t,
+            professional.education,
+          ).map((edu, index) => (
             <View key={index} style={styles.educationItem}>
               <Ionicons name="school-outline" size={18} color={colors.textMuted} />
               <Text style={styles.educationText}>{edu}</Text>
@@ -303,9 +349,15 @@ export default function ProfessionalDetailsScreen() {
 
         {/* Certifications Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Certifications</Text>
+          <Text style={styles.sectionTitle}>{t("copy.certifications")}</Text>
           <View style={styles.certificationsList}>
-            {professional.certifications.map((cert, index) => (
+            {doctorLocaleList(
+              isRTL,
+              professional.certificationsAr,
+              professional.certificationsEn,
+              t,
+              professional.certifications,
+            ).map((cert, index) => (
               <View key={index} style={styles.certificationBadge}>
                 <Ionicons name="ribbon-outline" size={14} color={colors.primary} />
                 <Text style={styles.certificationText}>{cert}</Text>
@@ -316,9 +368,15 @@ export default function ProfessionalDetailsScreen() {
 
         {/* Languages Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Languages</Text>
+          <Text style={styles.sectionTitle}>{t("copy.languagesSpoken")}</Text>
           <View style={styles.languagesRow}>
-            {professional.languages.map((lang, index) => (
+            {doctorLocaleList(
+              isRTL,
+              professional.languagesAr,
+              professional.languagesEn,
+              t,
+              professional.languages,
+            ).map((lang, index) => (
               <View key={index} style={styles.languageBadge}>
                 <Text style={styles.languageText}>{lang}</Text>
               </View>

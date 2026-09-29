@@ -17,15 +17,16 @@ import type { Professional } from "../../../types/directory.types";
 import { colors, sectionSpacing, spacing, typography } from "../../../theme";
 import { openInGoogleMaps, toFiniteNumber } from "../../../utils/openMaps";
 import { useTranslation } from "react-i18next";
-import { knownText } from "../../../utils/knownText";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { centerLocale, doctorLocaleText } from "../../../utils/professionalBilingual";
 
 function openCenterInGoogleMaps(p: Professional) {
   void openInGoogleMaps({
     mapUrl: p.centerMapUrl,
     latitude: p.centerLatitude,
     longitude: p.centerLongitude,
-    addressLine: p.centerAddress || p.location,
-    placeName: p.centerName,
+    addressLine: p.centerAddressEn || p.centerAddress || p.locationEn || p.location,
+    placeName: p.centerNameEn || p.centerName,
   });
 }
 
@@ -42,8 +43,13 @@ function canOpenCenterInMaps(p: Professional): boolean {
 
 export default function ProfessionalDetailsScreen() {
   const { t } = useTranslation();
+  const { isRTL } = useI18nLayout();
   const router = useRouter();
   const { id } = useLocalSearchParams();
+  const loc = (ar?: string, en?: string, legacy?: string) =>
+    doctorLocaleText(isRTL, { ar, en, legacy }, t);
+  const locCenter = (ar?: string, en?: string, legacy?: string) =>
+    centerLocale(isRTL, ar ?? "", en ?? "", legacy, t);
 
   const { data: professional, isLoading, error } = useQuery({
     queryKey: ["professional", id],
@@ -154,13 +160,21 @@ export default function ProfessionalDetailsScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.professionalName}>{professional?.name}</Text>
+        <Text style={styles.professionalName}>
+          {loc(professional?.nameAr, professional?.nameEn, professional?.name)}
+        </Text>
         
         {/* Specialty */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t("ui.specialty")}</Text>
           <View style={styles.specialtyBadge}>
-            <Text style={styles.specialtyText}>{knownText(t, professional?.specialty)}</Text>
+            <Text style={styles.specialtyText}>
+              {loc(
+                professional?.specialtyAr,
+                professional?.specialtyEn,
+                professional?.specialtyLabel || professional?.specialty,
+              )}
+            </Text>
           </View>
         </View>
 
@@ -210,33 +224,50 @@ export default function ProfessionalDetailsScreen() {
                 onPress={() => openCenterInGoogleMaps(professional)}
               >
                 {professional.centerName ? (
-                  <Text style={styles.infoValue}>🏥 {professional.centerName}</Text>
+                  <Text style={styles.infoValue}>
+                    🏥 {locCenter(professional.centerNameAr, professional.centerNameEn, professional.centerName)}
+                  </Text>
                 ) : null}
                 <Text style={styles.infoValue}>
                   📍{" "}
-                  {professional.centerAddress ||
-                    professional.location ||
-                    professional.centerName ||
-                    "—"}
+                  {locCenter(
+                    professional.centerAddressAr || professional.locationAr,
+                    professional.centerAddressEn || professional.locationEn,
+                    professional.centerAddress ||
+                      professional.location ||
+                      professional.centerName,
+                  ) || "—"}
                 </Text>
                 {professional.centerAddress &&
                   professional.location &&
                   professional.centerAddress.trim() !==
                     professional.location.trim() && (
-                    <Text style={styles.cityText}>{professional.location}</Text>
+                    <Text style={styles.cityText}>
+                      {loc(professional.locationAr, professional.locationEn, professional.location)}
+                    </Text>
                   )}
                 <Text style={styles.mapsHint}>{t("copy.tapMapsShort")}</Text>
               </TouchableOpacity>
             ) : (
               <>
                 {professional.location ? (
-                  <Text style={styles.infoValue}>📍 {professional.location}</Text>
+                  <Text style={styles.infoValue}>
+                    📍 {loc(professional.locationAr, professional.locationEn, professional.location)}
+                  </Text>
                 ) : null}
                 {professional.centerAddress ? (
-                  <Text style={styles.cityText}>{professional.centerAddress}</Text>
+                  <Text style={styles.cityText}>
+                    {locCenter(
+                      professional.centerAddressAr,
+                      professional.centerAddressEn,
+                      professional.centerAddress,
+                    )}
+                  </Text>
                 ) : null}
                 {professional.centerName ? (
-                  <Text style={styles.infoValue}>🏥 {professional.centerName}</Text>
+                  <Text style={styles.infoValue}>
+                    🏥 {locCenter(professional.centerNameAr, professional.centerNameEn, professional.centerName)}
+                  </Text>
                 ) : null}
               </>
             )}
@@ -247,7 +278,9 @@ export default function ProfessionalDetailsScreen() {
         {professional?.bio && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>{t("copy.about")}</Text>
-            <Text style={styles.bioText}>{professional.bio}</Text>
+            <Text style={styles.bioText}>
+              {loc(professional.bioAr, professional.bioEn, professional.bio)}
+            </Text>
           </View>
         )} 
       </ScrollView>

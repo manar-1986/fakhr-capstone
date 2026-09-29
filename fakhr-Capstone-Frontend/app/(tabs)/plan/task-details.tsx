@@ -5,10 +5,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { getTaskDetails } from "../../../api/care-path.api";
 import { colors, sectionSpacing, spacing, typography } from "../../../theme";
-import { knownText } from "../../../utils/knownText";
+import { planLocaleText } from "../../../utils/planBilingual";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
 
 export default function TaskDetailsScreen() {
   const { t } = useTranslation();
+  const { isRTL, dir, align } = useI18nLayout();
   const { id } = useLocalSearchParams();
   const { data: task, isLoading } = useQuery({
     queryKey: ["task", id],
@@ -29,15 +31,23 @@ export default function TaskDetailsScreen() {
         style={styles.container}
         contentContainerStyle={styles.scrollContent}
       >
-        <Text style={styles.title}>{knownText(t, task?.title)}</Text>
-        <Text style={styles.description}>{knownText(t, task?.description)}</Text>
+        <Text style={[styles.title, { textAlign: align, writingDirection: dir }]}>
+          {planLocaleText(isRTL, { ar: task?.titleAr, en: task?.titleEn, legacy: task?.title }, t)}
+        </Text>
+        <Text style={[styles.description, { textAlign: align, writingDirection: dir }]}>
+          {planLocaleText(isRTL, { ar: task?.descriptionAr, en: task?.descriptionEn, legacy: task?.description }, t)}
+        </Text>
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t("copy.instructions")}</Text>
-          <Text style={styles.sectionContent}>{knownText(t, task?.instructions)}</Text>
+          <Text style={[styles.sectionTitle, { textAlign: align, writingDirection: dir }]}>{t("copy.instructions")}</Text>
+          <Text style={[styles.sectionContent, { textAlign: align, writingDirection: dir }]}>
+            {planLocaleText(isRTL, { ar: task?.instructionsAr, en: task?.instructionsEn, legacy: task?.instructions }, t)}
+          </Text>
         </View>
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t("copy.expectedOutcome")}</Text>
-          <Text style={styles.sectionContent}>{knownText(t, task?.expectedOutcome)}</Text>
+          <Text style={[styles.sectionTitle, { textAlign: align, writingDirection: dir }]}>{t("copy.expectedOutcome")}</Text>
+          <Text style={[styles.sectionContent, { textAlign: align, writingDirection: dir }]}>
+            {planLocaleText(isRTL, { ar: task?.expectedOutcomeAr, en: task?.expectedOutcomeEn, legacy: task?.expectedOutcome }, t)}
+          </Text>
         </View>
       </ScrollView>
     </SafeAreaView>

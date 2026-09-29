@@ -8,11 +8,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useTranslation } from "react-i18next";
 import { generateCarePath } from "../../api/care-path.api";
 import { colors, radius, spacing, typography } from "../../theme";
+import { useI18nLayout } from "../../hooks/useI18nLayout";
 
 export default function GeneratePlanScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
+  const { dir } = useI18nLayout();
 
   const generateMutation = useMutation({
     mutationFn: generateCarePath,
@@ -21,8 +25,8 @@ export default function GeneratePlanScreen() {
     },
     onError: (error: Error) => {
       Alert.alert(
-        "Error",
-        error.message || "Failed to generate care path. Please try again."
+        t("common.error"),
+        error.message || t("common.tryAgain")
       );
     },
   });
@@ -33,15 +37,12 @@ export default function GeneratePlanScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Generating Your Care Path</Text>
-      <Text style={styles.subtitle}>
-        We&apos;re creating a personalized care plan based on your child&apos;s
-        information.
-      </Text>
+      <Text style={[styles.title, { writingDirection: dir }]}>{t("onboarding.generatingPlan")}</Text>
+      <Text style={[styles.subtitle, { writingDirection: dir }]}>{t("onboarding.generatingDescription")}</Text>
       {generateMutation.isPending ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={colors.primary} />
-          <Text style={styles.loadingText}>Generating your plan...</Text>
+          <Text style={[styles.loadingText, { writingDirection: dir }]}>{t("onboarding.generatingPlan")}</Text>
         </View>
       ) : (
         <TouchableOpacity
@@ -49,7 +50,7 @@ export default function GeneratePlanScreen() {
           onPress={handleGenerate}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>Generate Plan</Text>
+          <Text style={styles.buttonText}>{t("onboarding.generatePlan")}</Text>
         </TouchableOpacity>
       )}
     </View>

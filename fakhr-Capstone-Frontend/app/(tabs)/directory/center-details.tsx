@@ -8,10 +8,31 @@ import { colors, sectionSpacing, spacing, typography } from "../../../theme";
 import { openInGoogleMaps } from "../../../utils/openMaps";
 import { useTranslation } from "react-i18next";
 import { knownText } from "../../../utils/knownText";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import {
+  containsArabic,
+  directoryText,
+  type BilingualCenter,
+} from "../../../constants/directoryBilingual";
+
+function parseListing(raw: string | string[] | undefined): BilingualCenter | null {
+  const s = Array.isArray(raw) ? raw[0] : raw;
+  if (!s) return null;
+  try {
+    return JSON.parse(decodeURIComponent(s)) as BilingualCenter;
+  } catch {
+    try {
+      return JSON.parse(s) as BilingualCenter;
+    } catch {
+      return null;
+    }
+  }
+}
 
 export default function CenterDetailsScreen() {
   const { t } = useTranslation();
-  const { id } = useLocalSearchParams<{ id?: string }>();
+  const { isRTL, dir } = useI18nLayout();
+  const { id, listing: listingParam } = useLocalSearchParams<{ id?: string; listing?: string }>();
   const router = useRouter();
 
   const { data: center, isLoading, isError, error, refetch } = useQuery({
@@ -21,6 +42,9 @@ export default function CenterDetailsScreen() {
     retry: 1,
   });
   
+  const listing = parseListing(listingParam);
+  const loc = (ar: string, en: string) => (isRTL ? ar : en);
+
   const handleCall = () => {
     if (center?.phone) {
       Linking.openURL(`tel:${center.phone}`);
@@ -33,9 +57,15 @@ export default function CenterDetailsScreen() {
     }
   };
 
+  const mapsName = listing
+    ? listing.nameEn
+    : directoryText(center?.name, false, (v) => knownText(t, v));
+  const mapsCity = directoryText(center?.city, false, (v) => knownText(t, v));
+  const mapsAddress = directoryText(center?.address, false, (v) => knownText(t, v));
+
   const handleOpenGoogleMaps = () => {
     if (!center) return;
-    const line = [center.address, center.city]
+    const line = [mapsAddress, mapsCity]
       .filter((p): p is string => typeof p === "string" && p.trim().length > 0)
       .join(", ");
     void openInGoogleMaps({
@@ -43,19 +73,19 @@ export default function CenterDetailsScreen() {
       latitude: center.latitude,
       longitude: center.longitude,
       addressLine: line || null,
-      placeName: center.name,
+      placeName: mapsName,
     });
   };
 
   const handleOpenGoogleSearch = () => {
-    const query = center?.city ? `${center.name} ${center.city}` : center?.name || "";
+    const query = mapsCity ? `${mapsName} ${mapsCity}` : mapsName;
     if (!query.trim()) return;
     const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
     Linking.openURL(searchUrl);
   };
   if (isLoading) {
     return (
-      <SafeAreaView style={styles.wrapper} edges={["top"]}>
+      <SafeAreaView style={[styles.wrapper, { direction: isRTL ? "rtl" : "ltr" }]} edges={["top"]}>
         <View style={styles.container}>
           <Text style={styles.loadingText}>{t("common.loading")}</Text>
         </View>
@@ -63,16 +93,20 @@ export default function CenterDetailsScreen() {
     );
   }
 
-  if (isError || !center) {
+  if ((isError || !center) && !listing) {
     return (
-      <SafeAreaView style={styles.wrapper} edges={["top"]}>
+      <SafeAreaView style={[styles.wrapper, { direction: isRTL ? "rtl" : "ltr" }]} edges={["top"]}>
         <View style={[styles.container, styles.emptyState]}>
           <Ionicons name="medical-outline" size={48} color={colors.primary} />
           <Text style={styles.emptyTitle}>
             {isError ? t("copy.failedLoadCenter") : t("copy.centerNotFound")}
           </Text>
           <Text style={styles.emptyText}>
-            {isError ? (error?.message || t("copy.tryLater")) : t("copy.centerUnavailable")}
+            {isError
+              ? error?.message && (isRTL || !containsArabic(error.message))
+                ? error.message
+                : t("copy.tryLater")
+              : t("copy.centerUnavailable")}
           </Text>
           <View style={styles.errorActions}>
             {isError && (
@@ -90,11 +124,23 @@ export default function CenterDetailsScreen() {
     );
   }
 
-  const locationLine = [center.address, knownText(t, center.city)]
+  const displayName = listing
+    ? loc(listing.nameAr, listing.nameEn)
+    : directoryText(center?.name, isRTL, (v) => knownText(t, v));
+  const displayCity = directoryText(center?.city, isRTL, (v) => knownText(t, v));
+  const displayAddress = directoryText(center?.address, isRTL, (v) => knownText(t, v));
+  const displayHours = directoryText(center?.operatingHours, isRTL, (v) => knownText(t, v));
+  const displayDescription = directoryText(center?.description, isRTL, (v) => knownText(t, v));
+  const uniqueSpecialties = [
+    ...(listing ? [loc(listing.specialtyAr, listing.specialtyEn)] : []),
+    ...(center?.specialties ?? []).map((s) => directoryText(s, isRTL, (v) => knownText(t, v))),
+  ].filter((s, index, arr) => Boolean(s) && arr.indexOf(s) === index);
+
+  const locationLine = [displayAddress, displayCity]
     .filter((p): p is string => typeof p === "string" && p.trim().length > 0)
     .join(", ");
-  const lat = center.latitude;
-  const lng = center.longitude;
+  const lat = center?.latitude;
+  const lng = center?.longitude;
   const hasCoords =
     lat != null &&
     lng != null &&
@@ -103,40 +149,39 @@ export default function CenterDetailsScreen() {
     !Number.isNaN(lat) &&
     !Number.isNaN(lng);
   const canShowLocation =
-    Boolean(center.mapUrl?.trim()) ||
+    Boolean(center?.mapUrl?.trim()) ||
     hasCoords ||
     locationLine.length > 0;
   const locationPrimaryText =
     locationLine ||
-    (hasCoords ? t("copy.viewOnMap") : center.mapUrl?.trim() ? center.name : "");
+    (hasCoords ? t("copy.viewOnMap") : center?.mapUrl?.trim() ? displayName : "");
+  const typeValue = center?.type || listing?.type;
 
   return (
-    <SafeAreaView style={styles.wrapper} edges={["top"]}>
+    <SafeAreaView style={[styles.wrapper, { direction: isRTL ? "rtl" : "ltr" }]} edges={["top"]}>
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.titleSection}>
-          <Text style={styles.title}>{center.name}</Text>
-          {center.type && (
-            <View style={[styles.typeBadge, center.type === "public" ? styles.publicBadge : styles.privateBadge]}>
-              <Text style={[styles.typeBadgeText, center.type === "public" ? styles.publicText : styles.privateText]}>
-                {center.type === "public" || center.type === "حكومي"
+          <Text style={[styles.title, { textAlign: isRTL ? "right" : "left", writingDirection: dir }]}>{displayName}</Text>
+          {typeValue ? (
+            <View style={[styles.typeBadge, typeValue === "public" ? styles.publicBadge : styles.privateBadge]}>
+              <Text style={[styles.typeBadgeText, typeValue === "public" ? styles.publicText : styles.privateText]}>
+                {typeValue === "public" || typeValue === "حكومي"
                   ? t("copy.gov")
-                  : center.type === "private" || center.type === "خاص"
-                    ? t("copy.priv")
-                    : knownText(t, center.type)}
+                  : t("copy.priv")}
               </Text>
             </View>
-          )}
+          ) : null}
         </View>
 
         {canShowLocation && (
           <Pressable onPress={handleOpenGoogleMaps} style={styles.locationRow}>
             <Ionicons name="location-outline" size={20} color={colors.primary} />
             <View style={styles.locationContent}>
-              <Text style={styles.address}>
+              <Text style={[styles.address, { textAlign: isRTL ? "right" : "left", writingDirection: dir }]}>
                 {locationPrimaryText || t("copy.tapMaps")}
               </Text>
               <Text style={styles.openInMapsHint}>{t("copy.tapMaps")}</Text>
@@ -154,56 +199,56 @@ export default function CenterDetailsScreen() {
           <Ionicons name="open-outline" size={18} color={colors.primary} />
         </Pressable>
 
-        {center.phone && (
+        {center?.phone ? (
           <Pressable onPress={handleCall} style={styles.actionRow}>
             <Ionicons name="call-outline" size={20} color={colors.primary} />
             <Text style={styles.phone}>{String(center.phone)}</Text>
           </Pressable>
-        )}
+        ) : null}
 
-        {center.email && (
+        {center?.email ? (
           <Pressable onPress={handleEmail} style={styles.actionRow}>
             <Ionicons name="mail-outline" size={20} color={colors.primary} />
-            <Text style={styles.email}>{center.email}</Text>
+            <Text style={styles.email}>{center?.email}</Text>
           </Pressable>
-        )}
+        ) : null}
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t("copy.workingHours")}</Text>
+          <Text style={[styles.sectionTitle, { textAlign: isRTL ? "right" : "left" }]}>{t("copy.workingHours")}</Text>
           <View style={styles.hoursRow}>
             <Ionicons name="time-outline" size={20} color={colors.primary} />
-            <Text style={styles.hoursText}>
-              {knownText(t, center.operatingHours) || t("copy.contactHours")}
+            <Text style={[styles.hoursText, { writingDirection: dir, textAlign: isRTL ? "right" : "left" }]}>
+              {displayHours || t("copy.contactHours")}
             </Text>
           </View>
         </View>
 
-        {center.description && (
+        {displayDescription ? (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>{t("copy.about")}</Text>
-            <Text style={styles.description}>{knownText(t, center.description)}</Text>
+            <Text style={[styles.sectionTitle, { textAlign: isRTL ? "right" : "left" }]}>{t("copy.about")}</Text>
+            <Text style={[styles.description, { textAlign: isRTL ? "right" : "left", writingDirection: dir }]}>{displayDescription}</Text>
           </View>
-        )}
+        ) : null}
 
-        {center.specialties && center.specialties.length > 0 && (
+        {uniqueSpecialties.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>{t("ui.specialty")}</Text>
+            <Text style={[styles.sectionTitle, { textAlign: isRTL ? "right" : "left" }]}>{t("ui.specialty")}</Text>
             <View style={styles.servicesContainer}>
-              {center.specialties.map((s) => (
+              {uniqueSpecialties.map((s) => (
                 <View key={s} style={styles.serviceChip}>
-                  <Text style={styles.serviceChipText}>{knownText(t, s)}</Text>
+                  <Text style={styles.serviceChipText}>{s}</Text>
                 </View>
               ))}
             </View>
           </View>
         )}
 
-        {center.address && (
+        {center?.address ? (
           <Pressable onPress={handleOpenGoogleMaps} style={styles.mapLinkBtn}>
             <Ionicons name="map-outline" size={20} color={colors.primary} />
             <Text style={styles.mapLinkText}>{t("copy.openGoogleMaps")}</Text>
           </Pressable>
-        )}
+        ) : null}
       </ScrollView>
     </SafeAreaView>
   );

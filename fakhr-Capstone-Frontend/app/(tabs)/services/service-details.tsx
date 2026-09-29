@@ -12,13 +12,24 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useQuery } from "@tanstack/react-query";
-import { getServiceById } from "../../../api/services.api";
+import { getServiceById, type Service } from "../../../api/services.api";
 import { useTranslation } from "react-i18next";
-import { knownText } from "../../../utils/knownText";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
 import { colors } from "../../../theme";
+
+function loc(isRTL: boolean, ar?: string, en?: string, fallback = ""): string {
+  if (isRTL) return ar || fallback || en || "";
+  return en || fallback || "";
+}
+
+function locList(isRTL: boolean, ar?: string[], en?: string[], fallback: string[] = []): string[] {
+  if (isRTL) return (ar && ar.length ? ar : fallback) || [];
+  return (en && en.length ? en : fallback.filter((item) => !/[\u0600-\u06FF]/.test(item))) || [];
+}
 
 export default function ServiceDetailsScreen() {
   const { t } = useTranslation();
+  const { isRTL, dir, align } = useI18nLayout();
   const router = useRouter();
   const params = useLocalSearchParams<{ id?: string | string[] }>();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
@@ -88,10 +99,18 @@ export default function ServiceDetailsScreen() {
     );
   }
 
-  const getServiceSpecialty = (): string | undefined => {
+  const getServiceSpecialty = (item: Service): string | undefined => {
+    if (item.specialty) return item.specialty;
     const map: Record<string, string> = {
+      "hs-behavioral": "behavioral",
+      "hs-occupational": "occupational",
+      "hs-speech": "speech",
       "Speech & Language Therapy": "speech",
       "Occupational Therapy": "occupational",
+      "Behavioral Therapy": "behavioral",
+      "العلاج السلوكي": "behavioral",
+      "العلاج الوظيفي": "occupational",
+      "علاج النطق": "speech",
       "ABA Therapy": "behavioral",
       "Psychological Assessment": "behavioral",
       "Physical Therapy": "physical",
@@ -99,21 +118,39 @@ export default function ServiceDetailsScreen() {
       "Early Intervention": "speech",
       "School Readiness": "educational",
     };
-    return map[service.name];
+    return map[item.id] || map[item.name] || map[item.nameEn ?? ""] || map[item.nameAr ?? ""];
   };
 
+  const displayName = loc(isRTL, service.nameAr, service.nameEn, service.name);
+  const displayCategory = loc(isRTL, service.categoryAr, service.categoryEn, service.category);
+  const displayAbout = loc(
+    isRTL,
+    service.longDescriptionAr,
+    service.longDescriptionEn,
+    service.longDescription,
+  );
+  const displayDuration = loc(isRTL, service.durationAr, service.durationEn, service.duration);
+  const displayFrequency = loc(isRTL, service.frequencyAr, service.frequencyEn, service.frequency);
+  const displayAge = loc(isRTL, service.ageRangeAr, service.ageRangeEn, service.ageRange);
+  const displayBenefits = locList(
+    isRTL,
+    service.benefitsAr,
+    service.benefitsEn,
+    service.benefits,
+  );
+
   const handleViewProviders = () => {
-    const specialty = getServiceSpecialty();
+    const specialty = getServiceSpecialty(service);
     router.push({
       pathname: "/(tabs)/professionals",
-      params: specialty ? { specialty } : { search: service.name },
+      params: specialty ? { specialty } : { search: displayName },
     });
   };
 
   const handleBookService = () => {
     Alert.alert(
       t("copy.bookService"),
-      t("copy.findProvidersFor", { name: knownText(t, service.name) }),
+      t("copy.findProvidersFor", { name: displayName }),
       [
         { text: t("common.cancel"), style: "cancel" },
         { text: t("copy.findProviders"), onPress: handleViewProviders },
@@ -122,9 +159,9 @@ export default function ServiceDetailsScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={["top"]}>
+    <SafeAreaView style={[styles.container, { direction: isRTL ? "rtl" : "ltr" }]} edges={["top"]}>
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
         <Pressable
           style={({ pressed }) => [
             styles.backBtn,
@@ -132,9 +169,9 @@ export default function ServiceDetailsScreen() {
           ]}
           onPress={() => router.back()}
         >
-          <Ionicons name="arrow-back" size={24} color={colors.text} />
+          <Ionicons name={isRTL ? "arrow-forward" : "arrow-back"} size={24} color={colors.text} />
         </Pressable>
-        <Text style={styles.headerTitle}>{t("copy.serviceDetails")}</Text>
+        <Text style={[styles.headerTitle, { writingDirection: dir }]}>{t("copy.serviceDetails")}</Text>
         <View style={styles.headerRight} />
       </View>
 
@@ -157,9 +194,9 @@ export default function ServiceDetailsScreen() {
               color={service.color}
             />
           </View>
-          <Text style={styles.serviceName}>{knownText(t, service.name)}</Text>
+          <Text style={[styles.serviceName, { writingDirection: dir, textAlign: "center" }]}>{displayName}</Text>
           <View style={styles.categoryBadge}>
-            <Text style={styles.categoryText}>{knownText(t, service.category)}</Text>
+            <Text style={[styles.categoryText, { writingDirection: dir }]}>{displayCategory}</Text>
           </View>
 
           {/* Rating */}
@@ -184,35 +221,35 @@ export default function ServiceDetailsScreen() {
         <View style={styles.statsCard}>
           <View style={styles.statBox}>
             <Ionicons name="time-outline" size={22} color={colors.primary} />
-            <Text style={styles.statLabel}>{t("copy.duration")}</Text>
-            <Text style={styles.statValue}>{service.duration}</Text>
+            <Text style={[styles.statLabel, { writingDirection: dir, textAlign: "center" }]}>{t("copy.duration")}</Text>
+            <Text style={[styles.statValue, { writingDirection: dir, textAlign: "center" }]}>{displayDuration}</Text>
           </View>
           <View style={styles.statDivider} />
           <View style={styles.statBox}>
             <Ionicons name="calendar-outline" size={22} color={colors.primary} />
-            <Text style={styles.statLabel}>{t("copy.frequency")}</Text>
-            <Text style={styles.statValue}>{service.frequency}</Text>
+            <Text style={[styles.statLabel, { writingDirection: dir, textAlign: "center" }]}>{t("copy.frequency")}</Text>
+            <Text style={[styles.statValue, { writingDirection: dir, textAlign: "center" }]}>{displayFrequency}</Text>
           </View>
           <View style={styles.statDivider} />
           <View style={styles.statBox}>
             <Ionicons name="people-outline" size={22} color={colors.primary} />
-            <Text style={styles.statLabel}>{t("copy.ageGroup")}</Text>
-            <Text style={styles.statValue}>{service.ageRange}</Text>
+            <Text style={[styles.statLabel, { writingDirection: dir, textAlign: "center" }]}>{t("copy.ageGroup")}</Text>
+            <Text style={[styles.statValue, { writingDirection: dir, textAlign: "center" }]}>{displayAge}</Text>
           </View>
         </View>
 
         {/* About Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t("copy.aboutService")}</Text>
-          <Text style={styles.longDescription}>{service.longDescription}</Text>
+          <Text style={[styles.sectionTitle, { textAlign: align, writingDirection: dir }]}>{t("copy.aboutService")}</Text>
+          <Text style={[styles.longDescription, { textAlign: align, writingDirection: dir }]}>{displayAbout}</Text>
         </View>
 
         {/* Benefits Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t("copy.keyBenefits")}</Text>
+          <Text style={[styles.sectionTitle, { textAlign: align, writingDirection: dir }]}>{t("copy.keyBenefits")}</Text>
           <View style={styles.benefitsList}>
-            {service.benefits.map((benefit, index) => (
-              <View key={index} style={styles.benefitItem}>
+            {displayBenefits.map((benefit, index) => (
+              <View key={index} style={[styles.benefitItem, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
                 <View style={styles.benefitIcon}>
                   <Ionicons
                     name="checkmark"
@@ -220,48 +257,50 @@ export default function ServiceDetailsScreen() {
                     color="#FFFFFF"
                   />
                 </View>
-                <Text style={styles.benefitText}>{benefit}</Text>
+                <Text style={[styles.benefitText, { textAlign: align, writingDirection: dir }]}>{benefit}</Text>
               </View>
             ))}
           </View>
         </View>
 
         {/* Providers Card */}
-        <View style={styles.providersCard}>
+        <View style={[styles.providersCard, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
           <View style={styles.providersInfo}>
-            <Text style={styles.providersTitle}>{t("copy.availableProviders")}</Text>
-            <Text style={styles.providersCount}>
-              {service.providers} certified specialists in your area
+            <Text style={[styles.providersTitle, { textAlign: align, writingDirection: dir }]}>{t("copy.availableProviders")}</Text>
+            <Text style={[styles.providersCount, { textAlign: align, writingDirection: dir }]}>
+              {t("copy.specialistsInArea", { count: service.providers })}
             </Text>
           </View>
           <Pressable
             style={({ pressed }) => [
               styles.viewProvidersBtn,
+              { flexDirection: isRTL ? "row-reverse" : "row" },
               pressed && { opacity: 0.8 },
             ]}
             onPress={handleViewProviders}
           >
             <Text style={styles.viewProvidersBtnText}>{t("home.viewAll")}</Text>
-            <Ionicons name="arrow-forward" size={16} color={colors.primary} />
+            <Ionicons name={isRTL ? "arrow-back" : "arrow-forward"} size={16} color={colors.primary} />
           </Pressable>
         </View>
       </ScrollView>
 
       {/* Bottom CTA */}
-      <View style={styles.bottomCTA}>
+      <View style={[styles.bottomCTA, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
         <View style={styles.priceInfo}>
-          <Text style={styles.priceLabel}>{t("copy.startingFrom")}</Text>
-          <Text style={styles.priceValue}>{t("copy.freeConsult")}</Text>
+          <Text style={[styles.priceLabel, { textAlign: align, writingDirection: dir }]}>{t("copy.startingFrom")}</Text>
+          <Text style={[styles.priceValue, { textAlign: align, writingDirection: dir }]}>{t("copy.freeConsult")}</Text>
         </View>
         <Pressable
           style={({ pressed }) => [
             styles.bookButton,
+            { flexDirection: isRTL ? "row-reverse" : "row" },
             pressed && { transform: [{ scale: 0.98 }] },
           ]}
           onPress={handleBookService}
         >
           <Text style={styles.bookButtonText}>{t("copy.bookNow")}</Text>
-          <Ionicons name="arrow-forward" size={18} color="#FFFFFF" />
+          <Ionicons name={isRTL ? "arrow-back" : "arrow-forward"} size={18} color="#FFFFFF" />
         </Pressable>
       </View>
     </SafeAreaView>

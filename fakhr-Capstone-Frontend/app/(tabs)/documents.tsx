@@ -11,6 +11,9 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { HeaderBackButton } from "../../components/navigation/HeaderBackButton";
 import { colors } from "../../theme";
+import { useTranslation } from "react-i18next";
+import { useI18nLayout } from "../../hooks/useI18nLayout";
+import { doctorLocaleText } from "../../utils/professionalBilingual";
 
 // Specializations for filtering
 const SPECIALIZATIONS = [
@@ -25,55 +28,76 @@ const SPECIALIZATIONS = [
 const PROFESSIONALS = [
   {
     id: "1",
-    name: "Dr. Sarah Ahmed",
+    nameAr: "د. سارة أحمد",
+    nameEn: "Dr. Sarah Ahmed",
     specialty: "speech",
-    specialtyLabel: "Speech Therapist",
-    experience: "10 years experience",
+    specialtyLabelAr: "أخصائية نطق",
+    specialtyLabelEn: "Speech Therapist",
+    experienceAr: "١٠ سنوات خبرة",
+    experienceEn: "10 years experience",
     rating: 4.9,
   },
   {
     id: "2",
-    name: "Dr. Mohammed Ali",
+    nameAr: "د. محمد علي",
+    nameEn: "Dr. Mohammed Ali",
     specialty: "behavioral",
-    specialtyLabel: "Behavioral Specialist",
-    experience: "8 years experience",
+    specialtyLabelAr: "أخصائي سلوكي",
+    specialtyLabelEn: "Behavioral Specialist",
+    experienceAr: "٨ سنوات خبرة",
+    experienceEn: "8 years experience",
     rating: 4.8,
   },
   {
     id: "3",
-    name: "Dr. Fatima Hassan",
+    nameAr: "د. فاطمة حسن",
+    nameEn: "Dr. Fatima Hassan",
     specialty: "occupational",
-    specialtyLabel: "Occupational Therapist",
-    experience: "12 years experience",
+    specialtyLabelAr: "أخصائية علاج وظيفي",
+    specialtyLabelEn: "Occupational Therapist",
+    experienceAr: "١٢ سنة خبرة",
+    experienceEn: "12 years experience",
     rating: 4.9,
   },
   {
     id: "4",
-    name: "Dr. Omar Khalid",
+    nameAr: "د. عمر خالد",
+    nameEn: "Dr. Omar Khalid",
     specialty: "educational",
-    specialtyLabel: "Educational Psychologist",
-    experience: "6 years experience",
+    specialtyLabelAr: "أخصائي نفسي تربوي",
+    specialtyLabelEn: "Educational Psychologist",
+    experienceAr: "٦ سنوات خبرة",
+    experienceEn: "6 years experience",
     rating: 4.7,
   },
   {
     id: "5",
-    name: "Dr. Layla Mansour",
+    nameAr: "د. ليلى منصور",
+    nameEn: "Dr. Layla Mansour",
     specialty: "speech",
-    specialtyLabel: "Speech Therapist",
-    experience: "15 years experience",
+    specialtyLabelAr: "أخصائية نطق",
+    specialtyLabelEn: "Speech Therapist",
+    experienceAr: "١٥ سنة خبرة",
+    experienceEn: "15 years experience",
     rating: 5.0,
   },
   {
     id: "6",
-    name: "Dr. Youssef Ibrahim",
+    nameAr: "د. يوسف إبراهيم",
+    nameEn: "Dr. Youssef Ibrahim",
     specialty: "behavioral",
-    specialtyLabel: "Behavioral Analyst",
-    experience: "9 years experience",
+    specialtyLabelAr: "محلل سلوك",
+    specialtyLabelEn: "Behavioral Analyst",
+    experienceAr: "٩ سنوات خبرة",
+    experienceEn: "9 years experience",
     rating: 4.8,
   },
 ];
 
 export default function ProfessionalsScreen() {
+  const { t } = useTranslation();
+  const { isRTL } = useI18nLayout();
+  const loc = (ar?: string, en?: string) => doctorLocaleText(isRTL, { ar, en }, t);
   const [selectedFilter, setSelectedFilter] = React.useState("all");
 
   const filteredProfessionals =
@@ -83,8 +107,8 @@ export default function ProfessionalsScreen() {
 
   const handleProfessionalPress = (professional: (typeof PROFESSIONALS)[0]) => {
     Alert.alert(
-      professional.name,
-      `${professional.specialtyLabel}\n${professional.experience}\nRating: ${professional.rating}⭐\n\nProfessional details page coming soon.`
+      loc(professional.nameAr, professional.nameEn),
+      `${loc(professional.specialtyLabelAr, professional.specialtyLabelEn)}\n${loc(professional.experienceAr, professional.experienceEn)}\nRating: ${professional.rating}⭐\n\nProfessional details page coming soon.`
     );
   };
 
@@ -97,10 +121,10 @@ export default function ProfessionalsScreen() {
       >
         <View style={styles.header}>
           <HeaderBackButton color={colors.text} />
-          <Text style={styles.title}>Professionals</Text>
+          <Text style={styles.title}>{t("directory.healthcareProfessionals")}</Text>
         </View>
         <Text style={styles.subtitle}>
-          Find specialists for your child&apos;s needs
+          {t("copy.findSpecialists")}
         </Text>
 
         {/* Filter Row */}
@@ -125,7 +149,7 @@ export default function ProfessionalsScreen() {
                   selectedFilter === spec.id && styles.filterChipTextActive,
                 ]}
               >
-                {spec.label}
+                {spec.id === "all" ? t("ui.all") : spec.label}
               </Text>
             </Pressable>
           ))}
@@ -146,13 +170,15 @@ export default function ProfessionalsScreen() {
                 <Ionicons name="person" size={28} color={colors.primary} />
               </View>
               <View style={styles.professionalContent}>
-                <Text style={styles.professionalName}>{professional.name}</Text>
+                <Text style={styles.professionalName}>
+                  {loc(professional.nameAr, professional.nameEn)}
+                </Text>
                 <Text style={styles.professionalSpecialty}>
-                  {professional.specialtyLabel}
+                  {loc(professional.specialtyLabelAr, professional.specialtyLabelEn)}
                 </Text>
                 <View style={styles.professionalMeta}>
                   <Text style={styles.experienceText}>
-                    {professional.experience}
+                    {loc(professional.experienceAr, professional.experienceEn)}
                   </Text>
                   <View style={styles.ratingContainer}>
                     <Ionicons name="star" size={12} color="#F5A623" />

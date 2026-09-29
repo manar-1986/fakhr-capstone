@@ -20,7 +20,12 @@ import type { HealthCenter } from "../../../types/directory.types";
 import { tryNavigateToDisabilityServices } from "../../../utils/disabilityFlowNav";
 import { useTranslation } from "react-i18next";
 import { useI18nLayout } from "../../../hooks/useI18nLayout";
-import { knownText } from "../../../utils/knownText";
+import {
+  BILINGUAL_SCHOOLS,
+  schoolDisplayName,
+  type BilingualSchool,
+  type CenterType as SchoolType,
+} from "../../../constants/directoryBilingual";
 import { colors as palette } from "../../../theme";
 
 const colors = {
@@ -40,108 +45,29 @@ const colors = {
 const DESIGN_W = 423;
 const schoolPhoto = require("../../../assets/images/school-building.png");
 
-type SchoolType = "public" | "private";
+export type SchoolRow = BilingualSchool;
 
-export type SchoolRow = {
-  name: string;
-  city: string;
-  rating: number;
-  reviews: number;
-  type: SchoolType;
-  branch: string;
-  specialty: string;
-  about: string;
-  ageRange: string;
-  stage: string;
-  hours: string;
-};
+const SCHOOLS = BILINGUAL_SCHOOLS;
 
-const SCHOOLS: SchoolRow[] = [
-  {
-    name: "مدرسة النور للتربية الخاصة",
-    city: "حولي",
-    rating: 4.8,
-    reviews: 128,
-    type: "private",
-    branch: "التربية الخاصة",
-    specialty: "صعوبات التعلم",
-    about:
-      "تقدم تعليماً متخصصاً وشاملاً للأطفال من ذوي الاحتياجات الخاصة، مع بيئة آمنة ومحفزة وبرامج تربوية متخصصة.",
-    ageRange: "3 - 18 سنة",
-    stage: "ابتدائي - ثانوي",
-    hours: "7:30 ص - 1:30 م",
-  },
-  {
-    name: "مدرسة الأمل الشاملة",
-    city: "الفروانية",
-    rating: 4.6,
-    reviews: 96,
-    type: "private",
-    branch: "الشاملة",
-    specialty: "التعليم الشامل",
-    about:
-      "تقدم تعليماً متخصصاً وشاملاً للأطفال من ذوي الاحتياجات الخاصة، مع بيئة آمنة ومحفزة وبرامج تربوية متخصصة.",
-    ageRange: "3 - 18 سنة",
-    stage: "ابتدائي - ثانوي",
-    hours: "7:30 ص - 1:30 م",
-  },
-  {
-    name: "مدرسة البيان الخاصة",
-    city: "الجهراء",
-    rating: 4.7,
-    reviews: 85,
-    type: "private",
-    branch: "الخاصة",
-    specialty: "التربية الخاصة",
-    about:
-      "تقدم تعليماً متخصصاً وشاملاً للأطفال من ذوي الاحتياجات الخاصة، مع بيئة آمنة ومحفزة وبرامج تربوية متخصصة.",
-    ageRange: "3 - 18 سنة",
-    stage: "ابتدائي - ثانوي",
-    hours: "7:30 ص - 1:30 م",
-  },
-  {
-    name: "مدرسة التميز العالمية",
-    city: "العاصمة",
-    rating: 4.5,
-    reviews: 73,
-    type: "private",
-    branch: "العالمية",
-    specialty: "منهج عالمي",
-    about:
-      "تقدم تعليماً متخصصاً وشاملاً للأطفال من ذوي الاحتياجات الخاصة، مع بيئة آمنة ومحفزة وبرامج تربوية متخصصة.",
-    ageRange: "3 - 18 سنة",
-    stage: "ابتدائي - ثانوي",
-    hours: "7:30 ص - 1:30 م",
-  },
-  {
-    name: "مدرسة الكويت للصم",
-    city: "حولي",
-    rating: 4.9,
-    reviews: 64,
-    type: "public",
-    branch: "الصم",
-    specialty: "الإعاقة السمعية",
-    about:
-      "تقدم تعليماً متخصصاً وشاملاً للأطفال من ذوي الاحتياجات الخاصة، مع بيئة آمنة ومحفزة وبرامج تربوية متخصصة.",
-    ageRange: "3 - 18 سنة",
-    stage: "ابتدائي - ثانوي",
-    hours: "7:30 ص - 1:30 م",
-  },
+const CITY_OPTIONS = [
+  { key: "all", labelAr: "الكل", labelEn: "All" },
+  { key: "hawalli", labelAr: "حولي", labelEn: "Hawalli" },
+  { key: "farwaniya", labelAr: "الفروانية", labelEn: "Farwaniya" },
+  { key: "jahra", labelAr: "الجهراء", labelEn: "Jahra" },
+  { key: "capital", labelAr: "العاصمة", labelEn: "Capital" },
 ];
-
-const CITY_OPTIONS = ["الكل", "حولي", "الفروانية", "الجهراء", "العاصمة"];
-const TYPE_OPTIONS: { label: string; value: SchoolType | "all" }[] = [
-  { label: "الكل", value: "all" },
-  { label: "خاصة", value: "private" },
-  { label: "حكومية", value: "public" },
+const TYPE_OPTIONS: { value: SchoolType | "all" }[] = [
+  { value: "all" },
+  { value: "private" },
+  { value: "public" },
 ];
 const BRANCH_OPTIONS = [
-  "الكل",
-  "التربية الخاصة",
-  "الشاملة",
-  "الخاصة",
-  "العالمية",
-  "الصم",
+  { key: "all", labelAr: "الكل", labelEn: "All" },
+  { key: "special-ed", labelAr: "التربية الخاصة", labelEn: "Special education" },
+  { key: "inclusive", labelAr: "الشاملة", labelEn: "Inclusive" },
+  { key: "private", labelAr: "الخاصة", labelEn: "Private" },
+  { key: "international", labelAr: "العالمية", labelEn: "International" },
+  { key: "deaf", labelAr: "الصم", labelEn: "Deaf education" },
 ];
 
 type PickerKind = "city" | "type" | "branch" | null;
@@ -153,7 +79,7 @@ function centerIdOf(center?: HealthCenter) {
 
 export default function SchoolsScreen() {
   const { t } = useTranslation();
-  const { align } = useI18nLayout();
+  const { align, isRTL, dir } = useI18nLayout();
   const router = useRouter();
   const params = useLocalSearchParams<{
     disabilityId?: string;
@@ -165,9 +91,9 @@ export default function SchoolsScreen() {
   const ms = (n: number) => Math.round(n * s);
 
   const [search, setSearch] = useState("");
-  const [city, setCity] = useState("الكل");
+  const [city, setCity] = useState("all");
   const [type, setType] = useState<SchoolType | "all">("all");
-  const [branch, setBranch] = useState("الكل");
+  const [branch, setBranch] = useState("all");
   const [picker, setPicker] = useState<PickerKind>(null);
 
   const { data: centers = [] } = useQuery({
@@ -178,11 +104,12 @@ export default function SchoolsScreen() {
   const rows = useMemo(() => {
     const q = search.trim();
     return SCHOOLS.filter((school) => {
-      if (city !== "الكل" && school.city !== city) return false;
+      if (city !== "all" && school.cityKey !== city) return false;
       if (type !== "all" && school.type !== type) return false;
-      if (branch !== "الكل" && school.branch !== branch) return false;
+      if (branch !== "all" && school.branchKey !== branch) return false;
       if (!q) return true;
-      return school.name.includes(q) || school.city.includes(q);
+      const hay = `${school.nameAr} ${school.nameEn} ${school.cityAr} ${school.cityEn} ${school.specialtyAr} ${school.specialtyEn}`.toLowerCase();
+      return hay.includes(q.toLowerCase());
     });
   }, [search, city, type, branch]);
 
@@ -198,7 +125,7 @@ export default function SchoolsScreen() {
   };
 
   const openSchool = (school: SchoolRow) => {
-    const index = SCHOOLS.findIndex((item) => item.name === school.name);
+    const index = SCHOOLS.findIndex((item) => item.id === school.id);
     const id = centerIdOf(centers[index] ?? centers[0]);
     router.push({
       pathname: "/(tabs)/directory/school-details",
@@ -214,9 +141,9 @@ export default function SchoolsScreen() {
 
   const pickerOptions =
     picker === "city"
-      ? CITY_OPTIONS.map((label) => ({
-          label: label === "الكل" ? t("ui.all") : knownText(t, label),
-          onSelect: () => setCity(label),
+      ? CITY_OPTIONS.map((item) => ({
+          label: item.key === "all" ? t("ui.all") : isRTL ? item.labelAr : item.labelEn,
+          onSelect: () => setCity(item.key),
         }))
       : picker === "type"
         ? TYPE_OPTIONS.map((item) => ({
@@ -228,19 +155,19 @@ export default function SchoolsScreen() {
                   : t("ui.public"),
             onSelect: () => setType(item.value),
           }))
-        : BRANCH_OPTIONS.map((label) => ({
-            label: label === "الكل" ? t("ui.all") : knownText(t, label),
-            onSelect: () => setBranch(label),
+        : BRANCH_OPTIONS.map((item) => ({
+            label: item.key === "all" ? t("ui.all") : isRTL ? item.labelAr : item.labelEn,
+            onSelect: () => setBranch(item.key),
           }));
 
   const resetFilters = () => {
-    setCity("الكل");
+    setCity("all");
     setType("all");
-    setBranch("الكل");
+    setBranch("all");
   };
 
   return (
-    <SafeAreaView style={styles.safe} edges={["top"]}>
+    <SafeAreaView style={[styles.safe, { direction: isRTL ? "rtl" : "ltr" }]} edges={["top"]}>
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={[
@@ -265,7 +192,7 @@ export default function SchoolsScreen() {
           >
             <Ionicons name="chevron-back" size={ms(26)} color={colors.back} />
           </Pressable>
-          <Text style={[styles.title, { fontSize: ms(24), lineHeight: ms(32) }]}>
+          <Text style={[styles.title, { fontSize: ms(24), lineHeight: ms(32), writingDirection: dir }]}>
             {t("ui.schools")}
           </Text>
         </View>
@@ -278,6 +205,7 @@ export default function SchoolsScreen() {
               borderRadius: ms(22),
               paddingHorizontal: ms(14),
               marginBottom: ms(10),
+              flexDirection: isRTL ? "row-reverse" : "row",
             },
           ]}
         >
@@ -286,7 +214,7 @@ export default function SchoolsScreen() {
             onChangeText={setSearch}
             placeholder={t("ui.searchSchool")}
             placeholderTextColor={colors.placeholder}
-            style={[styles.searchInput, { fontSize: ms(13) }]}
+            style={[styles.searchInput, { fontSize: ms(13), writingDirection: dir }]}
             textAlign={align}
             returnKeyType="search"
           />
@@ -297,7 +225,7 @@ export default function SchoolsScreen() {
           />
         </View>
 
-        <View style={[styles.filterRow, { marginBottom: ms(14), gap: ms(6) }]}>
+        <View style={[styles.filterRow, { marginBottom: ms(14), gap: ms(6), flexDirection: isRTL ? "row-reverse" : "row" }]}>
           <FilterChip
             label={t("ui.area")}
             size={ms}
@@ -335,17 +263,32 @@ export default function SchoolsScreen() {
         </View>
 
         <View style={{ gap: ms(12) }}>
-          {rows.map((school) => (
+          {rows.length === 0 ? (
+            <Text
+              style={{
+                fontSize: ms(14),
+                color: colors.subtitle,
+                textAlign: isRTL ? "right" : "left",
+                writingDirection: dir,
+              }}
+            >
+              {t("common.noResults")}
+            </Text>
+          ) : null}
+          {rows.map((school) => {
+            const name = schoolDisplayName(school, isRTL);
+            const cityLabel = isRTL ? school.cityAr : school.cityEn;
+            return (
             <Pressable
-              key={school.name}
+              key={school.id}
               onPress={() => openSchool(school)}
               style={({ pressed }) => [
                 styles.row,
-                { gap: ms(12) },
+                { gap: ms(12), flexDirection: isRTL ? "row-reverse" : "row" },
                 pressed && styles.pressed,
               ]}
               accessibilityRole="button"
-              accessibilityLabel={school.name}
+              accessibilityLabel={name}
             >
               <Image
                 source={schoolPhoto}
@@ -356,15 +299,20 @@ export default function SchoolsScreen() {
                 }}
                 resizeMode="cover"
               />
-              <View style={styles.info}>
+              <View style={[styles.info, { alignItems: isRTL ? "flex-end" : "flex-start" }]}>
                 <Text
                   style={[
                     styles.schoolName,
-                    { fontSize: ms(15), lineHeight: ms(22) },
+                    {
+                      fontSize: ms(15),
+                      lineHeight: ms(22),
+                      textAlign: isRTL ? "right" : "left",
+                      writingDirection: dir,
+                    },
                   ]}
                   numberOfLines={1}
                 >
-                  {school.name}
+                  {name}
                 </Text>
                 <Text
                   style={[
@@ -373,10 +321,12 @@ export default function SchoolsScreen() {
                       fontSize: ms(12),
                       lineHeight: ms(18),
                       marginTop: ms(1),
+                      textAlign: isRTL ? "right" : "left",
+                      writingDirection: dir,
                     },
                   ]}
                 >
-                  {knownText(t, school.city)}
+                  {cityLabel}
                 </Text>
                 <View style={[styles.ratingRow, { marginTop: ms(4), gap: ms(4) }]}>
                   <Ionicons name="star" size={ms(13)} color={colors.star} />
@@ -391,7 +341,8 @@ export default function SchoolsScreen() {
                 </View>
               </View>
             </Pressable>
-          ))}
+            );
+          })}
         </View>
       </ScrollView>
 
@@ -406,7 +357,7 @@ export default function SchoolsScreen() {
             style={[styles.modalSheet, { width: Math.min(contentW - 40, 340) }]}
             onPress={() => {}}
           >
-            <Text style={styles.modalTitle}>{pickerTitle}</Text>
+            <Text style={[styles.modalTitle, { writingDirection: dir }]}>{pickerTitle}</Text>
             {pickerOptions.map((option) => (
               <Pressable
                 key={option.label}
@@ -419,7 +370,14 @@ export default function SchoolsScreen() {
                   pressed && styles.pressed,
                 ]}
               >
-                <Text style={styles.modalOptionText}>{option.label}</Text>
+                <Text
+                  style={[
+                    styles.modalOptionText,
+                    { textAlign: isRTL ? "right" : "left", writingDirection: dir },
+                  ]}
+                >
+                  {option.label}
+                </Text>
               </Pressable>
             ))}
           </Pressable>
@@ -438,6 +396,7 @@ function FilterChip({
   onPress: () => void;
   size: (n: number) => number;
 }) {
+  const { dir } = useI18nLayout();
   return (
     <Pressable
       onPress={onPress}
@@ -454,7 +413,7 @@ function FilterChip({
       ]}
     >
       <Ionicons name="chevron-down" size={size(12)} color={colors.filter} />
-      <Text style={[styles.chipLabel, { fontSize: size(13) }]}>{label}</Text>
+      <Text style={[styles.chipLabel, { fontSize: size(13), writingDirection: dir }]}>{label}</Text>
     </Pressable>
   );
 }
@@ -488,7 +447,6 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     color: colors.title,
     textAlign: "center",
-    writingDirection: "rtl",
   },
   searchBar: {
     flexDirection: "row",
@@ -502,7 +460,6 @@ const styles = StyleSheet.create({
     flex: 1,
     color: colors.title,
     paddingVertical: 8,
-    writingDirection: "rtl",
   },
   filterRow: {
     flexDirection: "row",
@@ -520,7 +477,6 @@ const styles = StyleSheet.create({
   chipLabel: {
     fontWeight: "700",
     color: colors.filter,
-    writingDirection: "rtl",
   },
   filterIconBtn: {
     alignItems: "center",
@@ -542,14 +498,10 @@ const styles = StyleSheet.create({
   schoolName: {
     fontWeight: "800",
     color: colors.title,
-    textAlign: "right",
-    writingDirection: "rtl",
   },
   schoolCity: {
     fontWeight: "500",
     color: colors.subtitle,
-    textAlign: "right",
-    writingDirection: "rtl",
   },
   ratingRow: {
     flexDirection: "row",
@@ -578,7 +530,6 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     color: colors.title,
     textAlign: "center",
-    writingDirection: "rtl",
     paddingVertical: 8,
   },
   modalOption: {
@@ -590,7 +541,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: colors.title,
     textAlign: "right",
-    writingDirection: "rtl",
   },
   pressed: {
     opacity: 0.88,

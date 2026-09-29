@@ -1,7 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 import { getProgress } from "../../../api/care-path.api";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
 import {
   cardShadow,
   colors,
@@ -12,6 +14,8 @@ import {
 } from "../../../theme";
 
 export default function ProgressScreen() {
+  const { t } = useTranslation();
+  const { align, dir, isRTL } = useI18nLayout();
   const { data: progress, isLoading } = useQuery({
     queryKey: ["progress"],
     queryFn: getProgress,
@@ -19,32 +23,32 @@ export default function ProgressScreen() {
 
   if (isLoading) {
     return (
-      <SafeAreaView style={styles.wrapper} edges={["top"]}>
+      <SafeAreaView style={[styles.wrapper, { direction: isRTL ? "rtl" : "ltr" }]} edges={["top"]}>
         <View style={styles.container}>
-          <Text style={styles.loadingText}>Loading progress...</Text>
+          <Text style={[styles.loadingText, { textAlign: align, writingDirection: dir }]}>{t("common.loading")}</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={styles.wrapper} edges={["top"]}>
+    <SafeAreaView style={[styles.wrapper, { direction: isRTL ? "rtl" : "ltr" }]} edges={["top"]}>
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.container}
       >
-        <Text style={styles.title}>Progress Overview</Text>
+        <Text style={[styles.title, { textAlign: align, writingDirection: dir }]}>{t("care.progressOverview")}</Text>
         <View style={[styles.statCard, cardShadow]}>
           <Text style={styles.statValue}>{progress?.completedTasks || 0}</Text>
-          <Text style={styles.statLabel}>Completed Tasks</Text>
+          <Text style={[styles.statLabel, { textAlign: align, writingDirection: dir }]}>{t("care.completedTasks")}</Text>
         </View>
         <View style={[styles.statCard, cardShadow]}>
           <Text style={styles.statValue}>{progress?.totalTasks || 0}</Text>
-          <Text style={styles.statLabel}>Total Tasks</Text>
+          <Text style={[styles.statLabel, { textAlign: align, writingDirection: dir }]}>{t("care.totalTasks")}</Text>
         </View>
         <View style={[styles.statCard, cardShadow]}>
           <Text style={styles.statValue}>{progress?.completionRate || 0}%</Text>
-          <Text style={styles.statLabel}>Completion Rate</Text>
+          <Text style={[styles.statLabel, { textAlign: align, writingDirection: dir }]}>{t("care.completionRate")}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>

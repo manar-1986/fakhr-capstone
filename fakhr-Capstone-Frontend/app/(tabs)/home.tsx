@@ -5,6 +5,7 @@ import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
+  I18nManager,
   Image,
   Pressable,
   ScrollView,
@@ -49,7 +50,7 @@ type ServiceItem = {
 
 export default function HomeScreen() {
   const { t } = useTranslation();
-  const { align } = useI18nLayout();
+  const { align, isRTL } = useI18nLayout();
   const router = useRouter();
   const { user } = useAuth();
   const { width: windowWidth } = useWindowDimensions();
@@ -73,9 +74,9 @@ export default function HomeScreen() {
   }, [userName, t]);
 
   const padX = ms(20);
-  const gridGap = ms(10);
-  const innerW = contentW - padX * 2;
-  const cellW = Math.floor((innerW - gridGap * 3) / 4);
+  const colGap = ms(10);
+  const rowGap = ms(16);
+  const iconSlot = ms(36);
 
   const openSearch = () => {
     router.navigate("/directory");
@@ -147,6 +148,10 @@ export default function HomeScreen() {
       onPress: () => router.navigate("/community/advice"),
     },
   ];
+
+  const serviceRows = [services.slice(0, 4), services.slice(4, 8)];
+  const gridRowDir =
+    isRTL === I18nManager.isRTL ? "row" : "row-reverse";
 
   return (
     <SafeAreaView style={styles.safe} edges={["top"]}>
@@ -275,47 +280,52 @@ export default function HomeScreen() {
           style={[
             styles.grid,
             {
-              width: innerW,
-              gap: gridGap,
+              width: "100%",
+              gap: rowGap,
               marginBottom: ms(16),
             },
           ]}
         >
-          {services.map((item) => {
-            const cell = (
-              <Pressable
-                onPress={item.onPress}
-                style={({ pressed }) => [
-                  styles.cell,
-                  { width: "100%", minHeight: ms(96) },
-                  pressed && styles.pressed,
-                ]}
-                accessibilityRole="button"
-                accessibilityLabel={item.label.replace("\n", " ")}
-              >
-                <Ionicons name={item.icon} size={ms(32)} color={item.color} />
-                <Text
-                  style={[
-                    styles.cellLabel,
-                    { fontSize: ms(11), lineHeight: ms(16), marginTop: ms(8) },
-                  ]}
-                >
-                  {item.label}
-                </Text>
-              </Pressable>
-            );
-            return (
-              <View key={item.id} style={{ width: cellW }}>
-                {item.href ? (
-                  <Link href={item.href} asChild>
-                    {cell}
-                  </Link>
-                ) : (
-                  cell
-                )}
-              </View>
-            );
-          })}
+          {serviceRows.map((row, rowIndex) => (
+            <View
+              key={`row-${rowIndex}`}
+              style={[styles.gridRow, { gap: colGap, flexDirection: gridRowDir }]}
+            >
+              {row.map((item) => {
+                const cell = (
+                  <Pressable
+                    onPress={item.onPress}
+                    style={({ pressed }) => [styles.cell, pressed && styles.pressed]}
+                    accessibilityRole="button"
+                    accessibilityLabel={item.label.replace("\n", " ")}
+                  >
+                    <View style={[styles.iconSlot, { height: iconSlot }]}>
+                      <Ionicons name={item.icon} size={ms(32)} color={item.color} />
+                    </View>
+                    <Text
+                      style={[
+                        styles.cellLabel,
+                        { fontSize: ms(11), lineHeight: ms(16), marginTop: ms(8) },
+                      ]}
+                    >
+                      {item.label}
+                    </Text>
+                  </Pressable>
+                );
+                return (
+                  <View key={item.id} style={styles.cellWrap}>
+                    {item.href ? (
+                      <Link href={item.href} asChild style={styles.cellLink}>
+                        {cell}
+                      </Link>
+                    ) : (
+                      cell
+                    )}
+                  </View>
+                );
+              })}
+            </View>
+          ))}
         </View>
 
         <View
@@ -448,16 +458,35 @@ const styles = StyleSheet.create({
     writingDirection: "rtl",
   },
   grid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignSelf: "flex-start",
+    alignSelf: "center",
+    alignItems: "stretch",
+    width: "100%",
+  },
+  gridRow: {
+    width: "100%",
+    alignItems: "flex-start",
+    justifyContent: "center",
+  },
+  cellWrap: {
+    flex: 1,
+    minWidth: 0,
+    alignItems: "stretch",
+  },
+  cellLink: {
+    width: "100%",
   },
   cell: {
+    width: "100%",
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingTop: 8,
+  },
+  iconSlot: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
   cellLabel: {
+    width: "100%",
     fontWeight: "700",
     color: colors.title,
     textAlign: "center",

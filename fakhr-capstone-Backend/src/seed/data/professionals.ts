@@ -1,6 +1,7 @@
 // src/seed/data/professionals.ts
+import { applyProfessionalI18n } from "./professionals.i18n";
 
-export const professionalsSeed = [
+const professionalsSeedRaw = [
   // =========================
   // Kuwait Center for Autism (Public) — Kuwait City
   // =========================
@@ -449,3 +450,5 @@ export const professionalsSeed = [
     image: "",
   },
 ];
+
+export const professionalsSeed = professionalsSeedRaw.map(applyProfessionalI18n);

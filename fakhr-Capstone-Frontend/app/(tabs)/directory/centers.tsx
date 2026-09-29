@@ -16,10 +16,16 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { centersListQueryKey, getCenters } from "../../../api/directory.api";
 import { DisabilityAwareHeaderBackButton } from "../../../components/navigation/HeaderBackButton";
-import type { HealthCenter } from "../../../types/directory.types";
 import { useTranslation } from "react-i18next";
 import { useI18nLayout } from "../../../hooks/useI18nLayout";
-import { knownText } from "../../../utils/knownText";
+import type { HealthCenter } from "../../../types/directory.types";
+import {
+  BILINGUAL_CENTERS,
+  centerDisplayName,
+  centerDisplaySpecialty,
+  type BilingualCenter,
+  type CenterType,
+} from "../../../constants/directoryBilingual";
 import { colors as palette } from "../../../theme";
 
 const colors = {
@@ -47,84 +53,30 @@ const PHOTOS = [
   require("../../../assets/images/center-4.png"),
 ];
 
-type CenterType = "public" | "private";
-
-type CenterRow = {
-  name: string;
-  specialty: string;
-  rating: number;
-  reviews: number;
-  type: CenterType;
-};
-
-const CENTERS: CenterRow[] = [
-  {
-    name: "مركز خطوة للتأهيل",
-    specialty: "الاستشارات النفسية",
-    rating: 4.9,
-    reviews: 73,
-    type: "private",
-  },
-  {
-    name: "مركز كيان",
-    specialty: "العلاج الوظيفي",
-    rating: 4.7,
-    reviews: 120,
-    type: "private",
-  },
-  {
-    name: "مركز فنون",
-    specialty: "العلاج الطبيعي",
-    rating: 4.8,
-    reviews: 88,
-    type: "public",
-  },
-  {
-    name: "مركز تنمية الطفل",
-    specialty: "التدخل المبكر",
-    rating: 4.9,
-    reviews: 70,
-    type: "private",
-  },
-  {
-    name: "مركز الأمل للتنمية",
-    specialty: "النطق والتخاطب",
-    rating: 4.6,
-    reviews: 54,
-    type: "private",
-  },
-  {
-    name: "مركز نور الحياة",
-    specialty: "التوحد",
-    rating: 4.8,
-    reviews: 91,
-    type: "public",
-  },
-  {
-    name: "مركز بداية",
-    specialty: "العلاج السلوكي",
-    rating: 4.5,
-    reviews: 62,
-    type: "private",
-  },
-];
+const CENTERS = BILINGUAL_CENTERS;
 
 const SPECIALTY_OPTIONS = [
-  "الكل",
-  ...Array.from(new Set(CENTERS.map((center) => center.specialty))),
+  { key: "all", labelAr: "الكل", labelEn: "All" },
+  ...Array.from(
+    new Map(
+      CENTERS.map((center) => [
+        center.specialtyKey,
+        { key: center.specialtyKey, labelAr: center.specialtyAr, labelEn: center.specialtyEn },
+      ]),
+    ).values(),
+  ),
 ];
-const TYPE_OPTIONS: { label: string; value: CenterType | "all" }[] = [
-  { label: "الكل", value: "all" },
-  { label: "خاصة", value: "private" },
-  { label: "حكومية", value: "public" },
+const TYPE_OPTIONS: { value: CenterType | "all" }[] = [
+  { value: "all" },
+  { value: "private" },
+  { value: "public" },
 ];
-const RATING_OPTIONS: { label: string; value: "all" | "high" | "4.5" | "4.0" }[] =
-  [
-    { label: "الكل", value: "all" },
-    { label: "الأعلى تقييماً", value: "high" },
-    { label: "4.5 فأكثر", value: "4.5" },
-    { label: "4.0 فأكثر", value: "4.0" },
-  ];
+const RATING_OPTIONS: { value: "all" | "high" | "4.5" | "4.0" }[] = [
+  { value: "all" },
+  { value: "high" },
+  { value: "4.5" },
+  { value: "4.0" },
+];
 
 type PickerKind = "specialty" | "type" | "rating" | null;
 
@@ -135,7 +87,7 @@ function centerIdOf(center?: HealthCenter) {
 
 export default function CentersScreen() {
   const { t } = useTranslation();
-  const { align } = useI18nLayout();
+  const { align, isRTL, dir } = useI18nLayout();
   const router = useRouter();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
@@ -143,7 +95,7 @@ export default function CentersScreen() {
   const ms = (n: number) => Math.round(n * s);
 
   const [search, setSearch] = useState("");
-  const [specialty, setSpecialty] = useState("الكل");
+  const [specialty, setSpecialty] = useState("all");
   const [type, setType] = useState<CenterType | "all">("all");
   const [ratingFilter, setRatingFilter] = useState<
     "all" | "high" | "4.5" | "4.0"
@@ -159,12 +111,13 @@ export default function CentersScreen() {
   const rows = useMemo(() => {
     const q = search.trim();
     const filtered = CENTERS.filter((center) => {
-      if (specialty !== "الكل" && center.specialty !== specialty) return false;
+      if (specialty !== "all" && center.specialtyKey !== specialty) return false;
       if (type !== "all" && center.type !== type) return false;
       if (ratingFilter === "4.5" && center.rating < 4.5) return false;
       if (ratingFilter === "4.0" && center.rating < 4.0) return false;
       if (!q) return true;
-      return center.name.includes(q) || center.specialty.includes(q);
+      const hay = `${center.nameAr} ${center.nameEn} ${center.specialtyAr} ${center.specialtyEn}`.toLowerCase();
+      return hay.includes(q.toLowerCase());
     });
     if (ratingFilter === "high") {
       return [...filtered].sort((a, b) => b.rating - a.rating);
@@ -175,12 +128,16 @@ export default function CentersScreen() {
   const visibleRows = rows.slice(0, visibleCount);
   const hasMore = visibleCount < rows.length;
 
-  const openCenter = (center: CenterRow) => {
-    const index = CENTERS.findIndex((item) => item.name === center.name);
+  const openCenter = (center: BilingualCenter) => {
+    const index = CENTERS.findIndex((item) => item.id === center.id);
     const id = centerIdOf(apiCenters[index] ?? apiCenters[0]);
-    router.push(
-      `/(tabs)/directory/center-details?id=${id ?? ""}` as const,
-    );
+    router.push({
+      pathname: "/(tabs)/directory/center-details",
+      params: {
+        id: id ?? "",
+        listing: encodeURIComponent(JSON.stringify(center)),
+      },
+    });
   };
 
   const pickerTitle =
@@ -192,9 +149,9 @@ export default function CentersScreen() {
 
   const pickerOptions =
     picker === "specialty"
-      ? SPECIALTY_OPTIONS.map((label) => ({
-          label: label === "الكل" ? t("ui.all") : knownText(t, label),
-          onSelect: () => setSpecialty(label),
+      ? SPECIALTY_OPTIONS.map((item) => ({
+          label: item.key === "all" ? t("ui.all") : isRTL ? item.labelAr : item.labelEn,
+          onSelect: () => setSpecialty(item.key),
         }))
       : picker === "type"
         ? TYPE_OPTIONS.map((item) => ({
@@ -219,7 +176,7 @@ export default function CentersScreen() {
           }));
 
   return (
-    <SafeAreaView style={styles.safe} edges={["top"]}>
+    <SafeAreaView style={[styles.safe, { direction: isRTL ? "rtl" : "ltr" }]} edges={["top"]}>
       <View style={[styles.column, { width: contentW }]}>
       <ScrollView
         style={styles.scroll}
@@ -236,7 +193,7 @@ export default function CentersScreen() {
       >
         <View style={[styles.header, { height: ms(44), marginBottom: ms(10) }]}>
           <DisabilityAwareHeaderBackButton color={colors.title} />
-          <Text style={[styles.title, { fontSize: ms(26), lineHeight: ms(34) }]}>
+          <Text style={[styles.title, { fontSize: ms(26), lineHeight: ms(34), writingDirection: dir }]}>
             {t("ui.centers")}
           </Text>
         </View>
@@ -250,7 +207,7 @@ export default function CentersScreen() {
               paddingHorizontal: ms(14),
               marginBottom: ms(12),
               gap: ms(8),
-              flexDirection: "row",
+              flexDirection: isRTL ? "row-reverse" : "row",
             },
           ]}
         >
@@ -262,7 +219,7 @@ export default function CentersScreen() {
             }}
             placeholder={t("ui.searchCenter")}
             placeholderTextColor={colors.placeholder}
-            style={[styles.searchInput, { fontSize: ms(14) }]}
+            style={[styles.searchInput, { fontSize: ms(14), writingDirection: dir }]}
             textAlign={align}
             returnKeyType="search"
           />
@@ -279,7 +236,7 @@ export default function CentersScreen() {
             {
               marginBottom: ms(16),
               gap: ms(8),
-              flexDirection: "row",
+              flexDirection: isRTL ? "row-reverse" : "row",
             },
           ]}
         >
@@ -307,25 +264,41 @@ export default function CentersScreen() {
         </View>
 
         <View style={{ gap: ms(16), width: "100%" }}>
+          {visibleRows.length === 0 ? (
+            <Text
+              style={[
+                styles.emptyText,
+                {
+                  fontSize: ms(14),
+                  textAlign: isRTL ? "right" : "left",
+                  writingDirection: dir,
+                },
+              ]}
+            >
+              {t("common.noResults")}
+            </Text>
+          ) : null}
           {visibleRows.map((center) => {
-            const index = CENTERS.findIndex((item) => item.name === center.name);
+            const index = CENTERS.findIndex((item) => item.id === center.id);
             const photoW = ms(108);
             const photoH = ms(80);
+            const name = centerDisplayName(center, isRTL);
+            const specialtyLabel = centerDisplaySpecialty(center, isRTL);
             return (
               <Pressable
-                key={center.name}
+                key={center.id}
                 onPress={() => openCenter(center)}
                 style={({ pressed }) => [
                   styles.row,
                   {
                     gap: ms(10),
                     minHeight: photoH,
-                    flexDirection: "row",
+                    flexDirection: isRTL ? "row-reverse" : "row",
                   },
                   pressed && styles.pressed,
                 ]}
                 accessibilityRole="button"
-                accessibilityLabel={center.name}
+                accessibilityLabel={name}
               >
                 <Image
                   source={PHOTOS[index % PHOTOS.length]}
@@ -336,15 +309,20 @@ export default function CentersScreen() {
                   }}
                   resizeMode="cover"
                 />
-                <View style={styles.info}>
+                <View style={[styles.info, { alignItems: isRTL ? "flex-end" : "flex-start" }]}>
                   <Text
                     style={[
                       styles.centerName,
-                      { fontSize: ms(15), lineHeight: ms(22) },
+                      {
+                        fontSize: ms(15),
+                        lineHeight: ms(22),
+                        textAlign: isRTL ? "right" : "left",
+                        writingDirection: dir,
+                      },
                     ]}
                     numberOfLines={1}
                   >
-                    {center.name}
+                    {name}
                   </Text>
                   <Text
                     style={[
@@ -353,10 +331,12 @@ export default function CentersScreen() {
                         fontSize: ms(12),
                         lineHeight: ms(18),
                         marginTop: ms(1),
+                        textAlign: isRTL ? "right" : "left",
+                        writingDirection: dir,
                       },
                     ]}
                   >
-                    {knownText(t, center.specialty)}
+                    {specialtyLabel}
                   </Text>
                   <View
                     style={[
@@ -423,7 +403,7 @@ export default function CentersScreen() {
             style={[styles.modalSheet, { width: Math.min(contentW - 40, 340) }]}
             onPress={() => {}}
           >
-            <Text style={styles.modalTitle}>{pickerTitle}</Text>
+            <Text style={[styles.modalTitle, { writingDirection: dir }]}>{pickerTitle}</Text>
             {pickerOptions.map((option) => (
               <Pressable
                 key={option.label}
@@ -437,7 +417,14 @@ export default function CentersScreen() {
                   pressed && styles.pressed,
                 ]}
               >
-                <Text style={styles.modalOptionText}>{option.label}</Text>
+                <Text
+                  style={[
+                    styles.modalOptionText,
+                    { textAlign: isRTL ? "right" : "left", writingDirection: dir },
+                  ]}
+                >
+                  {option.label}
+                </Text>
               </Pressable>
             ))}
           </Pressable>
@@ -456,6 +443,7 @@ function FilterChip({
   onPress: () => void;
   size: (n: number) => number;
 }) {
+  const { dir } = useI18nLayout();
   return (
     <Pressable
       onPress={onPress}
@@ -473,7 +461,7 @@ function FilterChip({
       ]}
     >
       <Ionicons name="chevron-down" size={size(12)} color={colors.filter} />
-      <Text style={[styles.chipLabel, { fontSize: size(13) }]}>{label}</Text>
+      <Text style={[styles.chipLabel, { fontSize: size(13), writingDirection: dir }]}>{label}</Text>
     </Pressable>
   );
 }
@@ -504,7 +492,6 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     color: colors.title,
     textAlign: "center",
-    writingDirection: "rtl",
   },
   searchBar: {
     flexDirection: "row",
@@ -518,7 +505,6 @@ const styles = StyleSheet.create({
     flex: 1,
     color: colors.title,
     paddingVertical: 8,
-    writingDirection: "rtl",
   },
   filterRow: {
     flexDirection: "row",
@@ -542,7 +528,6 @@ const styles = StyleSheet.create({
   chipLabel: {
     fontWeight: "700",
     color: colors.filter,
-    writingDirection: "rtl",
   },
   row: {
     width: "100%",
@@ -556,14 +541,10 @@ const styles = StyleSheet.create({
   centerName: {
     fontWeight: "800",
     color: colors.title,
-    textAlign: "right",
-    writingDirection: "rtl",
   },
   centerSpecialty: {
     fontWeight: "500",
     color: colors.subtitle,
-    textAlign: "right",
-    writingDirection: "rtl",
   },
   ratingRow: {
     flexDirection: "row",
@@ -584,7 +565,6 @@ const styles = StyleSheet.create({
   moreBtnText: {
     color: colors.white,
     fontWeight: "700",
-    writingDirection: "rtl",
   },
   modalOverlay: {
     flex: 1,
@@ -603,7 +583,6 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     color: colors.title,
     textAlign: "center",
-    writingDirection: "rtl",
     paddingVertical: 8,
   },
   modalOption: {
@@ -614,8 +593,10 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "600",
     color: colors.title,
-    textAlign: "right",
-    writingDirection: "rtl",
+  },
+  emptyText: {
+    color: colors.subtitle,
+    fontWeight: "500",
   },
   pressed: {
     opacity: 0.88,
