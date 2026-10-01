@@ -2,7 +2,7 @@ import { Stack } from "expo-router";
 import React from "react";
 
 /**
- * Community (Circles) stack: feed + advice reply flow.
+ * Fakhr Community: API-backed feed, composer and discussions. Legacy advice route retained for existing callers.
  */
 export default function CommunityStackLayout() {
   return (
@@ -14,6 +14,8 @@ export default function CommunityStackLayout() {
       }}
     >
       <Stack.Screen name="index" />
+      <Stack.Screen name="create" />
+      <Stack.Screen name="post" />
       <Stack.Screen name="advice" />
     </Stack>
   );

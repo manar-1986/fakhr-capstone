@@ -15,9 +15,6 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getProfessionals } from "../../../api/directory.api";
 import { DisabilityAwareHeaderBackButton } from "../../../components/navigation/HeaderBackButton";
-import { useRequireAuth } from "../../../hooks/useRequireAuth";
-import { bookingReturnHref } from "../../../utils/authRedirect";
-import type { DirectoryListing } from "../../../components/directory/types";
 import type { Professional } from "../../../types/directory.types";
 import { BILINGUAL_DOCTORS } from "../../../constants/professionalBilingual";
 import { useTranslation } from "react-i18next";
@@ -93,7 +90,6 @@ function mapApiProfessional(p: Professional, index: number): SpecialistRow {
 export default function ProfessionalsScreen() {
   const { t } = useTranslation();
   const { align, isRTL, dir } = useI18nLayout();
-  const { requireAuth } = useRequireAuth();
   const router = useRouter();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
@@ -132,28 +128,7 @@ export default function ProfessionalsScreen() {
       row.id ||
       (apiPros && professionalId(apiPros[index])) ||
       `doc-${index + 1}`;
-    const listing: DirectoryListing = {
-      id,
-      kind: "doctor",
-      name: row.nameAr,
-      nameAr: row.nameAr,
-      nameEn: row.nameEn,
-      subtitle: row.specialtyAr,
-      subtitleAr: row.specialtyAr,
-      subtitleEn: row.specialtyEn,
-      status: "OPEN",
-      locationLine: "",
-      rating: row.rating.toFixed(1),
-      imageUrl: row.imageUri || "",
-      tags: [row.specialtyEn || row.specialtyAr],
-      tagsAr: [row.specialtyAr],
-      tagsEn: [row.specialtyEn],
-      phone: "",
-    };
-    const encoded = encodeURIComponent(JSON.stringify(listing));
-    const href = bookingReturnHref(encoded);
-    if (!requireAuth(href)) return;
-    router.push(href);
+    router.push({ pathname: "/(tabs)/directory/professional-details", params: { id } });
   };
 
   return (
@@ -413,7 +388,6 @@ const styles = StyleSheet.create({
   ratingRow: {
     flexDirection: "row",
     alignItems: "center",
-    flexDirection: "row",
   },
   ratingText: {
     fontWeight: "600",

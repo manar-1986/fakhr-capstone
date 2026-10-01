@@ -36,7 +36,6 @@ type ServiceCategory = {
     | "/(tabs)/directory/schools"
     | "/(tabs)/services"
     | "/(tabs)/activity-library"
-    | "/(tabs)/community/advice"
     | "/(tabs)/products";
 };
 
@@ -72,14 +71,6 @@ const SERVICE_CATEGORIES: ServiceCategory[] = [
     iconColor: "#6E7CAF",
     backgroundColor: "#EBEEF9",
     pathname: "/(tabs)/activity-library",
-  },
-  {
-    id: "consultations",
-    labelKey: "ui.consultations",
-    icon: "chatbubble-ellipses-outline",
-    iconColor: "#7B6AA8",
-    backgroundColor: "#EEEAF8",
-    pathname: "/(tabs)/community/advice",
   },
   {
     id: "home-services",

@@ -110,15 +110,6 @@ export default function ProfileTabScreen() {
       },
     },
     {
-      key: "advice",
-      label: t("ui.myConsultations"),
-      icon: "chatbubbles-outline",
-      onPress: () => {
-        if (!requireAuth("/(tabs)/community/advice")) return;
-        router.navigate("/community/advice");
-      },
-    },
-    {
       key: "notifications",
       label: t("ui.notifications"),
       icon: "notifications-outline",

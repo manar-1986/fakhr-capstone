@@ -3,7 +3,7 @@ import { HeaderBackButton } from "../../../components/navigation/HeaderBackButto
 import { colors, typography } from "../../../theme";
 
 /**
- * Directory stack: Centers & Professionals hub (index), booking flow, and legacy directory screens.
+ * Directory stack: separate service pages, booking flow, and a legacy index redirect.
  */
 export default function DirectoryLayout() {
   const backButton = () => (
@@ -47,7 +47,7 @@ export default function DirectoryLayout() {
       <Stack.Screen
         name="professional-details"
         options={{
-          headerShown: true,
+          headerShown: false,
           headerTitle: "Professional Details",
           headerTitleAlign: "center",
           headerLeft: backButton,

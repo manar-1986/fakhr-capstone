@@ -7,6 +7,7 @@ import {
   Alert,
   I18nManager,
   Image,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -15,7 +16,7 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { getCurrentUser } from "../../api/users.api";
 import { WEB_PHONE_WIDTH } from "../../components/layout/WebAppShell";
 import { useAuth } from "../../context/AuthContext";
@@ -52,11 +53,20 @@ export default function HomeScreen() {
   const { align, isRTL } = useI18nLayout();
   const router = useRouter();
   const { user } = useAuth();
+  const insets = useSafeAreaInsets();
+  // Match the existing absolute tab bar and reserve a separate launcher area.
+  const assistantSize = 60;
+  const assistantBottom = 58 + Math.max(insets.bottom, 8) + 12;
+  // Keep the web bubble within the launcher area, clear of scrollable content.
+  const assistantClearance = assistantBottom + assistantSize + (Platform.OS === "web" ? 44 : 12);
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, WEB_PHONE_WIDTH);
   const s = contentW / DESIGN_W;
   const ms = (n: number) => Math.round(n * s);
   const [search, setSearch] = useState("");
+  const [assistantHovered, setAssistantHovered] = useState(false);
+  const [assistantFocused, setAssistantFocused] = useState(false);
+  const assistantLabel = `${t("ui.askFakhr")} ✨ AI`;
 
   const { data: currentUser } = useQuery({
     queryKey: ["currentUser"],
@@ -78,7 +88,7 @@ export default function HomeScreen() {
   const iconSlot = ms(36);
 
   const openSearch = () => {
-    router.navigate("/directory");
+    router.navigate("/(tabs)/directory/centers");
   };
 
   const openCategory = (href: Href) => {
@@ -136,9 +146,9 @@ export default function HomeScreen() {
       href: "/(tabs)/services",
     },
     {
-      id: "consultations",
-      label: t("ui.consultations"),
-      icon: "chatbubble-ellipses-outline",
+      id: "community",
+      label: t("ui.fakhrCommunity"),
+      icon: "people-outline",
       color: colors.icon,
       href: "/(tabs)/community",
     },
@@ -151,7 +161,7 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.safe} edges={["top"]}>
       <ScrollView
-        style={styles.scroll}
+        style={[styles.scroll, { marginBottom: assistantClearance }]}
         contentContainerStyle={[
           styles.scrollContent,
           {
@@ -159,7 +169,7 @@ export default function HomeScreen() {
             maxWidth: WEB_PHONE_WIDTH,
             paddingHorizontal: padX,
             paddingTop: ms(6),
-            paddingBottom: ms(108),
+            paddingBottom: ms(8),
           },
         ]}
         showsVerticalScrollIndicator={false}
@@ -252,7 +262,6 @@ export default function HomeScreen() {
               {t("ui.heroTitle")}
             </Text>
             <Pressable
-              onPress={() => router.navigate("/directory")}
               style={({ pressed }) => [
                 styles.heroBtn,
                 { borderRadius: ms(14), minHeight: ms(32), paddingHorizontal: ms(14) },
@@ -318,50 +327,64 @@ export default function HomeScreen() {
             </View>
           ))}
         </View>
-
-        <View
-          style={[
-            styles.aiBanner,
-            {
-              minHeight: ms(148),
-              borderRadius: ms(22),
-              paddingLeft: ms(18),
-              paddingVertical: ms(16),
-            },
+      </ScrollView>
+      <View
+        pointerEvents="box-none"
+        style={[
+          styles.assistantDock,
+          {
+            width: contentW,
+            bottom: assistantBottom,
+            paddingHorizontal: padX,
+            alignItems: isRTL ? "flex-start" : "flex-end",
+          },
+        ]}
+      >
+        {Platform.OS === "web" && (assistantHovered || assistantFocused) && (
+          <View
+            pointerEvents="none"
+            role="tooltip"
+            nativeID="ask-fakhr-tooltip"
+            style={[
+              styles.assistantTooltip,
+              { bottom: assistantSize + 8 },
+              isRTL ? { left: padX } : { right: padX },
+            ]}
+          >
+            <Text style={styles.assistantTooltipText} numberOfLines={1}>
+              {assistantLabel}
+            </Text>
+          </View>
+        )}
+        <Pressable
+          onHoverIn={() => Platform.OS === "web" && setAssistantHovered(true)}
+          onHoverOut={() => setAssistantHovered(false)}
+          onFocus={() => Platform.OS === "web" && setAssistantFocused(true)}
+          onBlur={() => setAssistantFocused(false)}
+          onPress={() => {
+            setAssistantHovered(false);
+            setAssistantFocused(false);
+            router.push("/(tabs)/directory/helpCenter");
+          }}
+          accessibilityRole="button"
+          accessibilityLabel={assistantLabel}
+          accessibilityHint={t("ui.startChat")}
+          style={({ pressed }) => [
+            styles.assistantLauncher,
+            { width: assistantSize, height: assistantSize, borderRadius: assistantSize / 2 },
+            pressed && styles.pressed,
           ]}
         >
-          <View style={styles.aiTextCol}>
-            <Text style={[styles.aiTitle, { fontSize: ms(28), lineHeight: ms(36) }]}>
-              {t("ui.askFakhr")}
-            </Text>
-            <Text
-              style={[
-                styles.aiSub,
-                { fontSize: ms(13), lineHeight: ms(20), marginBottom: ms(12) },
-              ]}
-            >
-              {t("ui.aiSubtitle")}
-            </Text>
-            <Pressable
-              onPress={() => router.push("/(tabs)/directory/helpCenter")}
-              style={({ pressed }) => [
-                styles.aiBtn,
-                { borderRadius: ms(16), minHeight: ms(36), paddingHorizontal: ms(16) },
-                pressed && styles.pressed,
-              ]}
-              accessibilityRole="button"
-              accessibilityLabel={t("ui.startChat")}
-            >
-              <Text style={[styles.aiBtnText, { fontSize: ms(14) }]}>{t("ui.startChat")}</Text>
-            </Pressable>
+          <View pointerEvents="none" style={styles.assistantAvatar}>
+            <Image
+              source={require("../../assets/images/fakhr-assistant-baby.png")}
+              style={styles.assistantImage}
+              resizeMode="cover"
+              accessible={false}
+            />
           </View>
-          <Image
-            source={require("../../assets/images/home-robot.png")}
-            style={{ width: ms(120), height: ms(132), marginRight: ms(6) }}
-            resizeMode="contain"
-          />
-        </View>
-      </ScrollView>
+        </Pressable>
+      </View>
     </SafeAreaView>
   );
 }
@@ -482,38 +505,53 @@ const styles = StyleSheet.create({
     textAlign: "center",
     writingDirection: "rtl",
   },
-  aiBanner: {
-    backgroundColor: colors.brand,
-    flexDirection: "row",
-    alignItems: "center",
-    overflow: "hidden",
+  assistantDock: {
+    position: "absolute",
+    alignSelf: "center",
+    direction: "ltr",
   },
-  aiTextCol: {
-    flex: 1,
-    alignItems: "flex-start",
-  },
-  aiTitle: {
-    fontWeight: "800",
-    color: colors.white,
-    textAlign: "right",
-    writingDirection: "rtl",
-  },
-  aiSub: {
-    fontWeight: "500",
-    color: colors.white,
-    textAlign: "right",
-    writingDirection: "rtl",
-  },
-  aiBtn: {
+  assistantLauncher: {
     backgroundColor: colors.white,
-    alignItems: "center",
-    justifyContent: "center",
-    alignSelf: "flex-start",
+    borderWidth: 1,
+    borderColor: colors.searchBorder,
+    padding: 3,
+    shadowColor: colors.brand,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.18,
+    shadowRadius: 6,
+    elevation: 5,
   },
-  aiBtnText: {
-    fontWeight: "700",
-    color: colors.brand,
-    writingDirection: "rtl",
+  assistantTooltip: {
+    position: "absolute",
+    backgroundColor: colors.brand,
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    shadowColor: colors.brand,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.12,
+    shadowRadius: 4,
+  },
+  assistantTooltipText: {
+    color: colors.white,
+    fontSize: 12,
+    lineHeight: 16,
+    fontWeight: "600",
+    writingDirection: "ltr",
+  },
+  assistantAvatar: {
+    flex: 1,
+    borderRadius: 30,
+    overflow: "hidden",
+    backgroundColor: colors.brand,
+  },
+  assistantImage: {
+    // Frame the face and shoulders without altering the original image asset.
+    position: "absolute",
+    width: "200%",
+    height: "160%",
+    left: "-40%",
+    top: 0,
   },
   pressed: {
     opacity: 0.85,

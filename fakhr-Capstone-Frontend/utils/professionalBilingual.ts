@@ -160,6 +160,7 @@ function fillFromLegacy(legacy: string | undefined, existing: BiFields): BiField
 
 export function normalizeProfessional(rawInput: unknown): import("../types/directory.types").Professional {
   const raw = asRecord(rawInput) ?? {};
+  const center = asRecord(raw.centerId);
   const catalog = lookupCatalog(raw);
   const catalogDoctor = catalog && "educationAr" in catalog ? (catalog as BilingualDoctor) : undefined;
   const catalogSeed = catalog && !("educationAr" in catalog) ? catalog : undefined;
@@ -179,8 +180,14 @@ export function normalizeProfessional(rawInput: unknown): import("../types/direc
   let availability = fillFromLegacy(asTrimmed(raw.availability), extractBi(raw, "availability"));
   let nextAvailable = fillFromLegacy(asTrimmed(raw.nextAvailable), extractBi(raw, "nextAvailable"));
   let experience = fillFromLegacy(asTrimmed(raw.experience), extractBi(raw, "experience"));
-  let centerName = fillFromLegacy(asTrimmed(raw.centerName), extractBi(raw, "centerName"));
-  let centerAddress = fillFromLegacy(asTrimmed(raw.centerAddress), extractBi(raw, "centerAddress"));
+  let centerName = fillFromLegacy(asTrimmed(raw.centerName) || asTrimmed(center?.name), {
+    ar: asTrimmed(raw.centerNameAr) || asTrimmed(center?.nameAr),
+    en: asTrimmed(raw.centerNameEn) || asTrimmed(center?.nameEn),
+  });
+  const centerAddress = fillFromLegacy(asTrimmed(raw.centerAddress) || asTrimmed(center?.address), {
+    ar: asTrimmed(raw.centerAddressAr) || asTrimmed(center?.addressAr),
+    en: asTrimmed(raw.centerAddressEn) || asTrimmed(center?.addressEn),
+  });
 
   const specialtyKey = asTrimmed(raw.specialty) || catalogDoctor?.specialtyKey || "";
   const specialtyFromKey = specialtyKey ? SPECIALTY_LABELS[specialtyKey] : undefined;
@@ -276,6 +283,13 @@ export function normalizeProfessional(rawInput: unknown): import("../types/direc
 
   return {
     id,
+    clinicNameAr: asTrimmed(raw.clinicNameAr),
+    clinicNameEn: asTrimmed(raw.clinicNameEn),
+    addressAr: asTrimmed(raw.addressAr),
+    addressEn: asTrimmed(raw.addressEn),
+    mapUrl: asTrimmed(raw.mapUrl),
+    latitude: typeof raw.latitude === "number" ? raw.latitude : undefined,
+    longitude: typeof raw.longitude === "number" ? raw.longitude : undefined,
     specialty: specialtyKey,
     nameAr,
     nameEn,
@@ -325,13 +339,13 @@ export function normalizeProfessional(rawInput: unknown): import("../types/direc
     phone: asTrimmed(raw.phone),
     image: asTrimmed(raw.image),
     centerId: asTrimmed(raw.centerId),
-    centerName: centerName.en || centerName.ar || asTrimmed(raw.centerName),
-    centerAddress: centerAddress.en || centerAddress.ar || asTrimmed(raw.centerAddress),
-    centerPhone: raw.centerPhone as string | undefined,
+    centerName: centerName.en || centerName.ar || asTrimmed(raw.centerName) || asTrimmed(center?.name),
+    centerAddress: centerAddress.en || centerAddress.ar || asTrimmed(raw.centerAddress) || asTrimmed(center?.address),
+    centerPhone: asTrimmed(raw.centerPhone) || asTrimmed(center?.phone),
     centerEmail: raw.centerEmail as string | undefined,
-    centerMapUrl: asTrimmed(raw.centerMapUrl),
-    centerLatitude: typeof raw.centerLatitude === "number" ? raw.centerLatitude : undefined,
-    centerLongitude: typeof raw.centerLongitude === "number" ? raw.centerLongitude : undefined,
+    centerMapUrl: asTrimmed(raw.centerMapUrl) || asTrimmed(center?.mapUrl),
+    centerLatitude: typeof raw.centerLatitude === "number" ? raw.centerLatitude : typeof center?.latitude === "number" ? center.latitude : undefined,
+    centerLongitude: typeof raw.centerLongitude === "number" ? raw.centerLongitude : typeof center?.longitude === "number" ? center.longitude : undefined,
     createdAt: asTrimmed(raw.createdAt),
     updatedAt: asTrimmed(raw.updatedAt),
   };

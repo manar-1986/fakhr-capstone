@@ -1,4 +1,21 @@
 {
+  "clinic": {
+    "details": "Doctor Details",
+    "contact": "Clinic contact information",
+    "name": "Clinic / hospital",
+    "address": "Clinic location / address",
+    "phone": "Clinic phone number",
+    "call": "Call",
+    "location": "Location",
+    "unavailable": "Not available",
+    "mapAvailable": "Clinic location available on Maps",
+    "openError": "Could not open this link. Please use the contact information above.",
+    "services": "Services",
+    "education": "Education",
+    "certifications": "Certifications",
+    "languages": "Languages",
+    "viewDetails": "View details"
+  },
   "auth": {
     "signIn": "Sign In",
     "signOut": "Sign Out",
@@ -237,7 +254,7 @@
     "circles": "Circles",
     "profile": "Profile",
     "settings": "Settings",
-    "plan": "My plan",
+    "plan": "My Journey",
     "explore": "Explore",
     "activities": "Activities",
     "account": "My account"
@@ -366,6 +383,7 @@
     "selectChild": "Choose child"
   },
   "ui": {
+    "fakhrCommunity": "Fakhr Community",
     "helloName": "Hello {{name}}",
     "helpToday": "How can we help you today?",
     "searchHome": "Search for a service, provider, or product",
@@ -399,7 +417,7 @@
     "centers": "Centers",
     "doctors": "Doctors\n& specialists",
     "doctorsOneLine": "Doctors & specialists",
-    "activities": "Activities\n& programs",
+    "activities": "Educational\nVideos",
     "activitiesOneLine": "Activities & programs",
     "homeProducts": "Home\nproducts",
     "homeProductsOneLine": "Home products",

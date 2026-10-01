@@ -1,342 +1,62 @@
+import { colors } from "../../../theme/colors";
 import { Ionicons } from "@expo/vector-icons";
-import { Image } from "expo-image";
-import React, { useCallback, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
-import {
-  Alert,
-  FlatList,
-  I18nManager,
-  Modal,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useLocalSearchParams } from "expo-router";
+import React, { useEffect, useRef, useState } from "react";
+import { ActivityIndicator, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import { CategoryTab } from "../../../components/community/CategoryTab";
-import { CATEGORY_TABS, postsForCategory } from "../../../components/community/communityMockData";
-import { CreatePostBox } from "../../../components/community/CreatePostBox";
-import { PostCard } from "../../../components/community/PostCard";
-import { SafeBanner } from "../../../components/community/SafeBanner";
-import type { CommunityCategoryId, CommunityPost } from "../../../components/community/types";
-import { libraryColors as c } from "../../../constants/libraryTheme";
-import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
-import { useLanguage } from "../../../context/LanguageContext";
+import { getCommunityPosts, setCommunityInteraction, type CommunityPost, type CommunitySort } from "../../../api/community.api";
+import { FAKHR_COMMUNITY_CATEGORIES } from "../../../constants/fakhrCommunity";
+import { ApiPostCard, CommunityButton, COMMUNITY_ROOT, createPostHref, postHref, useCommunityUI, c } from "../../../components/community/FakhrCommunityUI";
 
-const HEADER_AVATAR =
-  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80";
-
-export default function ParentCommunityScreen() {
-  const { t } = useTranslation();
-  const { isRTL } = useLanguage();
-  const reverseRows = isRTL !== I18nManager.isRTL;
+export default function FakhrCommunityScreen() {
+  const { text, row, txt, isRTL, user, go, requireLogin, router } = useCommunityUI();
+  const { sort: initialSort } = useLocalSearchParams<{ sort?: string }>();
   const insets = useSafeAreaInsets();
-
-  const [category, setCategory] = useState<CommunityCategoryId>("all");
-  const [draft, setDraft] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalBody, setModalBody] = useState("");
-
-  const data = useMemo(() => postsForCategory(category), [category]);
-
-  const report = useCallback(
-    (nameKey: string) => {
-      Alert.alert(
-        t("community.reportContent"),
-        t("community.reportPostBy", { name: t(nameKey) }),
-        [
-          { text: t("common.cancel"), style: "cancel" },
-          { text: t("community.report"), style: "destructive" },
-        ]
-      );
-    },
-    [t]
-  );
-
-  const renderItem = useCallback(
-    ({ item }: { item: CommunityPost }) => (
-      <PostCard post={item} onReport={() => report(item.nameKey)} />
-    ),
-    [report]
-  );
-
-  const listHeader = (
-    <>
-      <View style={[styles.topHeader, reverseRows && styles.rowReverse]}>
-        <HeaderBackButton variant="inline" color={c.text} />
-        <View style={[styles.brandRow, reverseRows && styles.rowReverse]}>
-          <View style={styles.brandIcon}>
-            <Ionicons name="people" size={20} color={c.white} />
-          </View>
-          <Text style={[styles.brandName, isRTL && styles.textRtl]}>
-            {t("community.brand")}
-          </Text>
-        </View>
-        <View style={[styles.headerRight, reverseRows && styles.rowReverse]}>
-          <Pressable
-            style={styles.roundBtn}
-            onPress={() =>
-              Alert.alert(t("home.notifications"), t("community.noNewNotifications"))
-            }
-            accessibilityRole="button"
-            accessibilityLabel={t("community.notificationsA11y")}
-          >
-            <Ionicons name="notifications-outline" size={22} color={c.text} />
-          </Pressable>
-          <Image
-            source={{ uri: HEADER_AVATAR }}
-            style={styles.profilePic}
-            contentFit="cover"
-            accessibilityLabel={t("community.profileA11y")}
-          />
-        </View>
+  const client = useQueryClient();
+  const [category, setCategory] = useState("all");
+  const [search, setSearch] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sort, setSort] = useState<CommunitySort>(initialSort === "saved" && user ? "saved" : "latest");
+  const [more, setMore] = useState(false);
+  const filters = useRef<ScrollView>(null);
+  useEffect(() => { const timer = setTimeout(() => setSearchQuery(search.trim()), 250); return () => clearTimeout(timer); }, [search]);
+  useEffect(() => { if (!user) setSort("latest"); else if (initialSort === "saved") setSort("saved"); }, [user, initialSort]);
+  const feed = useInfiniteQuery({
+    queryKey: ["community", "feed", user?.id, category, searchQuery, sort], initialPageParam: 1,
+    queryFn: ({ pageParam }) => getCommunityPosts({ page: pageParam, category, search: searchQuery, sort }),
+    getNextPageParam: page => page.pagination.page < page.pagination.totalPages ? page.pagination.page + 1 : undefined,
+    retry: false,
+  });
+  const pinned = useQuery({ queryKey: ["community", "pinned", user?.id], queryFn: () => getCommunityPosts({ pinned: true }), retry: false });
+  const interaction = useMutation({ mutationFn: ({ post, action }: { post: CommunityPost; action: "like" | "save" }) => setCommunityInteraction(post.id, action, action === "like" ? !post.isLiked : !post.isSaved), onSuccess: () => client.invalidateQueries({ queryKey: ["community"] }) });
+  const interact = (post: CommunityPost, action: "like" | "save") => { if (requireLogin(postHref(post.id))) interaction.mutate({ post, action }); };
+  const rows = feed.data?.pages.flatMap(page => page.posts) ?? [];
+  const important = pinned.data?.posts[0];
+  return <SafeAreaView style={c.safe} edges={["top"]}>
+    <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={[c.content, { paddingBottom: 90 + insets.bottom }]}>
+      <View style={c.header}>
+        <View style={[c.row, row]}><Pressable accessibilityRole="button" accessibilityLabel={text("رجوع", "Back")} onPress={() => router.canGoBack() ? router.back() : router.replace("/(tabs)/home")} style={c.action}><Ionicons name={isRTL ? "arrow-forward" : "arrow-back"} size={23} color={colors.brandMuted} /></Pressable><Text accessibilityRole="header" style={[c.title, txt]}>{text("مجتمع فخر", "Fakhr Community")}</Text><Ionicons name="people" size={38} color={colors.brandMuted} /></View>
+        <Text style={[c.subtitle, txt]}>{text("معًا.. نصنع فرقًا أكبر", "Together, we make a bigger difference")}</Text>
       </View>
-
-      <SafeBanner />
-
-      <CreatePostBox
-        draft={draft}
-        onChangeDraft={setDraft}
-        onOpenModal={() => setModalVisible(true)}
-        onPhoto={() => Alert.alert(t("community.photo"), t("community.pickPhoto"))}
-        onTagTopics={() =>
-          Alert.alert(t("community.tagTopics"), t("community.tagTopicsAlert"))
-        }
-        onPrivacy={() =>
-          Alert.alert(t("community.privacy"), t("community.privacyAlert"))
-        }
-      />
-
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={[
-          styles.catScroll,
-          reverseRows && styles.rowReverse,
-        ]}
-      >
-        {CATEGORY_TABS.map((tab) => (
-          <CategoryTab
-            key={tab.id}
-            label={t(tab.labelKey)}
-            selected={category === tab.id}
-            onPress={() => setCategory(tab.id)}
-          />
-        ))}
-      </ScrollView>
-    </>
-  );
-
-  return (
-    <SafeAreaView style={styles.safe} edges={["top"]}>
-      <View style={styles.flex}>
-        <FlatList
-          data={data}
-          extraData={`${category}-${isRTL}`}
-          keyExtractor={(item) => item.id}
-          renderItem={renderItem}
-          ListHeaderComponent={listHeader}
-          contentContainerStyle={[
-            styles.listContent,
-            { paddingBottom: 120 + insets.bottom },
-          ]}
-          showsVerticalScrollIndicator={false}
-        />
-
-        <Pressable
-          style={[
-            styles.shieldFab,
-            isRTL
-              ? { bottom: 72 + insets.bottom, left: 16 }
-              : { bottom: 72 + insets.bottom, right: 16 },
-          ]}
-          onPress={() =>
-            Alert.alert(t("community.safetyHelp"), t("community.safetyBody"))
-          }
-          accessibilityRole="button"
-          accessibilityLabel={t("community.safetyFabA11y")}
-        >
-          <Ionicons name="shield-checkmark" size={22} color={c.white} />
-        </Pressable>
+      <View style={c.card}>
+        <TextInput accessibilityLabel={text("البحث في المجتمع", "Search community")} placeholder={text("ابحث في المواضيع والتجارب...", "Search topics and experiences...")} value={search} onChangeText={setSearch} maxLength={200} placeholderTextColor={colors.textMuted} style={[c.input, txt]} />
+        <CommunityButton title={text("مشاركة جديدة", "New Post")} icon="add" primary onPress={() => { if (requireLogin(createPostHref)) go(createPostHref); }} />
+        <ScrollView key={String(isRTL)} ref={filters} horizontal showsHorizontalScrollIndicator={false} style={{ direction: "ltr" }} contentContainerStyle={[c.chips, row]} onContentSizeChange={() => { if (isRTL) filters.current?.scrollToEnd({ animated: false }); }}>
+          {FAKHR_COMMUNITY_CATEGORIES.filter((_, index) => more || index < 6).map(item => <Pressable accessibilityRole="button" accessibilityState={{ selected: category === item.id }} key={item.id} onPress={() => setCategory(item.id)} style={[c.chip, category === item.id && c.selected]}><Ionicons name={item.icon} size={25} color={colors.brandMuted} /><Text style={c.chipText}>{isRTL ? item.ar : item.en}</Text></Pressable>)}
+          <Pressable accessibilityRole="button" accessibilityState={{ expanded: more }} onPress={() => setMore(!more)} style={c.chip}><Ionicons name="ellipsis-horizontal" size={25} color={colors.brandMuted} /><Text style={c.chipText}>{text(more ? "أقل" : "المزيد", more ? "Less" : "More")}</Text></Pressable>
+        </ScrollView>
       </View>
-
-      <Modal
-        visible={modalVisible}
-        animationType="slide"
-        transparent
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalBackdrop}>
-          <View style={styles.modalCard}>
-            <Text style={[styles.modalTitle, isRTL && styles.textRtl]}>
-              {t("community.createPostTitle")}
-            </Text>
-            <TextInput
-              style={[styles.modalInput, isRTL && styles.textRtl]}
-              placeholder={t("community.sharePlaceholder")}
-              placeholderTextColor={c.textLight}
-              value={modalBody}
-              onChangeText={setModalBody}
-              multiline
-              textAlignVertical="top"
-              textAlign={isRTL ? "right" : "left"}
-            />
-            <View style={[styles.modalRow, reverseRows && styles.rowReverse]}>
-              <Pressable
-                style={styles.modalSecondary}
-                onPress={() => setModalVisible(false)}
-              >
-                <Text style={styles.modalSecondaryText}>{t("common.cancel")}</Text>
-              </Pressable>
-              <Pressable
-                style={styles.modalPrimary}
-                onPress={() => {
-                  Alert.alert(t("community.posted"), t("community.postedBody"));
-                  setModalVisible(false);
-                  setModalBody("");
-                  setDraft("");
-                }}
-              >
-                <Text style={styles.modalPrimaryText}>{t("community.post")}</Text>
-              </Pressable>
-            </View>
-          </View>
-        </View>
-      </Modal>
-    </SafeAreaView>
-  );
+      <View style={[c.card, { backgroundColor: `${colors.brandSoft}26` }]}>
+        <View style={[c.row, row]}><Ionicons name="megaphone-outline" size={23} color={colors.brandMuted} /><Text style={[c.author, txt]}>{text("موضوع مهم", "Important Topic")}</Text></View>
+        {pinned.isPending ? <ActivityIndicator color={colors.brandMuted} /> : pinned.isError ? <Text style={[c.muted, txt]}>{text("تعذر تحميل المواضيع المهمة الآن.", "Important topics could not be loaded.")}</Text> : important ? <Pressable accessibilityRole="button" onPress={() => go(postHref(important.id))}><Text style={[c.postTitle, txt]}>{important.title}</Text><Text numberOfLines={2} style={[c.body, txt]}>{important.content}</Text></Pressable> : <Text style={[c.body, txt]}>{text("لا توجد مواضيع مثبّتة حاليًا.", "No pinned topics yet.")}</Text>}
+      </View>
+      <View style={[c.row, row, { backgroundColor: colors.backgroundCard, borderRadius: 20, padding: 5, gap: 3 }]}>{([
+        ["latest", text("الأحدث", "Latest")], ["engaged", text("الأكثر تفاعلًا", "Most Engaged")], ["saved", text("المحفوظة", "Saved")],
+      ] as [CommunitySort, string][]).map(([id, label]) => <Pressable accessibilityRole="button" accessibilityState={{ selected: sort === id }} key={id} onPress={() => { if (id !== "saved" || requireLogin(`${COMMUNITY_ROOT}?sort=saved`)) setSort(id); }} style={[c.button, { flex: 1, paddingHorizontal: 4, backgroundColor: sort === id ? colors.brand : "transparent" }]}><Text style={[c.buttonText, sort === id && { color: colors.white }]}>{label}</Text></Pressable>)}</View>
+      {interaction.isError && <Text accessibilityRole="alert" style={[c.error, txt]}>{text("تعذر إتمام الإجراء. حاول مرة أخرى.", "Could not complete the action. Please try again.")}</Text>}
+      {feed.isPending ? <ActivityIndicator color={colors.brandMuted} /> : feed.isError ? <View style={c.card}><Text style={[c.error, txt]}>{text("تعذر تحميل المشاركات. تحقق من الاتصال وحاول مرة أخرى.", "Could not load posts. Check your connection and try again.")}</Text><CommunityButton title={text("إعادة المحاولة", "Retry")} onPress={() => { void feed.refetch(); void pinned.refetch(); }} /></View> : !rows.length ? <View style={c.card}><Text style={[c.body, txt]}>{text("لا توجد مشاركات لعرضها هنا بعد.", "No posts to show here yet.")}</Text></View> : rows.map(post => <ApiPostCard key={post.id} post={post} busy={interaction.isPending} onOpen={() => go(postHref(post.id))} onLike={() => interact(post, "like")} onSave={() => interact(post, "save")} />)}
+      {feed.hasNextPage && <CommunityButton title={text("عرض المزيد", "Load more")} disabled={feed.isFetchingNextPage} onPress={() => { void feed.fetchNextPage(); }} />}
+    </ScrollView>
+  </SafeAreaView>;
 }
-
-const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: "#F5F5F5" },
-  flex: { flex: 1, position: "relative" },
-  listContent: {
-    paddingHorizontal: 20,
-    paddingTop: 8,
-  },
-  rowReverse: { flexDirection: "row-reverse" },
-  textRtl: {
-    textAlign: "right",
-    writingDirection: "rtl",
-  },
-  topHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 14,
-  },
-  brandRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
-  brandIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: c.brand,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  brandName: {
-    fontSize: 22,
-    fontWeight: "800",
-    color: c.text,
-  },
-  headerRight: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
-  roundBtn: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: c.headerIconBg,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  profilePic: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: c.chipBg,
-  },
-  catScroll: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingBottom: 12,
-    marginTop: 4,
-  },
-  shieldFab: {
-    position: "absolute",
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: c.shieldFab,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.25,
-    shadowRadius: 6,
-    elevation: 8,
-  },
-  modalBackdrop: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
-    justifyContent: "flex-end",
-  },
-  modalCard: {
-    backgroundColor: c.white,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
-    paddingBottom: 28,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "700",
-    color: c.text,
-    marginBottom: 12,
-  },
-  modalInput: {
-    minHeight: 120,
-    borderRadius: 14,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: c.inputBorder,
-    padding: 12,
-    fontSize: 15,
-    color: c.text,
-    marginBottom: 16,
-    backgroundColor: c.bgApp,
-  },
-  modalRow: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    gap: 8,
-  },
-  modalSecondary: {
-    paddingVertical: 12,
-    paddingHorizontal: 18,
-  },
-  modalSecondaryText: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: c.textMuted,
-  },
-  modalPrimary: {
-    backgroundColor: c.brand,
-    borderRadius: 999,
-    paddingVertical: 12,
-    paddingHorizontal: 22,
-  },
-  modalPrimaryText: {
-    color: c.white,
-    fontSize: 16,
-    fontWeight: "700",
-  },
-});

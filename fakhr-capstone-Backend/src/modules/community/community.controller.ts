@@ -3,282 +3,131 @@ import mongoose from "mongoose";
 import Post from "../../models/Post.model";
 import PostReport from "../../models/PostReport.model";
 import { ApiError } from "../../middlewares/apiError";
-import { HTTP_STATUS, USER_ROLES } from "../../config/constants";
 import { AuthRequest } from "../../middlewares/auth.middleware";
+import { USER_ROLES } from "../../config/constants";
 
-/**
- * Create a new post
- * POST /api/community/posts
- * Requires: parent role
- */
-export const createPost = async (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
-  try {
-    if (!req.user) {
-      throw ApiError.unauthorized("User not authenticated");
-    }
-
-    // Check if user is a parent
-    if (req.user.role !== USER_ROLES.PARENT) {
-      throw ApiError.forbidden("Only parents can create posts");
-    }
-
-    const { title, content, tags } = req.body;
-
-    // Validate required fields
-    if (!title || !content) {
-      throw ApiError.badRequest("Title and content are required");
-    }
-
-    if (typeof title !== "string" || title.trim().length === 0) {
-      throw ApiError.badRequest("Title must be a non-empty string");
-    }
-
-    if (typeof content !== "string" || content.trim().length === 0) {
-      throw ApiError.badRequest("Content must be a non-empty string");
-    }
-
-    // Validate title length
-    if (title.trim().length > 200) {
-      throw ApiError.badRequest("Title must be less than 200 characters");
-    }
-
-    // Validate content length
-    if (content.trim().length > 5000) {
-      throw ApiError.badRequest("Content must be less than 5000 characters");
-    }
-
-    // Validate tags if provided
-    let validTags: string[] = [];
-    if (tags) {
-      if (!Array.isArray(tags)) {
-        throw ApiError.badRequest("Tags must be an array");
-      }
-      validTags = tags
-        .filter((tag: any) => typeof tag === "string" && tag.trim().length > 0)
-        .map((tag: string) => tag.trim().toLowerCase())
-        .slice(0, 10); // Limit to 10 tags
-    }
-
-    // Create post
-    const post = await Post.create({
-      title: title.trim(),
-      content: content.trim(),
-      authorId: req.user.id,
-      tags: validTags,
-      likes: 0,
-    });
-
-    // Populate author information
-    await post.populate("authorId", "name email");
-
-    res.status(HTTP_STATUS.CREATED).json({
-      success: true,
-      data: {
-        post: {
-          id: post._id.toString(),
-          title: post.title,
-          content: post.content,
-          authorId: post.authorId,
-          author: {
-            id: (post.authorId as any)._id?.toString() || post.authorId.toString(),
-            name: (post.authorId as any).name,
-            email: (post.authorId as any).email,
-          },
-          tags: post.tags,
-          likes: post.likes,
-          createdAt: post.createdAt,
-          updatedAt: post.updatedAt,
-        },
-      },
-    });
-  } catch (error) {
-    next(error);
-  }
+const member = (req: AuthRequest) => req.user?.role === USER_ROLES.PARENT;
+const visibility = (req: AuthRequest) => member(req) ? {} : { visibility: "public" };
+const idOf = (req: AuthRequest) => {
+  const id = String(req.params.postId ?? "");
+  if (!mongoose.Types.ObjectId.isValid(id)) throw ApiError.badRequest("Invalid post ID");
+  return id;
 };
-
-/**
- * Get all posts
- * GET /api/community/posts
- * Requires: parent role
- */
-export const getPosts = async (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
+function publicName(author: any) {
+  const name = typeof author?.name === "string" ? author.name.trim() : "";
+  return name.includes("@") ? "" : name;
+}
+/** Explicit allowlist: never return populated user objects, email, saves, or child/account data. */
+export function postResponse(post: any, userId?: string, includeComments = false) {
+  return {
+    id: String(post._id), title: post.title, content: post.content,
+    author: { name: publicName(post.authorId) },
+    tags: post.tags ?? [], imageUrl: post.imageUrl || undefined,
+    isPinned: post.isPinned === true, visibility: post.visibility ?? "members",
+    likes: post.likes ?? 0, commentCount: post.comments?.length ?? 0,
+    isLiked: !!userId && (post.likedBy ?? []).some((id: any) => String(id) === userId),
+    isSaved: !!userId && (post.savedBy ?? []).some((id: any) => String(id) === userId),
+    isOwn: !!userId && String(post.authorId?._id ?? post.authorId) === userId,
+    createdAt: post.createdAt, updatedAt: post.updatedAt,
+    ...(includeComments ? { comments: (post.comments ?? []).map((comment: any) => ({
+      id: String(comment._id), author: { name: publicName(comment.authorId) }, content: comment.content, createdAt: comment.createdAt,
+    })) } : {}),
+  };
+}
+function requiredText(value: unknown, max: number, field: string) {
+  if (typeof value !== "string" || !value.trim() || value.trim().length > max) throw ApiError.badRequest(`Invalid ${field}`);
+  return value.trim();
+}
+function escaped(value: string) { return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+export const createPost = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
-    if (!req.user) {
-      throw ApiError.unauthorized("User not authenticated");
+    const title = requiredText(req.body.title, 200, "title");
+    const content = requiredText(req.body.content, 5000, "content");
+    const tags = Array.isArray(req.body.tags) ? req.body.tags.filter((tag: unknown) => typeof tag === "string" && tag.length <= 80).slice(0, 10).map((tag: string) => tag.trim().toLowerCase()) : [];
+    let imageUrl: string | undefined;
+    if (req.body.imageUrl) {
+      imageUrl = requiredText(req.body.imageUrl, 2048, "image URL");
+      try { const url = new URL(imageUrl); if (url.protocol !== "https:" || url.username || url.password) throw Error(); } catch { throw ApiError.badRequest("Image must be an HTTPS URL"); }
     }
-
-    // Check if user is a parent
-    if (req.user.role !== USER_ROLES.PARENT) {
-      throw ApiError.forbidden("Only parents can view posts");
-    }
-
-    // Query parameters for pagination and filtering
-    const page = parseInt(req.query.page as string) || 1;
-    const limit = parseInt(req.query.limit as string) || 20;
-    const skip = (page - 1) * limit;
-    const sortBy = (req.query.sortBy as string) || "createdAt";
-    const sortOrder = (req.query.sortOrder as string) === "asc" ? 1 : -1;
-
-    // Build query
-    const query: any = {};
-
-    // Filter by tags if provided
-    if (req.query.tags) {
-      const tags = Array.isArray(req.query.tags)
-        ? req.query.tags
-        : [req.query.tags];
-      query.tags = { $in: tags };
-    }
-
-    // Filter by author if provided
+    const post = await Post.create({ title, content, tags, imageUrl, authorId: req.user!.id, visibility: req.body.visibility === "public" ? "public" : "members" });
+    await post.populate("authorId", "name");
+    res.status(201).json({ success: true, data: { post: postResponse(post, req.user!.id) } });
+  } catch (error) { next(error); }
+};
+export const getPosts = async (req: AuthRequest, res: Response, next: NextFunction) => {
+  try {
+    const page = Math.max(1, Math.min(10000, Number.parseInt(String(req.query.page)) || 1));
+    const limit = Math.max(1, Math.min(50, Number.parseInt(String(req.query.limit)) || 20));
+    const query: any = { ...visibility(req) };
+    const category = String(req.query.category ?? "").slice(0, 80);
+    if (category && category !== "all") query.tags = category;
+    // Retain the legacy tags filter for existing callers.
+    else if (req.query.tags) query.tags = { $in: (Array.isArray(req.query.tags) ? req.query.tags : [req.query.tags]).map(String).slice(0, 10) };
     if (req.query.authorId) {
-      const authorId = Array.isArray(req.query.authorId)
-        ? req.query.authorId[0]
-        : req.query.authorId;
-      const authorIdStr = authorId as string;
-      if (!mongoose.Types.ObjectId.isValid(authorIdStr)) {
-        throw ApiError.badRequest("Invalid author ID format");
-      }
-      query.authorId = new mongoose.Types.ObjectId(authorIdStr);
+      const authorId = String(req.query.authorId);
+      if (!mongoose.Types.ObjectId.isValid(authorId)) throw ApiError.badRequest("Invalid author ID");
+      query.authorId = new mongoose.Types.ObjectId(authorId);
     }
-
-    // Get total count for pagination
-    const total = await Post.countDocuments(query);
-
-    // Get posts with pagination
-    const posts = await Post.find(query)
-      .populate("authorId", "name email")
-      .sort({ [sortBy]: sortOrder })
-      .skip(skip)
-      .limit(limit);
-
-    // Format response
-    const formattedPosts = posts.map((post) => ({
-      id: post._id.toString(),
-      title: post.title,
-      content: post.content,
-      author: {
-        id: (post.authorId as any)._id?.toString() || post.authorId.toString(),
-        name: (post.authorId as any).name,
-        email: (post.authorId as any).email,
-      },
-      tags: post.tags,
-      likes: post.likes,
-      createdAt: post.createdAt,
-      updatedAt: post.updatedAt,
-    }));
-
-    res.status(HTTP_STATUS.OK).json({
-      success: true,
-      data: {
-        posts: formattedPosts,
-        pagination: {
-          page,
-          limit,
-          total,
-          totalPages: Math.ceil(total / limit),
-        },
-      },
-    });
-  } catch (error) {
-    next(error);
-  }
+    const search = String(req.query.search ?? "").trim().slice(0, 200);
+    if (search) query.$or = [{ title: { $regex: escaped(search), $options: "i" } }, { content: { $regex: escaped(search), $options: "i" } }];
+    if (req.query.pinned === "true") query.isPinned = true;
+    if (req.query.sort === "saved") {
+      if (!member(req)) throw ApiError.unauthorized("Sign in to view saved posts");
+      query.savedBy = new mongoose.Types.ObjectId(req.user!.id);
+    }
+    const sort: Record<string, 1 | -1> = req.query.sort === "engaged" ? { _engagement: -1, createdAt: -1, _id: -1 } : { createdAt: -1, _id: -1 };
+    const [total, ordered] = await Promise.all([
+      Post.countDocuments(query),
+      Post.aggregate([{ $match: query }, { $addFields: { _engagement: { $add: [{ $ifNull: ["$likes", 0] }, { $size: { $ifNull: ["$comments", []] } }] } } }, { $sort: sort }, { $skip: (page - 1) * limit }, { $limit: limit }, { $project: { _id: 1 } }]),
+    ]);
+    const posts = await Post.find({ _id: { $in: ordered.map(item => item._id) } }).populate("authorId", "name");
+    const byId = new Map(posts.map(post => [String(post._id), post]));
+    res.json({ success: true, data: { posts: ordered.map(item => byId.get(String(item._id))).filter(Boolean).map(post => postResponse(post, req.user?.id)), pagination: { page, limit, total, totalPages: Math.ceil(total / limit) } } });
+  } catch (error) { next(error); }
 };
-
-/**
- * Report a harmful post
- * POST /api/community/posts/:postId/report
- * Requires: parent role
- */
-export const reportPost = async (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
+export const getPost = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
-    if (!req.user) {
-      throw ApiError.unauthorized("User not authenticated");
-    }
-
-    // Check if user is a parent
-    if (req.user.role !== USER_ROLES.PARENT) {
-      throw ApiError.forbidden("Only parents can report posts");
-    }
-
-    const { postId } = req.params;
-    const { reason } = req.body;
-
-    // Validate postId
-    const postIdStr = Array.isArray(postId) ? postId[0] : postId;
-    if (!postIdStr || !mongoose.Types.ObjectId.isValid(postIdStr)) {
-      throw ApiError.badRequest("Invalid post ID format");
-    }
-
-    // Validate reason
-    if (!reason || typeof reason !== "string" || reason.trim().length === 0) {
-      throw ApiError.badRequest("Reason is required");
-    }
-
-    if (reason.trim().length > 500) {
-      throw ApiError.badRequest("Reason must be less than 500 characters");
-    }
-
-    // Check if post exists
-    const post = await Post.findById(postIdStr);
-    if (!post) {
-      throw ApiError.notFound("Post not found");
-    }
-
-    // Check if user already reported this post
-    const existingReport = await PostReport.findOne({
-      postId: postIdStr,
-      reporterId: req.user.id,
-    });
-
-    if (existingReport) {
-      throw ApiError.conflict("You have already reported this post");
-    }
-
-    // Prevent users from reporting their own posts
-    if (post.authorId.toString() === req.user.id) {
-      throw ApiError.forbidden("You cannot report your own post");
-    }
-
-    // Create report
-    const report = await PostReport.create({
-      postId: postIdStr,
-      reporterId: req.user.id,
-      reason: reason.trim(),
-      status: "pending",
-    });
-
-    res.status(HTTP_STATUS.CREATED).json({
-      success: true,
-      data: {
-        report: {
-          id: report._id.toString(),
-          postId: report.postId.toString(),
-          reporterId: report.reporterId.toString(),
-          reason: report.reason,
-          status: report.status,
-          createdAt: report.createdAt,
-        },
-        message: "Post reported successfully. Our team will review it shortly.",
-      },
-    });
+    const post = await Post.findOne({ _id: idOf(req), ...visibility(req) }).populate("authorId", "name").populate("comments.authorId", "name");
+    if (!post) throw ApiError.notFound("Post not found");
+    res.json({ success: true, data: { post: postResponse(post, req.user?.id, true) } });
+  } catch (error) { next(error); }
+};
+// Explicit desired state + conditional atomic update: retries do not add duplicate likes/saves.
+export const interactPost = async (req: AuthRequest, res: Response, next: NextFunction) => {
+  try {
+    const id = idOf(req), userId = new mongoose.Types.ObjectId(req.user!.id);
+    const kind = req.params.action;
+    if (kind !== "like" && kind !== "save") throw ApiError.badRequest("Invalid action");
+    if (typeof req.body.active !== "boolean") throw ApiError.badRequest("active must be boolean");
+    const field = kind === "like" ? "likedBy" : "savedBy";
+    const active = req.body.active;
+    const query = { _id: id, [field]: active ? { $ne: userId } : userId };
+    const update: any = active ? { $addToSet: { [field]: userId } } : { $pull: { [field]: userId } };
+    if (kind === "like") update.$inc = { likes: active ? 1 : -1 };
+    await Post.updateOne(query, update);
+    const post = await Post.findById(id).populate("authorId", "name").populate("comments.authorId", "name");
+    if (!post) throw ApiError.notFound("Post not found");
+    res.json({ success: true, data: { post: postResponse(post, req.user!.id, true) } });
+  } catch (error) { next(error); }
+};
+export const addComment = async (req: AuthRequest, res: Response, next: NextFunction) => {
+  try {
+    const id = idOf(req), content = requiredText(req.body.content, 2000, "comment");
+    // Bound embedded discussion size so a post cannot exceed MongoDB's document limit.
+    const post = await Post.findOneAndUpdate({ _id: id, "comments.499": { $exists: false } }, { $push: { comments: { authorId: req.user!.id, content, createdAt: new Date() } } }, { new: true, runValidators: true }).populate("authorId", "name").populate("comments.authorId", "name");
+    if (!post) throw ApiError.badRequest("Post unavailable or discussion full");
+    res.status(201).json({ success: true, data: { post: postResponse(post, req.user!.id, true) } });
+  } catch (error) { next(error); }
+};
+export const reportPost = async (req: AuthRequest, res: Response, next: NextFunction) => {
+  try {
+    const postId = idOf(req), reason = requiredText(req.body.reason, 500, "reason");
+    const post = await Post.findById(postId);
+    if (!post) throw ApiError.notFound("Post not found");
+    if (String(post.authorId) === req.user!.id) throw ApiError.forbidden("You cannot report your own post");
+    const report = await PostReport.create({ postId, reporterId: req.user!.id, reason, status: "pending" });
+    res.status(201).json({ success: true, data: { report: { id: String(report._id), status: report.status } } });
   } catch (error) {
-    // Handle duplicate key error (unique index)
-    if ((error as any).code === 11000) {
-      throw ApiError.conflict("You have already reported this post");
-    }
-    next(error);
+    next((error as any)?.code === 11000 ? ApiError.conflict("You have already reported this post") : error);
   }
 };

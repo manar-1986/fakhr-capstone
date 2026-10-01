@@ -27,6 +27,14 @@ export interface Review {
 }
 
 export interface Professional {
+  /** Clinic contact details. Omit unknown values; never synthesize contact data. */
+  clinicNameAr?: string;
+  clinicNameEn?: string;
+  addressAr?: string;
+  addressEn?: string;
+  mapUrl?: string;
+  latitude?: number;
+  longitude?: number;
   id: string;
   /** Required bilingual fields — every current and future doctor must include both locales. */
   nameAr: string;

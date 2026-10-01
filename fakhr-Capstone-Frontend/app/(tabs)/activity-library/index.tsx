@@ -27,6 +27,9 @@ import {
 import { useI18nLayout } from "../../../hooks/useI18nLayout";
 import { colors as palette } from "../../../theme";
 
+import { useAuth } from "../../../context/AuthContext";
+import { addJourneyRecord } from "../../../utils/journeyStore";
+
 const colors = {
   bg: palette.background,
   title: palette.textSecondary,
@@ -67,6 +70,7 @@ async function openActivityVideo(url: string) {
 
 export default function HomeActivityLibraryScreen() {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const { isRTL, dir, align } = useI18nLayout();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
@@ -89,6 +93,9 @@ export default function HomeActivityLibraryScreen() {
   const openVideo = (item: HomeActivityVideo) => {
     if (!item.youtubeUrl.trim()) return;
     void openActivityVideo(item.youtubeUrl.trim());
+    if (user) void addJourneyRecord(user.id, { type: "activity", action: "viewed", kind: "video", titleAr: item.titleAr, titleEn: item.titleEn, href: item.youtubeUrl }).catch(() => {
+      Alert.alert(isRTL ? "تعذر حفظ النشاط" : "Activity could not be saved", isRTL ? "يمكنك متابعة مشاهدة الفيديو." : "You can still watch the video.");
+    });
   };
 
   return (

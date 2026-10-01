@@ -1,1262 +1,170 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "expo-router";
-import React, { useEffect, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useFocusEffect, useLocalSearchParams, useRouter, type Href } from "expo-router";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { ActivityIndicator, Alert, Image, Linking, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
-import {
-  ActivityIndicator,
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-  View,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  completeCarePathTask,
-  getCurrentCarePath,
-  skipCarePathTask,
-  type CarePathTask,
-} from "../../../api/care-path.api";
-import { getChildren, type Child } from "../../../api/children.api";
-import { WEB_PHONE_WIDTH } from "../../../components/layout/WebAppShell";
-import {
-  FOCUS_AREAS,
-  SUPPORT_GOALS,
-  ageFromDate,
-  asIdList,
-  parseStoredDate,
-} from "../../../constants/childProfileOptions";
-import { getMockBookings } from "../../../utils/mockBookingsStore";
-import { planLocaleText } from "../../../utils/planBilingual";
-import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { getChildren } from "../../../api/children.api";
 import { useAuth } from "../../../context/AuthContext";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { ageFromDate, asIdList, FOCUS_AREAS, parseStoredDate } from "../../../constants/childProfileOptions";
+import { HOME_PRODUCTS, type HomeProduct } from "../../../constants/homeProducts";
+import { addJourneyRecord, readJourney, removeJourneyRecord, upcomingAppointments, type JourneyKind, type JourneyRecord } from "../../../utils/journeyStore";
+import { JourneyProducts, JourneyProductDetails } from "../../../components/journey/JourneyProducts";
+import { journeyProductSuggestions } from "../../../utils/journeyProducts";
 import { setPendingAuthHref } from "../../../utils/authRedirect";
-import { colors as palette } from "../../../theme";
 
-const CHILD_PHOTO = require("../../../assets/images/home-hero-girl.png");
+type Icon = React.ComponentProps<typeof Ionicons>["name"];
+const routes = { centers: "/(tabs)/directory/centers", products: "/(tabs)/products", videos: "/(tabs)/activity-library", articles: "/(tabs)/library" } as const;
 
-const colors = {
-  bg: "#EEF1F8",
-  headerWash: "#E4E9F6",
-  blob: "#D7DEF0",
-  blobSoft: "#E8ECF7",
-  title: "#3D4A86",
-  titleDark: "#3D4A78",
-  muted: palette.textMuted,
-  body: "#5A6490",
-  primary: palette.primary,
-  primarySoft: "#EEF1FA",
-  white: palette.white,
-  cardBorder: "#E6EAF4",
-  chipIdle: "#F2F4FA",
-  done: "#3DCE8A",
-  doneBg: "#E7F8F0",
-  skip: "#9AA0B8",
-  skipBg: "#F1F2F6",
-  progressTrack: "#E4E8F2",
-  progressFill: palette.brandSoft,
-};
-
-const DESIGN_W = 390;
-
-const WEEK_DAYS = [
-  { key: 6, labelKey: "planUi.sat" },
-  { key: 0, labelKey: "planUi.sun" },
-  { key: 1, labelKey: "planUi.mon" },
-  { key: 2, labelKey: "planUi.tue" },
-  { key: 3, labelKey: "planUi.wed" },
-  { key: 4, labelKey: "planUi.thu" },
-  { key: 5, labelKey: "planUi.fri" },
-] as const;
-
-const TAG_BY_FOCUS: Record<string, string> = {
-  speech: "copy.tagCommunication",
-  behavior: "copy.tagBehavior",
-  sensory: "copy.tagSensory",
-  motor: "copy.tagDelay",
-};
-
-const DIAGNOSIS_KEY: Record<string, string> = {
-  autism: "copy.tagAutism",
-  asd: "copy.tagAutism",
-  adhd: "copy.tagAdhd",
-  speech: "copy.tagCommunication",
-  sensory: "copy.tagSensory",
-  behavior: "copy.tagBehavior",
-  developmental: "copy.tagDelay",
-  delay: "copy.tagDelay",
-};
-
-function startOfSaturdayWeek(date: Date): Date {
-  const copy = new Date(date);
-  copy.setHours(0, 0, 0, 0);
-  const jsDay = copy.getDay();
-  const offset = (jsDay + 1) % 7;
-  copy.setDate(copy.getDate() - offset);
-  return copy;
-}
-
-function formatWeekRange(start: Date, months: string[]): string {
-  const end = new Date(start);
-  end.setDate(start.getDate() + 6);
-  const month = months[end.getMonth()] ?? "";
-  return `${start.getDate()} - ${end.getDate()} ${month}`;
-}
-
-function formatAppointmentDate(
-  appointment: {
-    dateKey?: string;
-    dateLabel?: string;
-    dateLabelAr?: string;
-    dateLabelEn?: string;
-  },
-  isRTL: boolean,
-  t: (key: string) => string,
-): string {
-  if (appointment.dateKey) {
-    const parsed = new Date(appointment.dateKey);
-    if (!Number.isNaN(parsed.getTime())) {
-      return parsed.toLocaleDateString(isRTL ? "ar-KW" : "en-GB", {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-      });
-    }
+  function Button({ title, onPress, icon = "chevron-forward-outline", disabled = false }: { title: string; onPress: () => void; icon?: Icon; disabled?: boolean }) {
+    const { tabRow, align } = useI18nLayout(); const row = { flexDirection: tabRow }; const txt = { textAlign: align };
+    return <Pressable accessibilityRole="button" disabled={disabled} onPress={onPress} style={[s.button, row, disabled && { opacity: .45 }]}><Ionicons name={icon} size={18} color="#6366CB" /><Text style={[s.buttonText, txt]}>{title}</Text></Pressable>;
   }
-  return planLocaleText(
-    isRTL,
-    {
-      ar: appointment.dateLabelAr,
-      en: appointment.dateLabelEn,
-      legacy: appointment.dateLabel,
-    },
-    t,
-  );
-}
-
-function childAge(child: Child): number | undefined {
-  if (typeof child.age === "number" && Number.isFinite(child.age)) {
-    return child.age;
+  function Section({ title, icon, children: content }: { title: string; icon: Icon; children: React.ReactNode }) {
+    const { tabRow, align } = useI18nLayout(); const row = { flexDirection: tabRow }; const txt = { textAlign: align };
+    return <View style={s.card}><View style={[s.sectionHeading, row]}><Ionicons name={icon} size={25} color="#6969D7" /><Text accessibilityRole="header" style={[s.sectionTitle, txt]}>{title}</Text></View>{content}</View>;
   }
-  const dob = parseStoredDate(child.dateOfBirth);
-  return dob ? ageFromDate(dob) : undefined;
-}
+  const Empty = ({ children: content }: { children: React.ReactNode }) => { const { align } = useI18nLayout(); return <Text style={[s.empty, { textAlign: align }]}>{content}</Text>; };
 
-function childTags(child: Child, t: (key: string) => string, isRTL: boolean): string[] {
-  const tags: string[] = [];
-  const diagnoses = Array.isArray(child.diagnosis)
-    ? child.diagnosis
-    : Array.isArray(child.diagnoses)
-      ? child.diagnoses
-      : child.diagnosis
-        ? [String(child.diagnosis)]
-        : [];
-  diagnoses.forEach((item) => {
-    const raw = String(item).trim();
-    if (!raw) return;
-    const mapped = DIAGNOSIS_KEY[raw.toLowerCase()];
-    tags.push(mapped ? t(mapped) : planLocaleText(isRTL, { legacy: raw }, t));
-  });
-  asIdList(child.areasOfFocus).forEach((id) => {
-    const mapped = TAG_BY_FOCUS[id];
-    if (mapped) tags.push(t(mapped));
-    else {
-      const area = FOCUS_AREAS.find((f) => f.id === id);
-      tags.push(area ? t(area.labelKey) : planLocaleText(isRTL, { legacy: id }, t));
-    }
-  });
-  return [...new Set(tags)].slice(0, 4);
-}
-
-function weeklyGoalsText(child: Child | undefined, t: (key: string) => string, isRTL: boolean): string {
-  if (!child) return "";
-  const ids = asIdList(child.supportGoals);
-  if (!ids.length) {
-    return planLocaleText(
-      isRTL,
-      {
-        ar: child.medicalHistoryAr,
-        en: child.medicalHistoryEn,
-        legacy: child.medicalHistory?.trim(),
-      },
-      t,
-    );
-  }
-  return ids
-    .map((id) => {
-      const goal = SUPPORT_GOALS.find((g) => g.id === id);
-      return goal ? t(goal.labelKey) : planLocaleText(isRTL, { legacy: id }, t);
-    })
-    .join(isRTL ? "، " : ", ");
-}
-
-function taskLocale(
-  isRTL: boolean,
-  t: (key: string) => string,
-  ar?: string,
-  en?: string,
-  legacy?: string,
-) {
-  return planLocaleText(isRTL, { ar, en, legacy }, t);
-}
-
-function taskIcon(task: CarePathTask): React.ComponentProps<typeof Ionicons>["name"] {
-  const hay = `${task.category ?? ""} ${task.title} ${task.titleAr ?? ""} ${task.titleEn ?? ""}`.toLowerCase();
-  if (hay.includes("speech") || hay.includes("نطق") || hay.includes("تواصل")) {
-    return "chatbubbles-outline";
-  }
-  if (hay.includes("play") || hay.includes("لعب") || hay.includes("puzzle")) {
-    return "extension-puzzle-outline";
-  }
-  if (hay.includes("sensory") || hay.includes("حسي") || hay.includes("يد")) {
-    return "hand-left-outline";
-  }
-  if (hay.includes("doctor") || hay.includes("طبيب") || hay.includes("موعد")) {
-    return "calendar-outline";
-  }
-  return "checkbox-outline";
-}
-
-function helpfulnessLabel(
-  task: CarePathTask,
-  t: (key: string) => string,
-  isRTL: boolean,
-): string | null {
-  const hay = [
-    taskLocale(isRTL, t, task.noteAr, task.noteEn, task.note),
-    taskLocale(isRTL, t, task.expectedOutcomeAr, task.expectedOutcomeEn, task.expectedOutcome),
-    task.note,
-    task.expectedOutcome,
-  ]
-    .join(" ")
-    .toLowerCase();
-  if (hay.includes("very") || hay.includes("جدا")) return t("copy.veryHelpful");
-  if (hay.includes("helpful") || hay.includes("مفيد")) return t("copy.helpful");
-  return null;
-}
-
-/** Visual-only fallback when the account has no child profile yet. */
-const DEMO_CHILD: Child = {
-  id: "demo-visual-child",
-  name: "محمد",
-  nameAr: "محمد",
-  nameEn: "Mohammed",
-  age: 6,
-  parentId: "demo-visual",
-};
-
-const DEMO_TAGS = [
-  { ar: "تأخر نمائي", en: "Developmental delay", key: "copy.tagDelay" },
-  { ar: "تواصل", en: "Communication", key: "copy.tagCommunication" },
-  { ar: "حسي", en: "Sensory", key: "copy.tagSensory" },
-  { ar: "سلوكي", en: "Behavior", key: "copy.tagBehavior" },
-];
-
-const DEMO_GOALS_AR =
-  "تحسين مهارات التواصل، وزيادة التركيز على المهام اليومية، وتعزيز الاستقلالية.";
-const DEMO_GOALS_EN =
-  "Improve communication skills, increase focus on daily tasks, and build independence.";
-
-const DEMO_TASKS: CarePathTask[] = [
-  {
-    id: "demo-task-speech",
-    title: "تمرين النطق",
-    titleAr: "تمرين النطق",
-    titleEn: "Speech exercise",
-    description: "التمرين لمدة 10 دقائق",
-    descriptionAr: "التمرين لمدة 10 دقائق",
-    descriptionEn: "Practice for 10 minutes",
-    category: "speech",
-    status: "completed",
-    expectedOutcome: "مفيد جداً",
-    expectedOutcomeAr: "مفيد جداً",
-    expectedOutcomeEn: "Very helpful",
-  },
-  {
-    id: "demo-task-play",
-    title: "لعب تفاعلي",
-    titleAr: "لعب تفاعلي",
-    titleEn: "Interactive play",
-    description: "اللعب بالمكعبات لمدة 15 دقيقة",
-    descriptionAr: "اللعب بالمكعبات لمدة 15 دقيقة",
-    descriptionEn: "Play with blocks for 15 minutes",
-    category: "play",
-    status: "skipped",
-    note: "كان متعب اليوم",
-    noteAr: "كان متعب اليوم",
-    noteEn: "Felt tired today",
-    instructions: "كان متعب اليوم",
-    instructionsAr: "كان متعب اليوم",
-    instructionsEn: "Felt tired today",
-  },
-  {
-    id: "demo-task-sensory",
-    title: "نشاط حسي",
-    titleAr: "نشاط حسي",
-    titleEn: "Sensory activity",
-    description: "استخدام كرة الضغط لمدة 5 دقائق",
-    descriptionAr: "استخدام كرة الضغط لمدة 5 دقائق",
-    descriptionEn: "Use a squeeze ball for 5 minutes",
-    category: "sensory",
-    status: "completed",
-    expectedOutcome: "مفيد",
-    expectedOutcomeAr: "مفيد",
-    expectedOutcomeEn: "Helpful",
-  },
-];
-
-const DEMO_APPOINTMENT = {
-  listingName: "د. أحمد – علاج وظيفي",
-  listingNameAr: "د. أحمد – علاج وظيفي",
-  listingNameEn: "Dr. Ahmad – occupational therapy",
-  dateLabel: "الأحد 20 سبتمبر",
-  dateLabelAr: "الأحد 20 سبتمبر",
-  dateLabelEn: "Sunday 20 September",
-  timeLabel: "5:00 مساءً",
-  timeLabelAr: "5:00 مساءً",
-  timeLabelEn: "5:00 PM",
-  notes: "",
-};
-
-export default function PlanScreen() {
+export default function JourneyScreen() {
   const router = useRouter();
+  const { productId } = useLocalSearchParams<{ productId?: string }>();
+  const { user, loading } = useAuth();
+  const { isRTL, align, tabRow, locale } = useI18nLayout();
   const { t } = useTranslation();
-  const { user, loading: authLoading } = useAuth();
-  const { isRTL, dir, align } = useI18nLayout();
-  const queryClient = useQueryClient();
-  const { width: windowWidth } = useWindowDimensions();
-  const contentW = Math.min(windowWidth, WEB_PHONE_WIDTH);
-  const s = contentW / DESIGN_W;
-  const ms = (n: number) => Math.round(n * s);
+  const insets = useSafeAreaInsets();
+  const text = (ar: string, en: string) => isRTL ? ar : en;
+  const [selectedId, setSelectedId] = useState<string>();
+  const [switching, setSwitching] = useState(false);
+  const [savedKind, setSavedKind] = useState<JourneyKind>();
+  const [expandedHistory, setExpandedHistory] = useState(false);
+  const [viewedProduct, setViewedProduct] = useState<HomeProduct>();
 
-  const months = (t("planUi.months", { returnObjects: true }) as string[]) ?? [];
-  const today = useMemo(() => new Date(), []);
-  const [selectedDay, setSelectedDay] = useState<number>(today.getDay());
-  const weekStart = useMemo(() => startOfSaturdayWeek(today), [today]);
 
-  const { data: children, isLoading: childrenLoading } = useQuery({
-    queryKey: ["children"],
-    queryFn: getChildren,
-    enabled: Boolean(user),
-    retry: false,
-  });
 
-  const child = children?.[0];
-  const useDemo = !childrenLoading && !child;
 
-  const { data: carePathData, isLoading: planLoading } = useQuery({
-    queryKey: ["currentCarePath", child?.id],
-    queryFn: () => getCurrentCarePath(child!.id),
-    enabled: Boolean(child?.id),
-    retry: false,
-  });
+  const [busy, setBusy] = useState(false);
+  const mutationBusy = useRef(false);
+  const scroll = useRef<ScrollView>(null);
+  const activityY = useRef(0);
+  useEffect(() => { setSelectedId(undefined); setSavedKind(undefined); setViewedProduct(undefined); }, [user?.id]);
+  useEffect(() => { setViewedProduct(HOME_PRODUCTS.find(product => product.id === productId)); }, [productId]);
+  const children = useQuery({ queryKey: ["journey-children", user?.id], queryFn: getChildren, enabled: !!user });
+  const journey = useQuery({ queryKey: ["journey", user?.id], queryFn: () => readJourney(user!.id), enabled: !!user });
+  const { refetch: refreshChildren } = children;
+  const { refetch: refreshJourney } = journey;
+  useFocusEffect(useCallback(() => { if (user?.id) { void refreshChildren(); void refreshJourney(); } }, [user?.id, refreshChildren, refreshJourney]));
+  const child = children.data?.find(c => c.id === selectedId) ?? children.data?.[0];
+  const records = journey.data ?? [];
+  const history = records.filter(r => ["activity", "appointment", "note", "report"].includes(r.type));
+  const saved = records.filter(r => r.type === "saved");
 
-  const bookings = useMemo(() => getMockBookings(), []);
-  const appointment = useDemo ? DEMO_APPOINTMENT : bookings[0];
-
-  const tasks = useDemo ? DEMO_TASKS : (carePathData?.tasks ?? []);
-  const dayTasks = useMemo(() => {
-    const withDue = tasks.filter((task) => task.dueDate);
-    if (!withDue.length) return tasks;
-    return tasks.filter((task) => {
-      if (!task.dueDate) return selectedDay === today.getDay();
-      const due = new Date(task.dueDate);
-      return !Number.isNaN(due.getTime()) && due.getDay() === selectedDay;
-    });
-  }, [tasks, selectedDay, today]);
-
-  const completedCount = useDemo
-    ? 3
-    : tasks.filter((task) => task.status === "completed").length;
-  const totalCount = useDemo ? 4 : tasks.length;
-  const percent = useDemo
-    ? 75
-    : totalCount
-      ? Math.round((completedCount / totalCount) * 100)
-      : 0;
-
-  const completeMutation = useMutation({
-    mutationFn: (taskId: string) => completeCarePathTask(taskId),
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: ["currentCarePath"] });
-    },
-  });
-
-  const skipMutation = useMutation({
-    mutationFn: (taskId: string) => skipCarePathTask(taskId),
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: ["currentCarePath"] });
-    },
-  });
-
-  const displayChild = child ?? (useDemo ? DEMO_CHILD : undefined);
-  const tags = useDemo
-    ? DEMO_TAGS.map((tag) => t(tag.key))
-    : displayChild
-      ? childTags(displayChild, t, isRTL)
-      : [];
-  const goals = useDemo
-    ? planLocaleText(isRTL, { ar: DEMO_GOALS_AR, en: DEMO_GOALS_EN, legacy: DEMO_GOALS_AR }, t)
-    : weeklyGoalsText(child, t, isRTL);
-  const childDisplayName = displayChild
-    ? planLocaleText(
-        isRTL,
-        {
-          ar: displayChild.nameAr,
-          en: displayChild.nameEn,
-          legacy: displayChild.name,
-        },
-        t,
-        { allowArabicInEnglish: true },
-      )
-    : "";
-  const age = useDemo ? 6 : displayChild ? childAge(displayChild) : undefined;
-  const loading = childrenLoading || (Boolean(child?.id) && planLoading);
-  const initials = childDisplayName.trim()?.slice(0, 1) ?? "";
-
-  const padX = ms(16);
-  const avatarSize = ms(68);
-
-  useEffect(() => {
-    if (authLoading) return;
-    if (user) return;
-    setPendingAuthHref("/(tabs)/plan");
-    router.replace("/(auth)/login");
-  }, [authLoading, user, router]);
-
-  if (authLoading || !user) {
-    return <SafeAreaView style={styles.safe} edges={["top"]} />;
+  const appointments = upcomingAppointments(records);
+  const dob = parseStoredDate(child?.dateOfBirth);
+  const age = child?.age ?? (dob ? ageFromDate(dob) : undefined);
+  const focus = asIdList(child?.areasOfFocus);
+  const diagnosisKeys: Record<string, string> = { autism: "copy.tagAutism", asd: "copy.tagAutism", adhd: "copy.tagAdhd", sensory: "copy.tagSensory", behavior: "copy.tagBehavior", speech: "copy.tagCommunication", developmental: "copy.tagDelay", delay: "copy.tagDelay" };
+  const tags = [...new Set([...asIdList(child?.diagnosis ?? child?.diagnoses).map(d => diagnosisKeys[d.toLowerCase()] ? t(diagnosisKeys[d.toLowerCase()]) : d), ...focus.map(id => { const option = FOCUS_AREAS.find(f => f.id === id); return option ? t(option.labelKey) : id; })])];
+  const productSuggestions = journeyProductSuggestions(child);
+  const go = (href: string) => router.push(href as Href);
+  async function mutate(work: () => Promise<unknown>) {
+    if (mutationBusy.current || !user) return;
+    mutationBusy.current = true;
+    setBusy(true);
+    try { await work(); await journey.refetch(); } catch { Alert.alert(text("تعذر الحفظ", "Could not save"), text("حاول مرة أخرى. لم يتم حفظ التغيير.", "Please try again. Your change was not saved.")); } finally { mutationBusy.current = false; setBusy(false); }
   }
-
-  return (
-    <SafeAreaView style={[styles.safe, { direction: isRTL ? "rtl" : "ltr" }]} edges={["top"]}>
-      <View pointerEvents="none" style={StyleSheet.absoluteFill}>
-        <View style={[styles.headerWash, { height: ms(168) }]} />
-        <View
-          style={[
-            styles.blob,
-            {
-              width: ms(220),
-              height: ms(220),
-              borderRadius: ms(110),
-              top: ms(-78),
-              right: ms(-70),
-              backgroundColor: colors.blob,
-            },
-          ]}
-        />
-        <View
-          style={[
-            styles.blob,
-            {
-              width: ms(160),
-              height: ms(160),
-              borderRadius: ms(80),
-              top: ms(-36),
-              left: ms(-58),
-              backgroundColor: colors.blobSoft,
-            },
-          ]}
-        />
+  async function toggleSave(kind: JourneyKind, titleAr: string, titleEn: string, href: string) {
+    const existing = saved.find(r => r.kind === kind && (kind === "product" || r.href === href) && r.titleEn === titleEn);
+    await mutate(async () => {
+      if (existing) await removeJourneyRecord(user!.id, existing.id);
+      else {
+        await addJourneyRecord(user!.id, { type: "saved", kind, titleAr, titleEn, href });
+        await addJourneyRecord(user!.id, { type: "activity", action: "saved", kind, titleAr, titleEn, href });
+      }
+    });
+  }
+  const openLink = async (url: string) => { try { await Linking.openURL(url); } catch { Alert.alert(text("تعذر فتح الرابط", "Could not open link")); } };
+  const label = (r: JourneyRecord) => text(r.titleAr, r.titleEn);
+  const row = { flexDirection: tabRow };
+  const txt = { textAlign: align };
+  if (loading) return <View style={s.loading}><ActivityIndicator color="#6667D4" /></View>;
+  if (!user) return <SafeAreaView style={s.safe}><View style={s.card}><Text style={[s.title, txt]}>{text("رحلتي", "My Journey")}</Text><Empty>{text("سجّل الدخول لتنظيم رحلتك مع طفلك.", "Sign in to organize your journey with your child.")}</Empty><Button title={text("تسجيل الدخول", "Sign in")} icon="log-in-outline" onPress={() => { setPendingAuthHref("/(tabs)/plan" as Href); go("/(auth)/login"); }} /></View></SafeAreaView>;
+  return <SafeAreaView style={s.safe} edges={["top"]}>
+    <ScrollView ref={scroll} keyboardShouldPersistTaps="handled" contentContainerStyle={[s.content, { paddingBottom: 86 + insets.bottom }]} showsVerticalScrollIndicator={false}>
+      <View style={[s.header, row]}>
+        <View style={{ flex: 1 }}><Text accessibilityRole="header" style={[s.title, txt]}>{text("رحلتي", "My Journey")}</Text><Text style={[s.subtitle, txt]}>{text("كل خطوة تقربنا من مستقبل أفضل لطفلك", "Every step brings your child closer to a better future")}</Text></View>
+        <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={s.illustration}><View style={s.path} /><View style={s.pathEnd} /><Ionicons style={{ position: "absolute", top: 5, left: 14 }} name="location" size={26} color="#8C9ADC" /><Ionicons style={{ position: "absolute", bottom: 6, right: 10 }} name="location" size={30} color="#8C9ADC" /><Ionicons style={{ position: "absolute", top: 0, right: 8 }} name="heart" size={26} color="#D5BFE0" /></View>
       </View>
-
-      <ScrollView
-        style={styles.scroll}
-        contentContainerStyle={{
-          width: contentW,
-          alignSelf: "center",
-          paddingHorizontal: padX,
-          paddingBottom: ms(168),
-        }}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={[styles.headerRow, { marginTop: ms(4), marginBottom: ms(16), minHeight: ms(44) }]}>
-          <Pressable
-            onPress={() => router.navigate("/(tabs)/home")}
-            hitSlop={10}
-            style={({ pressed }) => [
-              styles.backBtn,
-              { width: ms(36), height: ms(36), borderRadius: ms(18) },
-              pressed && styles.pressed,
-            ]}
-            accessibilityRole="button"
-            accessibilityLabel={t("common.back")}
-          >
-            <Ionicons name="chevron-back" size={ms(20)} color={colors.titleDark} />
-          </Pressable>
-          <Text style={[styles.pageTitle, { fontSize: ms(24), textAlign: align, writingDirection: dir }]}>{t("ui.childPlan")}</Text>
-        </View>
-
-        <View
-          style={[
-            styles.card,
-            styles.profileCard,
-            { padding: ms(16), marginBottom: ms(14), borderRadius: ms(24) },
-          ]}
-        >
-          {childrenLoading ? (
-            <ActivityIndicator color={colors.primary} />
-          ) : displayChild ? (
-            <View style={[styles.profileRow, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
-              <View
-                style={[
-                  styles.avatarRing,
-                  {
-                    width: avatarSize,
-                    height: avatarSize,
-                    borderRadius: avatarSize / 2,
-                    borderWidth: ms(3),
-                  },
-                ]}
-              >
-                {useDemo ? (
-                  <Image source={CHILD_PHOTO} style={styles.avatarImg} />
-                ) : (
-                  <View style={styles.avatarFallback}>
-                    <Text style={[styles.avatarLetter, { fontSize: ms(24) }]}>{initials}</Text>
-                  </View>
-                )}
-              </View>
-              <View style={styles.profileMain}>
-                <View style={styles.profileTop}>
-                  <Pressable
-                    onPress={() => {
-                      if (useDemo) return;
-                      router.push(`/(tabs)/profile/edit-child-profile?id=${displayChild.id}`);
-                    }}
-                    hitSlop={8}
-                    style={styles.editBtn}
-                    accessibilityLabel={t("ui.edit")}
-                  >
-                    <Ionicons name="pencil-outline" size={ms(18)} color={colors.primary} />
-                  </Pressable>
-                  <View style={[styles.profileText, { alignItems: isRTL ? "flex-end" : "flex-start" }]}>
-                    <Text style={[styles.childName, { fontSize: ms(20), textAlign: align, writingDirection: dir }]}>{childDisplayName}</Text>
-                    <Text style={[styles.childAge, { fontSize: ms(13), textAlign: align, writingDirection: dir }]}>
-                      {age != null ? t("ui.years", { count: age }) : t("ui.ageUnknown")}
-                    </Text>
-                  </View>
-                </View>
-                {tags.length ? (
-                  <View style={[styles.tagsRow, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
-                    {tags.map((tag) => (
-                      <View key={tag} style={styles.tag}>
-                        <Text style={[styles.tagText, { writingDirection: dir }]}>{tag}</Text>
-                      </View>
-                    ))}
-                  </View>
-                ) : (
-                  <Text style={[styles.emptyInline, { textAlign: align, writingDirection: dir }]}>{t("copy.noTagsYet")}</Text>
-                )}
-              </View>
-            </View>
-          ) : (
-            <View>
-              <Text style={[styles.emptyTitle, { textAlign: align, writingDirection: dir }]}>{t("copy.noChildProfile")}</Text>
-              <Text style={[styles.emptyBody, { textAlign: align, writingDirection: dir }]}>{t("copy.addChildForPlan")}</Text>
-              <Pressable
-                onPress={() => router.push("/(tabs)/profile/manage-children")}
-                style={styles.emptyCta}
-              >
-                <Text style={styles.emptyCtaText}>{t("copy.manageChildren")}</Text>
-              </Pressable>
-            </View>
-          )}
-        </View>
-
-        <View style={[styles.card, { padding: ms(16), marginBottom: ms(14), borderRadius: ms(24) }]}>
-          <View style={[styles.sectionHead, { flexDirection: isRTL ? "row" : "row-reverse" }]}>
-            <View style={[styles.dateChip, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
-              <Ionicons name="calendar-outline" size={ms(14)} color={colors.primary} />
-              <Text style={[styles.dateChipText, { fontSize: ms(12), writingDirection: dir }]}>
-                {formatWeekRange(weekStart, months)}
-              </Text>
-            </View>
-            <View style={[styles.sectionTitleRow, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
-              <Ionicons name="calendar" size={ms(16)} color={colors.primary} />
-              <Text style={[styles.sectionTitle, { fontSize: ms(16), textAlign: align, writingDirection: dir }]}>{t("planUi.weeklyPlan")}</Text>
-            </View>
-          </View>
-
-          <View style={[styles.daysRow, { marginTop: ms(14), marginBottom: ms(16), flexDirection: isRTL ? "row-reverse" : "row" }]}>
-            {WEEK_DAYS.map((day) => {
-              const selected = selectedDay === day.key;
-              return (
-                <Pressable
-                  key={day.key}
-                  onPress={() => setSelectedDay(day.key)}
-                  style={[
-                    styles.dayChip,
-                    {
-                      minHeight: ms(34),
-                      paddingHorizontal: ms(4),
-                    },
-                    selected && styles.dayChipOn,
-                  ]}
-                >
-                  <Text
-                    style={[
-                      styles.dayChipText,
-                      { fontSize: ms(11), writingDirection: dir },
-                      selected && styles.dayChipTextOn,
-                    ]}
-                    numberOfLines={1}
-                  >
-                    {t(day.labelKey)}
-                  </Text>
-                </Pressable>
-              );
-            })}
-          </View>
-
-          <View style={[styles.goalsCard, { padding: ms(14), marginBottom: ms(18), borderRadius: ms(18) }]}>
-            <View style={[styles.sectionTitleRow, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
-              <Ionicons name="disc-outline" size={ms(16)} color={colors.primary} />
-              <Text style={[styles.sectionTitle, { fontSize: ms(15), textAlign: align, writingDirection: dir }]}>{t("planUi.weeklyGoals")}</Text>
-            </View>
-            <View style={[styles.goalsBody, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
-              <Text style={[styles.goalsText, { fontSize: ms(13), lineHeight: ms(22), textAlign: align, writingDirection: dir }]}>
-                {goals || t("ui.childGoalsPlaceholder")}
-              </Text>
-              <View style={[styles.plantWrap, { width: ms(72), height: ms(72) }]}>
-                <Ionicons name="leaf" size={ms(28)} color={colors.primary} style={{ opacity: 0.35 }} />
-                <Ionicons
-                  name="leaf-outline"
-                  size={ms(40)}
-                  color={colors.primary}
-                  style={{ opacity: 0.7, marginTop: -8 }}
-                />
-              </View>
-            </View>
-          </View>
-
-          <View style={[styles.tasksHead, { marginBottom: ms(12), flexDirection: isRTL ? "row-reverse" : "row" }]}>
-            <Ionicons name="checkbox" size={ms(16)} color={colors.primary} />
-            <Text style={[styles.sectionTitle, { fontSize: ms(15), textAlign: align, writingDirection: dir }]}>{t("copy.todaysTasks")}</Text>
-          </View>
-
-          {loading ? (
-            <ActivityIndicator color={colors.primary} style={{ marginVertical: 12 }} />
-          ) : dayTasks.length ? (
-            dayTasks.map((task) => {
-              const helpful = helpfulnessLabel(task, t, isRTL);
-              const note = taskLocale(
-                isRTL,
-                t,
-                task.instructionsAr || task.noteAr,
-                task.instructionsEn || task.noteEn,
-                task.instructions || task.note,
-              );
-              const title = taskLocale(isRTL, t, task.titleAr, task.titleEn, task.title);
-              const description = taskLocale(
-                isRTL,
-                t,
-                task.descriptionAr,
-                task.descriptionEn,
-                task.description,
-              );
-              const frequency = taskLocale(isRTL, t, task.frequencyAr, task.frequencyEn, task.frequency);
-              return (
-                <View
-                  key={task.id}
-                  style={[
-                    styles.taskCard,
-                    { padding: ms(14), marginBottom: ms(10), borderRadius: ms(18) },
-                  ]}
-                >
-                  <View style={[styles.taskTop, { flexDirection: isRTL ? "row" : "row-reverse" }]}>
-                    <View style={[styles.taskStatusCol, { maxWidth: ms(108), alignItems: isRTL ? "flex-start" : "flex-end" }]}>
-                      {task.status === "completed" ? (
-                        <View style={[styles.statusPill, styles.statusDone, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
-                          <Ionicons name="checkmark-circle" size={15} color={colors.done} />
-                          <Text style={[styles.statusText, { color: colors.done, writingDirection: dir }]}>{t("copy.done")}</Text>
-                        </View>
-                      ) : task.status === "skipped" ? (
-                        <View style={[styles.statusPill, styles.statusSkip, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
-                          <Ionicons name="remove-circle-outline" size={15} color={colors.skip} />
-                          <Text style={[styles.statusText, { color: colors.skip, writingDirection: dir }]}>{t("copy.skip")}</Text>
-                        </View>
-                      ) : (
-                        <View style={styles.pendingActions}>
-                          <Pressable
-                            onPress={() => {
-                              if (useDemo) return;
-                              completeMutation.mutate(task.id);
-                            }}
-                            style={[styles.statusPill, styles.statusDone, { flexDirection: isRTL ? "row-reverse" : "row" }]}
-                          >
-                            <Ionicons name="checkmark-circle" size={15} color={colors.done} />
-                            <Text style={[styles.statusText, { color: colors.done, writingDirection: dir }]}>{t("copy.done")}</Text>
-                          </Pressable>
-                          <Pressable
-                            onPress={() => {
-                              if (useDemo) return;
-                              skipMutation.mutate(task.id);
-                            }}
-                            style={[styles.statusPill, styles.statusSkip, { flexDirection: isRTL ? "row-reverse" : "row" }]}
-                          >
-                            <Ionicons name="remove-circle-outline" size={15} color={colors.skip} />
-                            <Text style={[styles.statusText, { color: colors.skip, writingDirection: dir }]}>{t("copy.skip")}</Text>
-                          </Pressable>
-                        </View>
-                      )}
-                      {helpful ? (
-                        <View style={[styles.helpfulRow, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
-                          <Ionicons name="happy-outline" size={14} color={colors.primary} />
-                          <Text style={[styles.helpfulText, { writingDirection: dir }]}>{helpful}</Text>
-                        </View>
-                      ) : null}
-                      {note && task.status === "skipped" ? (
-                        <View style={[styles.noteRow, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
-                          <Ionicons name="document-text-outline" size={13} color={colors.muted} />
-                          <Text style={[styles.noteText, { textAlign: align, writingDirection: dir }]} numberOfLines={2}>
-                            {note}
-                          </Text>
-                        </View>
-                      ) : null}
-                    </View>
-                    <View style={[styles.taskMain, { alignItems: isRTL ? "flex-end" : "flex-start" }]}>
-                      <Text style={[styles.taskTitle, { fontSize: ms(15), textAlign: align, writingDirection: dir }]}>{title}</Text>
-                      {description ? (
-                        <Text style={[styles.taskDesc, { fontSize: ms(12), textAlign: align, writingDirection: dir }]} numberOfLines={2}>
-                          {description}
-                          {frequency ? ` • ${frequency}` : ""}
-                        </Text>
-                      ) : null}
-                    </View>
-                    <View
-                      style={[
-                        styles.taskIconWrap,
-                        { width: ms(40), height: ms(40), borderRadius: ms(14) },
-                      ]}
-                    >
-                      <Ionicons name={taskIcon(task)} size={ms(18)} color={colors.primary} />
-                    </View>
-                  </View>
-                </View>
-              );
-            })
-          ) : (
-            <View style={[styles.emptyBox, { marginBottom: ms(10) }]}>
-              <Text style={[styles.emptyBody, { textAlign: align, writingDirection: dir }]}>{t("ui.noTasksToday")}</Text>
-            </View>
-          )}
-
-          <View
-            style={[
-              styles.taskCard,
-              { padding: ms(14), marginBottom: ms(18), borderRadius: ms(18) },
-            ]}
-          >
-            <View style={[styles.taskTop, { flexDirection: isRTL ? "row" : "row-reverse" }]}>
-              <Pressable
-                onPress={() => router.navigate("/(tabs)/bookings")}
-                style={[styles.detailsLink, { flexDirection: isRTL ? "row" : "row-reverse" }]}
-                accessibilityRole="button"
-                accessibilityLabel={t("ui.viewDetails")}
-              >
-                <Ionicons name={isRTL ? "chevron-back" : "chevron-forward"} size={16} color={colors.primary} />
-                <Text style={[styles.detailsLinkText, { writingDirection: dir }]}>{t("ui.viewDetails")}</Text>
-              </Pressable>
-              <View style={[styles.taskMain, { alignItems: isRTL ? "flex-end" : "flex-start" }]}>
-                <Text style={[styles.taskTitle, { fontSize: ms(15), textAlign: align, writingDirection: dir }]}>{t("copy.doctorAppointments")}</Text>
-                {appointment ? (
-                  <>
-                    <Text style={[styles.taskDesc, { textAlign: align, writingDirection: dir }]}>
-                      {planLocaleText(
-                        isRTL,
-                        {
-                          ar: appointment.listingNameAr,
-                          en: appointment.listingNameEn,
-                          legacy: appointment.listingName,
-                        },
-                        t,
-                      )}
-                    </Text>
-                    <Text style={[styles.taskDesc, { textAlign: align, writingDirection: dir }]}>
-                      {formatAppointmentDate(appointment, isRTL, t)}
-                      {appointment.timeLabel || appointment.timeLabelEn || appointment.timeLabelAr
-                        ? ` • ${planLocaleText(
-                            isRTL,
-                            {
-                              ar: appointment.timeLabelAr,
-                              en: appointment.timeLabelEn,
-                              legacy: appointment.timeLabel,
-                            },
-                            t,
-                          )}`
-                        : ""}
-                    </Text>
-                  </>
-                ) : (
-                  <Text style={[styles.taskDesc, { textAlign: align, writingDirection: dir }]}>{t("copy.noSavedAppointments")}</Text>
-                )}
-              </View>
-              <View
-                style={[
-                  styles.taskIconWrap,
-                  { width: ms(40), height: ms(40), borderRadius: ms(14) },
-                ]}
-              >
-                <Ionicons name="calendar-outline" size={ms(18)} color={colors.primary} />
-              </View>
-            </View>
-          </View>
-
-          <View style={[styles.bottomStats, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
-            <Pressable
-              onPress={() => router.push("/(tabs)/plan/progress")}
-              style={[styles.evalBlock, { alignItems: isRTL ? "flex-end" : "flex-start" }]}
-            >
-              <View style={[styles.evalTitleRow, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
-                <Ionicons name="star-outline" size={16} color={colors.primary} />
-                <Text style={[styles.evalTitle, { writingDirection: dir }]}>{t("planUi.weeklyEval")}</Text>
-                <Ionicons name={isRTL ? "chevron-back" : "chevron-forward"} size={14} color={colors.muted} />
-              </View>
-              <Text style={[styles.evalMeta, { textAlign: align, writingDirection: dir }]}>
-                {totalCount
-                  ? t("planUi.completedOf", { done: completedCount, total: totalCount })
-                  : t("ui.noRatingYet")}
-              </Text>
-            </Pressable>
-            <View style={styles.progressBlock}>
-              <View style={[styles.progressLabelRow, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
-                <Ionicons name="stats-chart-outline" size={16} color={colors.primary} />
-                <Text style={[styles.progressLabel, { writingDirection: dir }]}>{t("copy.weekProgress")}</Text>
-              </View>
-              <Text style={[styles.percent, { fontSize: ms(22), textAlign: isRTL ? "left" : "right", writingDirection: dir }]}>{percent}%</Text>
-              <View style={[styles.progressTrack, { flexDirection: isRTL ? "row-reverse" : "row" }]}>
-                <View style={[styles.progressFill, { width: `${percent}%` }]} />
-              </View>
-            </View>
-          </View>
-        </View>
-
-        <Pressable
-          onPress={() => router.push("/(tabs)/plan/check-in")}
-          style={({ pressed }) => [
-            styles.card,
-            styles.updateCard,
-            { padding: ms(16), borderRadius: ms(22), flexDirection: isRTL ? "row-reverse" : "row" },
-            pressed && styles.pressed,
-          ]}
-        >
-          <Ionicons name={isRTL ? "chevron-back" : "chevron-forward"} size={18} color={colors.muted} />
-          <View style={{ flex: 1 }}>
-            <Text style={[styles.sectionTitle, { fontSize: ms(14), textAlign: align, writingDirection: dir }]}>
-              {t("copy.autoUpdateTitle")}
-            </Text>
-            <Text style={[styles.taskDesc, { marginTop: 4, textAlign: align, writingDirection: dir }]}>
-              {t("copy.autoUpdateBody")}
-            </Text>
-          </View>
-          <Ionicons name="sparkles-outline" size={18} color={colors.primary} />
-        </Pressable>
-      </ScrollView>
-    </SafeAreaView>
-  );
+      <View style={s.card}>
+        {children.isPending ? <ActivityIndicator color="#6667D4" /> : children.isError ? <><Empty>{text("تعذر تحميل بيانات الأطفال.", "Could not load child profiles.")}</Empty><Button title={text("إعادة المحاولة", "Try again")} onPress={() => { void children.refetch(); }} /></> : child ? <>
+          <View style={[s.profile, row]}><View style={s.avatar}>{child.photoUrl ? <Image accessibilityLabel={text("صورة الطفل", "Child photo")} source={{ uri: child.photoUrl }} style={s.avatar} /> : <Ionicons name="person-outline" size={42} color="#969BD1" />}</View><View style={{ flex: 1 }}><Text style={[s.childName, txt]}>{text(child.nameAr || child.name, child.nameEn || child.name)}</Text><Text style={[s.body, txt]}>{age === undefined ? text("العمر غير مضاف", "Age not provided") : text(`${age} سنوات`, `${age} years old`)}</Text>{!child.photoUrl && <Text style={[s.small, txt]}>{text("لم تُضف صورة للطفل بعد", "No child photo added yet")}</Text>}</View></View>
+          {tags.length > 0 && <View style={[s.tags, row]}>{tags.map(tag => <View key={tag} style={s.tag}><Text style={s.tagText}>{tag}</Text></View>)}</View>}
+          {(children.data?.length ?? 0) > 1 && <Button title={text("تبديل الطفل", "Switch child")} icon="people-outline" onPress={() => setSwitching(!switching)} />}
+          {switching && children.data?.map(c => <Button key={c.id} icon={c.id === child.id ? "checkmark-circle" : "person-outline"} title={text(c.nameAr || c.name, c.nameEn || c.name)} onPress={() => { setSelectedId(c.id); setSwitching(false); }} />)}
+        </> : <><Empty>{text("أضف ملف طفلك لتبدأ رحلتكما معًا.", "Add your child's profile to begin your journey together.")}</Empty><Button title={text("إضافة طفل", "Add child")} icon="person-add-outline" onPress={() => go("/(tabs)/profile/add-child")} /></>}
+      </View>
+      <Section title={text("رحلتنا معًا", "Our Journey Together")} icon="map-outline">
+        <Text style={[s.small, txt]}>{text("خطوات بسيطة لرحلة أسهل — استكشف بالترتيب الذي يناسبك", "Small steps for an easier journey — explore at your own pace")}</Text>
+        <View style={[s.steps, row]}><View style={s.connector} />{([
+          ["compass-outline", text("فهم الاحتياج", "Understand needs"), () => go("/(tabs)/profile/manage-children")],
+          ["search-outline", text("البحث عن خدمات", "Explore services"), () => go(routes.centers)],
+          ["heart-outline", text("الاختيار والحجز", "Choose & book"), () => go(routes.centers)],
+          ["calendar-outline", text("المتابعة والتقييم", "Follow up & reflect"), () => { scroll.current?.scrollTo({ y: activityY.current, animated: true }); }],
+          ["star-outline", text("مستقبل أكثر إشراقًا", "A brighter future"), () => go(routes.videos)],
+        ] as [Icon, string, () => void][]).map(([icon, title, action]) => <Pressable accessibilityRole="button" key={title} onPress={action} style={s.step}><View style={s.stepCircle}><Ionicons name={icon} size={23} color="#6B6AD6" /></View><Text style={s.stepLabel}>{title}</Text></Pressable>)}</View>
+      </Section>
+      <View onLayout={event => { activityY.current = event.nativeEvent.layout.y; }}><Section title={text("أحدث نشاط", "Recent Activity")} icon="time-outline">
+        <Text style={[s.small, txt]}>{text("نشاط حسابك على هذا الجهاز", "Your account's activity on this device")}</Text>
+        {journey.isPending ? <ActivityIndicator /> : journey.isError ? <Button title={text("تعذر تحميل النشاط — إعادة المحاولة", "Could not load activity — retry")} onPress={() => { void journey.refetch(); }} /> : !history.length ? <Empty>{text("تبدأ قصتك من هنا. سيظهر نشاطك الجديد عند مشاهدة الفيديوهات أو حفظ العناصر.", "Your story starts here. New video views and saved items will appear here.")}</Empty> : (expandedHistory ? history : history.slice(0, 5)).map(r => <View key={r.id} style={[s.timeline, row]}><View style={s.timelineIcon}><Ionicons name={r.type === "appointment" ? "calendar-outline" : r.type === "report" ? "document-text-outline" : r.type === "note" ? "create-outline" : r.action === "saved" ? "heart" : "play-circle-outline"} size={22} color="#7979D7" /></View><View style={{ flex: 1 }}><Text style={[s.itemTitle, txt]}>{r.type === "appointment" ? text("أضفت موعد مركز محليًا", "Added a local center appointment") : r.type === "note" ? text("أضفت ملاحظة", "Added a note") : r.type === "report" ? text("أضفت رابط مستند", "Added a document link") : r.action === "saved" ? text("حفظت عنصرًا", "Saved an item") : text("فتحت فيديو", "Opened a video")}</Text><Text style={[s.body, txt]}>{label(r)}</Text><Text style={[s.small, txt]}>{new Date(r.createdAt).toLocaleString(locale === "ar" ? "ar-KW" : "en-GB", { dateStyle: "medium", timeStyle: "short" })}</Text></View></View>)}
+        {history.length > 5 && <Button title={expandedHistory ? text("عرض أقل", "Show less") : text("عرض كل الأنشطة", "View all activity")} onPress={() => setExpandedHistory(!expandedHistory)} />}
+      </Section>
+      </View>
+      <Section title={text("مواعيدي القادمة", "Upcoming Appointments")} icon="calendar-outline">
+        <Text style={[s.small, txt]}>{text("مواعيد المراكز المحفوظة على هذا الجهاز فقط. يرجى تأكيد الحجز مع المركز.", "Center appointments saved on this device only. Please confirm your booking with the center.")}</Text>
+        {!appointments.length ? <Empty>{text("لا توجد مواعيد مراكز قادمة محفوظة.", "No upcoming center appointments saved.")}</Empty> : appointments.map(r => <View key={r.id} style={s.inset}><Text style={[s.itemTitle, txt]}>{label(r)}</Text><Text style={[s.body, txt]}>{text(r.centerAr || "", r.centerEn || "")}</Text><Text style={[s.body, txt]}>{r.dateKey} · {r.time}</Text><Text style={[s.small, txt]}>{text(r.locationAr || "الموقع غير متاح", r.locationEn || "Location unavailable")}</Text></View>)}
+        <Button title={text("استكشاف المراكز والخدمات", "Explore centers & services")} icon="business-outline" onPress={() => go(routes.centers)} />
+      </Section>
+      <Section title={text("محفوظاتي", "Saved Items")} icon="heart-outline">
+        <View style={[s.savedGrid, row]}>{([
+          ["center", "business-outline", text("المراكز", "Centers"), "#EFECFF"], ["product", "cart-outline", text("المنتجات", "Products"), "#FFF0F5"], ["video", "play-circle-outline", text("الفيديوهات", "Videos"), "#E9F7F5"], ["article", "document-text-outline", text("المقالات", "Articles"), "#EDF1FF"],
+        ] as [JourneyKind, Icon, string, string][]).map(([kind, icon, title, backgroundColor]) => <Pressable accessibilityRole="button" accessibilityState={{ selected: savedKind === kind }} key={kind} onPress={() => setSavedKind(savedKind === kind ? undefined : kind)} style={[s.savedTile, { backgroundColor }]}><Ionicons name={icon} size={28} color="#7977CA" /><Text style={s.savedLabel}>{title}</Text><Text style={s.savedLabel}>{journey.isSuccess ? `(${saved.filter(r => r.kind === kind).length})` : "—"}</Text></Pressable>)}</View>
+        {savedKind && <View style={s.inset}>{!saved.some(r => r.kind === savedKind) && <Empty>{text("لم تحفظ عناصر في هذه الفئة بعد.", "No saved items in this category yet.")}</Empty>}{saved.filter(r => r.kind === savedKind).map(r => <View key={r.id}><Button title={label(r)} onPress={() => { const product = r.kind === "product" ? HOME_PRODUCTS.find(item => item.nameEn === r.titleEn) : undefined; if (product) setViewedProduct(product); else if (r.href?.startsWith("https://")) void openLink(r.href); else if (r.href) go(r.href); }} /><Button title={text("إزالة من المحفوظات", "Remove saved item")} icon="heart-dislike-outline" onPress={() => { void mutate(() => removeJourneyRecord(user.id, r.id)); }} /></View>)}</View>}
+        {savedKind && <Button title={text("استكشاف المزيد", "Explore more")} onPress={() => go(savedKind === "center" ? routes.centers : savedKind === "product" ? routes.products : savedKind === "video" ? routes.videos : routes.articles)} />}
+      </Section>
+      <Section title={text("اقتراحات لك", "Suggestions for You")} icon="bulb-outline">
+        <Text style={[s.small, txt]}>{text("أفكار عامة لاستكشاف فخر", "General ideas to explore Fakhr")}</Text>
+        <Button title={text("استكشاف المراكز", "Explore centers")} icon="location-outline" onPress={() => go(routes.centers)} />
+      </Section>
+      <JourneyProducts
+        products={productSuggestions.products}
+        personalized={productSuggestions.personalized}
+        busy={busy || !journey.isSuccess}
+        isSaved={product => saved.some(record => record.kind === "product" && record.titleEn === product.nameEn)}
+        onView={setViewedProduct}
+        onSave={product => { void toggleSave("product", product.nameAr, product.nameEn, `/(tabs)/plan?productId=${product.id}`); }}
+        onViewAll={() => go(routes.products)}
+      />
+      <View style={[s.footer, row]}><Ionicons name="heart" size={32} color="#8A8DD2" /><Text style={[s.footerText, txt]}>{text("كل خطوة صغيرة .. تصنع فرقًا كبيرًا", "Every small step makes a big difference")}</Text></View>
+      <Text style={[s.storageNotice, txt]}>{text("ملفات الأطفال مرتبطة بحسابك. النشاط والمحفوظات والمواعيد هنا محلية لهذا الجهاز؛ لا تتم مزامنتها بين الأجهزة.", "Child profiles come from your account. Activity, saves, and appointments here are local to this device and do not sync across devices.")}</Text>
+    </ScrollView>
+    <JourneyProductDetails product={viewedProduct} onClose={() => setViewedProduct(undefined)} />
+  </SafeAreaView>;
 }
 
-const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: colors.bg,
-  },
-  headerWash: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: colors.headerWash,
-    borderBottomLeftRadius: 48,
-    borderBottomRightRadius: 48,
-  },
-  blob: {
-    position: "absolute",
-    opacity: 0.9,
-  },
-  scroll: {
-    flex: 1,
-  },
-  headerRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  backBtn: {
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "rgba(255,255,255,0.72)",
-  },
-  pageTitle: {
-    flex: 1,
-    textAlign: "right",
-    writingDirection: "rtl",
-    fontWeight: "700",
-    color: colors.title,
-  },
-  card: {
-    backgroundColor: colors.white,
-    borderRadius: 24,
-    shadowColor: "#6E7CAF",
-    shadowOpacity: 0.1,
-    shadowRadius: 16,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 3,
-  },
-  profileCard: {
-    backgroundColor: colors.white,
-  },
-  profileRow: {
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    gap: 12,
-  },
-  avatarRing: {
-    overflow: "hidden",
-    borderColor: colors.primarySoft,
-    backgroundColor: colors.primarySoft,
-  },
-  avatarImg: {
-    width: "100%",
-    height: "100%",
-  },
-  avatarFallback: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: colors.primarySoft,
-  },
-  avatarLetter: {
-    color: colors.primary,
-    fontWeight: "700",
-  },
-  profileMain: {
-    flex: 1,
-  },
-  profileTop: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-  },
-  editBtn: {
-    paddingTop: 2,
-  },
-  profileText: {
-    flex: 1,
-    alignItems: "flex-end",
-  },
-  childName: {
-    fontWeight: "700",
-    color: colors.titleDark,
-    writingDirection: "rtl",
-    textAlign: "right",
-  },
-  childAge: {
-    color: colors.muted,
-    marginTop: 2,
-    writingDirection: "rtl",
-    textAlign: "right",
-  },
-  tagsRow: {
-    flexDirection: "row-reverse",
-    flexWrap: "wrap",
-    gap: 6,
-    marginTop: 10,
-  },
-  tag: {
-    backgroundColor: colors.primarySoft,
-    borderRadius: 999,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-  },
-  tagText: {
-    color: colors.primary,
-    fontSize: 11,
-    fontWeight: "600",
-    writingDirection: "rtl",
-  },
-  sectionHead: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  sectionTitleRow: {
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    gap: 6,
-  },
-  sectionTitle: {
-    fontWeight: "700",
-    color: colors.titleDark,
-    writingDirection: "rtl",
-    textAlign: "right",
-  },
-  dateChip: {
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    gap: 4,
-  },
-  dateChipText: {
-    color: colors.primary,
-    fontWeight: "600",
-    writingDirection: "rtl",
-  },
-  daysRow: {
-    flexDirection: "row-reverse",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: 4,
-  },
-  dayChip: {
-    flex: 1,
-    borderRadius: 999,
-    backgroundColor: colors.chipIdle,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  dayChipOn: {
-    backgroundColor: colors.primary,
-  },
-  dayChipText: {
-    color: colors.primary,
-    fontWeight: "700",
-    writingDirection: "rtl",
-  },
-  dayChipTextOn: {
-    color: colors.white,
-  },
-  goalsCard: {
-    backgroundColor: colors.primarySoft,
-  },
-  goalsBody: {
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    gap: 10,
-    marginTop: 8,
-  },
-  plantWrap: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  goalsText: {
-    flex: 1,
-    color: colors.body,
-    textAlign: "right",
-    writingDirection: "rtl",
-  },
-  tasksHead: {
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    gap: 6,
-  },
-  taskCard: {
-    backgroundColor: colors.white,
-    borderWidth: 1,
-    borderColor: colors.cardBorder,
-    shadowColor: "#6E7CAF",
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 3 },
-    elevation: 1,
-  },
-  taskTop: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
-  taskIconWrap: {
-    backgroundColor: colors.primarySoft,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  taskMain: {
-    flex: 1,
-    alignItems: "flex-end",
-  },
-  taskTitle: {
-    fontWeight: "700",
-    color: colors.titleDark,
-    textAlign: "right",
-    writingDirection: "rtl",
-  },
-  taskDesc: {
-    color: colors.muted,
-    marginTop: 3,
-    textAlign: "right",
-    writingDirection: "rtl",
-  },
-  taskStatusCol: {
-    alignItems: "flex-start",
-    gap: 6,
-    minWidth: 76,
-  },
-  statusPill: {
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    gap: 4,
-    borderRadius: 999,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-  },
-  statusDone: {
-    backgroundColor: colors.doneBg,
-  },
-  statusSkip: {
-    backgroundColor: colors.skipBg,
-  },
-  statusText: {
-    fontSize: 11,
-    fontWeight: "700",
-    writingDirection: "rtl",
-  },
-  pendingActions: {
-    gap: 4,
-  },
-  helpfulRow: {
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    gap: 4,
-  },
-  helpfulText: {
-    fontSize: 11,
-    color: colors.primary,
-    writingDirection: "rtl",
-  },
-  noteRow: {
-    flexDirection: "row-reverse",
-    alignItems: "flex-start",
-    gap: 4,
-  },
-  noteText: {
-    flexShrink: 1,
-    fontSize: 10,
-    color: colors.muted,
-    textAlign: "right",
-    writingDirection: "rtl",
-  },
-  detailsLink: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 2,
-    minWidth: 76,
-  },
-  detailsLinkText: {
-    color: colors.primary,
-    fontSize: 12,
-    fontWeight: "600",
-    writingDirection: "rtl",
-  },
-  bottomStats: {
-    flexDirection: "row-reverse",
-    gap: 12,
-    alignItems: "flex-end",
-  },
-  progressBlock: {
-    flex: 1.25,
-  },
-  progressLabelRow: {
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    gap: 6,
-    marginBottom: 6,
-  },
-  progressLabel: {
-    color: colors.body,
-    fontSize: 12,
-    fontWeight: "600",
-    writingDirection: "rtl",
-  },
-  percent: {
-    color: colors.titleDark,
-    fontWeight: "800",
-    textAlign: "left",
-    writingDirection: "rtl",
-    marginBottom: 6,
-  },
-  progressTrack: {
-    height: 8,
-    borderRadius: 999,
-    backgroundColor: colors.progressTrack,
-    overflow: "hidden",
-    flexDirection: "row-reverse",
-  },
-  progressFill: {
-    height: "100%",
-    backgroundColor: colors.progressFill,
-    borderRadius: 999,
-  },
-  evalBlock: {
-    flex: 1,
-    alignItems: "flex-end",
-  },
-  evalTitleRow: {
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    gap: 4,
-    marginBottom: 6,
-  },
-  evalTitle: {
-    color: colors.body,
-    fontSize: 12,
-    fontWeight: "700",
-    writingDirection: "rtl",
-  },
-  evalMeta: {
-    color: colors.muted,
-    fontSize: 11,
-    textAlign: "right",
-    writingDirection: "rtl",
-  },
-  updateCard: {
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    gap: 10,
-  },
-  emptyTitle: {
-    fontSize: 16,
-    fontWeight: "700",
-    color: colors.titleDark,
-    textAlign: "right",
-    writingDirection: "rtl",
-    marginBottom: 6,
-  },
-  emptyBody: {
-    fontSize: 13,
-    color: colors.muted,
-    textAlign: "right",
-    writingDirection: "rtl",
-  },
-  emptyInline: {
-    marginTop: 8,
-    fontSize: 12,
-    color: colors.muted,
-    textAlign: "right",
-    writingDirection: "rtl",
-  },
-  emptyCta: {
-    alignSelf: "flex-end",
-    marginTop: 10,
-    backgroundColor: colors.primary,
-    borderRadius: 999,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-  },
-  emptyCtaText: {
-    color: colors.white,
-    fontWeight: "700",
-    fontSize: 13,
-  },
-  emptyBox: {
-    backgroundColor: colors.primarySoft,
-    borderRadius: 14,
-    padding: 12,
-  },
-  pressed: {
-    opacity: 0.85,
-  },
+const s = StyleSheet.create({
+  safe: { flex: 1, backgroundColor: "#EEF0FD" }, loading: { flex: 1, alignItems: "center", justifyContent: "center" }, content: { paddingHorizontal: 16, gap: 14 },
+  header: { alignItems: "center", paddingTop: 16, paddingBottom: 3, gap: 8 }, title: { fontSize: 34, fontWeight: "800", color: "#293A94" }, subtitle: { fontSize: 15, color: "#727FBB", lineHeight: 24, marginTop: 5 },
+  illustration: { width: 90, height: 102 }, path: { position: "absolute", left: 21, top: 19, width: 49, height: 43, borderColor: "#CDD5F4", borderWidth: 7, borderLeftWidth: 0, borderRadius: 28, transform: [{ rotate: "-20deg" }] },
+  pathEnd: { position: "absolute", left: 9, top: 51, width: 49, height: 43, borderColor: "#CDD5F4", borderWidth: 7, borderRightWidth: 0, borderRadius: 28, transform: [{ rotate: "-20deg" }] },
+  card: { backgroundColor: "#FFFFFF", borderRadius: 23, padding: 17, gap: 9, shadowColor: "#6D77B2", shadowOpacity: .035, shadowRadius: 12, shadowOffset: { width: 0, height: 3 }, elevation: 1 },
+  profile: { gap: 14, alignItems: "center" }, avatar: { width: 76, height: 76, borderRadius: 38, backgroundColor: "#F0F1FC", alignItems: "center", justifyContent: "center" }, childName: { fontSize: 23, fontWeight: "700", color: "#334399" },
+  tags: { flexWrap: "wrap", gap: 6, marginTop: 5 }, tag: { borderRadius: 20, paddingHorizontal: 12, paddingVertical: 5, backgroundColor: "#EEEEFF" }, tagText: { fontSize: 12, color: "#4A50A1" },
+  sectionHeading: { alignItems: "center", gap: 9 }, sectionTitle: { flex: 1, fontSize: 20, fontWeight: "700", color: "#33418E" }, body: { fontSize: 14, lineHeight: 22, color: "#63709F" }, small: { fontSize: 12, lineHeight: 19, color: "#727CA5" }, empty: { color: "#727C9E", fontSize: 13, lineHeight: 22, paddingVertical: 12 },
+  button: { paddingHorizontal: 12, paddingVertical: 11, backgroundColor: "#F0F0FF", borderRadius: 13, alignItems: "center", justifyContent: "center", gap: 7, minHeight: 44, marginTop: 4 }, buttonText: { color: "#585DC4", fontSize: 13, flexShrink: 1 },
+  steps: { gap: 3, marginTop: 8, alignItems: "flex-start" }, connector: { position: "absolute", left: 25, right: 25, top: 21, height: 2, backgroundColor: "#DDDDF6" }, step: { flex: 1, alignItems: "center", gap: 6 }, stepCircle: { width: 43, height: 43, borderRadius: 22, backgroundColor: "#EEEDFF", borderWidth: 4, borderColor: "#F7F7FF", alignItems: "center", justifyContent: "center" }, stepLabel: { textAlign: "center", fontSize: 10, lineHeight: 17, color: "#5662A4" },
+  timeline: { alignItems: "flex-start", gap: 12, paddingTop: 14, paddingBottom: 5 }, timelineIcon: { backgroundColor: "#F0F0FC", width: 42, height: 42, borderRadius: 21, alignItems: "center", justifyContent: "center" }, itemTitle: { fontSize: 14, fontWeight: "600", lineHeight: 22, color: "#35468F" },
+  inset: { padding: 12, backgroundColor: "#F6F6FD", borderRadius: 15, gap: 5 }, savedGrid: { gap: 7, marginTop: 5 }, savedTile: { flex: 1, paddingVertical: 13, borderRadius: 14, alignItems: "center", gap: 5 }, savedLabel: { fontSize: 10, color: "#505B9E", textAlign: "center" },
+  footer: { padding: 22, backgroundColor: "#E0E4FA", borderRadius: 22, alignItems: "center", gap: 15 }, footerText: { flex: 1, fontSize: 18, fontWeight: "600", color: "#41519B", lineHeight: 28 }, storageNotice: { fontSize: 11, lineHeight: 18, color: "#828AAA", paddingHorizontal: 8 },
 });

@@ -14,14 +14,16 @@ import type { DirectoryListing } from "./types";
 
 export type ListingCardProps = {
   item: DirectoryListing;
-  onBookAppointment: () => void;
-  onCall: () => void;
+  onBookAppointment?: () => void;
+  onCall?: () => void;
+  onViewDetails?: () => void;
 };
 
 export function DirectoryListingCard({
   item,
   onBookAppointment,
   onCall,
+  onViewDetails,
 }: ListingCardProps) {
   const { t } = useTranslation();
   const { isRTL } = useI18nLayout();
@@ -44,9 +46,10 @@ export function DirectoryListingCard({
     item.tags,
   ).slice(0, 2);
   const more = item.moreTagCount;
+  const CardContainer = item.kind === "doctor" ? Pressable : View;
 
   return (
-    <View style={styles.card}>
+    <CardContainer style={styles.card} onPress={item.kind === "doctor" ? onViewDetails : undefined}>
       <View style={styles.imageWrap}>
         <Image
           source={{ uri: item.imageUrl }}
@@ -105,19 +108,19 @@ export function DirectoryListingCard({
         <View style={styles.actions}>
           <Pressable
             style={({ pressed }) => [styles.primaryBtn, pressed && styles.pressed]}
-            onPress={onBookAppointment}
+            onPress={item.kind === "doctor" ? onViewDetails : onBookAppointment}
           >
-            <Text style={styles.primaryBtnText}>{t("copy.bookAppointment")}</Text>
+            <Text style={styles.primaryBtnText}>{t(item.kind === "doctor" ? "clinic.viewDetails" : "copy.bookAppointment")}</Text>
           </Pressable>
-          <Pressable
+          {item.kind === "center" && <Pressable
             style={({ pressed }) => [styles.phoneBtn, pressed && styles.pressed]}
             onPress={onCall}
           >
             <Ionicons name="call-outline" size={22} color={c.primary} />
-          </Pressable>
+          </Pressable>}
         </View>
       </View>
-    </View>
+    </CardContainer>
   );
 }
 

@@ -1,0 +1,23 @@
+import React from "react";
+import { expect, jest, test } from "@jest/globals";
+import { fireEvent, render } from "@testing-library/react-native";
+import { JourneyProducts } from "../components/journey/JourneyProducts";
+import { HOME_PRODUCTS } from "../constants/homeProducts";
+let mockRTL = false;
+jest.mock("@expo/vector-icons", () => ({ Ionicons: "Icon" }));
+jest.mock("../hooks/useI18nLayout", () => ({ useI18nLayout: () => ({ isRTL: mockRTL, align: mockRTL ? "right" : "left", dir: mockRTL ? "rtl" : "ltr", tabRow: mockRTL ? "row-reverse" : "row" }) }));
+test.each([false, true])("product cards show catalog fields and independent save/detail actions (RTL=%s)", rtl => {
+  mockRTL = rtl;
+  const onSave = jest.fn(), onView = jest.fn(), onViewAll = jest.fn();
+  const product = HOME_PRODUCTS[0];
+  const screen = render(<JourneyProducts products={[product]} personalized={false} isSaved={() => false} busy={false} onSave={onSave} onView={onView} onViewAll={onViewAll} />);
+  expect(screen.getByText(rtl ? product.nameAr : product.nameEn)).toBeTruthy();
+  expect(screen.getByText(product.priceLabel)).toBeTruthy();
+  fireEvent.press(screen.getByLabelText(rtl ? `حفظ ${product.nameAr}` : `Save ${product.nameEn}`));
+  expect(onSave).toHaveBeenCalledWith(product);
+  expect(onView).not.toHaveBeenCalled();
+  fireEvent.press(screen.getByLabelText(rtl ? `عرض المنتج: ${product.nameAr}` : `View Product: ${product.nameEn}`));
+  expect(onView).toHaveBeenCalledWith(product);
+  fireEvent.press(screen.getByText(rtl ? "عرض كل المنتجات" : "View All Products"));
+  expect(onViewAll).toHaveBeenCalled();
+});

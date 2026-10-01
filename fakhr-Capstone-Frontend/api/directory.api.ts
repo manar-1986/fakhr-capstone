@@ -1,6 +1,8 @@
 import { HealthCenter, Professional } from "../types/directory.types";
 import { normalizeProfessional } from "../utils/professionalBilingual";
 import instance from "./axios";
+import { BILINGUAL_DOCTORS } from "../constants/professionalBilingual";
+import { FEATURED_LISTINGS } from "../components/directory/directoryMockData";
 
 
 export interface CenterFilters {
@@ -202,6 +204,10 @@ export const getCenterDetails = async (centerId: string): Promise<HealthCenter> 
 
 
 export const getProfessionalDetails = async (professionalId: string): Promise<Professional> => {
+  const localDoctor = BILINGUAL_DOCTORS.find((doc) => doc.id === professionalId);
+  if (localDoctor) return normalizeProfessional(localDoctor);
+  const featured = FEATURED_LISTINGS.find((item) => item.kind === "doctor" && item.id === professionalId);
+  if (featured) return normalizeProfessional({ ...featured, specialtyAr: featured.subtitleAr, specialtyEn: featured.subtitleEn, image: featured.imageUrl });
   const response = await instance.get<{ success: boolean; data: { professional: Professional } }>(`/directory/professionals/${professionalId}`);
   // axios interceptor returns response.data directly, so response is already the full response object
   const professional = (response as unknown as { success: boolean; data: { professional: Professional } }).data.professional;

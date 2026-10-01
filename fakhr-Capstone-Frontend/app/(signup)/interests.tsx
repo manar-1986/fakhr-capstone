@@ -40,7 +40,6 @@ const INTERESTS: Interest[] = [
   { id: "events", labelKey: "ui.events", icon: "people-outline" },
   { id: "products", labelKey: "ui.products", icon: "bag-handle-outline" },
   { id: "institutes", labelKey: "ui.institutes", icon: "home-outline" },
-  { id: "consultations", labelKey: "ui.consultations", icon: "chatbubble-ellipses-outline" },
   { id: "services", labelKey: "ui.servicesShort", icon: "extension-puzzle-outline" },
   { id: "education", labelKey: "ui.education", icon: "play-circle-outline" },
 ];

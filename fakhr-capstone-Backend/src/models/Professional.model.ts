@@ -1,6 +1,13 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 export interface IProfessional extends Document {
+  clinicNameAr?: string;
+  clinicNameEn?: string;
+  addressAr?: string;
+  addressEn?: string;
+  mapUrl?: string;
+  latitude?: number;
+  longitude?: number;
   name: string;
   nameAr?: string;
   nameEn?: string;
@@ -38,6 +45,13 @@ export interface IProfessional extends Document {
 
 const professionalSchema = new Schema<IProfessional>(
   {
+    clinicNameAr: { type: String, trim: true },
+    clinicNameEn: { type: String, trim: true },
+    addressAr: { type: String, trim: true },
+    addressEn: { type: String, trim: true },
+    mapUrl: { type: String, trim: true },
+    latitude: { type: Number, min: -90, max: 90 },
+    longitude: { type: Number, min: -180, max: 180 },
     name: { type: String, required: true },
     nameAr: { type: String },
     nameEn: { type: String },

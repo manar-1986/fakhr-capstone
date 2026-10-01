@@ -2,6 +2,14 @@ import type { BiText } from "./directoryBilingual";
 
 /** Required bilingual shape for every doctor/specialist shown in the app. */
 export type BilingualDoctor = {
+  clinicNameAr?: string;
+  clinicNameEn?: string;
+  addressAr?: string;
+  addressEn?: string;
+  phone?: string;
+  mapUrl?: string;
+  latitude?: number;
+  longitude?: number;
   id: string;
   nameAr: string;
   nameEn: string;

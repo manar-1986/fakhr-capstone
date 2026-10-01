@@ -7,6 +7,8 @@ export interface Medication {
 }
 
 export interface Child {
+  /** Optional account-provided photo. Current backend omits this when unavailable. */
+  photoUrl?: string;
   id: string;
   name: string;
   nameAr?: string;

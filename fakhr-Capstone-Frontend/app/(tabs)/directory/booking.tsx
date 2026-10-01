@@ -14,6 +14,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import type { DirectoryListing } from "../../../components/directory/types";
+import { addJourneyRecord } from "../../../utils/journeyStore";
 import { saveMockBooking } from "../../../utils/mockBookingsStore";
 import { addAppointmentToDeviceCalendar } from "../../../utils/addAppointmentToCalendar";
 import { listingLocaleName, listingLocaleSubtitle } from "../../../utils/professionalBilingual";
@@ -107,11 +108,15 @@ export default function BookingScreen() {
   const listing = useMemo(() => parseListing(itemParam), [itemParam]);
 
   useEffect(() => {
+    if (listing?.kind === "doctor") {
+      router.replace({ pathname: "/(tabs)/directory/professional-details", params: { id: listing.id } });
+      return;
+    }
     if (authLoading) return;
     if (user) return;
     setPendingAuthHref(bookingReturnHref(itemParam));
     router.replace("/(auth)/login");
-  }, [authLoading, user, itemParam, router]);
+  }, [authLoading, user, itemParam, router, listing]);
 
   const dateOptions = useMemo(() => {
     const days = (t("copy.days", { returnObjects: true }) as string[]) ?? [];
@@ -223,6 +228,21 @@ export default function BookingScreen() {
       phone: phone.trim(),
       notes: notes.trim() || undefined,
     });
+    // Persist only center/service requests; legacy doctor bookings never enter Journey.
+    if (user && listing.kind !== "doctor") {
+      const serviceIndex = serviceOptions.indexOf(appointmentType);
+      void addJourneyRecord(user.id, {
+        type: "appointment", kind: "center", action: "booked",
+        titleAr: (appointmentType === defaultService ? listing.subtitleAr : listing.tagsAr?.[serviceIndex]) || listing.subtitleAr || (isRTL ? appointmentType : "خدمة مركز"),
+        titleEn: (appointmentType === defaultService ? listing.subtitleEn : listing.tagsEn?.[serviceIndex]) || listing.subtitleEn || (!isRTL ? appointmentType : "Center service"),
+        centerAr: listing.nameAr || listing.name, centerEn: listing.nameEn || listing.name,
+        locationAr: listing.locationLineAr, locationEn: listing.locationLineEn,
+        dateKey: selectedDateKey, time: selectedTime,
+      }).catch(() => Alert.alert(
+        isRTL ? "لم يُحفظ الموعد في رحلتي" : "Appointment not saved to My Journey",
+        isRTL ? "تعذر الحفظ على هذا الجهاز. احتفظ بتفاصيل الموعد." : "Device storage failed. Please keep your appointment details.",
+      ));
+    }
     setPhase(3);
   };
 
@@ -278,7 +298,7 @@ export default function BookingScreen() {
     router.push("/(tabs)/bookings");
   };
 
-  if (authLoading || !user) {
+  if (listing?.kind === "doctor" || authLoading || !user) {
     return <SafeAreaView style={styles.safe} edges={["top"]} />;
   }
 
@@ -309,9 +329,7 @@ export default function BookingScreen() {
                 styles.confirmArrows,
                 {
                   marginTop: ms(16),
-                  paddingHorizontal: ms(2),
-                  flexDirection: "row",
-                  flexDirection: "row",
+                  paddingHorizontal: ms(2),                  flexDirection: "row",
                 },
               ]}
             >
@@ -472,9 +490,7 @@ export default function BookingScreen() {
               styles.stepper,
               {
                 marginTop: ms(18),
-                marginBottom: ms(22),
-                flexDirection: "row-reverse",
-                flexDirection: "row",
+                marginBottom: ms(22),                flexDirection: "row",
               },
             ]}
           >
@@ -589,9 +605,7 @@ export default function BookingScreen() {
                 style={[
                   styles.dateRow,
                   {
-                    gap: ms(8),
-                    flexDirection: "row-reverse",
-                    flexDirection: "row",
+                    gap: ms(8),                    flexDirection: "row",
                   },
                 ]}
               >
@@ -654,9 +668,7 @@ export default function BookingScreen() {
                   {
                     gap: ms(8),
                     marginTop: ms(16),
-                    marginBottom: ms(28),
-                    flexDirection: "row",
-                    flexDirection: "row",
+                    marginBottom: ms(28),                    flexDirection: "row",
                   },
                 ]}
               >

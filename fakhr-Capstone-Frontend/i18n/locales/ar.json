@@ -1,4 +1,21 @@
 {
+  "clinic": {
+    "details": "تفاصيل الطبيب",
+    "contact": "معلومات التواصل مع العيادة",
+    "name": "العيادة / المستشفى",
+    "address": "موقع / عنوان العيادة",
+    "phone": "رقم هاتف العيادة",
+    "call": "اتصال",
+    "location": "الموقع",
+    "unavailable": "غير متوفر",
+    "mapAvailable": "موقع العيادة متوفر على الخريطة",
+    "openError": "تعذر فتح الرابط. يرجى استخدام معلومات التواصل أعلاه.",
+    "services": "الخدمات",
+    "education": "التعليم",
+    "certifications": "الشهادات",
+    "languages": "اللغات",
+    "viewDetails": "عرض التفاصيل"
+  },
   "auth": {
     "signIn": "تسجيل الدخول",
     "signOut": "تسجيل الخروج",
@@ -237,7 +254,7 @@
     "circles": "الحلقات",
     "profile": "الملف",
     "settings": "الإعدادات",
-    "plan": "خطتي",
+    "plan": "رحلتي",
     "explore": "استكشف",
     "activities": "الأنشطة",
     "account": "حسابي"
@@ -366,6 +383,7 @@
     "selectChild": "اختر الطفل"
   },
   "ui": {
+    "fakhrCommunity": "مجتمع فخر",
     "helloName": "مرحباً {{name}}",
     "helpToday": "كيف يمكننا مساعدتك اليوم؟",
     "searchHome": "ابحث عن خدمة، جهة، أو منتج",
@@ -399,7 +417,7 @@
     "centers": "المراكز",
     "doctors": "الأطباء\nومتخصصين",
     "doctorsOneLine": "الأطباء والمتخصصين",
-    "activities": "الأنشطة\nوالبرامج",
+    "activities": "الفيديوهات\nالتعليمية",
     "activitiesOneLine": "الأنشطة والبرامج",
     "homeProducts": "المنتجات\nالمنزلية",
     "homeProductsOneLine": "المنتجات المنزلية",

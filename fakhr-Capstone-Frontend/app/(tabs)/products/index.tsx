@@ -12,7 +12,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { DisabilityAwareHeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 import { useTranslation } from "react-i18next";
-import { knownText } from "../../../utils/knownText";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { PRODUCT_SUPPORT_CATEGORIES, filterHomeProducts, type ProductSupportFilter } from "../../../constants/homeProducts";
 import { colors as palette } from "../../../theme";
 
 const colors = {
@@ -32,9 +33,8 @@ const DESIGN_W = 390;
 const PAGE_SIZE = 4;
 
 const FILTERS = [
-  { id: "all", label: "الكل" },
-  { id: "أدوات تعليمية", label: "أدوات تعليمية" },
-  { id: "المستلزمات", label: "المستلزمات" },
+  { id: "all", nameAr: "الكل", nameEn: "All" },
+  ...PRODUCT_SUPPORT_CATEGORIES,
 ] as const;
 
 const PHOTOS = [
@@ -44,87 +44,19 @@ const PHOTOS = [
   require("../../../assets/images/product-4.png"),
 ];
 
-type ProductRow = {
-  id: string;
-  name: string;
-  category: string;
-  priceLabel: string;
-  photoIndex: number;
-};
-
-const PRODUCTS: ProductRow[] = [
-  {
-    id: "p-1",
-    name: "كرسي متحرك",
-    category: "المستلزمات",
-    priceLabel: "KD 95.000",
-    photoIndex: 0,
-  },
-  {
-    id: "p-2",
-    name: "بطاقات تواصل مصورة",
-    category: "أدوات تعليمية",
-    priceLabel: "KD 6.500",
-    photoIndex: 1,
-  },
-  {
-    id: "p-3",
-    name: "سماعات عازلة للضوضاء",
-    category: "المستلزمات",
-    priceLabel: "KD 12.000",
-    photoIndex: 2,
-  },
-  {
-    id: "p-4",
-    name: "أدوات تنمية مهارات",
-    category: "أدوات تعليمية",
-    priceLabel: "KD 16.000",
-    photoIndex: 3,
-  },
-  {
-    id: "p-5",
-    name: "لوحة تواصل",
-    category: "أدوات تعليمية",
-    priceLabel: "KD 8.000",
-    photoIndex: 1,
-  },
-  {
-    id: "p-6",
-    name: "وسادة دعم",
-    category: "المستلزمات",
-    priceLabel: "KD 14.000",
-    photoIndex: 0,
-  },
-  {
-    id: "p-7",
-    name: "مكعبات حسية",
-    category: "أدوات تعليمية",
-    priceLabel: "KD 9.500",
-    photoIndex: 3,
-  },
-  {
-    id: "p-8",
-    name: "حزام أمان",
-    category: "المستلزمات",
-    priceLabel: "KD 11.000",
-    photoIndex: 2,
-  },
-];
 
 export default function ProductsScreen() {
   const { t } = useTranslation();
+  const { isRTL, align, dir } = useI18nLayout();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
   const s = contentW / DESIGN_W;
   const ms = (n: number) => Math.round(n * s);
 
-  const [filter, setFilter] = useState<(typeof FILTERS)[number]["id"]>("all");
+  const [filter, setFilter] = useState<ProductSupportFilter>("all");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-  const filteredRows = useMemo(() => {
-    if (filter === "all") return PRODUCTS;
-    return PRODUCTS.filter((row) => row.category === filter);
-  }, [filter]);
+  const filteredRows = useMemo(() => filterHomeProducts(filter), [filter]);
 
   const visibleRows = filteredRows.slice(0, visibleCount);
   const hasMore = visibleCount < filteredRows.length;
@@ -149,6 +81,7 @@ export default function ProductsScreen() {
                 {
                   fontSize: ms(24),
                   lineHeight: ms(32),
+                  writingDirection: dir,
                 },
               ]}
             >
@@ -161,12 +94,14 @@ export default function ProductsScreen() {
               styles.filters,
               {
                 gap: ms(8),
+                flexDirection: isRTL ? "row-reverse" : "row",
                 marginBottom: ms(10),
               },
             ]}
           >
             {FILTERS.map((item) => {
               const selected = filter === item.id;
+              const label = isRTL ? item.nameAr : item.nameEn;
               return (
                 <Pressable
                   key={item.id}
@@ -187,33 +122,31 @@ export default function ProductsScreen() {
                   ]}
                   accessibilityRole="button"
                   accessibilityState={{ selected }}
-                  accessibilityLabel={
-                    item.id === "all"
-                      ? t("ui.all")
-                      : item.id === "أدوات تعليمية"
-                        ? t("ui.educationalTools")
-                        : t("ui.supplies")
-                  }
+                  accessibilityLabel={label}
                 >
                   <Text
                     style={[
                       styles.filterText,
                       {
                         fontSize: ms(14),
+                        writingDirection: dir,
+                        textAlign: align,
                         color: selected ? colors.white : colors.unselectedText,
                       },
                     ]}
                   >
-                    {item.id === "all"
-                      ? t("ui.all")
-                      : item.id === "أدوات تعليمية"
-                        ? t("ui.educationalTools")
-                        : t("ui.supplies")}
+                    {label}
                   </Text>
                 </Pressable>
               );
             })}
           </View>
+
+          {filteredRows.length === 0 && (
+            <Text accessibilityLiveRegion="polite" style={[styles.emptyText, { textAlign: align, writingDirection: dir }]}>
+              {isRTL ? "لا توجد منتجات في هذه الفئة حالياً." : "No products in this category yet."}
+            </Text>
+          )}
 
           {visibleRows.map((row, index) => {
             const imageSize = ms(68);
@@ -225,6 +158,7 @@ export default function ProductsScreen() {
                   styles.row,
                   {
                     minHeight: ms(88),
+                    flexDirection: isRTL ? "row-reverse" : "row",
                     paddingVertical: ms(12),
                     gap: ms(14),
                     borderBottomWidth:
@@ -235,7 +169,7 @@ export default function ProductsScreen() {
                   pressed && styles.pressed,
                 ]}
                 accessibilityRole="button"
-                accessibilityLabel={knownText(t, row.name)}
+                accessibilityLabel={isRTL ? row.nameAr : row.nameEn}
               >
                 <Image
                   source={photo}
@@ -246,15 +180,15 @@ export default function ProductsScreen() {
                   }}
                   resizeMode="cover"
                 />
-                <View style={styles.info}>
+                <View style={[styles.info, { alignItems: isRTL ? "flex-end" : "flex-start" }]}>
                   <Text
                     style={[
                       styles.name,
-                      { fontSize: ms(16), lineHeight: ms(22) },
+                      { fontSize: ms(16), lineHeight: ms(22), textAlign: align, writingDirection: dir },
                     ]}
                     numberOfLines={1}
                   >
-                    {knownText(t, row.name)}
+                    {isRTL ? row.nameAr : row.nameEn}
                   </Text>
                   <View
                     style={[
@@ -277,7 +211,7 @@ export default function ProductsScreen() {
                   </View>
                 </View>
                 <Ionicons
-                  name="chevron-forward"
+                  name={isRTL ? "chevron-back" : "chevron-forward"}
                   size={ms(16)}
                   color={colors.chevron}
                 />
@@ -285,7 +219,7 @@ export default function ProductsScreen() {
             );
           })}
 
-          <Pressable
+          {hasMore && <Pressable
             onPress={() => {
               if (hasMore) setVisibleCount((count) => count + PAGE_SIZE);
             }}
@@ -301,10 +235,10 @@ export default function ProductsScreen() {
             accessibilityRole="button"
             accessibilityLabel={t("ui.seeMore")}
           >
-            <Text style={[styles.moreBtnText, { fontSize: ms(16) }]}>
+            <Text style={[styles.moreBtnText, { fontSize: ms(16), writingDirection: dir }]}>
               {t("ui.seeMore")}
             </Text>
-          </Pressable>
+          </Pressable>}
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -338,10 +272,14 @@ const styles = StyleSheet.create({
   },
   filters: {
     width: "100%",
+    direction: "ltr",
+    flexWrap: "wrap",
     flexDirection: "row",
     alignItems: "center",
   },
   filterBtn: {
+    maxWidth: "100%",
+    paddingVertical: 8,
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 14,
@@ -352,6 +290,7 @@ const styles = StyleSheet.create({
   },
   row: {
     width: "100%",
+    direction: "ltr",
     flexDirection: "row",
     alignItems: "center",
     borderBottomColor: colors.divider,
@@ -371,7 +310,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  emptyText: {
+    color: colors.unselectedText,
+    fontSize: 15,
+    lineHeight: 24,
+    paddingVertical: 28,
+  },
   price: {
+    writingDirection: "ltr",
     fontWeight: "600",
     color: colors.text,
   },

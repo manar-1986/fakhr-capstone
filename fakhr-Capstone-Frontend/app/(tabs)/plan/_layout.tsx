@@ -7,8 +7,8 @@ export const unstable_settings = {
 };
 
 /**
- * Plan stack: weekly child plan is the tab root (index).
- * Nested English Progress / Check-in screens stay available from the plan itself.
+ * The parent Journey is the tab root (index).
+ * Keep legacy care-path detail routes for existing callers; Journey does not link to them.
  */
 export default function PlanLayout() {
   const backButton = () => (
