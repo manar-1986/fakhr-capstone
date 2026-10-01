@@ -17,6 +17,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { register } from "../../api/auth.api";
 import { useAuth, USER_PROFILE_CACHE_KEY } from "../../context/AuthContext";
+import { consumePendingAuthHref } from "../../utils/authRedirect";
 import { colors as palette } from "../../theme";
 
 const colors = {
@@ -55,7 +56,8 @@ export default function RegisterScreen() {
         JSON.stringify(data.user)
       );
       setUser(data.user);
-      router.replace("/(tabs)/home");
+      const pending = consumePendingAuthHref();
+      router.replace(pending ?? "/(tabs)/home");
     },
     onError: (error: any) => {
       const errorMessage = error?.message || error?.response?.data?.message || "Failed to create account. Please try again.";

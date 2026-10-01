@@ -8,8 +8,8 @@ export const unstable_settings = {
 };
 
 /**
- * Main tabs: Home, Plan, Activities (services), Profile.
- * Discover stays available as a hidden route; services is the Activities tab.
+ * Main tabs: Home, Plan, Activities (Discover screen), Profile.
+ * Home Activity Video Library and Home Services stay hidden routes.
  */
 export default function TabsLayout() {
   const { t } = useTranslation();
@@ -25,7 +25,7 @@ export default function TabsLayout() {
     >
       <Tabs.Screen name="home" options={{ title: t("tabs.home") }} />
       <Tabs.Screen name="plan" options={{ title: t("tabs.plan") }} />
-      <Tabs.Screen name="discover" options={{ href: null, title: t("tabs.explore") }} />
+      <Tabs.Screen name="discover" options={{ title: t("tabs.activities") }} />
       <Tabs.Screen
         name="profile"
         options={{
@@ -40,7 +40,8 @@ export default function TabsLayout() {
       <Tabs.Screen name="library" options={{ href: null }} />
       <Tabs.Screen name="documents" options={{ href: null }} />
       <Tabs.Screen name="resources" options={{ href: null }} />
-      <Tabs.Screen name="services" options={{ title: t("tabs.activities") }} />
+      <Tabs.Screen name="activity-library" options={{ href: null }} />
+      <Tabs.Screen name="services" options={{ href: null }} />
       <Tabs.Screen name="products" options={{ href: null }} />
       <Tabs.Screen name="professionals" options={{ href: null }} />
     </Tabs>

@@ -16,6 +16,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getCurrentUser } from "../../../api/users.api";
 import { useAuth } from "../../../context/AuthContext";
+import { useRequireAuth } from "../../../hooks/useRequireAuth";
+import { setPendingAuthHref } from "../../../utils/authRedirect";
 import { colors as palette } from "../../../theme";
 
 const colors = {
@@ -51,6 +53,7 @@ export default function ProfileTabScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const { user } = useAuth();
+  const { requireAuth } = useRequireAuth();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
   const s = contentW / DESIGN_W;
@@ -83,25 +86,37 @@ export default function ProfileTabScreen() {
       key: "personal",
       label: t("ui.myDetails"),
       icon: "person-outline",
-      onPress: () => router.push("/(tabs)/profile/edit-profile"),
+      onPress: () => {
+        if (!requireAuth("/(tabs)/profile/edit-profile")) return;
+        router.push("/(tabs)/profile/edit-profile");
+      },
     },
     {
       key: "children",
       label: t("ui.myChildren"),
       icon: "people-outline",
-      onPress: () => router.push("/(tabs)/profile/edit-child-profile"),
+      onPress: () => {
+        if (!requireAuth("/(tabs)/profile/edit-child-profile")) return;
+        router.push("/(tabs)/profile/edit-child-profile");
+      },
     },
     {
       key: "bookings",
       label: t("ui.myAppointments"),
       icon: "calendar-outline",
-      onPress: () => router.navigate("/bookings"),
+      onPress: () => {
+        if (!requireAuth("/(tabs)/bookings")) return;
+        router.navigate("/bookings");
+      },
     },
     {
       key: "advice",
       label: t("ui.myConsultations"),
       icon: "chatbubbles-outline",
-      onPress: () => router.navigate("/community/advice"),
+      onPress: () => {
+        if (!requireAuth("/(tabs)/community/advice")) return;
+        router.navigate("/community/advice");
+      },
     },
     {
       key: "notifications",
@@ -213,6 +228,7 @@ export default function ProfileTabScreen() {
           ))}
         </View>
 
+        {user ? (
         <Pressable
           onPress={handleLogout}
           style={({ pressed }) => [
@@ -232,6 +248,54 @@ export default function ProfileTabScreen() {
             {t("auth.signOut")}
           </Text>
         </Pressable>
+        ) : (
+          <>
+            <Pressable
+              onPress={() => {
+                setPendingAuthHref("/(tabs)/profile");
+                router.push("/(auth)/login");
+              }}
+              style={({ pressed }) => [
+                styles.logout,
+                {
+                  minHeight: ms(52),
+                  borderRadius: ms(16),
+                  marginTop: ms(16),
+                },
+                pressed && styles.pressed,
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel={t("auth.signIn")}
+            >
+              <Ionicons name="log-in-outline" size={ms(20)} color={colors.icon} />
+              <Text style={[styles.logoutText, { fontSize: ms(16) }]}>
+                {t("auth.signIn")}
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                setPendingAuthHref("/(tabs)/profile");
+                router.push("/(signup)");
+              }}
+              style={({ pressed }) => [
+                styles.logout,
+                {
+                  minHeight: ms(52),
+                  borderRadius: ms(16),
+                  marginTop: ms(10),
+                },
+                pressed && styles.pressed,
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel={t("auth.createAccount")}
+            >
+              <Ionicons name="person-add-outline" size={ms(20)} color={colors.icon} />
+              <Text style={[styles.logoutText, { fontSize: ms(16) }]}>
+                {t("auth.createAccount")}
+              </Text>
+            </Pressable>
+          </>
+        )}
       </ScrollView>
     </SafeAreaView>
   );

@@ -35,6 +35,7 @@ type ServiceCategory = {
     | "/(tabs)/directory/professionals"
     | "/(tabs)/directory/schools"
     | "/(tabs)/services"
+    | "/(tabs)/activity-library"
     | "/(tabs)/community/advice"
     | "/(tabs)/products";
 };
@@ -70,7 +71,7 @@ const SERVICE_CATEGORIES: ServiceCategory[] = [
     icon: "people-outline",
     iconColor: "#6E7CAF",
     backgroundColor: "#EBEEF9",
-    pathname: "/(tabs)/services",
+    pathname: "/(tabs)/activity-library",
   },
   {
     id: "consultations",

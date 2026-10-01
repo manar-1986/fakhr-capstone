@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useI18nLayout } from "../../hooks/useI18nLayout";
+import { useAuth } from "../../context/AuthContext";
+import { setPendingAuthHref } from "../../utils/authRedirect";
 import { colors as palette } from "../../theme";
 
 const colors = {
@@ -14,7 +16,7 @@ const colors = {
   border: palette.borderLight,
 };
 
-type TabRoute = "home" | "plan" | "services" | "profile";
+type TabRoute = "home" | "plan" | "discover" | "profile";
 
 type TabDef = {
   key: string;
@@ -22,7 +24,7 @@ type TabDef = {
   icon: React.ComponentProps<typeof Ionicons>["name"];
   iconFocused: React.ComponentProps<typeof Ionicons>["name"];
   routeName: TabRoute;
-  href: "/(tabs)/home" | "/(tabs)/plan" | "/(tabs)/services" | "/(tabs)/profile";
+  href: "/(tabs)/home" | "/(tabs)/plan" | "/(tabs)/discover" | "/(tabs)/profile";
 };
 
 const TABS: TabDef[] = [
@@ -47,8 +49,8 @@ const TABS: TabDef[] = [
     labelKey: "tabs.activities",
     icon: "people-outline",
     iconFocused: "people",
-    routeName: "services",
-    href: "/(tabs)/services",
+    routeName: "discover",
+    href: "/(tabs)/discover",
   },
   {
     key: "profile",
@@ -79,6 +81,7 @@ export function MainTabBar({ state, navigation }: MainTabBarProps) {
   const { tabRow, dir } = useI18nLayout();
   const insets = useSafeAreaInsets();
   const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
   const pathname = usePathname();
   const bottomPad = Math.max(insets.bottom, 8);
   const barHeight = 58;
@@ -105,8 +108,13 @@ export function MainTabBar({ state, navigation }: MainTabBarProps) {
       canPreventDefault: true,
     });
     if (!event.defaultPrevented) {
-      // Plan is a stack; replace so خطتي always opens index (weekly plan), not nested Progress.
       if (tab.routeName === "plan") {
+        if (authLoading) return;
+        if (!user) {
+          setPendingAuthHref("/(tabs)/plan");
+          router.push("/(auth)/login");
+          return;
+        }
         router.replace(tab.href);
         return;
       }

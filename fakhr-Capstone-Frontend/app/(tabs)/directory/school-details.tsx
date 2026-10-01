@@ -22,6 +22,8 @@ import { openInGoogleMaps } from "../../../utils/openMaps";
 import { useTranslation } from "react-i18next";
 import { knownText } from "../../../utils/knownText";
 import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { useRequireAuth } from "../../../hooks/useRequireAuth";
+import { bookingReturnHref } from "../../../utils/authRedirect";
 import {
   BILINGUAL_SCHOOLS,
   containsArabic,
@@ -94,6 +96,7 @@ export default function SchoolDetailsScreen() {
   const { t } = useTranslation();
   const { isRTL, dir } = useI18nLayout();
   const router = useRouter();
+  const { requireAuth } = useRequireAuth();
   const insets = useSafeAreaInsets();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
@@ -194,10 +197,10 @@ export default function SchoolDetailsScreen() {
         .filter(Boolean),
       phone: phone || "",
     };
-    router.push({
-      pathname: "/(tabs)/directory/booking",
-      params: { item: encodeURIComponent(JSON.stringify(listing)) },
-    });
+    const encoded = encodeURIComponent(JSON.stringify(listing));
+    const href = bookingReturnHref(encoded);
+    if (!requireAuth(href)) return;
+    router.push(href);
   };
 
   const onTabPress = (key: TabKey) => {

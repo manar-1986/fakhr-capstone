@@ -18,17 +18,19 @@ import { FEATURED_LISTINGS } from "../../../components/directory/directoryMockDa
 import { FilterChip } from "../../../components/directory/FilterChip";
 import type { DirectoryListing } from "../../../components/directory/types";
 import { libraryColors as c } from "../../../constants/libraryTheme";
+import { useRequireAuth } from "../../../hooks/useRequireAuth";
+import { bookingReturnHref } from "../../../utils/authRedirect";
 
 export default function CentersAndProfessionalsScreen() {
   const router = useRouter();
+  const { requireAuth } = useRequireAuth();
   const [search, setSearch] = useState("");
   const [nearMe, setNearMe] = useState(true);
 
   const goBooking = (item: DirectoryListing) => {
-    router.push({
-      pathname: "/(tabs)/directory/booking",
-      params: { item: encodeURIComponent(JSON.stringify(item)) },
-    });
+    const href = bookingReturnHref(encodeURIComponent(JSON.stringify(item)));
+    if (!requireAuth(href)) return;
+    router.push(href);
   };
 
   const callItem = (item: DirectoryListing) => {

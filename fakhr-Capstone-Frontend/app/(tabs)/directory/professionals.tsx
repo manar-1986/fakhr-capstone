@@ -15,6 +15,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getProfessionals } from "../../../api/directory.api";
 import { DisabilityAwareHeaderBackButton } from "../../../components/navigation/HeaderBackButton";
+import { useRequireAuth } from "../../../hooks/useRequireAuth";
+import { bookingReturnHref } from "../../../utils/authRedirect";
 import type { DirectoryListing } from "../../../components/directory/types";
 import type { Professional } from "../../../types/directory.types";
 import { BILINGUAL_DOCTORS } from "../../../constants/professionalBilingual";
@@ -91,6 +93,7 @@ function mapApiProfessional(p: Professional, index: number): SpecialistRow {
 export default function ProfessionalsScreen() {
   const { t } = useTranslation();
   const { align, isRTL, dir } = useI18nLayout();
+  const { requireAuth } = useRequireAuth();
   const router = useRouter();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
@@ -147,10 +150,10 @@ export default function ProfessionalsScreen() {
       tagsEn: [row.specialtyEn],
       phone: "",
     };
-    router.push({
-      pathname: "/(tabs)/directory/booking",
-      params: { item: encodeURIComponent(JSON.stringify(listing)) },
-    });
+    const encoded = encodeURIComponent(JSON.stringify(listing));
+    const href = bookingReturnHref(encoded);
+    if (!requireAuth(href)) return;
+    router.push(href);
   };
 
   return (

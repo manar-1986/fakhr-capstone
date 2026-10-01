@@ -19,6 +19,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { login } from "../../api/auth.api";
 import { useAuth, USER_PROFILE_CACHE_KEY } from "../../context/AuthContext";
+import { finishAuthRedirect } from "../../utils/authRedirect";
 import { useI18nLayout } from "../../hooks/useI18nLayout";
 import { useTranslation } from "react-i18next";
 import { colors as palette } from "../../theme";
@@ -66,7 +67,7 @@ export default function LoginScreen() {
         );
         setUser(data.user);
       }
-      router.replace("/(tabs)/home");
+      finishAuthRedirect(router);
     },
     onError: (error: any) => {
       const errorMessage = error?.message || error?.response?.data?.message || "Invalid credentials. Please try again.";
@@ -91,7 +92,7 @@ export default function LoginScreen() {
     } catch {
       /* fall through */
     }
-    router.replace("/(auth)/welcome");
+    router.replace("/(tabs)/home");
   };
 
   return (

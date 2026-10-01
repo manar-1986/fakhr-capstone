@@ -21,6 +21,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { register } from "../../api/auth.api";
 import { useAuth, USER_PROFILE_CACHE_KEY } from "../../context/AuthContext";
+import { consumePendingAuthHref } from "../../utils/authRedirect";
 import { useI18nLayout } from "../../hooks/useI18nLayout";
 import { colors as palette } from "../../theme";
 
@@ -59,7 +60,8 @@ export function CreateAccountScreen() {
         JSON.stringify(data.user)
       );
       setUser(data.user);
-      router.replace("/(signup)/user-type");
+      const pending = consumePendingAuthHref();
+      router.replace(pending ?? "/(signup)/user-type");
     },
     onError: (error: unknown) => {
       const err = error as { message?: string; response?: { data?: { message?: string } } };

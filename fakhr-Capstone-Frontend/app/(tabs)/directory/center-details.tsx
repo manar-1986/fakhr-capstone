@@ -4,11 +4,14 @@ import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from "react-na
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { getCenterDetails } from "../../../api/directory.api";
+import type { DirectoryListing } from "../../../components/directory/types";
 import { colors, sectionSpacing, spacing, typography } from "../../../theme";
 import { openInGoogleMaps } from "../../../utils/openMaps";
 import { useTranslation } from "react-i18next";
 import { knownText } from "../../../utils/knownText";
 import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { useRequireAuth } from "../../../hooks/useRequireAuth";
+import { bookingReturnHref } from "../../../utils/authRedirect";
 import {
   containsArabic,
   directoryText,
@@ -34,6 +37,7 @@ export default function CenterDetailsScreen() {
   const { isRTL, dir } = useI18nLayout();
   const { id, listing: listingParam } = useLocalSearchParams<{ id?: string; listing?: string }>();
   const router = useRouter();
+  const { requireAuth } = useRequireAuth();
 
   const { data: center, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["center", id],
@@ -157,6 +161,36 @@ export default function CenterDetailsScreen() {
     (hasCoords ? t("copy.viewOnMap") : center?.mapUrl?.trim() ? displayName : "");
   const typeValue = center?.type || listing?.type;
 
+  const handleBook = () => {
+    const centerId = String(id || listing?.id || center?.id || "center");
+    const nameAr = listing?.nameAr || displayName;
+    const nameEn = listing?.nameEn || displayName;
+    const specialtyAr = listing?.specialtyAr || uniqueSpecialties[0] || "";
+    const specialtyEn = listing?.specialtyEn || uniqueSpecialties[0] || "";
+    const bookingListing: DirectoryListing = {
+      id: centerId,
+      kind: "center",
+      name: displayName,
+      nameAr,
+      nameEn,
+      subtitle: uniqueSpecialties[0] || specialtyAr || specialtyEn,
+      subtitleAr: specialtyAr,
+      subtitleEn: specialtyEn,
+      status: "OPEN",
+      locationLine,
+      rating: String(center?.rating ?? listing?.rating ?? ""),
+      imageUrl: "",
+      tags: uniqueSpecialties,
+      tagsAr: uniqueSpecialties,
+      tagsEn: uniqueSpecialties,
+      phone: center?.phone != null ? String(center.phone) : "",
+    };
+    const encoded = encodeURIComponent(JSON.stringify(bookingListing));
+    const href = bookingReturnHref(encoded);
+    if (!requireAuth(href)) return;
+    router.push(href);
+  };
+
   return (
     <SafeAreaView style={[styles.wrapper, { direction: isRTL ? "rtl" : "ltr" }]} edges={["top"]}>
       <ScrollView
@@ -242,6 +276,22 @@ export default function CenterDetailsScreen() {
             </View>
           </View>
         )}
+
+        <Pressable
+          onPress={handleBook}
+          style={({ pressed }) => [styles.bookButton, pressed && styles.bookButtonPressed]}
+          accessibilityRole="button"
+          accessibilityLabel={t("copy.bookAppointmentCenter")}
+        >
+          <Text
+            style={[
+              styles.bookButtonText,
+              { writingDirection: dir },
+            ]}
+          >
+            {t("copy.bookAppointmentCenter")}
+          </Text>
+        </Pressable>
 
         {center?.address ? (
           <Pressable onPress={handleOpenGoogleMaps} style={styles.mapLinkBtn}>
@@ -563,6 +613,24 @@ const styles = StyleSheet.create({
       color: "#6E7CAF",
       fontWeight: "500",
       fontSize: 14,
+    },
+    bookButton: {
+      marginTop: spacing.lg,
+      marginBottom: spacing.sm,
+      backgroundColor: colors.primary,
+      paddingVertical: 16,
+      borderRadius: 12,
+      alignItems: "center",
+      justifyContent: "center",
+      width: "100%",
+    },
+    bookButtonPressed: {
+      opacity: 0.88,
+    },
+    bookButtonText: {
+      color: colors.white || "#FFFFFF",
+      fontSize: 16,
+      fontWeight: "700",
     },
     secondaryButton: {
       backgroundColor: "#BCC3D8",

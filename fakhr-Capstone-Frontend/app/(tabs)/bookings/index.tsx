@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
 import { libraryColors as c } from "../../../constants/libraryTheme";
+import { useAuth } from "../../../context/AuthContext";
+import { setPendingAuthHref } from "../../../utils/authRedirect";
+import { useRouter } from "expo-router";
 
 /**
  * Bookings tab — placeholder list until appointments API is wired.
  */
 export default function BookingsScreen() {
+  const router = useRouter();
+  const { user, loading } = useAuth();
+
+  useEffect(() => {
+    if (loading) return;
+    if (user) return;
+    setPendingAuthHref("/(tabs)/bookings");
+    router.replace("/(auth)/login");
+  }, [loading, user, router]);
+
+  if (loading || !user) {
+    return <SafeAreaView style={styles.safe} edges={["top"]} />;
+  }
+
   return (
     <SafeAreaView style={styles.safe} edges={["top"]}>
       <View style={styles.body}>

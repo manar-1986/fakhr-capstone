@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
@@ -32,6 +32,8 @@ import {
 import { getMockBookings } from "../../../utils/mockBookingsStore";
 import { planLocaleText } from "../../../utils/planBilingual";
 import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { useAuth } from "../../../context/AuthContext";
+import { setPendingAuthHref } from "../../../utils/authRedirect";
 import { colors as palette } from "../../../theme";
 
 const CHILD_PHOTO = require("../../../assets/images/home-hero-girl.png");
@@ -322,6 +324,7 @@ const DEMO_APPOINTMENT = {
 export default function PlanScreen() {
   const router = useRouter();
   const { t } = useTranslation();
+  const { user, loading: authLoading } = useAuth();
   const { isRTL, dir, align } = useI18nLayout();
   const queryClient = useQueryClient();
   const { width: windowWidth } = useWindowDimensions();
@@ -337,6 +340,7 @@ export default function PlanScreen() {
   const { data: children, isLoading: childrenLoading } = useQuery({
     queryKey: ["children"],
     queryFn: getChildren,
+    enabled: Boolean(user),
     retry: false,
   });
 
@@ -415,6 +419,17 @@ export default function PlanScreen() {
 
   const padX = ms(16);
   const avatarSize = ms(68);
+
+  useEffect(() => {
+    if (authLoading) return;
+    if (user) return;
+    setPendingAuthHref("/(tabs)/plan");
+    router.replace("/(auth)/login");
+  }, [authLoading, user, router]);
+
+  if (authLoading || !user) {
+    return <SafeAreaView style={styles.safe} edges={["top"]} />;
+  }
 
   return (
     <SafeAreaView style={[styles.safe, { direction: isRTL ? "rtl" : "ltr" }]} edges={["top"]}>

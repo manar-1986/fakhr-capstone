@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   Alert,
   Pressable,
@@ -18,7 +18,9 @@ import { saveMockBooking } from "../../../utils/mockBookingsStore";
 import { addAppointmentToDeviceCalendar } from "../../../utils/addAppointmentToCalendar";
 import { listingLocaleName, listingLocaleSubtitle } from "../../../utils/professionalBilingual";
 import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
+import { useAuth } from "../../../context/AuthContext";
 import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { bookingReturnHref, setPendingAuthHref } from "../../../utils/authRedirect";
 import { colors as palette } from "../../../theme";
 
 const colors = {
@@ -95,6 +97,7 @@ export default function BookingScreen() {
   const { t } = useTranslation();
   const { align, isRTL } = useI18nLayout();
   const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
   const { width: windowWidth } = useWindowDimensions();
   const contentW = Math.min(windowWidth, 430);
   const s = contentW / DESIGN_W;
@@ -102,6 +105,13 @@ export default function BookingScreen() {
 
   const { item: itemParam } = useLocalSearchParams<{ item?: string }>();
   const listing = useMemo(() => parseListing(itemParam), [itemParam]);
+
+  useEffect(() => {
+    if (authLoading) return;
+    if (user) return;
+    setPendingAuthHref(bookingReturnHref(itemParam));
+    router.replace("/(auth)/login");
+  }, [authLoading, user, itemParam, router]);
 
   const dateOptions = useMemo(() => {
     const days = (t("copy.days", { returnObjects: true }) as string[]) ?? [];
@@ -141,6 +151,26 @@ export default function BookingScreen() {
   const providerName = listing
     ? listingLocaleName(listing, isRTL, t)
     : t("copy.fatimaOrg");
+
+  const serviceOptions = useMemo(() => {
+    if (!listing) return [];
+    const localized = isRTL
+      ? listing.tagsAr?.filter(Boolean)
+      : listing.tagsEn?.filter(Boolean);
+    const tags = (localized?.length ? localized : listing.tags?.filter(Boolean)) ?? [];
+    return [...new Set(tags)];
+  }, [listing, isRTL]);
+
+  const defaultService = listing
+    ? listingLocaleSubtitle(listing, isRTL, t) || t("copy.speechSession")
+    : t("copy.speechSession");
+
+  const [selectedService, setSelectedService] = useState(defaultService);
+
+  useEffect(() => {
+    setSelectedService(defaultService);
+  }, [defaultService]);
+
   const activeStep = phase === 1 ? 1 : 2;
 
   const selectedDateLabel = useMemo(() => {
@@ -156,9 +186,7 @@ export default function BookingScreen() {
     return `${opt.day} ${opt.date} ${opt.month} ${year}`;
   }, [dateOptions, selectedDateKey]);
 
-  const appointmentType = listing
-    ? listingLocaleSubtitle(listing, isRTL, t) || t("copy.speechSession")
-    : t("copy.speechSession");
+  const appointmentType = selectedService || defaultService;
   const confirmationTime = selectedTime
     ? t("copy.timePrefix", { time: formatTimeLocalized(selectedTime, t) })
     : "";
@@ -249,6 +277,10 @@ export default function BookingScreen() {
   const viewAppointments = () => {
     router.push("/(tabs)/bookings");
   };
+
+  if (authLoading || !user) {
+    return <SafeAreaView style={styles.safe} edges={["top"]} />;
+  }
 
   return (
     <SafeAreaView style={styles.safe} edges={["top"]}>
@@ -505,6 +537,53 @@ export default function BookingScreen() {
               >
                 {providerName}
               </Text>
+
+              {listing?.kind === "center" && serviceOptions.length > 0 ? (
+                <View style={{ marginBottom: ms(18), gap: ms(8) }}>
+                  <Text
+                    style={[
+                      styles.inputLabel,
+                      { textAlign: align, writingDirection: isRTL ? "rtl" : "ltr" },
+                    ]}
+                  >
+                    {t("copy.service")}
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: isRTL ? "row-reverse" : "row",
+                      flexWrap: "wrap",
+                      gap: ms(8),
+                    }}
+                  >
+                    {serviceOptions.map((service) => {
+                      const sel = selectedService === service;
+                      return (
+                        <Pressable
+                          key={service}
+                          onPress={() => setSelectedService(service)}
+                          style={({ pressed }) => [
+                            styles.serviceChip,
+                            sel && styles.serviceChipSelected,
+                            pressed && styles.pressed,
+                          ]}
+                          accessibilityRole="button"
+                          accessibilityState={{ selected: sel }}
+                          accessibilityLabel={service}
+                        >
+                          <Text
+                            style={[
+                              styles.serviceChipText,
+                              sel && styles.serviceChipTextSelected,
+                            ]}
+                          >
+                            {service}
+                          </Text>
+                        </Pressable>
+                      );
+                    })}
+                  </View>
+                </View>
+              ) : null}
 
               <View
                 style={[
@@ -767,6 +846,26 @@ const styles = StyleSheet.create({
     textAlign: "right",
     writingDirection: "rtl",
     width: "100%",
+  },
+  serviceChip: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+    backgroundColor: palette.primarySoft ?? "#EBEEF9",
+    borderWidth: 1,
+    borderColor: palette.border,
+  },
+  serviceChipSelected: {
+    backgroundColor: colors.selected,
+    borderColor: colors.selected,
+  },
+  serviceChipText: {
+    fontWeight: "600",
+    color: colors.title,
+    fontSize: 13,
+  },
+  serviceChipTextSelected: {
+    color: colors.white,
   },
   dateRow: {
     flexDirection: "row",

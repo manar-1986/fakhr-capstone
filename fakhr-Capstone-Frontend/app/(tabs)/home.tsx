@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useRouter } from "expo-router";
+import { useRouter, type Href } from "expo-router";
 import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -44,8 +44,7 @@ type ServiceItem = {
   label: string;
   icon: keyof typeof Ionicons.glyphMap;
   color: string;
-  href?: string;
-  onPress: () => void;
+  href: Href;
 };
 
 export default function HomeScreen() {
@@ -82,70 +81,66 @@ export default function HomeScreen() {
     router.navigate("/directory");
   };
 
+  const openCategory = (href: Href) => {
+    router.push(href);
+  };
+
   const services: ServiceItem[] = [
     {
       id: "disability",
       label: t("ui.disabilityCategories"),
       icon: "accessibility-outline",
       color: colors.icon,
-      href: "/resources",
-      onPress: () => router.push("/(tabs)/resources"),
+      href: "/(tabs)/resources",
     },
     {
       id: "schools",
       label: t("ui.schools"),
       icon: "school-outline",
       color: colors.icon,
-      href: "/directory/schools",
-      onPress: () => router.navigate("/directory/schools"),
+      href: "/(tabs)/directory/schools",
     },
     {
       id: "centers",
       label: t("ui.centers"),
       icon: "business-outline",
       color: colors.icon,
-      href: "/directory/centers",
-      onPress: () => router.navigate("/directory/centers"),
+      href: "/(tabs)/directory/centers",
     },
     {
       id: "doctors",
       label: t("ui.doctors"),
       icon: "person-outline",
       color: colors.specialist,
-      href: "/directory/professionals",
-      onPress: () => router.navigate("/directory/professionals"),
+      href: "/(tabs)/directory/professionals",
     },
     {
       id: "activities",
       label: t("ui.activities"),
-      icon: "people-outline",
+      icon: "play-circle-outline",
       color: colors.icon,
-      href: "/services",
-      onPress: () => router.navigate("/services"),
+      href: "/(tabs)/activity-library",
     },
     {
       id: "products",
       label: t("ui.homeProducts"),
       icon: "storefront-outline",
       color: colors.icon,
-      href: "/products",
-      onPress: () => router.navigate("/products"),
+      href: "/(tabs)/products",
     },
     {
       id: "homeServices",
       label: t("ui.homeServices"),
       icon: "home-outline",
       color: colors.icon,
-      href: "/services",
-      onPress: () => router.navigate("/services"),
+      href: "/(tabs)/services",
     },
     {
       id: "consultations",
       label: t("ui.consultations"),
       icon: "chatbubble-ellipses-outline",
       color: colors.icon,
-      href: "/community/advice",
-      onPress: () => router.navigate("/community/advice"),
+      href: "/(tabs)/community",
     },
   ];
 
@@ -291,39 +286,35 @@ export default function HomeScreen() {
               key={`row-${rowIndex}`}
               style={[styles.gridRow, { gap: colGap, flexDirection: gridRowDir }]}
             >
-              {row.map((item) => {
-                const cell = (
-                  <Pressable
-                    onPress={item.onPress}
-                    style={({ pressed }) => [styles.cell, pressed && styles.pressed]}
-                    accessibilityRole="button"
-                    accessibilityLabel={item.label.replace("\n", " ")}
+              {row.map((item) => (
+                <Pressable
+                  key={item.id}
+                  onPress={() => openCategory(item.href)}
+                  style={({ pressed }) => [
+                    styles.cellWrap,
+                    styles.cell,
+                    pressed && styles.pressed,
+                  ]}
+                  accessibilityRole="button"
+                  accessibilityLabel={item.label.replace(/\n/g, " ")}
+                >
+                  <View
+                    pointerEvents="none"
+                    style={[styles.iconSlot, { height: iconSlot }]}
                   >
-                    <View style={[styles.iconSlot, { height: iconSlot }]}>
-                      <Ionicons name={item.icon} size={ms(32)} color={item.color} />
-                    </View>
-                    <Text
-                      style={[
-                        styles.cellLabel,
-                        { fontSize: ms(11), lineHeight: ms(16), marginTop: ms(8) },
-                      ]}
-                    >
-                      {item.label}
-                    </Text>
-                  </Pressable>
-                );
-                return (
-                  <View key={item.id} style={styles.cellWrap}>
-                    {item.href ? (
-                      <Link href={item.href} asChild style={styles.cellLink}>
-                        {cell}
-                      </Link>
-                    ) : (
-                      cell
-                    )}
+                    <Ionicons name={item.icon} size={ms(32)} color={item.color} />
                   </View>
-                );
-              })}
+                  <Text
+                    pointerEvents="none"
+                    style={[
+                      styles.cellLabel,
+                      { fontSize: ms(11), lineHeight: ms(16), marginTop: ms(8) },
+                    ]}
+                  >
+                    {item.label}
+                  </Text>
+                </Pressable>
+              ))}
             </View>
           ))}
         </View>
@@ -471,9 +462,8 @@ const styles = StyleSheet.create({
     flex: 1,
     minWidth: 0,
     alignItems: "stretch",
-  },
-  cellLink: {
-    width: "100%",
+    zIndex: 2,
+    cursor: "pointer",
   },
   cell: {
     width: "100%",

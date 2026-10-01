@@ -254,6 +254,11 @@
     "comingSoon": "قريباً",
     "comingSoonBody": "اقتراحات مخصصة حسب ملف طفلك."
   },
+  "activityLibrary": {
+    "subtitle": "أنشطة وتمارين عملية يمكن تنفيذها مع طفلك في المنزل.",
+    "watchVideo": "شاهد الفيديو",
+    "viewContent": "مشاهدة المحتوى"
+  },
   "settings": {
     "title": "الإعدادات",
     "backToProfile": "العودة إلى الملف الشخصي",
@@ -635,6 +640,7 @@
     "aboutSchool": "نبذة عن المدرسة",
     "call": "اتصال",
     "bookAppointment": "حجز موعد",
+    "bookAppointmentCenter": "احجز موعد",
     "share": "مشاركة",
     "phoneUnavailable": "رقم الهاتف غير متوفر حالياً.",
     "callTitle": "اتصال",

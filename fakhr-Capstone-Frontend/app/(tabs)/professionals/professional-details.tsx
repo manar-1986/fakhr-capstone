@@ -18,6 +18,7 @@ import type { Professional } from "../../../types/directory.types";
 import { openInGoogleMaps, toFiniteNumber } from "../../../utils/openMaps";
 import { useTranslation } from "react-i18next";
 import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { useRequireAuth } from "../../../hooks/useRequireAuth";
 import {
   centerLocale,
   doctorLocaleList,
@@ -50,6 +51,7 @@ export default function ProfessionalDetailsScreen() {
   const { t } = useTranslation();
   const { isRTL } = useI18nLayout();
   const router = useRouter();
+  const { requireAuth } = useRequireAuth();
   const { id } = useLocalSearchParams();
   const loc = (ar?: string, en?: string, legacy?: string) =>
     doctorLocaleText(isRTL, { ar, en, legacy }, t);
@@ -66,6 +68,15 @@ export default function ProfessionalDetailsScreen() {
 
   const handleBookAppointment = () => {
     if (!professional) return;
+    const id = professional.id;
+    if (
+      !requireAuth({
+        pathname: "/(tabs)/professionals/professional-details",
+        params: { id: String(id) },
+      })
+    ) {
+      return;
+    }
     Alert.alert(
       t("copy.bookAppointment"),
       t("copy.bookWithName", { name: loc(professional.nameAr, professional.nameEn, professional.name) }),
