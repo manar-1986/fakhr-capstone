@@ -1,0 +1,50 @@
+import React from "react";
+import { beforeEach, expect, jest, test } from "@jest/globals";
+import { fireEvent, render } from "@testing-library/react-native";
+import Journey from "../app/(tabs)/plan/index";
+let mockRTL = false;
+let mockChildren: any[] = [];
+let mockRecords: any[] = [];
+let mockUser: any = { id: "test-parent" };
+const mockPush = jest.fn();
+const mockRefresh = jest.fn();
+jest.mock("../context/AuthContext", () => ({ useAuth: () => ({ user: mockUser, loading: false }) }));
+jest.mock("../api/children.api", () => ({ getChildren: jest.fn() }));
+jest.mock("../utils/authRedirect", () => ({ setPendingAuthHref: jest.fn() }));
+jest.mock("../utils/journeyStore", () => ({ ...jest.requireActual<any>("../utils/journeyStore"), readJourney: jest.fn() }));
+jest.mock("@tanstack/react-query", () => ({ useQuery: ({ queryKey }: any) => ({ data: queryKey[0] === "journey-children" ? mockChildren : mockRecords, isSuccess: true, refetch: mockRefresh }) }));
+jest.mock("expo-router", () => ({ useFocusEffect: () => {}, useLocalSearchParams: () => ({}), useRouter: () => ({ push: mockPush }) }));
+jest.mock("@expo/vector-icons", () => ({ Ionicons: "Icon" }));
+jest.mock("react-native-safe-area-context", () => ({ SafeAreaView: require("react-native").View, useSafeAreaInsets: () => ({ bottom: 0 }) }));
+jest.mock("../hooks/useI18nLayout", () => ({ useI18nLayout: () => ({ isRTL: mockRTL, locale: mockRTL ? "ar" : "en", align: mockRTL ? "right" : "left", tabRow: mockRTL ? "row-reverse" : "row" }) }));
+beforeEach(() => { mockRTL = false; mockChildren = []; mockRecords = []; mockUser = { id: "test-parent" }; mockPush.mockClear(); });
+test("empty account shows no invented child, activity or treatment progress", () => {
+  const screen = render(<Journey />);
+  expect(screen.getByText("Add child")).toBeTruthy();
+  expect(screen.getByText("No upcoming center appointments saved.")).toBeTruthy();
+  expect(screen.queryByText(/weekly|Done|Skip|محمد/i)).toBeNull();
+});
+test("switching children updates profile and Files & Reports stays removed", () => {
+  mockChildren = [{ id: "a", name: "Child A", age: 6, areasOfFocus: ["sensory"] }, { id: "b", name: "Child B", age: 8, areasOfFocus: ["motor"] }];
+  mockRecords = [{ id: "report-a", type: "report", childId: "a", titleAr: "تقرير أ", titleEn: "Report A", createdAt: "2026-10-01T00:00:00Z", href: "https://example.com/a" }];
+  const screen = render(<Journey />);
+  expect(screen.getByText("6 years old")).toBeTruthy();
+  fireEvent.press(screen.getByText("Switch child"));
+  fireEvent.press(screen.getByText("Child B"));
+  expect(screen.getByText("8 years old")).toBeTruthy();
+  expect(screen.queryByText("Files & Reports")).toBeNull();
+});
+test("Arabic labels render and journey steps navigate to existing pages", () => {
+  mockRTL = true;
+  const screen = render(<Journey />);
+  expect(screen.getByText("رحلتي")).toBeTruthy();
+  expect(screen.getByText("كل خطوة تقربنا من مستقبل أفضل لطفلك")).toBeTruthy();
+  fireEvent.press(screen.getByText("البحث عن خدمات"));
+  expect(mockPush).toHaveBeenCalledWith("/(tabs)/directory/centers");
+});
+test("guest is asked to sign in rather than shown account information", () => {
+  mockUser = null;
+  const screen = render(<Journey />);
+  expect(screen.getByText("Sign in")).toBeTruthy();
+  expect(screen.queryByText("Saved Items")).toBeNull();
+});

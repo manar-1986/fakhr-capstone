@@ -1,0 +1,697 @@
+import { Text, TextInput, ScrollView } from "../../../components/ui/AppText";
+import { typography } from "../../../theme/typography";
+import { Ionicons } from "@expo/vector-icons";
+import React, { useMemo, useState } from "react";
+import { Image, Pressable, StyleSheet, useWindowDimensions, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { WEB_PHONE_WIDTH } from "../../../components/layout/WebAppShell";
+import {
+  EXPLORE_ARTICLES,
+  EXPLORE_CATEGORIES,
+  FEATURED_CARD,
+  WEEKLY_CONTENT,
+  type ExploreCategoryId,
+  type WeeklyContentItem,
+} from "../../../components/explore/exploreDemoData";
+import { useTranslation } from "react-i18next";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { colors as palette } from "../../../theme";
+
+const colors = {
+  bg: palette.borderLight,
+  white: palette.white,
+  title: palette.textSecondary,
+  heading: palette.textSecondary,
+  subtitle: palette.textMuted,
+  body: palette.textSecondary,
+  brand: palette.primary,
+  searchBg: palette.white,
+  searchBorder: palette.border,
+  placeholder: palette.textLight,
+  cardBorder: palette.borderLight,
+  badgeBg: "rgba(255,255,255,0.92)",
+  durationBg: "rgba(35,40,55,0.72)",
+};
+
+const DESIGN_W = 390;
+
+export default function ExploreScreen() {
+  const { t } = useTranslation();
+  const { align, isRTL } = useI18nLayout();
+  const { width: windowWidth } = useWindowDimensions();
+  const contentW = Math.min(windowWidth || WEB_PHONE_WIDTH, WEB_PHONE_WIDTH);
+  const s = contentW / DESIGN_W;
+  const ms = (n: number) => Math.round(n * s);
+
+  const [search, setSearch] = useState("");
+  const [categoryId, setCategoryId] = useState<ExploreCategoryId>("all");
+  const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
+
+  const categoryLabel = (id: ExploreCategoryId) => {
+    const keys: Record<ExploreCategoryId, string> = {
+      all: "exploreUi.allTopics",
+      sensory: "exploreUi.sensory",
+      "life-skills": "exploreUi.lifeSkills",
+      communication: "exploreUi.communication",
+      behavior: "exploreUi.behavior",
+    };
+    return t(keys[id]);
+  };
+
+  const weeklyTitle = (item: WeeklyContentItem) => t(`exploreUi.${item.id}`);
+  const weeklyBadge = (item: WeeklyContentItem) => t(`exploreUi.${item.kind}`);
+
+  const articleCopy = (id: string) => {
+    if (id === "a1") {
+      return {
+        title: t("exploreUi.a1Title"),
+        subtitle: t("exploreUi.a1Sub"),
+        readTime: t("exploreUi.a1Read"),
+      };
+    }
+    return {
+      title: t("exploreUi.a2Title"),
+      subtitle: t("exploreUi.a2Sub"),
+      readTime: t("exploreUi.a2Read"),
+    };
+  };
+
+  const query = search.trim().toLowerCase();
+
+  const weeklyItems = useMemo(() => {
+    return WEEKLY_CONTENT.filter((item) => {
+      const inCategory =
+        categoryId === "all" || item.categoryIds.includes(categoryId);
+      const title = t(`exploreUi.${item.id}`).toLowerCase();
+      const inSearch = !query || title.includes(query);
+      return inCategory && inSearch;
+    });
+  }, [categoryId, query, t]);
+
+  const articles = useMemo(() => {
+    return EXPLORE_ARTICLES.filter((item) => {
+      const inCategory =
+        categoryId === "all" || item.categoryIds.includes(categoryId);
+      const copy = articleCopy(item.id);
+      const inSearch =
+        !query ||
+        copy.title.toLowerCase().includes(query) ||
+        copy.subtitle.toLowerCase().includes(query);
+      return inCategory && inSearch;
+    });
+  }, [categoryId, query, t]);
+
+  const toggleSaved = (id: string) => {
+    setSavedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const padX = ms(18);
+  const weeklyCardW = ms(142);
+
+  return (
+    <SafeAreaView style={styles.safe} edges={["top"]}>
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={[
+          styles.scrollContent,
+          {
+            width: contentW,
+            paddingHorizontal: padX,
+            paddingBottom: ms(120),
+            paddingTop: ms(6),
+          },
+        ]}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.brandRow}>
+          <View style={styles.brandTextCol}>
+            <Text style={[styles.brandName, { fontSize: typography.body }]}>{t("ui.brand")}</Text>
+            <Text style={[styles.brandTag, { fontSize: typography.caption }]}>
+              {t("exploreUi.tagline")}
+            </Text>
+          </View>
+          <Image
+            source={require("../../../assets/images/fakhr-wordmark-blue.png")}
+            style={{ width: ms(28), height: ms(34) }}
+            resizeMode="contain"
+            accessibilityLabel={t("ui.brand")}
+          />
+        </View>
+
+        <Text
+          style={[
+            styles.pageTitle,
+            { fontSize: typography.title, lineHeight: typography.h1LineHeight, marginTop: ms(4) },
+          ]}
+        >
+          {t("tabs.explore")}
+        </Text>
+        <Text
+          style={[
+            styles.pageSubtitle,
+            { fontSize: typography.caption, lineHeight: typography.captionLineHeight, marginBottom: ms(14) },
+          ]}
+        >
+          {t("exploreUi.subtitle")}
+        </Text>
+
+        <View
+          style={[
+            styles.searchBar,
+            {
+              minHeight: ms(46),
+              borderRadius: ms(23),
+              paddingHorizontal: ms(14),
+              marginBottom: ms(18),
+            },
+          ]}
+        >
+          <Ionicons name="search-outline" size={ms(18)} color={colors.placeholder} />
+          <TextInput
+            value={search}
+            onChangeText={setSearch}
+            placeholder={t("ui.exploreSearch")}
+            placeholderTextColor={colors.placeholder}
+            style={[styles.searchInput, { fontSize: typography.caption }]}
+            textAlign={align}
+            returnKeyType="search"
+          />
+        </View>
+
+        <View style={[styles.categoriesRow, { marginBottom: ms(18) }]}>
+          {EXPLORE_CATEGORIES.map((cat) => {
+            const selected = categoryId === cat.id;
+            return (
+              <Pressable
+                key={cat.id}
+                onPress={() => setCategoryId(cat.id)}
+                style={styles.categoryItem}
+                accessibilityRole="button"
+                accessibilityLabel={categoryLabel(cat.id).replace("\n", " ")}
+                accessibilityState={{ selected }}
+              >
+                <View
+                  style={[
+                    styles.categoryCircle,
+                    {
+                      width: ms(56),
+                      height: ms(56),
+                      borderRadius: ms(28),
+                      backgroundColor: cat.backgroundColor,
+                      borderWidth: selected ? 2 : 0,
+                      borderColor: cat.iconColor,
+                    },
+                  ]}
+                >
+                  <Ionicons name={cat.icon} size={ms(24)} color={cat.iconColor} />
+                </View>
+                <Text
+                  style={[
+                    styles.categoryLabel,
+                    {
+                      fontSize: typography.caption,
+                      lineHeight: typography.captionLineHeight,
+                      color: selected ? colors.heading : colors.body,
+                    },
+                  ]}
+                >
+                  {categoryLabel(cat.id)}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+
+        <View
+          style={[
+            styles.featuredCard,
+            {
+              borderRadius: ms(22),
+              height: ms(158),
+              marginBottom: ms(22),
+            },
+          ]}
+        >
+          <Image
+            source={{ uri: FEATURED_CARD.imageUrl }}
+            style={[styles.featuredImage, { width: "42%", height: "100%" }]}
+            resizeMode="cover"
+          />
+          <View style={[styles.featuredCopy, { padding: ms(14) }]}>
+            <Text
+              style={[
+                styles.featuredTitle,
+                { fontSize: typography.menu, lineHeight: typography.bodyLineHeight, marginBottom: ms(6) },
+              ]}
+            >
+              {t("exploreUi.featuredTitle")}
+            </Text>
+            <Text
+              style={[
+                styles.featuredSubtitle,
+                { fontSize: typography.caption, lineHeight: typography.captionLineHeight, marginBottom: ms(12) },
+              ]}
+            >
+              {t("exploreUi.featuredSubtitle")}
+            </Text>
+            <Pressable
+              style={({ pressed }) => [
+                styles.featuredCta,
+                {
+                  borderRadius: ms(14),
+                  minHeight: ms(30),
+                  paddingHorizontal: ms(12),
+                },
+                pressed && styles.pressed,
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel={t("exploreUi.featuredCta")}
+            >
+              <Ionicons name="chevron-back" size={ms(14)} color={colors.white} />
+              <Text style={[styles.featuredCtaText, { fontSize: typography.caption }]}>
+                {t("exploreUi.featuredCta")}
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+
+        <View style={[styles.sectionHeader, { marginBottom: ms(12) }]}>
+          <Text style={[styles.sectionTitle, { fontSize: typography.body }]}>
+            {t("exploreUi.weeklyFeatured")}
+          </Text>
+          <Text style={[styles.sparkle, { fontSize: typography.body }]}>✨</Text>
+        </View>
+
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{ direction: isRTL ? "rtl" : "ltr" }}
+          contentContainerStyle={[
+            styles.weeklyRow,
+            { paddingBottom: ms(4), gap: ms(12) },
+          ]}
+        >
+          {weeklyItems.map((item) => (
+            <WeeklyCard
+              key={item.id}
+              item={item}
+              width={weeklyCardW}
+              ms={ms}
+              title={weeklyTitle(item)}
+              badge={weeklyBadge(item)}
+              saveLabel={t("ui.save")}
+              saved={savedIds.has(item.id)}
+              onToggleSave={() => toggleSaved(item.id)}
+            />
+          ))}
+        </ScrollView>
+
+        <View
+          style={[
+            styles.articlesHeader,
+            { marginTop: ms(22), marginBottom: ms(12) },
+          ]}
+        >
+          <Pressable accessibilityRole="button" accessibilityLabel={t("exploreUi.viewAll")}>
+            <Text style={[styles.viewAll, { fontSize: typography.caption }]}>{t("exploreUi.viewAll")}</Text>
+          </Pressable>
+          <Text style={[styles.sectionTitle, { fontSize: typography.body }]}>
+            {t("exploreUi.articlesTips")}
+          </Text>
+        </View>
+
+        {articles.map((article) => {
+          const copy = articleCopy(article.id);
+          return (
+          <Pressable
+            key={article.id}
+            style={[
+              styles.articleRow,
+              {
+                borderRadius: ms(16),
+                padding: ms(10),
+                marginBottom: ms(10),
+              },
+            ]}
+            accessibilityRole="button"
+            accessibilityLabel={copy.title}
+          >
+            <Ionicons name="chevron-back" size={ms(18)} color={colors.placeholder} />
+            <Image
+              source={{ uri: article.imageUrl }}
+              style={{
+                width: ms(72),
+                height: ms(64),
+                borderRadius: ms(12),
+                marginHorizontal: ms(8),
+              }}
+              resizeMode="cover"
+            />
+            <View style={styles.articleCopy}>
+              <Text
+                style={[
+                  styles.articleTitle,
+                  { fontSize: typography.caption, lineHeight: typography.captionLineHeight },
+                ]}
+              >
+                {copy.title}
+              </Text>
+              <Text
+                style={[
+                  styles.articleSub,
+                  { fontSize: typography.caption, lineHeight: typography.captionLineHeight, marginTop: ms(2) },
+                ]}
+              >
+                {copy.subtitle}
+              </Text>
+              <View style={styles.readRow}>
+                <Text style={[styles.readTime, { fontSize: typography.caption }]}>
+                  {copy.readTime}
+                </Text>
+                <Ionicons
+                  name="time-outline"
+                  size={ms(13)}
+                  color={colors.placeholder}
+                />
+              </View>
+            </View>
+          </Pressable>
+          );
+        })}
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+function WeeklyCard({
+  item,
+  width,
+  ms,
+  title,
+  badge,
+  saveLabel,
+  saved,
+  onToggleSave,
+}: {
+  item: WeeklyContentItem;
+  width: number;
+  ms: (n: number) => number;
+  title: string;
+  badge: string;
+  saveLabel: string;
+  saved: boolean;
+  onToggleSave: () => void;
+}) {
+  return (
+    <View style={[styles.weeklyCard, { width, borderRadius: ms(16) }]}>
+      <View style={[styles.weeklyImageWrap, { height: ms(92), borderRadius: ms(14) }]}>
+        <Image
+          source={{ uri: item.imageUrl }}
+          style={styles.weeklyImage}
+          resizeMode="cover"
+        />
+        <View style={[styles.badge, { top: ms(8), right: ms(8), borderRadius: ms(8) }]}>
+          <Text style={[styles.badgeText, { fontSize: typography.caption }]}>{badge}</Text>
+        </View>
+        {item.duration ? (
+          <View
+            style={[
+              styles.duration,
+              { bottom: ms(8), left: ms(8), borderRadius: ms(8) },
+            ]}
+          >
+            <Text style={[styles.durationText, { fontSize: typography.caption }]}>
+              {item.duration}
+            </Text>
+          </View>
+        ) : null}
+      </View>
+      <View style={[styles.weeklyFooter, { paddingTop: ms(8) }]}>
+        <Text
+          style={[styles.weeklyTitle, { fontSize: typography.caption, lineHeight: typography.captionLineHeight }]}
+          numberOfLines={2}
+        >
+          {title}
+        </Text>
+        <Pressable
+          onPress={onToggleSave}
+          hitSlop={8}
+          accessibilityRole="button"
+          accessibilityLabel={saveLabel}
+        >
+          <Ionicons
+            name={saved ? "bookmark" : "bookmark-outline"}
+            size={ms(16)}
+            color={colors.brand}
+          />
+        </Pressable>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: colors.bg,
+  },
+  scroll: {
+    flex: 1,
+    width: "100%",
+  },
+  scrollContent: {
+    alignSelf: "center",
+  },
+  brandRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    marginBottom: 2,
+  },
+  brandTextCol: {
+    alignItems: "flex-end",
+    marginRight: 6,
+  },
+  brandName: {
+    fontWeight: "800",
+    color: colors.title,
+    writingDirection: "rtl",
+  },
+  brandTag: {
+    color: colors.subtitle,
+    writingDirection: "rtl",
+  },
+  pageTitle: {
+    fontWeight: "800",
+    color: colors.title,
+    textAlign: "right",
+    writingDirection: "rtl",
+  },
+  pageSubtitle: {
+    color: colors.subtitle,
+    textAlign: "right",
+    writingDirection: "rtl",
+  },
+  searchBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.searchBg,
+    borderWidth: 1,
+    borderColor: colors.searchBorder,
+    shadowColor: "#8A94B8",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+    elevation: 1,
+  },
+  searchInput: {
+    flex: 1,
+    marginLeft: 8,
+    color: colors.body,
+    paddingVertical: 8,
+    writingDirection: "rtl",
+  },
+  categoriesRow: {
+    flexDirection: "row-reverse",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+  },
+  categoryItem: {
+    flex: 1,
+    alignItems: "center",
+  },
+  categoryCircle: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 6,
+  },
+  categoryLabel: {
+    fontWeight: "700",
+    textAlign: "center",
+    writingDirection: "rtl",
+  },
+  featuredCard: {
+    flexDirection: "row",
+    backgroundColor: "#EEF1FA",
+    overflow: "hidden",
+    shadowColor: "#6E7CAF",
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.12,
+    shadowRadius: 14,
+    elevation: 3,
+  },
+  featuredImage: {
+    backgroundColor: "#DDE3F4",
+  },
+  featuredCopy: {
+    flex: 1,
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
+  featuredTitle: {
+    fontWeight: "800",
+    color: colors.heading,
+    textAlign: "right",
+    writingDirection: "rtl",
+  },
+  featuredSubtitle: {
+    color: "#7B84A3",
+    textAlign: "right",
+    writingDirection: "rtl",
+  },
+  featuredCta: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.brand,
+    alignSelf: "flex-end",
+    gap: 4,
+  },
+  featuredCtaText: {
+    color: colors.white,
+    fontWeight: "700",
+    writingDirection: "rtl",
+  },
+  sectionHeader: {
+    flexDirection: "row-reverse",
+    alignItems: "center",
+    gap: 6,
+  },
+  sectionTitle: {
+    fontWeight: "800",
+    color: colors.heading,
+    textAlign: "right",
+    writingDirection: "rtl",
+  },
+  sparkle: {
+    textAlign: "right",
+  },
+  weeklyRow: {
+    flexDirection: "row",
+  },
+  weeklyCard: {
+    backgroundColor: colors.white,
+    padding: 6,
+    shadowColor: "#8A94B8",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  weeklyImageWrap: {
+    overflow: "hidden",
+    position: "relative",
+  },
+  weeklyImage: {
+    width: "100%",
+    height: "100%",
+  },
+  badge: {
+    position: "absolute",
+    backgroundColor: colors.badgeBg,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+  },
+  badgeText: {
+    color: colors.heading,
+    fontWeight: "700",
+    writingDirection: "rtl",
+  },
+  duration: {
+    position: "absolute",
+    backgroundColor: colors.durationBg,
+    paddingHorizontal: 7,
+    paddingVertical: 3,
+  },
+  durationText: {
+    color: colors.white,
+    fontWeight: "700",
+  },
+  weeklyFooter: {
+    flexDirection: "row-reverse",
+    alignItems: "flex-start",
+    gap: 6,
+  },
+  weeklyTitle: {
+    flex: 1,
+    fontWeight: "700",
+    color: colors.body,
+    textAlign: "right",
+    writingDirection: "rtl",
+  },
+  articlesHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  viewAll: {
+    color: colors.brand,
+    fontWeight: "600",
+    writingDirection: "rtl",
+  },
+  articleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.white,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.cardBorder,
+    shadowColor: "#8A94B8",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    elevation: 1,
+  },
+  articleCopy: {
+    flex: 1,
+    alignItems: "flex-end",
+  },
+  articleTitle: {
+    fontWeight: "800",
+    color: colors.heading,
+    textAlign: "right",
+    writingDirection: "rtl",
+  },
+  articleSub: {
+    color: colors.subtitle,
+    textAlign: "right",
+    writingDirection: "rtl",
+  },
+  readRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    marginTop: 4,
+  },
+  readTime: {
+    color: colors.placeholder,
+    writingDirection: "rtl",
+  },
+  pressed: {
+    opacity: 0.88,
+  },
+});

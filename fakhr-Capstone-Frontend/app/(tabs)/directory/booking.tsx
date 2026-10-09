@@ -1,0 +1,1014 @@
+import { Text, TextInput, ScrollView } from "../../../components/ui/AppText";
+import { typography } from "../../../theme/typography";
+import { Ionicons } from "@expo/vector-icons";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Alert, Pressable, StyleSheet, useWindowDimensions, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
+import type { DirectoryListing } from "../../../components/directory/types";
+import { addJourneyRecord } from "../../../utils/journeyStore";
+import { saveMockBooking } from "../../../utils/mockBookingsStore";
+import { addAppointmentToDeviceCalendar } from "../../../utils/addAppointmentToCalendar";
+import { listingLocaleName, listingLocaleSubtitle } from "../../../utils/professionalBilingual";
+import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
+import { useAuth } from "../../../context/AuthContext";
+import { useI18nLayout } from "../../../hooks/useI18nLayout";
+import { bookingReturnHref, setPendingAuthHref } from "../../../utils/authRedirect";
+import { colors as palette } from "../../../theme";
+
+const colors = {
+  bg: palette.background,
+  title: palette.textSecondary,
+  muted: palette.textLight,
+  line: palette.border,
+  cardBorder: palette.border,
+  selected: palette.primary,
+  white: palette.white,
+  success: palette.success,
+  chevron: palette.textMuted,
+  timeMuted: palette.textMuted,
+};
+
+const DESIGN_W = 390;
+
+const STEPS = [
+  { n: 1, labelKey: "copy.service" },
+  { n: 2, labelKey: "copy.appointment" },
+  { n: 3, labelKey: "copy.confirmation" },
+  { n: 4, labelKey: "copy.confirmation" },
+];
+
+const TIME_SLOTS = [
+  "09:00 AM",
+  "10:30 AM",
+  "01:00 PM",
+  "02:30 PM",
+  "04:00 PM",
+  "05:30 PM",
+];
+
+function parseListing(raw: string | string[] | undefined): DirectoryListing | null {
+  const s = Array.isArray(raw) ? raw[0] : raw;
+  if (!s) return null;
+  const tryParse = (x: string) => JSON.parse(x) as DirectoryListing;
+  try {
+    return tryParse(decodeURIComponent(s));
+  } catch {
+    try {
+      return tryParse(s);
+    } catch {
+      return null;
+    }
+  }
+}
+
+function formatTimeLocalized(slot: string, t: (key: string) => string) {
+  const [time, period] = slot.split(" ");
+  const [h, m] = time.split(":");
+  const hour = String(parseInt(h, 10));
+  const suffix = period === "PM" ? t("copy.pm") : t("copy.am");
+  return `${hour}:${m} ${suffix}`;
+}
+
+function slotToHours(slot: string | null) {
+  if (!slot) return { h: 11, m: 0 };
+  const [time, period] = slot.split(" ");
+  let h = parseInt(time.split(":")[0], 10);
+  const m = parseInt(time.split(":")[1], 10) || 0;
+  if (period === "PM" && h < 12) h += 12;
+  if (period === "AM" && h === 12) h = 0;
+  return { h, m };
+}
+
+function appointmentDateTime(dateKey: string, slot: string | null) {
+  const { h, m } = slotToHours(slot);
+  const [year, month, day] = dateKey.split("-").map((part) => Number(part));
+  return new Date(year, (month || 1) - 1, day || 1, h, m, 0, 0);
+}
+
+export default function BookingScreen() {
+  const { t } = useTranslation();
+  const { align, isRTL } = useI18nLayout();
+  const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
+  const { width: windowWidth } = useWindowDimensions();
+  const contentW = Math.min(windowWidth, 430);
+  const s = contentW / DESIGN_W;
+  const ms = (n: number) => Math.round(n * s);
+
+  const { item: itemParam } = useLocalSearchParams<{ item?: string }>();
+  const listing = useMemo(() => parseListing(itemParam), [itemParam]);
+
+  useEffect(() => {
+    if (listing?.kind === "doctor") {
+      router.replace({ pathname: "/(tabs)/directory/professional-details", params: { id: listing.id } });
+      return;
+    }
+    if (authLoading) return;
+    if (user) return;
+    setPendingAuthHref(bookingReturnHref(itemParam));
+    router.replace("/(auth)/login");
+  }, [authLoading, user, itemParam, router, listing]);
+
+  const dateOptions = useMemo(() => {
+    const days = (t("copy.days", { returnObjects: true }) as string[]) ?? [];
+    const months = (t("planUi.months", { returnObjects: true }) as string[]) ?? [];
+    const out: {
+      key: string;
+      day: string;
+      date: string;
+      month: string;
+    }[] = [];
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+    for (let i = 0; i < 4; i++) {
+      const d = new Date(start);
+      d.setDate(start.getDate() + i);
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+      out.push({
+        key,
+        day: days[d.getDay()] ?? "",
+        date: String(d.getDate()),
+        month: months[d.getMonth()] ?? "",
+      });
+    }
+    return out;
+  }, [t]);
+
+  const [phase, setPhase] = useState<1 | 2 | 3>(1);
+  const [selectedDateKey, setSelectedDateKey] = useState(
+    () => dateOptions[2]?.key ?? dateOptions[0]?.key ?? "",
+  );
+  const [selectedTime, setSelectedTime] = useState<string | null>("01:00 PM");
+  const [patientName, setPatientName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [notes, setNotes] = useState("");
+  const calendarBusy = useRef(false);
+
+  const providerName = listing
+    ? listingLocaleName(listing, isRTL, t)
+    : t("copy.fatimaOrg");
+
+  const serviceOptions = useMemo(() => {
+    if (!listing) return [];
+    const localized = isRTL
+      ? listing.tagsAr?.filter(Boolean)
+      : listing.tagsEn?.filter(Boolean);
+    const tags = (localized?.length ? localized : listing.tags?.filter(Boolean)) ?? [];
+    return [...new Set(tags)];
+  }, [listing, isRTL]);
+
+  const defaultService = listing
+    ? listingLocaleSubtitle(listing, isRTL, t) || t("copy.speechSession")
+    : t("copy.speechSession");
+
+  const [selectedService, setSelectedService] = useState(defaultService);
+
+  useEffect(() => {
+    setSelectedService(defaultService);
+  }, [defaultService]);
+
+  const activeStep = phase === 1 ? 1 : 2;
+
+  const selectedDateLabel = useMemo(() => {
+    const opt = dateOptions.find((d) => d.key === selectedDateKey);
+    if (!opt) return "";
+    return `${opt.day} ${opt.date} ${opt.month}`;
+  }, [dateOptions, selectedDateKey]);
+
+  const confirmationDateLabel = useMemo(() => {
+    const opt = dateOptions.find((d) => d.key === selectedDateKey);
+    if (!opt) return "";
+    const year = selectedDateKey.slice(0, 4);
+    return `${opt.day} ${opt.date} ${opt.month} ${year}`;
+  }, [dateOptions, selectedDateKey]);
+
+  const appointmentType = selectedService || defaultService;
+  const confirmationTime = selectedTime
+    ? t("copy.timePrefix", { time: formatTimeLocalized(selectedTime, t) })
+    : "";
+
+  const goNext = () => {
+    if (!selectedTime) {
+      Alert.alert(t("copy.required"), t("copy.timeRequired"));
+      return;
+    }
+    setPhase(2);
+  };
+
+  const confirm = () => {
+    if (!listing) {
+      Alert.alert(t("common.error"), t("copy.bookingLoadError"));
+      return;
+    }
+    if (!patientName.trim() || !phone.trim()) {
+      Alert.alert(t("copy.required"), t("copy.namePhoneRequired"));
+      return;
+    }
+    if (!selectedTime) {
+      Alert.alert(t("copy.required"), t("copy.timeRequired"));
+      return;
+    }
+    saveMockBooking({
+      listingName: listing.nameAr || listing.nameEn || listing.name,
+      listingNameAr: listing.nameAr,
+      listingNameEn: listing.nameEn,
+      dateLabel: `${selectedDateLabel} (${selectedDateKey})`,
+      dateKey: selectedDateKey,
+      timeLabel: selectedTime,
+      patientName: patientName.trim(),
+      phone: phone.trim(),
+      notes: notes.trim() || undefined,
+    });
+    // Persist only center/service requests; legacy doctor bookings never enter Journey.
+    if (user && listing.kind !== "doctor") {
+      const serviceIndex = serviceOptions.indexOf(appointmentType);
+      void addJourneyRecord(user.id, {
+        type: "appointment", kind: "center", action: "booked",
+        titleAr: (appointmentType === defaultService ? listing.subtitleAr : listing.tagsAr?.[serviceIndex]) || listing.subtitleAr || (isRTL ? appointmentType : "خدمة مركز"),
+        titleEn: (appointmentType === defaultService ? listing.subtitleEn : listing.tagsEn?.[serviceIndex]) || listing.subtitleEn || (!isRTL ? appointmentType : "Center service"),
+        centerAr: listing.nameAr || listing.name, centerEn: listing.nameEn || listing.name,
+        locationAr: listing.locationLineAr, locationEn: listing.locationLineEn,
+        dateKey: selectedDateKey, time: selectedTime,
+      }).catch(() => Alert.alert(
+        isRTL ? "لم يُحفظ الموعد في رحلتي" : "Appointment not saved to My Journey",
+        isRTL ? "تعذر الحفظ على هذا الجهاز. احتفظ بتفاصيل الموعد." : "Device storage failed. Please keep your appointment details.",
+      ));
+    }
+    setPhase(3);
+  };
+
+  const addToCalendar = async () => {
+    if (calendarBusy.current || !selectedDateKey || !selectedTime) return;
+    calendarBusy.current = true;
+    const start = appointmentDateTime(selectedDateKey, selectedTime);
+    const end = new Date(start.getTime() + 60 * 60 * 1000);
+    const location = listing
+      ? listingLocaleName(
+          {
+            name: listing.locationLine,
+            nameAr: listing.locationLineAr,
+            nameEn: listing.locationLineEn,
+          },
+          isRTL,
+          t,
+        )
+      : "";
+    const notesLines = [
+      appointmentType,
+      confirmationDateLabel,
+      confirmationTime,
+      location,
+      t("copy.calendarBookedViaFakhr"),
+      notes.trim(),
+    ].filter((line) => line && line.trim());
+    try {
+      await addAppointmentToDeviceCalendar(
+        {
+          title: t("copy.calendarEventTitle", { name: providerName }),
+          notes: notesLines.join("\n"),
+          location,
+          start,
+          end,
+          duplicateKey: `${listing?.id ?? providerName}|${selectedDateKey}|${selectedTime}`,
+          webSummary: t("copy.calendarEventTitle", { name: providerName }),
+        },
+        {
+          permissionDenied: t("copy.calendarPermissionDenied"),
+          alreadyAdded: t("copy.calendarAlreadyAdded"),
+          added: t("copy.calendarAdded"),
+          error: t("copy.calendarError"),
+          ok: t("common.done"),
+        },
+      );
+    } finally {
+      calendarBusy.current = false;
+    }
+  };
+
+  const viewAppointments = () => {
+    router.push("/(tabs)/bookings");
+  };
+
+  if (listing?.kind === "doctor" || authLoading || !user) {
+    return <SafeAreaView style={styles.safe} edges={["top"]} />;
+  }
+
+  return (
+    <SafeAreaView style={styles.safe} edges={["top"]}>
+      <View style={[styles.column, { width: contentW }]}>
+        <View style={[[styles.header, { height: ms(48) }], { height: undefined, minHeight: 56, paddingHorizontal: 44 }]}>
+          <HeaderBackButton color={colors.title} onPress={() => router.back()} />
+        </View>
+        {phase === 3 ? (
+          <ScrollView
+            style={styles.scroll}
+            contentContainerStyle={{
+              paddingHorizontal: ms(22),
+              paddingTop: ms(14),
+              paddingBottom: ms(28),
+            }}
+            showsVerticalScrollIndicator={false}
+          >
+            <Text
+              style={[styles.title, { fontSize: typography.title, lineHeight: typography.h1LineHeight }]}
+            >
+              {t("copy.confirmBooking")}
+            </Text>
+
+            <View
+              style={[
+                styles.confirmArrows,
+                {
+                  marginTop: ms(16),
+                  paddingHorizontal: ms(2),                  flexDirection: "row",
+                },
+              ]}
+            >
+              <Pressable
+                onPress={() => router.back()}
+                hitSlop={12}
+                style={({ pressed }) => [pressed && styles.pressed]}
+                accessibilityRole="button"
+                accessibilityLabel={t("common.back")}
+              >
+                <Ionicons
+                  name="chevron-back"
+                  size={ms(20)}
+                  color={colors.title}
+                />
+              </Pressable>
+              <Pressable
+                onPress={viewAppointments}
+                hitSlop={12}
+                style={({ pressed }) => [pressed && styles.pressed]}
+                accessibilityRole="button"
+                accessibilityLabel={t("copy.next")}
+              >
+                <Ionicons
+                  name="chevron-forward"
+                  size={ms(20)}
+                  color={colors.title}
+                />
+              </Pressable>
+            </View>
+
+            <View
+              style={[
+                styles.successCircle,
+                {
+                  width: ms(92),
+                  height: ms(92),
+                  borderRadius: ms(46),
+                  marginTop: ms(8),
+                  marginBottom: ms(20),
+                  alignSelf: "center",
+                },
+              ]}
+            >
+              <Ionicons name="checkmark" size={ms(50)} color={colors.white} />
+            </View>
+
+            <Text
+              style={[
+                styles.successMsg,
+                { fontSize: typography.title, lineHeight: typography.h1LineHeight, marginBottom: ms(12) },
+              ]}
+            >
+              {t("copy.bookingSuccess")}
+            </Text>
+            <Text
+              style={[
+                styles.confirmType,
+                { fontSize: typography.body, lineHeight: typography.bodyLineHeight, marginBottom: ms(8) },
+              ]}
+            >
+              {appointmentType}
+            </Text>
+            <Text
+              style={[
+                styles.confirmDate,
+                { fontSize: typography.body, lineHeight: typography.bodyLineHeight, marginBottom: ms(4) },
+              ]}
+            >
+              {confirmationDateLabel}
+            </Text>
+            <Text
+              style={[
+                styles.confirmTime,
+                {
+                  fontSize: typography.body,
+                  lineHeight: typography.bodyLineHeight,
+                  marginBottom: ms(10),
+                  writingDirection: "rtl",
+                },
+              ]}
+            >
+              {confirmationTime}
+            </Text>
+            <Text
+              style={[
+                styles.confirmProvider,
+                {
+                  fontSize: typography.body,
+                  lineHeight: typography.bodyLineHeight,
+                  marginBottom: ms(24),
+                },
+              ]}
+            >
+              {providerName}
+            </Text>
+
+            <Pressable
+              onPress={addToCalendar}
+              style={({ pressed }) => [
+                styles.nextBtn,
+                {
+                  minHeight: ms(52),
+                  borderRadius: ms(18),
+                  marginBottom: ms(12),
+                  width: "100%",
+                },
+                pressed && styles.pressed,
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel={t("copy.addToCalendar")}
+            >
+              <Text style={[styles.nextText, { fontSize: typography.body }]}>
+                {t("copy.addToCalendar")}
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={viewAppointments}
+              style={({ pressed }) => [
+                styles.nextBtn,
+                {
+                  minHeight: ms(52),
+                  borderRadius: ms(18),
+                  width: "100%",
+                },
+                pressed && styles.pressed,
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel={t("copy.viewMyAppointments")}
+            >
+              <Text style={[styles.nextText, { fontSize: typography.body }]}>
+                {t("copy.viewMyAppointments")}
+              </Text>
+            </Pressable>
+          </ScrollView>
+        ) : (
+          <ScrollView
+          style={styles.scroll}
+          contentContainerStyle={[
+            styles.scrollContent,
+            {
+              paddingHorizontal: ms(20),
+              paddingTop: ms(14),
+              paddingBottom: ms(28),
+            },
+          ]}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          <Text
+            style={[styles.title, { fontSize: typography.title, lineHeight: typography.h1LineHeight }]}
+          >
+            {t("copy.bookAppointment")}
+          </Text>
+
+          <View
+            style={[
+              styles.stepper,
+              {
+                marginTop: ms(18),
+                marginBottom: ms(22),                flexDirection: "row",
+              },
+            ]}
+          >
+            <View
+              style={[
+                styles.stepLine,
+                {
+                  left: "12.5%",
+                  right: "12.5%",
+                  top: ms(15),
+                },
+              ]}
+            />
+            {STEPS.map((step) => {
+              const active = step.n === activeStep;
+              return (
+                <View key={step.n} style={styles.stepItem}>
+                  <View
+                    style={[
+                      styles.stepCircle,
+                      {
+                        width: ms(32),
+                        height: ms(32),
+                        borderRadius: ms(16),
+                      },
+                      active ? styles.stepCircleActive : styles.stepCircleIdle,
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.stepNum,
+                        { fontSize: typography.body },
+                        active ? styles.stepNumActive : styles.stepNumIdle,
+                      ]}
+                    >
+                      {step.n}
+                    </Text>
+                  </View>
+                  <Text
+                    style={[
+                      styles.stepLabel,
+                      { fontSize: typography.caption, marginTop: ms(6) },
+                      active ? styles.stepLabelActive : styles.stepLabelIdle,
+                    ]}
+                  >
+                    {t(step.labelKey)}
+                  </Text>
+                </View>
+              );
+            })}
+          </View>
+
+          {phase === 1 ? (
+            <>
+              <Text
+                style={[
+                  styles.provider,
+                  { fontSize: typography.body, marginBottom: ms(18) },
+                ]}
+              >
+                {providerName}
+              </Text>
+
+              {listing?.kind === "center" && serviceOptions.length > 0 ? (
+                <View style={{ marginBottom: ms(18), gap: ms(8) }}>
+                  <Text
+                    style={[
+                      styles.inputLabel,
+                      { textAlign: align, writingDirection: isRTL ? "rtl" : "ltr" },
+                    ]}
+                  >
+                    {t("copy.service")}
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: isRTL ? "row-reverse" : "row",
+                      flexWrap: "wrap",
+                      gap: ms(8),
+                    }}
+                  >
+                    {serviceOptions.map((service) => {
+                      const sel = selectedService === service;
+                      return (
+                        <Pressable
+                          key={service}
+                          onPress={() => setSelectedService(service)}
+                          style={({ pressed }) => [
+                            styles.serviceChip,
+                            sel && styles.serviceChipSelected,
+                            pressed && styles.pressed,
+                          ]}
+                          accessibilityRole="button"
+                          accessibilityState={{ selected: sel }}
+                          accessibilityLabel={service}
+                        >
+                          <Text
+                            style={[
+                              styles.serviceChipText,
+                              sel && styles.serviceChipTextSelected,
+                            ]}
+                          >
+                            {service}
+                          </Text>
+                        </Pressable>
+                      );
+                    })}
+                  </View>
+                </View>
+              ) : null}
+
+              <View
+                style={[
+                  styles.dateRow,
+                  {
+                    gap: ms(8),                    flexDirection: "row",
+                  },
+                ]}
+              >
+                {dateOptions.map((d) => {
+                  const sel = d.key === selectedDateKey;
+                  return (
+                    <Pressable
+                      key={d.key}
+                      onPress={() => setSelectedDateKey(d.key)}
+                      style={({ pressed }) => [
+                        styles.dateCard,
+                        {
+                          minHeight: ms(108),
+                          borderRadius: ms(18),
+                          paddingVertical: ms(12),
+                        },
+                        sel && styles.dateCardSelected,
+                        pressed && styles.pressed,
+                      ]}
+                      accessibilityRole="button"
+                      accessibilityLabel={d.day}
+                    >
+                      <Text
+                        style={[
+                          styles.dateDay,
+                          { fontSize: typography.caption },
+                          sel && styles.dateTextSel,
+                        ]}
+                        numberOfLines={1}
+                      >
+                        {d.day}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.dateNum,
+                          { fontSize: typography.title, lineHeight: typography.cardTitleLineHeight },
+                          sel && styles.dateTextSel,
+                        ]}
+                      >
+                        {d.date}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.dateMonth,
+                          { fontSize: typography.caption },
+                          sel && styles.dateTextSel,
+                        ]}
+                        numberOfLines={1}
+                      >
+                        {d.month}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+
+              <View
+                style={[
+                  styles.timeRow,
+                  {
+                    gap: ms(8),
+                    marginTop: ms(16),
+                    marginBottom: ms(28),                    flexDirection: "row",
+                  },
+                ]}
+              >
+                {([TIME_SLOTS[3], TIME_SLOTS[2], TIME_SLOTS[4]] as string[]).map(
+                  (slot) => {
+                  const sel = selectedTime === slot;
+                  return (
+                    <Pressable
+                      key={slot}
+                      onPress={() => setSelectedTime(slot)}
+                      style={({ pressed }) => [
+                        styles.timeCard,
+                        {
+                          flex: 1,
+                          minHeight: ms(44),
+                          borderRadius: ms(14),
+                        },
+                        sel && styles.timeCardSelected,
+                        pressed && styles.pressed,
+                      ]}
+                      accessibilityRole="button"
+                      accessibilityLabel={formatTimeLocalized(slot, t)}
+                    >
+                      <Text
+                        style={[
+                          styles.timeText,
+                          { fontSize: typography.body, writingDirection: "ltr" },
+                          sel && styles.timeTextSel,
+                        ]}
+                      >
+                        {formatTimeLocalized(slot, t)}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+            </>
+          ) : (
+            <View>
+              <Text
+                style={[
+                  styles.provider,
+                  { fontSize: typography.body, marginBottom: ms(16) },
+                ]}
+              >
+                {providerName}
+              </Text>
+              <Text style={styles.inputLabel}>{t("auth.fullName")}</Text>
+              <TextInput
+                style={styles.input}
+                placeholder={t("auth.enterFullName")}
+                placeholderTextColor={colors.muted}
+                value={patientName}
+                onChangeText={setPatientName}
+                textAlign={align}
+              />
+              <Text style={styles.inputLabel}>{t("auth.phone")}</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="05xxxxxxxx"
+                placeholderTextColor={colors.muted}
+                keyboardType="phone-pad"
+                value={phone}
+                onChangeText={setPhone}
+                textAlign={align}
+              />
+              <Text style={styles.inputLabel}>{t("copy.notesOptional")}</Text>
+              <TextInput
+                style={[styles.input, styles.textArea]}
+                placeholder={t("copy.additionalInfo")}
+                placeholderTextColor={colors.muted}
+                value={notes}
+                onChangeText={setNotes}
+                multiline
+                textAlign={align}
+                textAlignVertical="top"
+              />
+            </View>
+          )}
+
+          <Pressable
+            onPress={phase === 1 ? goNext : confirm}
+            style={({ pressed }) => [
+              styles.nextBtn,
+              {
+                minHeight: ms(52),
+                borderRadius: ms(16),
+                marginTop: phase === 1 ? 0 : ms(12),
+              },
+              pressed && styles.pressed,
+            ]}
+            accessibilityRole="button"
+            accessibilityLabel={phase === 1 ? t("copy.next") : t("copy.confirmBooking")}
+          >
+            <Text style={[styles.nextText, { fontSize: typography.menu }]}>
+              {phase === 1 ? t("copy.next") : t("copy.confirmBooking")}
+            </Text>
+          </Pressable>
+        </ScrollView>
+        )}
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: colors.bg,
+    alignItems: "center",
+  },
+  column: {
+    flex: 1,
+    maxWidth: 430,
+  },
+  header: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+  },
+  scroll: {
+    flex: 1,
+  },
+  scrollContent: {
+    width: "100%",
+  },
+  title: {
+    fontWeight: "800",
+    color: colors.title,
+    textAlign: "center",
+    writingDirection: "rtl",
+  },
+  stepper: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    position: "relative",
+  },
+  stepLine: {
+    position: "absolute",
+    height: 1.5,
+    backgroundColor: colors.line,
+  },
+  stepItem: {
+    flex: 1,
+    alignItems: "center",
+    zIndex: 1,
+  },
+  stepCircle: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.white,
+    borderWidth: 1.5,
+    borderColor: colors.line,
+  },
+  stepCircleActive: {
+    backgroundColor: colors.selected,
+    borderColor: colors.selected,
+  },
+  stepCircleIdle: {
+    backgroundColor: colors.white,
+    borderColor: colors.line,
+  },
+  stepNum: {
+    fontWeight: "700",
+  },
+  stepNumActive: {
+    color: colors.white,
+  },
+  stepNumIdle: {
+    color: colors.muted,
+  },
+  stepLabel: {
+    fontWeight: "600",
+    textAlign: "center",
+    writingDirection: "rtl",
+  },
+  stepLabelActive: {
+    color: colors.title,
+  },
+  stepLabelIdle: {
+    color: colors.muted,
+  },
+  provider: {
+    fontWeight: "800",
+    color: colors.title,
+    textAlign: "right",
+    writingDirection: "rtl",
+    width: "100%",
+  },
+  serviceChip: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+    backgroundColor: palette.primarySoft ?? "#EBEEF9",
+    borderWidth: 1,
+    borderColor: palette.border,
+  },
+  serviceChipSelected: {
+    backgroundColor: colors.selected,
+    borderColor: colors.selected,
+  },
+  serviceChipText: {
+    fontWeight: "600",
+    color: colors.title,
+    fontSize: typography.button,
+  },
+  serviceChipTextSelected: {
+    color: colors.white,
+  },
+  dateRow: {
+    flexDirection: "row",
+    width: "100%",
+  },
+  dateCard: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.white,
+    borderWidth: 1,
+    borderColor: colors.cardBorder,
+  },
+  dateCardSelected: {
+    backgroundColor: colors.selected,
+    borderColor: colors.selected,
+  },
+  dateDay: {
+    fontWeight: "600",
+    color: colors.muted,
+    writingDirection: "rtl",
+  },
+  dateNum: {
+    fontWeight: "800",
+    color: colors.title,
+    marginTop: 2,
+  },
+  dateMonth: {
+    fontWeight: "600",
+    color: colors.muted,
+    writingDirection: "rtl",
+  },
+  dateTextSel: {
+    color: colors.white,
+  },
+  timeRow: {
+    flexDirection: "row",
+    width: "100%",
+  },
+  timeCard: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.white,
+    borderWidth: 1,
+    borderColor: colors.cardBorder,
+  },
+  timeCardSelected: {
+    backgroundColor: colors.selected,
+    borderColor: colors.selected,
+  },
+  timeText: {
+    fontWeight: "700",
+    color: colors.title,
+    writingDirection: "rtl",
+  },
+  timeTextSel: {
+    color: colors.white,
+  },
+  inputLabel: {
+    fontSize: typography.label,
+    fontWeight: "600",
+    color: colors.title,
+    textAlign: "right",
+    writingDirection: "rtl",
+    marginBottom: 6,
+  },
+  input: {
+    backgroundColor: colors.white,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: colors.cardBorder,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    fontSize: typography.body,
+    color: colors.title,
+    marginBottom: 14,
+    writingDirection: "rtl",
+  },
+  textArea: {
+    minHeight: 90,
+  },
+  nextBtn: {
+    backgroundColor: colors.selected,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+  },
+  nextText: {
+    color: colors.white,
+    fontWeight: "700",
+    writingDirection: "rtl",
+  },
+  pressed: {
+    opacity: 0.9,
+  },
+  confirmArrows: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+  },
+  successCircle: {
+    backgroundColor: colors.success,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  successMsg: {
+    fontWeight: "800",
+    color: colors.title,
+    textAlign: "center",
+    writingDirection: "rtl",
+    width: "100%",
+  },
+  confirmType: {
+    fontWeight: "700",
+    color: colors.title,
+    textAlign: "center",
+    writingDirection: "rtl",
+    width: "100%",
+  },
+  confirmDate: {
+    fontWeight: "700",
+    color: colors.title,
+    textAlign: "center",
+    writingDirection: "rtl",
+    width: "100%",
+  },
+  confirmTime: {
+    fontWeight: "600",
+    color: colors.timeMuted,
+    textAlign: "center",
+    width: "100%",
+  },
+  confirmProvider: {
+    fontWeight: "800",
+    color: colors.title,
+    textAlign: "center",
+    writingDirection: "rtl",
+    width: "100%",
+  },
+});
