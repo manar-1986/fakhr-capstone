@@ -8,7 +8,7 @@ import {useI18nLayout} from '../../hooks/useI18nLayout';
 export type CareEntry = {id:string; title:string; date:string; start:string; end:string; category:string; location:string; notes:string; reminder:string; dose:string; frequency:string; status:string; active:boolean;timezone?:string;repeat?:string;until?:string};
 type Data = {schedule:CareEntry[]; medications:CareEntry[]; history:{time:string;title:string;status:string}[]};
 const Context=createContext<{data:Record<string,Data>; set:React.Dispatch<React.SetStateAction<Record<string,Data>>>}|null>(null);
-export const localCarePreview=()=>Platform.OS==='web' && typeof window!=='undefined' && ['localhost','127.0.0.1'].includes(window.location.hostname);
+export const localCarePreview=()=>__DEV__ && Platform.OS==='web' && typeof window!=='undefined' && ['localhost','127.0.0.1'].includes(window.location.hostname);
 export function DailyCareProvider({children}:React.PropsWithChildren){const [data,set]=useState<Record<string,Data>>({});return <Context.Provider value={{data,set}}>{children}</Context.Provider>}
 export function validCareEntry(e:CareEntry,med:boolean){
  const date=new Date(e.date+'T12:00:00');

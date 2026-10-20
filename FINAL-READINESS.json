@@ -1,0 +1,231 @@
+{
+  "version": "Fakhr-Farooq-20261020-v2",
+  "parentCommit": "3ed65da74831ec4c3b1d03413f54dcec30516aba",
+  "originalIntegratedCommit": "8b5e8aaf58bf9e1e7ff6094e511a2188dc7d3a0d",
+  "checkedAt": "2026-10-20T20:33:39.587Z",
+  "cleanInstalls": {
+    "frontend": "PASS npm ci",
+    "backend": "PASS npm ci",
+    "runtime": "Node v24.11.1 / npm 11.6.2"
+  },
+  "typeScript": {
+    "frontend": "PASS",
+    "backend": "PASS"
+  },
+  "frontend": {
+    "suites": 44,
+    "passed": 327,
+    "failed": 0,
+    "files": [
+      "planAINavigation.test.tsx",
+      "verifiedProviders.test.tsx",
+      "professionalTabs.test.tsx",
+      "institutionScreens.test.tsx",
+      "calendarPanel.test.tsx",
+      "professionalsSearchReadiness.test.tsx",
+      "centerContacts.test.tsx",
+      "providerRecommendations.test.tsx",
+      "productionPreviewIsolation.test.tsx",
+      "careCalendarPreview.test.tsx",
+      "schoolRecommendations.test.tsx",
+      "authNavigation.test.tsx",
+      "appNavigationShell.test.tsx",
+      "homeDrawer.test.tsx",
+      "dailyCarePreview.test.tsx",
+      "suggestedActivityPreview.test.tsx",
+      "productsScreen.test.tsx",
+      "minimumAuthProvider.test.tsx",
+      "productImages.test.tsx",
+      "guestAccountFlow.test.tsx",
+      "dailyCarePersistence.test.tsx",
+      "mainTabNavigation.test.tsx",
+      "mockPlanChatInteractions.test.tsx",
+      "themeContrast.test.tsx",
+      "planHeader.test.tsx",
+      "approvedActivityInteraction.test.tsx",
+      "minimumScreens.test.tsx",
+      "minimumChild.test.tsx",
+      "minimumCompatibility.test.ts",
+      "dailyCareWireContract.test.ts",
+      "suggestions.test.ts",
+      "planActionColors.test.tsx",
+      "dailyCompanion.test.ts",
+      "minimumTransport.test.ts",
+      "mockPlanAI.test.ts",
+      "mockPlanSave.test.ts",
+      "schoolRecommendationCopy.test.ts",
+      "firstRelease.test.ts",
+      "restaurantMeals.test.ts",
+      "restaurantVerifiedData.test.ts",
+      "populatedPlanVisual.test.ts",
+      "smartPlan.test.ts",
+      "mockPlanChat.test.ts",
+      "planPreviewPolicy.test.ts"
+    ],
+    "backportChecks": 23,
+    "assetsChecked": 174
+  },
+  "backend": {
+    "groups": [
+      {
+        "name": "backend-contract-tests",
+        "suites": 3,
+        "passed": 52,
+        "failed": 0
+      },
+      {
+        "name": "backend-modern-routes",
+        "suites": 1,
+        "passed": 20,
+        "failed": 0
+      },
+      {
+        "name": "backend-persistence-tests",
+        "suites": 4,
+        "passed": 36,
+        "failed": 0
+      },
+      {
+        "name": "backend-config-tests",
+        "suites": 1,
+        "passed": 78,
+        "failed": 0
+      },
+      {
+        "name": "backend-ai-tests",
+        "suites": 2,
+        "passed": 3,
+        "failed": 0
+      }
+    ],
+    "totalPassed": 189,
+    "database": "Disposable local MongoDB replica sets; no production connection"
+  },
+  "productionWebExport": "PASS",
+  "productionHtmlScan": {
+    "htmlFiles": 164,
+    "visibleSyntheticHits": []
+  },
+  "localFrontend": [
+    {
+      "route": "/home",
+      "status": 200,
+      "html": true
+    },
+    {
+      "route": "/plan",
+      "status": 200,
+      "html": true
+    },
+    {
+      "route": "/plan/ask",
+      "status": 200,
+      "html": true
+    },
+    {
+      "route": "/plan/assistant",
+      "status": 200,
+      "html": true
+    },
+    {
+      "route": "/plan/companion",
+      "status": 200,
+      "html": true
+    },
+    {
+      "route": "/plan/restaurants",
+      "status": 200,
+      "html": true
+    },
+    {
+      "route": "/directory/professionals",
+      "status": 200,
+      "html": true
+    },
+    {
+      "route": "/directory/centers",
+      "status": 200,
+      "html": true
+    },
+    {
+      "route": "/directory/schools",
+      "status": 200,
+      "html": true
+    },
+    {
+      "route": "/products",
+      "status": 200,
+      "html": true
+    }
+  ],
+  "localBackend": "Compiled startup PASS; health 200; protected Plan/AI/children routes 401",
+  "controls": {
+    "primitiveControlsReviewed": 403,
+    "missingHandlerAndDisabledState": 0,
+    "limits": "AST review and scoped interaction tests, not exhaustive physical-device tapping"
+  },
+  "aiSafeguards": [
+    {
+      "file": "/src/modules/ai/ai.activation.ts",
+      "sha256": "c56c37b9b19c7770defed8d714b210836af3ce27c5ff9758c4d8fc670dd85dbd",
+      "standalone": true,
+      "validated": true,
+      "matches": true
+    },
+    {
+      "file": "/src/modules/ai/ai.budget.ts",
+      "sha256": "55719297776af2e1154e245cb18c3a2411d606503a921b0151a3a9baac3c0f6e",
+      "standalone": true,
+      "validated": true,
+      "matches": true
+    },
+    {
+      "file": "/src/modules/ai/ai.quotas.ts",
+      "sha256": "7076b37c19782566ed5d87a964ac570e33a1e4482e8cb8ca955f4b5479a588eb",
+      "standalone": true,
+      "validated": true,
+      "matches": true
+    },
+    {
+      "file": "/src/modules/ai/ai.requests.ts",
+      "sha256": "c12168dcd79d70168350b62a08c23bde3beb111234868fe0c4152b507c56b1aa",
+      "standalone": true,
+      "validated": true,
+      "matches": true
+    },
+    {
+      "file": "/src/modules/ai/ai.transport.ts",
+      "sha256": "4955bb6798d437b42fefd159f6808a45811c967be5897760f893d792d3a6eeb7",
+      "standalone": true,
+      "validated": true,
+      "matches": true
+    },
+    {
+      "file": "/src/modules/ai/ai.witness.ts",
+      "sha256": "2f1f7d38ea60caaaf6e223efcaa2b2bd3df466453309b0543f7466cadfc42750",
+      "standalone": true,
+      "validated": true,
+      "matches": true
+    }
+  ],
+  "changes": [
+    "Restrict localhost care preview to development",
+    "Redirect production archived Plan to current Plan preserving child/date",
+    "Redirect production demo Explore to existing resources",
+    "Repair existing legacy professionals search; disable unsupported sort and demo actions",
+    "Document both fixture flags and frontend daily-care flag",
+    "Update obsolete terminal-task test expectations; add production isolation/search/API route regression tests"
+  ],
+  "blocked": [
+    "Production infrastructure/real-account end-to-end validation",
+    "Approved activity catalog and verified production restaurant records/image licensing",
+    "Backup/recovery, additive DB permissions/indexes, trusted proxy and deployment approval",
+    "Live personalized AI privacy/model approval and adapter",
+    "Native device and app-store certification"
+  ],
+  "warnings": [
+    "Legacy favorites/messages layout-name warnings",
+    "Dependency, ts-jest and Mongoose deprecation warnings"
+  ],
+  "scope": "No redesign, production access, live AI, deployment, push, export or real-data restore. Original handoff unchanged."
+}

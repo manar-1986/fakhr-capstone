@@ -1,3 +1,4 @@
+import { Redirect } from "expo-router";
 import { colors as fakhrColors } from "../../../theme/colors";
 import { Text, TextInput, ScrollView } from "../../../components/ui/AppText";
 import { typography } from "../../../theme/typography";
@@ -37,6 +38,11 @@ const colors = {
 const DESIGN_W = 390;
 
 export default function ExploreScreen() {
+  // Archived illustrative content has no production publishing workflow.
+  if (!__DEV__) return <Redirect href="/(tabs)/resources" />;
+  return <ExplorePreviewScreen />;
+}
+function ExplorePreviewScreen() {
   const { t } = useTranslation();
   const { align, isRTL } = useI18nLayout();
   const { width: windowWidth } = useWindowDimensions();
@@ -272,7 +278,7 @@ export default function ExploreScreen() {
                 pressed && styles.pressed,
               ]}
               accessibilityRole="button"
-              accessibilityLabel={t("exploreUi.featuredCta")}
+              accessibilityLabel={t("exploreUi.featuredCta")} disabled accessibilityState={{disabled:true}}
             >
               <Ionicons name="chevron-back" size={ms(14)} color={colors.white} />
               <Text style={[styles.featuredCtaText, { fontSize: typography.helper }]}>
@@ -319,7 +325,7 @@ export default function ExploreScreen() {
             { marginTop: ms(22), marginBottom: ms(12) },
           ]}
         >
-          <Pressable accessibilityRole="button" accessibilityLabel={t("exploreUi.viewAll")}>
+          <Pressable disabled accessibilityState={{disabled:true}} accessibilityRole="button" accessibilityLabel={t("exploreUi.viewAll")}>
             <Text style={[styles.viewAll, { fontSize: typography.helper }]}>{t("exploreUi.viewAll")}</Text>
           </Pressable>
           <Text style={[styles.sectionTitle, { fontSize: typography.body }]}>
@@ -331,7 +337,7 @@ export default function ExploreScreen() {
           const copy = articleCopy(article.id);
           return (
           <Pressable
-            key={article.id}
+            key={article.id} disabled accessibilityState={{disabled:true}}
             style={[
               styles.articleRow,
               {

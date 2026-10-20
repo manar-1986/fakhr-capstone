@@ -31,12 +31,12 @@ test('all 45 frontend operations use mounted integrated routes, persisted fixtur
  expect((await call('GET','/api/children')).data.children[0].id).toBe(child);
  await call('GET','/api/children/:childId','/api/children/'+child);
  await call('PUT','/api/children/:childId','/api/children/'+child,{supportGoals:['Synthetic goal']});
- const template=await Template.create({name:'Synthetic only',duration:1,targetDiagnoses:['synthetic'],tasks:[{week:1,title:'Synthetic task',description:'Not guidance'}]});
+ const template=await Template.create({name:'Synthetic only',duration:1,targetDiagnoses:['synthetic'],tasks:[{week:1,title:'Synthetic task',description:'Not guidance'},{week:1,title:'Synthetic alternative',description:'Not guidance'}]});
  const generated=await request(app).post('/api/care-paths/generate').set('Authorization',auth).send({childId:child,templateId:template.id}).expect(201);
  const task=generated.body.tasks[0]._id;
  await call('GET','/api/care-paths/current',undefined,undefined,200,{childId:child});
  await call('POST','/api/care-path-tasks/:id/complete','/api/care-path-tasks/'+task+'/complete',{note:'Synthetic'});
- await call('POST','/api/care-path-tasks/:id/skip','/api/care-path-tasks/'+task+'/skip',{});
+ await call('POST','/api/care-path-tasks/:id/skip','/api/care-path-tasks/'+generated.body.tasks[1]._id+'/skip',{});
  await call('POST','/api/care-paths/checkin',undefined,{childId:child,note:'Synthetic'},201);
  const eventInput={title:'Synthetic reminder',date:'2026-10-16',startTime:'10:00',timezone:'Asia/Kuwait',category:'home',notes:'Synthetic'};
  const event=(await call('POST','/api/calendar-events',undefined,{...eventInput,childId:child,requestId:'synthetic-mounted-event'},201)).event.id;

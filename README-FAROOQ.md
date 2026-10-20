@@ -19,7 +19,8 @@ npx tsc --noEmit
 npm run web -- --port 8115
 ```
 
-For isolated visual review set `EXPO_PUBLIC_SMART_PLAN_PREVIEW=true` before starting
+For isolated visual review set both `EXPO_PUBLIC_SMART_PLAN_PREVIEW=true` and
+`EXPO_PUBLIC_SMART_PLAN_FIXTURES=true` before starting
 Metro. It deliberately blocks API transport. Preview examples:
 `/plan?childId=synthetic-child-a&date=2026-10-20`,
 `/plan/ask?childId=synthetic-child-a&date=2026-10-20`.
@@ -50,4 +51,11 @@ environment containing real service credentials.
 Handoff fixes: enforce LF for the five checksum-protected dependency patch files;
 update three stale frontend tests for the approved palette and explicit legacy
 navigation isolation. Real minimum-release gate tests remain enabled and pass.
-No application behavior or validated AI module was changed.
+Version 1 preserved application behavior. Version 2 closes archived preview routes in production, repairs the existing professionals search, and marks unsupported legacy actions disabled. Validated AI modules remain unchanged.
+
+For local authenticated daily-care testing also set EXPO_PUBLIC_DAILY_CARE_ENABLED=true
+in the frontend, alongside FAKHR_DAILY_CARE_ENABLED=true in the local backend.
+Keep both preview flags false for authenticated testing. Never test a real account
+against the isolated fixture preview. The production restaurant catalog is empty
+until verified, licensed records are approved; the three supplied meals remain
+local preview records.

@@ -105,7 +105,7 @@ Optional full-profile mail: EMAIL_HOST, EMAIL_PORT, EMAIL_SECURE, EMAIL_USER,
 EMAIL_PASS, EMAIL_FROM.
 
 Frontend: EXPO_PUBLIC_API_URL, EXPO_PUBLIC_API_STRICT,
-EXPO_PUBLIC_FAKHR_RELEASE_PROFILE, EXPO_PUBLIC_SMART_PLAN_PREVIEW,
+EXPO_PUBLIC_FAKHR_RELEASE_PROFILE, EXPO_PUBLIC_SMART_PLAN_PREVIEW, EXPO_PUBLIC_SMART_PLAN_FIXTURES, EXPO_PUBLIC_DAILY_CARE_ENABLED,
 EXPO_PUBLIC_FAKHR_AI_ACCESS.
 Local tests only: MONGOMS_SYSTEM_BINARY, MONGOMS_RUNTIME_DOWNLOAD.
 Never embed server secrets in EXPO_PUBLIC variables.
@@ -152,3 +152,20 @@ The production backend connection and real account end-to-end flows remain pendi
 The source package omits root scratch editing scripts, a stray pager file, the
 misspelled duplicate frontend folder containing only an Expo declaration, and old
 review screenshots. All application assets and code remain included.
+
+## Final readiness corrections (version 2)
+
+- Archived `/plan/legacy` redirects to the current Plan in release builds, preserving
+  selected child/date. Archived demo `/discover` redirects to existing `/resources`.
+- Local-care memory preview now requires development mode, even on localhost.
+- The older `/professionals` search field now updates its existing API search.
+  Unsupported sort and archived demo actions are explicitly disabled.
+- Compatibility tests now respect the existing completed-task overwrite prohibition.
+  No backend runtime, schema, UI theme, or AI safeguard was modified.
+- See FINAL-READINESS.json for fresh tests, endpoint coverage and verification limits.
+
+The current production restaurant list is deliberately empty, not the three preview
+meals. Add approved verified records and image rights before promising restaurant
+recommendations. Personalized AI remains blocked outside isolated development.
+An automated source scan checks 403 primitive controls for missing handlers or
+explicit disabled states; it is not exhaustive manual tapping on physical devices.

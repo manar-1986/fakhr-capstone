@@ -11,7 +11,7 @@ import { ActivityIndicator, Modal, Image, KeyboardAvoidingView, Platform, Pressa
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
+import { Redirect, useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Text, TextInput, ScrollView } from "../../../components/ui/AppText";
 import { typography } from "../../../theme/typography";
@@ -38,6 +38,12 @@ function Button({ title, onPress, disabled = false, selected = false, icon }: { 
 }
 
 export default function MyPlanScreen() {
+  const { childId, date } = useLocalSearchParams<{ childId?: string; date?: string }>();
+  // The archived screen contains illustrative guest content, never release content.
+  if (!__DEV__) return <Redirect href={{ pathname: '/(tabs)/plan', params: { ...(childId ? { childId } : {}), ...(date ? { date } : {}) } }} />;
+  return <LegacyPlanScreen />;
+}
+function LegacyPlanScreen() {
   const { user, loading } = useAuth();
   const { isRTL } = useI18nLayout();
   if (loading) return <SafeAreaView style={s.screen}><ActivityIndicator color={colors.primary} /></SafeAreaView>;

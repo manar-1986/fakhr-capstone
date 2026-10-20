@@ -1,5 +1,5 @@
 import { HeaderBackButton } from "../../../components/navigation/HeaderBackButton";
-import { Text, ScrollView } from "../../../components/ui/AppText";
+import { Text, TextInput, ScrollView } from "../../../components/ui/AppText";
 import { typography } from "../../../theme/typography";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -126,7 +126,7 @@ export default function ProfessionalsScreen() {
         </View>
 
         {/* Search / Service filter hint */}
-        {searchQuery || (specialtyParam && selectedFilter !== "all") ? (
+        {specialtyParam && selectedFilter !== "all" ? (
           <View style={styles.searchHint}>
             <Ionicons name="filter" size={18} color={colors.primary} />
             <Text style={styles.searchHintText}>
@@ -146,10 +146,10 @@ export default function ProfessionalsScreen() {
             </Pressable>
           </View>
         ) : (
-          <Pressable style={styles.searchBar}>
+          <View style={styles.searchBar}>
             <Ionicons name="search-outline" size={20} color={colors.textMuted} />
-            <Text style={styles.searchPlaceholder}>{t("copy.searchProfessionalsPlaceholder")}</Text>
-          </Pressable>
+            <TextInput accessibilityLabel={t("copy.searchProfessionalsPlaceholder")} placeholder={t("copy.searchProfessionalsPlaceholder")} value={searchQuery} onChangeText={setSearchQuery} style={[styles.searchPlaceholder,{flex:1}]} />
+          </View>
         )}
 
         {/* Filter Section */}
@@ -230,7 +230,7 @@ export default function ProfessionalsScreen() {
                   ? t("copy.professionalFoundOne")
                   : t("copy.professionalsFound", { count: filteredProfessionals.length })}
               </Text>
-              <Pressable style={styles.sortButton}>
+              <Pressable disabled accessibilityRole="button" accessibilityState={{disabled:true}} style={[styles.sortButton,{opacity:0.6}]}>
                 <Ionicons name="funnel-outline" size={16} color={colors.textSecondary} />
                 <Text style={styles.sortButtonText}>{t("copy.sort")}</Text>
               </Pressable>

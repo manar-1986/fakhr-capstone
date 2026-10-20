@@ -38,7 +38,7 @@ test('registered plan contracts return tasks and persist done, skip, and check-i
  const id=made.body.tasks[0]._id;
  await request(app).post('/api/care-path-tasks/'+id+'/complete').set('Authorization',auth).send({note:'Synthetic note'}).expect(200);
  const current=await request(app).get('/api/care-paths/current').set('Authorization',auth).query({childId:child.id}).expect(200);expect(current.body.tasks[0].status).toBe('completed');expect(current.body.tasks[0].note).toBe('Synthetic note');expect(current.body.carePath.status).toBe('completed');
- await request(app).post('/api/care-path-tasks/'+id+'/skip').set('Authorization',auth).send({}).expect(200);
+ await request(app).post('/api/care-path-tasks/'+id+'/skip').set('Authorization',auth).send({}).expect(400);
  const check=await request(app).post('/api/care-paths/checkin').set('Authorization',auth).send({childId:child.id,note:'Synthetic feedback'}).expect(201);expect(check.body.success).toBe(true);
 });
 test('production cannot activate AI or Messages via feature flags',async()=>{
