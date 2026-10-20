@@ -1,0 +1,7 @@
+import {z} from 'zod';
+import {date,time,timezone,objectId,requestId,instant} from '../dailyCare/contracts';
+export const selection=z.object({childId:objectId,date,timezone}).strict();
+export const mealInput=z.object({childId:objectId,requestId,date,time,timezone,name:z.string().trim().min(1).max(120),items:z.string().trim().min(1).max(1000),allergyNotes:z.string().max(1000),textureNotes:z.string().max(1000),preparation:z.string().max(2000).optional(),restrictions:z.string().max(1000).optional(),kind:z.enum(['breakfast','morning-snack','lunch','afternoon-snack','dinner','other']).optional()}).strict().refine(v=>{try{instant(v.date,v.time,v.timezone);return true}catch{return false}});
+export const mealAction=z.object({revision:z.number().int().nonnegative(),status:z.enum(['pending','ate','partial','tasted','explored','declined']),notes:z.string().max(2000)}).strict();
+export const taskAction=z.object({revision:z.number().int().nonnegative(),action:z.enum(['start','complete','skip','note']),note:z.string().max(2000).optional()}).strict();
+export const planInput=z.object({childId:objectId,date,timezone,templateId:objectId,catalogVersion:z.string().max(100),entries:z.array(z.object({activityId:z.string().min(1).max(80),time,durationMinutes:z.number().int().min(1).max(120)}).strict()).min(1).max(10),accessibilityConfirmed:z.literal(true),safetyConfirmed:z.literal(true)}).strict().refine(v=>new Set(v.entries.map(x=>x.activityId)).size===v.entries.length).refine(v=>v.entries.every(x=>{try{instant(v.date,x.time,v.timezone);return true}catch{return false}}));

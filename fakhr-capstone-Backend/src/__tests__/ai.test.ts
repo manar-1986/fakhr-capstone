@@ -1,0 +1,17 @@
+jest.mock('../modules/ai/ai.transport',()=>({runBudgetedAI:async(config:unknown)=>{const {buildAIRequest}=require('../modules/ai/ai.requests');const OpenAI=require('openai').default;return new OpenAI({apiKey:'offline-only'}).responses.create(buildAIRequest(config));}}));
+import express from "express";
+import request from "supertest";
+import User from "../models/User.model";
+import {generateToken} from "../utils/jwt";
+import routes from "../modules/ai/ai.routes";
+import {errorHandler} from "../middlewares/error.middleware";
+const mockCreate=jest.fn();
+jest.mock("openai",()=>{const actual=jest.requireActual("openai");const Client=jest.fn().mockImplementation(()=>({responses:{create:mockCreate}}));Object.assign(Client,{RateLimitError:actual.RateLimitError,AuthenticationError:actual.AuthenticationError,APIConnectionError:actual.APIConnectionError});return {__esModule:true,default:Client};});
+const app=express();app.use(express.json());app.use("/api/ai",routes);app.use(errorHandler);
+let auth:string;const originalKey=process.env.OPENAI_API_KEY;
+beforeEach(async()=>{mockCreate.mockReset();process.env.OPENAI_API_KEY="isolated-test-only-not-a-real-key";const user=await User.create({email:"ai-test@example.invalid",password:"test-only"});auth="Bearer "+generateToken({userId:String(user._id)});});
+afterAll(()=>{if(originalKey===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=originalKey;});
+test.each(["Help with activities","ساعدني في الأنشطة"])("AI preserves existing response contract for %s",async question=>{mockCreate.mockResolvedValue({output_text:" Test answer "});const r=await request(app).post("/api/ai/ask").set("Authorization",auth).send({question}).expect(200);expect(r.body.data.answer.length).toBeGreaterThan(20);expect(r.body.data.timestamp).toBeDefined();expect(mockCreate).toHaveBeenCalledTimes(1);expect(r.body.data.answer).toContain("Test answer");});
+test("AI requires authentication and validates input before OpenAI",async()=>{await request(app).post("/api/ai/ask").send({question:"hello"}).expect(401);for(const question of ["",42,"x".repeat(2001)])await request(app).post("/api/ai/ask").set("Authorization",auth).send({question}).expect(400);expect(mockCreate).not.toHaveBeenCalled();});
+test("local public guidance works without a key or outbound OpenAI",async()=>{delete process.env.OPENAI_API_KEY;const r=await request(app).post("/api/ai/ask").set("Authorization",auth).send({question:"hello"}).expect(200);expect(r.body.data.answer).toBeDefined();expect(mockCreate).not.toHaveBeenCalled();});
+test("Untrusted OpenAI output is unused by local private flows",async()=>{mockCreate.mockResolvedValueOnce({output_text:""});await request(app).post("/api/ai/ask").set("Authorization",auth).send({question:"hello"}).expect(200);mockCreate.mockRejectedValueOnce(new Error("sensitive-provider-detail"));const r=await request(app).post("/api/ai/ask").set("Authorization",auth).send({question:"hello"}).expect(200);expect(JSON.stringify(r.body)).not.toContain("sensitive-provider-detail");});

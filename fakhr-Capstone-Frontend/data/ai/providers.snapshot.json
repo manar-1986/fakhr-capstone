@@ -1,0 +1,3279 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "id": "directory",
+      "files": [
+        "menwhm.pdf",
+        "menwhmة.pdf"
+      ],
+      "sha256": "9767ce664f6e91403ffed06d8bbd5622df2b9ec7fd709a07d5a0909e576f3316",
+      "pages": 8,
+      "date": null,
+      "note": "Identical files; source date not stated. Read once per unique page."
+    },
+    {
+      "id": "scan-2023",
+      "files": [
+        "مدارس وحضانات.pdf"
+      ],
+      "sha256": "2dbd168fbacda743951ca401ffed3064592081cf94b4429533a2583410017c2e",
+      "pages": 8,
+      "date": "2023-04-20",
+      "note": "Scanned pages visually transcribed; not evidence of current operation."
+    }
+  ],
+  "records": [
+    {
+      "id": "kw-n-bustan",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-bustan",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 1,
+              "row": "1",
+              "nameAr": "حضانة البستان لضعاف السمع والنطق",
+              "governorateAr": "العاصمة",
+              "areaAr": "الخالدية",
+              "addressAr": "الخالدية: قطعة 2، شارع العروبة، قسيمة 2",
+              "phones": [
+                "24822086"
+              ],
+              "needsAr": "ضعف سمع، تأخر لغوي، زراعة قوقعة",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "48",
+              "agesAr": "3–6 سنوات"
+            }
+          ],
+          "profile": {
+            "specialization": {
+              "ar": "دعم الأطفال ذوي ضعف السمع وصعوبات النطق والتواصل.",
+              "en": "Support for children with hearing impairments and speech and communication difficulties."
+            },
+            "additionalUrl": "https://forms.gle/v62wQTgREg6KufvDA",
+            "additionalUrlLabel": {
+              "ar": "التسجيل للعام الدراسي 2026–2027",
+              "en": "Registration for Academic Year 2026–2027"
+            },
+            "mapUrl": "https://maps.app.goo.gl/rhHVy2zS3JJPEump8",
+            "instagram": "https://www.instagram.com/albustan1997/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            }
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-dream",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-dream",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 1,
+              "row": "2",
+              "nameAr": "حضانة كويت دريم سنتر للاحتياجات الخاصة",
+              "governorateAr": "العاصمة",
+              "areaAr": "الخالدية",
+              "addressAr": "الخالدية: قطعة 1، شارع غزة، مبنى 4",
+              "phones": [
+                "24827123",
+                "55290612"
+              ],
+              "needsAr": "توحد، تأخر تطوري، متلازمة داون",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "76",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 3,
+              "row": "29",
+              "nameAr": "حضانة كويت دريم سنتر",
+              "governorateAr": "العاصمة",
+              "areaAr": "الخالدية",
+              "addressAr": "الخالدية – قطعة 1 – شارع غزة – مبنى 4",
+              "phones": [
+                "24827123",
+                "55290612"
+              ],
+              "needsAr": "توحد (إعاقة ذهنية)؛ تأخر تطوري (إعاقة تطورية)؛ داون",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {
+            "specialization": {
+              "ar": "مركز للتدخل المبكر مخصص للأطفال ذوي الاحتياجات الخاصة.",
+              "en": "An early intervention centre for children with special needs."
+            },
+            "instagram": "https://www.instagram.com/kuwaitdreamcentre/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "mapUrl": "https://maps.app.goo.gl/RB6pjdAtikXkWK8U7"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-nada",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-nada",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 1,
+              "row": "4",
+              "nameAr": "حضانة الندى لذوي الاحتياجات الخاصة",
+              "governorateAr": "العاصمة",
+              "areaAr": "المنصورية",
+              "addressAr": "المنصورية: قطعة 1، جادة 10، منزل 29، خلف حديقة المنصورية",
+              "phones": [
+                "50311309",
+                "22547016"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "96",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 3,
+              "row": "30",
+              "nameAr": "حضانة الندى لذوي الاحتياجات الخاصة",
+              "governorateAr": "العاصمة",
+              "areaAr": "المنصورية",
+              "addressAr": "المنصورية – قطعة 1 – جادة 10 – منزل 29 – خلف حديقة المنصورية",
+              "phones": [
+                "50311309",
+                "22547016"
+              ],
+              "needsAr": "طيف التوحد؛ الإعاقة الذهنية والحركية والحسية؛ تأخر تطوري شامل؛ ازدواج الإعاقة؛ المتلازمات الوراثية",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {
+            "instagram": "https://www.instagram.com/nadacenter2015/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "whatsapp": {
+              "phone": "+96597163315",
+              "url": "https://wa.me/96597163315"
+            },
+            "mapUrl": "https://maps.app.goo.gl/eB8qZ86U3xqJoyoD8"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-ghad",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-ghad",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 1,
+              "row": "5",
+              "nameAr": "حضانة الغد المشرق",
+              "governorateAr": "حولي",
+              "areaAr": "الزهراء",
+              "addressAr": "جنوب السرة الزهراء قطعة 2 شارع 218 م 498",
+              "phones": [
+                "25242460",
+                "60352111"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "75",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 2,
+              "row": "16",
+              "nameAr": "حضانة الغد المشرق لذوي الاحتياجات الخاصة",
+              "governorateAr": "حولي",
+              "areaAr": "الزهراء",
+              "addressAr": "جنوب السرة – الزهراء – قطعة 2 – شارع 218 – منزل 498",
+              "phones": [
+                "25242460"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {
+            "instagram": "https://www.instagram.com/alghad.almoshriq/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "mapUrl": "https://maps.app.goo.gl/U41tGHh7B9vtgqG87"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-children",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-children",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 1,
+              "row": "6",
+              "nameAr": "حضانة بيت الأطفال للاحتياجات الخاصة",
+              "governorateAr": "حولي",
+              "areaAr": "الجابرية",
+              "addressAr": "الجابرية: قطعة 8، شارع 101، منزل 5، بجوار مستشفى هادي",
+              "phones": [
+                "25350358",
+                "25350359",
+                "97223077"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "50",
+              "agesAr": "3–6 سنوات"
+            }
+          ],
+          "profile": {
+            "instagram": "https://www.instagram.com/childrenhomekwt/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "whatsapp": {
+              "phone": "+96597223077",
+              "url": "https://wa.me/96597223077"
+            },
+            "mapUrl": "https://maps.app.goo.gl/pxFNHF7J2nogESv5A"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-basma",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-basma",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 1,
+              "row": "7",
+              "nameAr": "حضانة البسمة",
+              "governorateAr": "حولي",
+              "areaAr": "السلام",
+              "addressAr": "السلام: قطعة 5، شارع 507، فيلا 8",
+              "phones": [
+                "99734267",
+                "25240970",
+                "25240960"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "64",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 2,
+              "row": "12",
+              "nameAr": "حضانة البسمة",
+              "governorateAr": "حولي",
+              "areaAr": "السلام",
+              "addressAr": "جنوب السرة – السلام – قطعة 5 – شارع 507 – فيلا 8",
+              "phones": [
+                "99734267",
+                "25240970",
+                "25240960"
+              ],
+              "needsAr": "الإعاقة الذهنية والحركية (بسيطة/متوسطة/شديدة)؛ فرط حركة وتشتت انتباه؛ تأخر تطوري شامل؛ داون؛ الاضطراب الانفعالي والسلوكي؛ الإعاقة السمعية (بسيطة/متوسطة)؛ تأخر لغوي؛ إعاقة بصرية (بسيطة)؛ طيف توحد؛ إعاقة مزدوجة",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {
+            "mapUrl": "https://maps.app.goo.gl/aYaVwS88Xa1B5nfQ8"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-maharat",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-maharat",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 1,
+              "row": "8",
+              "nameAr": "حضانة مهارات للاحتياجات الخاصة",
+              "governorateAr": "حولي",
+              "areaAr": "الزهراء",
+              "addressAr": "الزهراء: قطعة 8، شارع 806، فيلا 220",
+              "phones": [
+                "99680656",
+                "25244894",
+                "60901962"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "48",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 2,
+              "row": "19",
+              "nameAr": "حضانة مهارات للاحتياجات الخاصة",
+              "governorateAr": "حولي",
+              "areaAr": "الزهراء",
+              "addressAr": "الزهراء – قطعة 8 – شارع 806 – فيلا 220",
+              "phones": [
+                "99680656",
+                "25244894",
+                "60901962"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {
+            "instagram": "https://www.instagram.com/maharat.nursery/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "mapUrl": "https://maps.app.goo.gl/wYNiTPACVpyLFxX98"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-milestone",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-milestone",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 1,
+              "row": "9",
+              "nameAr": "حضانة مايلستون للاحتياجات الخاصة",
+              "governorateAr": "حولي",
+              "areaAr": "الصديق",
+              "addressAr": "الصديق: قطعة 5، قسيمة 282–283",
+              "phones": [
+                "69006591"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "101",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 2,
+              "row": "17",
+              "nameAr": "حضانة مايلستون للاحتياجات الخاصة",
+              "governorateAr": "حولي",
+              "areaAr": "الصديق",
+              "addressAr": "الصديق – قطعة 5 – قسيمة 502 – مبنى 282/283",
+              "phones": [
+                "69006591"
+              ],
+              "needsAr": "صعوبات تعلم – طيف توحد – فرط نشاط – تأخر نطق – تأخر نمائي شامل – بطء تعلم – داون – صرع – شلل دماغي – إعاقة سمعية والحركية بسيطة",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {
+            "instagram": "https://www.instagram.com/milestone_q8/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "mapUrl": "https://maps.app.goo.gl/Jum3sux5wMiWj1SS6"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-royal",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-royal",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 1,
+              "row": "10",
+              "nameAr": "الحضانة الملكية البريطانية ثنائية اللغة",
+              "governorateAr": "حولي",
+              "areaAr": "الصديق",
+              "addressAr": "الصديق: قطعة 4، شارع 401، فيلا 233–234",
+              "phones": [
+                "98009696",
+                "25239696"
+              ],
+              "needsAr": "ذهنية بسيطة، داون، سمعية، طيف التوحد",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "165",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 2,
+              "row": "18",
+              "nameAr": "الحضانة الملكية البريطانية",
+              "governorateAr": "حولي",
+              "areaAr": "الصديق",
+              "addressAr": "الصديق – قطعة 4 – شارع 401 – فيلا 233/234",
+              "phones": [
+                "98009696",
+                "25239696"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {
+            "instagram": "https://www.instagram.com/rbkedu/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "website": "http://www.rb.edu.kw/"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-shams",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-shams",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 2,
+              "row": "11",
+              "nameAr": "حضانة الشمس المشرقة النموذجية لذوي الاحتياجات الخاصة",
+              "governorateAr": "الفروانية",
+              "areaAr": "إشبيلية",
+              "addressAr": "إشبيلية: قطعة 4، شارع 401، قسيمة 782",
+              "phones": [
+                "24385524",
+                "24385523",
+                "60669545"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "64",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 1,
+              "row": "5",
+              "nameAr": "حضانة الشمس المشرقة",
+              "governorateAr": "الفروانية",
+              "areaAr": "إشبيلية",
+              "addressAr": "إشبيلية – قطعة 4 – شارع 401 – قسيمة 782",
+              "phones": [
+                "24385524",
+                "24385523",
+                "60669545",
+                "60788391"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {
+            "phone": "+96560669545",
+            "extraPhones": [
+              {
+                "phone": "+96560788391",
+                "label": {
+                  "ar": "رقم إضافي",
+                  "en": "Additional contact"
+                }
+              }
+            ],
+            "address": {
+              "ar": "إشبيلية: قطعة 4، شارع 401، قسيمة 782\nإشبيلية – قطعة 4 – شارع 401 – قسيمة 782",
+              "en": "إشبيلية: قطعة 4، شارع 401، قسيمة 782\nإشبيلية – قطعة 4 – شارع 401 – قسيمة 782"
+            },
+            "area": {
+              "ar": "إشبيلية",
+              "en": "إشبيلية"
+            },
+            "supportedConditions": {
+              "ar": [
+                "جميع الإعاقات"
+              ],
+              "en": [
+                "جميع الإعاقات"
+              ]
+            },
+            "ages": {
+              "ar": "3–6 سنوات",
+              "en": "3–6 سنوات"
+            },
+            "instagram": "https://www.instagram.com/sunshineidealnursery/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "mapUrl": "https://maps.app.goo.gl/dE562Jvv2emv4HvK6"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-heba",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-heba",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 2,
+              "row": "12",
+              "nameAr": "حضانة الهبة لذوي الاحتياجات الخاصة",
+              "governorateAr": "الفروانية",
+              "areaAr": "عبد الله المبارك",
+              "addressAr": "عبد الله المبارك: قطعة 6، شارع 601، قسيمة 22",
+              "phones": [
+                "97446577",
+                "97446477"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "48",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 1,
+              "row": "1",
+              "nameAr": "حضانة الهبة",
+              "governorateAr": "الفروانية",
+              "areaAr": "عبد الله المبارك",
+              "addressAr": "عبد الله المبارك – قطعة 6 – شارع 601 – قسيمة 409 – لوحة زرقاء 3",
+              "phones": [
+                "97446577",
+                "97446477"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {},
+          "sourceStatus": "unverified"
+        },
+        {
+          "id": "kw-n-heba-2",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 2,
+              "row": "14",
+              "nameAr": "حضانة الهبة 2",
+              "governorateAr": "الفروانية",
+              "areaAr": "الأندلس",
+              "addressAr": "الأندلس ق 4 ش 5 قسيمة 173",
+              "phones": [
+                "51142276"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "45",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 1,
+              "row": "2",
+              "nameAr": "حضانة الهبة 2 للاحتياجات الخاصة",
+              "governorateAr": "الفروانية",
+              "areaAr": "الأندلس",
+              "addressAr": "الأندلس – قطعة 4 – شارع 5 – قسيمة 173",
+              "phones": [
+                "51142276"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {},
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-nuwair",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-nuwair",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 2,
+              "row": "15",
+              "nameAr": "حضانة النوير للاحتياجات الخاصة",
+              "governorateAr": "الفروانية",
+              "areaAr": "الرحاب",
+              "addressAr": "الرحاب: قطعة 2، شارع 2، قسيمة 387",
+              "phones": [
+                "55544069"
+              ],
+              "needsAr": "إعاقة ذهنية، توحد، إعاقة حركية",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "40",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 1,
+              "row": "6",
+              "nameAr": "حضانة النوير للاحتياجات الخاصة",
+              "governorateAr": "الفروانية",
+              "areaAr": "الرحاب",
+              "addressAr": "الرحاب – قطعة 2 – شارع 1 – قسيمة 11",
+              "phones": [
+                "55544069"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {
+            "instagram": "https://www.instagram.com/alnowairnurserygroup/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "whatsapp": {
+              "phone": "+96555544069",
+              "url": "https://wa.me/96555544069"
+            }
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-smart",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-smart",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 2,
+              "row": "16",
+              "nameAr": "حضانة سبيشل سمارت أكاديمي",
+              "governorateAr": "الفروانية",
+              "areaAr": "خيطان",
+              "addressAr": "خيطان ق 5 ش 41 م 345",
+              "phones": [
+                "95002006",
+                "94002004"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "50",
+              "agesAr": "3–6 سنوات"
+            }
+          ],
+          "profile": {
+            "instagram": "https://www.instagram.com/s.academy.kw/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "mapUrl": "https://maps.app.goo.gl/yTB8QHQsYXF2Roqe8"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-maha",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-maha",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 2,
+              "row": "17",
+              "nameAr": "حضانة المها لذوي الاحتياجات الخاصة",
+              "governorateAr": "مبارك الكبير",
+              "areaAr": "فنيطيس",
+              "addressAr": "فنيطيس: قطعة 4، شارع 407، منزل 354",
+              "phones": [
+                "50999405",
+                "66569293"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "70",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 2,
+              "row": "20",
+              "nameAr": "حضانة المها",
+              "governorateAr": "مبارك الكبير",
+              "areaAr": "فنيطيس",
+              "addressAr": "فنيطيس – ق 4 – شارع 407 – منزل 354",
+              "phones": [
+                "50999405",
+                "66569293"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {},
+          "sourceStatus": "unverified"
+        },
+        {
+          "id": "kw-n-maha-2",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 2,
+              "row": "18",
+              "nameAr": "حضانة المها 2 لذوي الاحتياجات الخاصة",
+              "governorateAr": "مبارك الكبير",
+              "areaAr": "فنيطيس",
+              "addressAr": "فنيطيس: قطعة 8، شارع 815، منزل 114",
+              "phones": [
+                "60484449"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "51",
+              "agesAr": "3–6 سنوات"
+            }
+          ],
+          "profile": {},
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-jack",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-jack",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 2,
+              "row": "19",
+              "nameAr": "حضانة جاك اند جل ثنائية اللغة للاحتياجات الخاصة",
+              "governorateAr": "مبارك الكبير",
+              "areaAr": "أبو فطيرة",
+              "addressAr": "أبو فطيرة: قطعة 8، شارع 189، قسيمة 438",
+              "phones": [
+                "69018209",
+                "69624824"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "44",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 3,
+              "row": "22",
+              "nameAr": "حضانة جاك اند جل",
+              "governorateAr": "مبارك الكبير",
+              "areaAr": "أبو فطيرة",
+              "addressAr": "أبوفطيرة – قطعة 8 – شارع 189 – قسيمة 438",
+              "phones": [
+                "97712272",
+                "69018209"
+              ],
+              "needsAr": "الإعاقات الذهنية؛ الإعاقات الحركية؛ تأخر تطوري شامل",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {
+            "instagram": "https://www.instagram.com/jack.jill.kw/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "mapUrl": "https://maps.app.goo.gl/XR6uE7MZmcdMXitu5"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-amal",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-amal",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 2,
+              "row": "20",
+              "nameAr": "حضانة الأمل",
+              "governorateAr": "مبارك الكبير",
+              "areaAr": "فنيطيس",
+              "addressAr": "فنيطيس قطعة 3 شارع 306 فيلا 233",
+              "phones": [
+                "99107631",
+                "99108345"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "54",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 3,
+              "row": "24",
+              "nameAr": "حضانة الأمل",
+              "governorateAr": "مبارك الكبير",
+              "areaAr": "فنيطيس",
+              "addressAr": "الفنيطيس – قطعة 3 – شارع 306 – فيلا 233",
+              "phones": [
+                "99107631",
+                "99108345"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {
+            "website": "http://www.hopenurserykw.com/",
+            "mapUrl": "https://maps.app.goo.gl/UC1cutUUVgb5fyFh8"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-best",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-best",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 2,
+              "row": "21",
+              "nameAr": "حضانة بست دريم لذوي الاحتياجات الخاصة",
+              "governorateAr": "مبارك الكبير",
+              "areaAr": "أبو فطيرة",
+              "addressAr": "أبو فطيرة: قطعة 6 شارع 50، قسيمة 155",
+              "phones": [
+                "99220249",
+                "55704473"
+              ],
+              "needsAr": "إعاقة ذهنية، توحد، تأخر تطوري شامل",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "40",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 3,
+              "row": "23",
+              "nameAr": "حضانة بست دريم لذوي الاحتياجات الخاصة",
+              "governorateAr": "مبارك الكبير",
+              "areaAr": "أبو فطيرة",
+              "addressAr": "أبوفطيرة – ق 6 – شارع 50 – قسيمة 155",
+              "phones": [
+                "99220249",
+                "55704473"
+              ],
+              "needsAr": "الإعاقات الذهنية – توحد – تأخر تطوري شامل",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {
+            "extraPhones": [
+              {
+                "phone": "55704473",
+                "label": {
+                  "ar": "رقم إضافي",
+                  "en": "Additional contact"
+                }
+              },
+              {
+                "phone": "+96541149088",
+                "label": {
+                  "ar": "رقم إضافي",
+                  "en": "Additional contact"
+                }
+              }
+            ],
+            "instagram": "https://www.instagram.com/bestdreamkw/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "mapUrl": "https://maps.app.goo.gl/hQ21G6XeBWwYqPwd6"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-abdullah",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-abdullah",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 3,
+              "row": "22",
+              "nameAr": "حضانة دار عبد الله للاحتياجات الخاصة",
+              "governorateAr": "مبارك الكبير",
+              "areaAr": "أبو فطيرة",
+              "addressAr": "أبو فطيرة قطعة 8، شارع 81، منزل 180–181",
+              "phones": [
+                "22072244",
+                "66110660"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "72",
+              "agesAr": "3–6 سنوات"
+            }
+          ],
+          "profile": {
+            "instagram": "https://www.instagram.com/darabdullahnursery/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "whatsapp": {
+              "phone": "+96566110660",
+              "url": "https://wa.me/96566110660"
+            },
+            "mapUrl": "https://maps.app.goo.gl/6jUoran1ggrKdyx56"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-yanmo",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-yanmo",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 3,
+              "row": "23",
+              "nameAr": "حضانة ينمو لذوي الاحتياجات الخاصة",
+              "governorateAr": "الأحمدي",
+              "areaAr": "العقيلة",
+              "addressAr": "العقيلة ق 4 ش 420 مبنى 131",
+              "phones": [
+                "41111577",
+                "41111588"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "52",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 3,
+              "row": "28",
+              "nameAr": "حضانة ينمو النموذجية",
+              "governorateAr": "الأحمدي",
+              "areaAr": "العقيلة",
+              "addressAr": "العقيلة – قطعة 4 – شارع 420 – مبنى 131",
+              "phones": [
+                "41111577",
+                "41111588"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {
+            "instagram": "https://www.instagram.com/yanmo_ideal_nursery/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "whatsapp": {
+              "phone": "+96541111588",
+              "url": "https://wa.me/96541111588"
+            },
+            "mapUrl": "https://maps.google.com/?q=29.177370,48.094494"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-energy",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-energy",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 3,
+              "row": "24",
+              "nameAr": "حضانة انرجي افكتف كيدز",
+              "governorateAr": "الأحمدي",
+              "areaAr": "صباح الأحمد",
+              "addressAr": "صباح الأحمد ش 127 قسيمة 134 قطاع E1",
+              "phones": [
+                "55992218",
+                "50031300"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "40",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 3,
+              "row": "27",
+              "nameAr": "حضانة انرجي افكتف كيدز",
+              "governorateAr": "الأحمدي",
+              "areaAr": "صباح الأحمد",
+              "addressAr": "صباح الأحمد – قسيمة 134 – قطاع E1",
+              "phones": [
+                "55992218",
+                "50031300"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {
+            "phone": "+96560006383",
+            "extraPhones": [
+              {
+                "phone": "+96566700017",
+                "label": {
+                  "ar": "رقم إضافي",
+                  "en": "Additional contact"
+                }
+              }
+            ],
+            "address": {
+              "ar": "صباح الأحمد ش 127 قسيمة 134 قطاع E1\nصباح الأحمد – قسيمة 134 – قطاع E1",
+              "en": "صباح الأحمد ش 127 قسيمة 134 قطاع E1\nصباح الأحمد – قسيمة 134 – قطاع E1"
+            },
+            "area": {
+              "ar": "صباح الأحمد",
+              "en": "صباح الأحمد"
+            },
+            "supportedConditions": {
+              "ar": [
+                "جميع الإعاقات"
+              ],
+              "en": [
+                "جميع الإعاقات"
+              ]
+            },
+            "ages": {
+              "ar": "3–6 سنوات",
+              "en": "3–6 سنوات"
+            },
+            "instagram": "https://www.instagram.com/energyeek/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "mapUrl": "https://maps.app.goo.gl/YKhQTiRJmwYtA1aBA"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-ghali",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-ghali",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 3,
+              "row": "25",
+              "nameAr": "حضانة غالي النموذجية لذوي الاحتياجات الخاصة",
+              "governorateAr": "الأحمدي",
+              "areaAr": "المنقف",
+              "addressAr": "المنقف: قطعة 1، شارع 121، فيلا 5",
+              "phones": [
+                "23746758",
+                "23741289",
+                "99942901"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "150",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 3,
+              "row": "26",
+              "nameAr": "حضانة غالي للاحتياجات الخاصة",
+              "governorateAr": "الأحمدي",
+              "areaAr": "المنقف",
+              "addressAr": "المنقف – قطعة 1 – شارع 121 – فيلا 5",
+              "phones": [
+                "23746758",
+                "23741289",
+                "99942901"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {
+            "instagram": "https://www.instagram.com/ghali_nursery2/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "mapUrl": "https://maps.app.goo.gl/opg8qT4DfKjMQTNy9"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-insan-1",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-insan-1",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 3,
+              "row": "26",
+              "nameAr": "حضانة إنسان 1",
+              "governorateAr": "الأحمدي",
+              "areaAr": "الفنطاس الزراعية",
+              "addressAr": "الفنطاس الزراعية: قطعة 4، شارع 2، منزل 291",
+              "phones": [
+                "60041147",
+                "60031132",
+                "65502770"
+              ],
+              "needsAr": "إعاقة ذهنية بسيطة ومتوسطة – توحد – إعاقات حركية",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "90",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 3,
+              "row": "25",
+              "nameAr": "حضانة مركز انسان",
+              "governorateAr": "الأحمدي",
+              "areaAr": "الفنطاس الزراعية",
+              "addressAr": "الفنطاس الزراعية – قطعة 4 – شارع 2 – منزل 291",
+              "phones": [
+                "23908080",
+                "52226632",
+                "99721356"
+              ],
+              "needsAr": "الإعاقة الذهنية؛ إعاقة تطورية (توحد)؛ إعاقة حركية",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {},
+          "sourceStatus": "unverified"
+        },
+        {
+          "id": "kw-n-insan-2",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 3,
+              "row": "27",
+              "nameAr": "حضانة انسان 2",
+              "governorateAr": "الأحمدي",
+              "areaAr": "صباح الأحمد",
+              "addressAr": "صباح الأحمد قطعة D4 ش 427 ق 394 م 18",
+              "phones": [
+                "60041147",
+                "60031132",
+                "65502770"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "45",
+              "agesAr": "3–6 سنوات"
+            }
+          ],
+          "profile": {},
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-little",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-little",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 3,
+              "row": "28",
+              "nameAr": "حضانة ليتل فنقرز",
+              "governorateAr": "الجهراء",
+              "areaAr": "الجهراء القديمة",
+              "addressAr": "الجهراء القديمة ق 1 ش 3 متفرع من شارع عبد الله بن جدعان 37",
+              "phones": [
+                "51678168",
+                "55996615",
+                "24554130"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "48",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 1,
+              "row": "8",
+              "nameAr": "حضانة ليتل فنقرز للاحتياجات الخاصة",
+              "governorateAr": "الجهراء",
+              "areaAr": "الجهراء القديمة",
+              "addressAr": "الجهراء القديمة – قطعة 1 – شارع 3 متفرع من شارع عبد الله بن جدعان – منزل 37",
+              "phones": [
+                "51678168",
+                "55996615",
+                "24554130"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {
+            "instagram": "https://www.instagram.com/littlefingers_nursery/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "mapUrl": "https://maps.app.goo.gl/AQyNovaPtwJBLU898"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-sumaya",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-sumaya",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 3,
+              "row": "29",
+              "nameAr": "حضانة سمية",
+              "governorateAr": "الجهراء",
+              "areaAr": "القصر",
+              "addressAr": "الجهراء القصر ق 2 ش مرشد الشمري م 10",
+              "phones": [
+                "66677126",
+                "55299862",
+                "24563356",
+                "24563358"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "111",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 1,
+              "row": "9",
+              "nameAr": "حضانة سمية النموذجية",
+              "governorateAr": "الجهراء",
+              "areaAr": "القصر",
+              "addressAr": "الجهراء – القصر – قطعة 2 – شارع مرشد الشمري – منزل 10 – الرقم الآلي للعنوان 17629462",
+              "phones": [
+                "66677126",
+                "55299862",
+                "24563356",
+                "24563358"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {
+            "instagram": "https://www.instagram.com/somya_jahra/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "mapUrl": "https://maps.app.goo.gl/HN9pmxqPzfetrRhT7"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-nasser",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-nasser",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 3,
+              "row": "30",
+              "nameAr": "حضانة بيت ناصر",
+              "governorateAr": "الجهراء",
+              "areaAr": "النسيم",
+              "addressAr": "النسيم -93 ش 9 فيلا 324",
+              "phones": [
+                "22259590",
+                "60050735"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "58",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 1,
+              "row": "10",
+              "nameAr": "حضانة بيت ناصر لذوي الاحتياجات الخاصة",
+              "governorateAr": "الجهراء",
+              "areaAr": "النسيم",
+              "addressAr": "النسيم – قطعة 3 – فيلا 242 – مقابل الكلية الكندية",
+              "phones": [
+                "96926826",
+                "55081912"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {},
+          "sourceStatus": "unverified"
+        },
+        {
+          "id": "kw-n-nasser-2",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 1,
+              "row": "3",
+              "nameAr": "حضانة بيت ناصر 2",
+              "governorateAr": "العاصمة",
+              "areaAr": "جابر الأحمد",
+              "addressAr": "جابر الأحمد قطعة 5 شارع 528 فيلا 24",
+              "phones": [
+                "22259590",
+                "60050735"
+              ],
+              "needsAr": null,
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "49",
+              "agesAr": "3–6 سنوات"
+            },
+            {
+              "sourceId": "scan-2023",
+              "page": 3,
+              "row": "32",
+              "nameAr": "حضانة بيت ناصر 2",
+              "governorateAr": "العاصمة",
+              "areaAr": "جابر الأحمد",
+              "addressAr": "جابر الأحمد – ق 5 – شارع 528 – قسيمة 884 – فيلا 24 – مقابل مدرسة تميم الداري",
+              "phones": [
+                "62220012",
+                "60050735",
+                "55916205",
+                "64445953",
+                "22259590"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {},
+          "sourceStatus": "unverified"
+        },
+        {
+          "id": "kw-n-nasser-3",
+          "observations": [
+            {
+              "sourceId": "directory",
+              "page": 2,
+              "row": "13",
+              "nameAr": "حضانة بيت ناصر 3",
+              "governorateAr": "الفروانية",
+              "areaAr": "غرب عبد الله المبارك",
+              "addressAr": "غرب عبد الله المبارك: قطعة 4، شارع 441، فيلا 428",
+              "phones": [
+                "22259590",
+                "60050735"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": "46",
+              "agesAr": "3–6 سنوات"
+            }
+          ],
+          "profile": {},
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "kw-n-dima",
+      "category": "nursery",
+      "branches": [
+        {
+          "id": "kw-n-dima",
+          "observations": [
+            {
+              "sourceId": "scan-2023",
+              "page": 1,
+              "row": "7",
+              "nameAr": "حضانة ديما",
+              "governorateAr": "الجهراء",
+              "areaAr": "سعد العبد الله",
+              "addressAr": "سعد العبد الله – قطعة 2 – شارع 221 – منزل 71 – مقابل مدرسة الصامتة متوسطة بنات",
+              "phones": [
+                "55507189",
+                "24534954",
+                "24534955"
+              ],
+              "needsAr": "جميع الإعاقات",
+              "stagesAr": null,
+              "classroomAr": null,
+              "capacityAr": null,
+              "agesAr": null
+            }
+          ],
+          "profile": {
+            "instagram": "https://www.instagram.com/dima_nursery/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "mapUrl": "https://maps.app.goo.gl/6UDHCcQdXLv5uN1q9"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "center-abc-kuwait",
+      "category": "rehabilitation",
+      "branches": [
+        {
+          "id": "center-abc-kuwait",
+          "observations": [],
+          "profile": {
+            "classification": {
+              "ar": "مركز تدخل مبكر",
+              "en": "Early intervention center"
+            },
+            "description": {
+              "ar": "مركز في السالمية يقدم التقييم والتدخل السلوكي وخدمات النطق والعلاج الوظيفي.",
+              "en": "A Salmiya center offering assessment, behavioral intervention, speech and occupational therapy."
+            },
+            "services": {
+              "ar": [
+                "التقييم",
+                "تحليل السلوك التطبيقي",
+                "النطق والعلاج الوظيفي",
+                "الاستشارات والتدريب"
+              ],
+              "en": [
+                "Assessment",
+                "Applied behavior analysis",
+                "Speech and occupational therapy",
+                "Consultation and training"
+              ]
+            },
+            "area": {
+              "ar": "السالمية",
+              "en": "Salmiya"
+            },
+            "address": {
+              "ar": "أولمبيا، البرج الشرقي، الدور الثالث، قطعة 2، شارع سالم المبارك، السالمية، الكويت.",
+              "en": "Olympia, East Tower, 3rd Floor, Block 2, Salem Al-Mubarak Street, Salmiya, Kuwait."
+            },
+            "phone": "22251564",
+            "whatsapp": {
+              "phone": "65026155",
+              "url": "https://wa.me/96565026155"
+            },
+            "website": "https://abckuwait.com/",
+            "instagram": "https://www.instagram.com/abcofkuwait/"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "center-qudrat-early-intervention",
+      "category": "rehabilitation",
+      "branches": [
+        {
+          "id": "center-qudrat-early-intervention",
+          "observations": [],
+          "profile": {
+            "classification": {
+              "ar": "مركز تدخل مبكر",
+              "en": "Early intervention center"
+            },
+            "description": {
+              "ar": "يقدم المركز التقييم والتدخل للأطفال ذوي التحديات النمائية والسلوكية وتأخر اللغة والكلام.",
+              "en": "The center provides assessment and intervention for children with developmental, behavioral, and speech and language challenges."
+            },
+            "services": {
+              "ar": [
+                "التقييم",
+                "الدعم الفردي والجماعي والمدرسي",
+                "النطق والعلاج الوظيفي",
+                "الاستشارات والتدريب"
+              ],
+              "en": [
+                "Assessment",
+                "Individual, group and school support",
+                "Speech and occupational therapy",
+                "Consultation and training"
+              ]
+            },
+            "ages": {
+              "ar": "من 2 إلى 14 سنة",
+              "en": "Ages 2–14"
+            },
+            "area": {
+              "ar": "السالمية",
+              "en": "Salmiya"
+            },
+            "address": {
+              "ar": "السالمية، قطعة 10، شارع 1، قسيمة 45، مقابل الدائري الخامس.",
+              "en": "Salmiya, Block 10, Street 1, Parcel 45, opposite the Fifth Ring Road."
+            },
+            "phone": "22280108",
+            "whatsapp": {
+              "phone": "22280108",
+              "url": "https://wa.me/96522280108"
+            },
+            "mapUrl": "https://www.google.com/maps?cid=4214790053165937874",
+            "website": "https://qudratkw.com/",
+            "instagram": "https://www.instagram.com/qudrat_kw/"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "center-kcld",
+      "category": "rehabilitation",
+      "branches": [
+        {
+          "id": "center-kcld",
+          "observations": [],
+          "profile": {
+            "classification": {
+              "ar": "مركز لصعوبات التعلم",
+              "en": "Learning disabilities center"
+            },
+            "description": {
+              "ar": "متخصصون في صعوبات التعلم منذ عام 2010، ويقدم المركز خدمات متخصصة لدعم الأطفال والأفراد الذين يواجهون صعوبات التعلم والتأخر الأكاديمي والتطوري، ومشكلات الانتباه والنطق والتخاطب.",
+              "en": "Specialized in learning disabilities since 2010, providing support for academic and developmental delays, attention difficulties, hyperactivity, and speech and language development."
+            },
+            "services": {
+              "ar": [
+                "صعوبات التعلم",
+                "التأخر الأكاديمي والتطوري",
+                "تشتت الانتباه وفرط النشاط",
+                "النطق والتخاطب",
+                "تعديل السلوك وتنمية المهارات الاجتماعية"
+              ],
+              "en": [
+                "Learning Disabilities",
+                "Academic and Developmental Delays",
+                "Attention Deficit and Hyperactivity",
+                "Speech and Language Therapy",
+                "Behavior modification and social skills"
+              ]
+            },
+            "area": {
+              "ar": "الجابرية",
+              "en": "Jabriya"
+            },
+            "phone": "+96555269262",
+            "mapUrl": "https://maps.app.goo.gl/je3cAvLqZYQjPMY48",
+            "website": "http://kcld-kw.com/arabic/index.html",
+            "instagram": "https://www.instagram.com/kcld_support/",
+            "established": 2010,
+            "supervisors": {
+              "ar": [
+                "د. نهى المفرح",
+                "د. عواطف البلوشي"
+              ],
+              "en": [
+                "Dr. Noha Al-Mufarreh",
+                "Dr. Awatef Al-Balushi"
+              ]
+            },
+            "additionalPhone": "22233696",
+            "whatsapp": {
+              "phone": "55269262",
+              "url": "https://wa.me/96555269262"
+            }
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "center-roa-childhood",
+      "category": "rehabilitation",
+      "branches": [
+        {
+          "id": "center-roa-childhood",
+          "observations": [],
+          "profile": {
+            "classification": {
+              "ar": "مركز للطفولة المبكرة",
+              "en": "Early childhood center"
+            },
+            "description": {
+              "ar": "مركز في الكويت يقدم برامج التدخل المبكر ودعم النطق واللغة وتنمية مهارات الأطفال.",
+              "en": "A Kuwait center providing early intervention, speech and language support, and child development programs."
+            },
+            "services": {
+              "ar": [
+                "التدخل المبكر",
+                "النطق واللغة",
+                "صعوبات التعلم",
+                "تنمية المهارات"
+              ],
+              "en": [
+                "Early intervention",
+                "Speech and language",
+                "Learning difficulties",
+                "Skills development"
+              ]
+            },
+            "ages": {
+              "ar": "من سنة إلى 12 سنة",
+              "en": "Ages 1–12"
+            },
+            "area": {
+              "ar": "بنيد القار",
+              "en": "Bneid Al Qar"
+            },
+            "phone": "96670460",
+            "whatsapp": {
+              "phone": "96670460",
+              "url": "https://wa.me/96596670460"
+            },
+            "website": "https://roacenter.com/",
+            "instagram": "https://www.instagram.com/ru_ruyy_autism/"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "center-first-step",
+      "category": "rehabilitation",
+      "branches": [
+        {
+          "id": "center-first-step",
+          "observations": [],
+          "profile": {
+            "classification": {
+              "ar": "مركز استشارات وتدخل مبكر",
+              "en": "Counseling and early intervention center"
+            },
+            "description": {
+              "ar": "يقدم التقييم والتدخل الفردي للأطفال ذوي اضطراب طيف التوحد وفرط الحركة وتأخر اللغة والتحديات النمائية.",
+              "en": "Provides assessment and individualized intervention for children with autism, ADHD, language delays and developmental challenges."
+            },
+            "services": {
+              "ar": [
+                "تحليل السلوك التطبيقي",
+                "النطق واللغة",
+                "العلاج الوظيفي",
+                "الاستشارات النفسية",
+                "التدخل المبكر وتدريب الوالدين"
+              ],
+              "en": [
+                "Applied behavior analysis",
+                "Speech and language",
+                "Occupational therapy",
+                "Psychological counseling",
+                "Early intervention and parent training"
+              ]
+            },
+            "area": {
+              "ar": "السالمية",
+              "en": "Salmiya"
+            },
+            "address": {
+              "ar": "السالمية، شارع حمد المبارك، بجانب مجمع المارينا الطبي، لافان ريزدنس 1، الدور الأول والثاني.",
+              "en": "Salmiya, Hamad Al Mubarak Street, next to Marina Medical Complex, Lavan Residence 1, first and second floors."
+            },
+            "phone": "97222133",
+            "website": "https://www.firststepkw.com/",
+            "instagram": "https://www.instagram.com/firststep_kw/"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "center-slp-shahad-shehab",
+      "category": "rehabilitation",
+      "branches": [
+        {
+          "id": "center-slp-shahad-shehab",
+          "observations": [],
+          "profile": {
+            "classification": {
+              "ar": "عيادة النطق والسمع والخدمات التأهيلية",
+              "en": "Speech, hearing and rehabilitation clinic"
+            },
+            "description": {
+              "ar": "عيادة الاختصاصية شهد شهاب تقدم خدمات النطق والعلاج الوظيفي وتعديل السلوك واختبارات السمع لجميع الفئات العمرية.",
+              "en": "Shahad Shehab’s clinic provides speech therapy, occupational therapy, behavior support and hearing assessments for all ages."
+            },
+            "services": {
+              "ar": [
+                "علاج النطق",
+                "العلاج الوظيفي",
+                "تحليل السلوك التطبيقي",
+                "اختبارات السمع",
+                "الاستشارات النفسية",
+                "اختبارات الذكاء"
+              ],
+              "en": [
+                "Speech therapy",
+                "Occupational therapy",
+                "Applied behavior analysis",
+                "Hearing assessments",
+                "Psychological consultation",
+                "Intelligence testing"
+              ]
+            },
+            "ages": {
+              "ar": "جميع الفئات العمرية",
+              "en": "All age groups"
+            },
+            "phone": "22071100",
+            "additionalPhone": "66900447",
+            "whatsapp": {
+              "phone": "66900447",
+              "url": "https://wa.me/96566900447"
+            },
+            "website": "https://www.slpshahad.com/",
+            "instagram": "https://www.instagram.com/slpshahadshehab/"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "center-hope",
+      "category": "rehabilitation",
+      "branches": [
+        {
+          "id": "center-hope",
+          "observations": [],
+          "profile": {
+            "description": {
+              "ar": "حيث يبدأ الأمل ويقوده الطموح. يقدم المركز تدخلات علاجية وتقييمات مقننة في مجالات النطق واللغة، وتحليل السلوك التطبيقي، والعلاج الوظيفي.",
+              "en": "Where hope begins and passion leads. HOPE Center provides therapeutic interventions and standardized assessments in speech and language therapy, Applied Behavior Analysis (ABA), and occupational therapy."
+            },
+            "services": {
+              "ar": [
+                "النطق واللغة",
+                "تحليل السلوك التطبيقي (ABA)",
+                "العلاج الوظيفي",
+                "التقييمات المقننة"
+              ],
+              "en": [
+                "Speech and Language Therapy",
+                "Applied Behavior Analysis (ABA)",
+                "Occupational Therapy",
+                "Standardized Assessments"
+              ]
+            },
+            "phone": "+96599307764",
+            "area": {
+              "ar": "السالمية",
+              "en": "Salmiya"
+            },
+            "address": {
+              "ar": "السالمية، السلام مول، الدور الثاني، الكويت",
+              "en": "Al Salam Mall, 2nd Floor, Salmiya, Kuwait"
+            },
+            "mapUrl": "https://maps.app.goo.gl/geuKhrDcQtWaoiEy8",
+            "instagram": "https://www.instagram.com/hopecenter.kw/"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "center-future-pioneers",
+      "category": "rehabilitation",
+      "branches": [
+        {
+          "id": "center-future-pioneers",
+          "observations": [],
+          "profile": {
+            "description": {
+              "ar": "مركز متخصص في التدخل المبكر، يقدم خدمات النطق واللغة، والعلاج الوظيفي، وتحليل السلوك التطبيقي (ABA)، وصعوبات التعلم، والعلاج السلوكي المعرفي (CBT)، بهدف دعم الأطفال وتنمية مهاراتهم.",
+              "en": "An early intervention center offering speech and language therapy, occupational therapy, Applied Behavior Analysis (ABA), learning disabilities support, and Cognitive Behavioral Therapy (CBT)."
+            },
+            "services": {
+              "ar": [
+                "التدخل المبكر",
+                "جلسات النطق واللغة",
+                "العلاج الوظيفي",
+                "تحليل السلوك التطبيقي (ABA)",
+                "صعوبات التعلم",
+                "العلاج السلوكي المعرفي (CBT)"
+              ],
+              "en": [
+                "Early Intervention",
+                "Speech and Language Therapy",
+                "Occupational Therapy",
+                "Applied Behavior Analysis (ABA)",
+                "Learning Disabilities Support",
+                "Cognitive Behavioral Therapy (CBT)"
+              ]
+            },
+            "phone": "+96592232537",
+            "additionalPhone": "+96567793331",
+            "instagram": "https://www.instagram.com/futurepioneerskw/",
+            "website": "https://futurepioneerkw.com/",
+            "additionalUrl": "https://futurepioneerskw.taplink.site/",
+            "mapUrl": "https://maps.app.goo.gl/JiKUdUymjjh5oQFR6"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "center-thiqa",
+      "category": "rehabilitation",
+      "branches": [
+        {
+          "id": "center-thiqa",
+          "observations": [],
+          "profile": {
+            "description": {
+              "ar": "مركز متخصص في التدخل المبكر، يقدم جلسات التخاطب، وتنمية المهارات الإدراكية، وتعديل السلوك، والعلاج الوظيفي، والتعليم الأكاديمي، والاستشارات التربوية.",
+              "en": "An early intervention center offering speech and language therapy, cognitive skills development, behavior modification, occupational therapy, academic education, and educational consultations."
+            },
+            "services": {
+              "ar": [
+                "النطق والتخاطب",
+                "تنمية المهارات الإدراكية",
+                "تعديل السلوك",
+                "العلاج الوظيفي",
+                "التعليم الأكاديمي",
+                "الاستشارات التربوية"
+              ],
+              "en": [
+                "Speech and Language Therapy",
+                "Cognitive Skills Development",
+                "Behavior Modification",
+                "Occupational Therapy",
+                "Academic Education",
+                "Educational Consultations"
+              ]
+            },
+            "phone": "+96568885376",
+            "whatsapp": {
+              "url": "https://wa.me/message/GWQL6WWG5DXZC1"
+            },
+            "address": {
+              "ar": "منطقة الضجيج، الكويت",
+              "en": "Al-Dajeej, Kuwait"
+            },
+            "area": {
+              "ar": "الضجيج",
+              "en": "Al-Dajeej"
+            },
+            "mapUrl": "https://www.google.com/maps?q=29.263891,47.965710"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "provider-maram-aldihani",
+      "category": "rehabilitation",
+      "branches": [
+        {
+          "id": "provider-maram-aldihani",
+          "observations": [],
+          "profile": {
+            "classification": {
+              "ar": "اختصاصية علاج وظيفي مستقلة",
+              "en": "Independent Occupational Therapist"
+            },
+            "description": {
+              "ar": "مرام الديحاني، اختصاصية علاج وظيفي بخبرة تزيد عن 10 سنوات.",
+              "en": "Maram Aldihani is an occupational therapist with more than 10 years of experience."
+            },
+            "phone": "+96599982918",
+            "additionalPhone": "+96569990629",
+            "whatsapp": {
+              "url": "https://wa.link/e9inge"
+            },
+            "instagram": "https://www.instagram.com/maram.aldihani/"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "center-kdc",
+      "category": "rehabilitation",
+      "branches": [
+        {
+          "id": "center-kdc",
+          "observations": [],
+          "profile": {
+            "classification": {
+              "ar": "مركز للتطور والنمو",
+              "en": "Developmental Center"
+            },
+            "description": {
+              "ar": "مركز يقدم برامج نمائية وتعليمية لدعم مهارات التواصل والتفاعل الاجتماعي والاستقلالية لدى الأطفال، مع مشاركة الأسرة.",
+              "en": "A center offering developmental and educational programs supporting children’s communication, social interaction and independence, with family participation."
+            },
+            "services": {
+              "ar": [
+                "برنامج النمو المبكر",
+                "برنامج الاستعداد للمدرسة",
+                "برنامج المهارات الاجتماعية والصداقة",
+                "برنامج التواصل والتفاعل",
+                "برنامج الاستقلالية والمهارات الحياتية",
+                "برنامج مشاركة الأسرة"
+              ],
+              "en": [
+                "Early Development Program",
+                "School Readiness Program",
+                "Social Skills & Friendship Program",
+                "Communication & Interaction Program",
+                "Independence & Life Skills Program",
+                "Family Engagement Program"
+              ]
+            },
+            "phone": "+96597697665",
+            "whatsapp": {
+              "phone": "97697665",
+              "url": "https://wa.me/96597697665"
+            },
+            "instagram": "https://www.instagram.com/kdc.kw",
+            "website": "http://www.kdccounseling.com/",
+            "mapUrl": "https://maps.app.goo.gl/5C9DZCxiEL4bbF9b8",
+            "area": {
+              "ar": "السالمية",
+              "en": "Salmiya"
+            },
+            "address": {
+              "ar": "الكويت، السالمية، شارع سالم المبارك، برج سحاب، الدور الثاني.",
+              "en": "Sahab Tower, 2nd Floor, Salem Al Mubarak Street, Salmiya, Kuwait."
+            }
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "center-initials-clinic",
+      "category": "rehabilitation",
+      "branches": [
+        {
+          "id": "center-initials-clinic",
+          "observations": [],
+          "profile": {
+            "classification": {
+              "ar": "علاج اضطرابات النطق واللغة والبلع",
+              "en": "Speech, Language and Swallowing Disorders"
+            },
+            "description": {
+              "ar": "عيادة متخصصة في علاج اضطرابات النطق واللغة والبلع، وترتبط بالأخصائية سمية العصفور.",
+              "en": "A clinic specializing in speech, language, and swallowing disorders, associated with specialist Somaya Al-Asfour."
+            },
+            "services": {
+              "ar": [
+                "علاج اضطرابات النطق واللغة والبلع"
+              ],
+              "en": [
+                "Speech, Language and Swallowing Disorders"
+              ]
+            },
+            "associatedSpecialists": {
+              "ar": [
+                "أ. سمية العصفور"
+              ],
+              "en": [
+                "Somaya Al-Asfour"
+              ]
+            },
+            "phone": "+96594012660",
+            "instagram": "https://www.instagram.com/initials_kw/",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            },
+            "mapUrl": "https://maps.app.goo.gl/6m7xrBxD6A4skcDe6",
+            "additionalUrl": "https://linktr.ee/initials_kw",
+            "additionalUrlLabel": {
+              "ar": "لينكتري",
+              "en": "Linktree"
+            }
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "center-kun-ala-sila",
+      "category": "rehabilitation",
+      "branches": [
+        {
+          "id": "center-kun-ala-sila",
+          "observations": [],
+          "profile": {
+            "classification": {
+              "ar": "النطق واللغة والبلع",
+              "en": "Speech, Language and Swallowing"
+            },
+            "description": {
+              "ar": "مركز متخصص في تقييم وعلاج صعوبات اللغة والنطق والبلع، بالإضافة إلى تثقيف وتعليم مقدمي الرعاية والمختصين.",
+              "en": "A center specializing in the assessment and treatment of speech, language, and swallowing difficulties, as well as education and training for caregivers and professionals."
+            },
+            "services": {
+              "ar": [
+                "تقييم اضطرابات النطق واللغة",
+                "علاج صعوبات النطق والتخاطب",
+                "تقييم وعلاج صعوبات البلع",
+                "تثقيف وتدريب مقدمي الرعاية",
+                "تعليم وتدريب المختصين"
+              ],
+              "en": [
+                "Speech and Language Assessments",
+                "Speech and Language Therapy",
+                "Swallowing Assessment and Therapy",
+                "Caregiver Education and Training",
+                "Professional Education and Training"
+              ]
+            },
+            "phone": "+96565117417",
+            "whatsapp": {
+              "phone": "65117417",
+              "url": "https://wa.me/96565117417"
+            },
+            "instagram": "https://www.instagram.com/the.sela.center/"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "home-provider-lets-speech",
+      "category": "rehabilitation",
+      "branches": [
+        {
+          "id": "home-provider-lets-speech",
+          "observations": [],
+          "profile": {
+            "classification": {
+              "ar": "علاج النطق والتخاطب",
+              "en": "Speech and Language Therapy"
+            },
+            "phone": "+96597944756",
+            "instagram": "https://www.instagram.com/lets.speech/",
+            "mapUrl": "https://maps.app.goo.gl/2yC4gYUayPofTkAKA",
+            "instagramLabel": {
+              "ar": "إنستقرام",
+              "en": "Instagram"
+            }
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "center-special-reem",
+      "category": "sports",
+      "branches": [
+        {
+          "id": "center-special-reem",
+          "observations": [],
+          "profile": {
+            "classification": {
+              "ar": "تحليل السلوك · العلاج الطبيعي · العلاج الوظيفي",
+              "en": "Behavior Analysis · Physiotherapy · Occupational Therapy"
+            },
+            "description": {
+              "ar": "مركز يقدم خدمات تحليل السلوك والعلاج الطبيعي والعلاج الوظيفي.",
+              "en": "A center offering behavior analysis, physiotherapy, and occupational therapy services."
+            },
+            "services": {
+              "ar": [
+                "تحليل السلوك",
+                "العلاج الطبيعي",
+                "العلاج الوظيفي"
+              ],
+              "en": [
+                "Behavior Analysis",
+                "Physiotherapy",
+                "Occupational Therapy"
+              ]
+            },
+            "area": {
+              "ar": "صباح السالم",
+              "en": "Sabah Al Salem"
+            },
+            "address": {
+              "ar": "أرجان، صباح السالم",
+              "en": "Argan, Sabah Al Salem"
+            },
+            "phone": "+96595007009",
+            "whatsapp": {
+              "phone": "+96595007009",
+              "url": "https://wa.me/96595007009"
+            },
+            "instagram": "https://www.instagram.com/special.reem/",
+            "mapUrl": "https://maps.app.goo.gl/gW7SfCGw6qyiWav69"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "center-communicate",
+      "category": "rehabilitation",
+      "branches": [
+        {
+          "id": "center-communicate",
+          "observations": [],
+          "profile": {
+            "classification": {
+              "ar": "علاج النطق واللغة",
+              "en": "Speech and Language Therapy"
+            },
+            "description": {
+              "ar": "مركز يقدم خدمات علاج النطق واللغة والعلاج باللعب.",
+              "en": "A center offering speech and language therapy and play therapy services."
+            },
+            "services": {
+              "ar": [
+                "علاج النطق واللغة",
+                "العلاج باللعب"
+              ],
+              "en": [
+                "Speech and Language Therapy",
+                "Play Therapy"
+              ]
+            },
+            "instagram": "https://www.instagram.com/communicate_kw/",
+            "website": "http://www.communicatekw.com/",
+            "mapUrl": "https://maps.app.goo.gl/M3Xnjooot4hS8gbd9"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "center-speak-up",
+      "category": "rehabilitation",
+      "branches": [
+        {
+          "id": "center-speak-up",
+          "observations": [],
+          "profile": {
+            "classification": {
+              "ar": "النطق واللغة",
+              "en": "Speech and Language Therapy"
+            },
+            "description": {
+              "ar": "مركز سبيك أب الاستشاري للخدمات التأهيلية والتدريب، يتمتع بخبرة تزيد عن 11 سنة في مجال النطق واللغة.",
+              "en": "Speak Up Consulting Center for Rehabilitation and Training Services, with over 11 years of experience in speech and language services."
+            },
+            "services": {
+              "ar": [
+                "النطق واللغة"
+              ],
+              "en": [
+                "Speech and Language Therapy"
+              ]
+            },
+            "phone": "+96555566034",
+            "whatsapp": {
+              "url": "https://wa.me/message/MSKRS5DKDUHIK1"
+            },
+            "instagram": "https://www.instagram.com/speakupkw_/",
+            "mapUrl": "https://maps.app.goo.gl/R5c7ZNy2Vm9dybzXA"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "sports-al-tomooh",
+      "category": "sports",
+      "branches": [
+        {
+          "id": "sports-al-tomooh",
+          "observations": [],
+          "profile": {
+            "classification": {
+              "ar": "الإعاقة الذهنية",
+              "en": "Intellectual Disabilities"
+            },
+            "description": {
+              "ar": "نادي رياضي كويتي متخصص في رياضة الأشخاص ذوي الإعاقة الذهنية.",
+              "en": "A Kuwaiti sports club specializing in sports for people with intellectual disabilities."
+            },
+            "whatsapp": {
+              "url": "https://wa.me/96560606079"
+            },
+            "instagram": "https://www.instagram.com/altomoohsportclub/",
+            "mapUrl": "https://maps.app.goo.gl/GTa7PpoJir6Jgdcv8"
+          },
+          "sourceStatus": "unverified"
+        }
+      ]
+    },
+    {
+      "id": "doctor-hadeel-yassin-faras",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "doctor-hadeel-yassin-faras",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "طب الأطفال التطوري",
+                "Developmental pediatrics"
+              ],
+              "en": []
+            }
+          },
+          "sources": [
+            {
+              "title": "Qatar National Library",
+              "url": "https://www.qnl.qa/en/about/news/qatar-national-library-explores-strategies-support-language-development-among-children"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doctor-fatima-al-awadhi",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "doctor-fatima-al-awadhi",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "التخصص قيد التحقق",
+                "Specialty awaiting verification",
+                "دكتورة الأطفال التطوري"
+              ],
+              "en": [
+                "Developmental Pediatrician"
+              ]
+            }
+          },
+          "sources": [
+            {
+              "title": "Al-Anba — 2011 interview (historical)",
+              "url": "https://www.alanba.com.kw/246888/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doctor-dalal-sulaiman-al-shayji",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "doctor-dalal-sulaiman-al-shayji",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "علم النفس الإكلينيكي",
+                "Clinical Psychology",
+                "اختصاصية نفسية إكلينيكية متخصصة في اضطراب طيف التوحد"
+              ],
+              "en": [
+                "Clinical Psychologist specializing in Autism Spectrum Disorder."
+              ]
+            }
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "doctor-mohammed-almuhtab",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "doctor-mohammed-almuhtab",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "طب الأسنان",
+                "Dentistry",
+                "طب أسنان الأطفال وذوي الاحتياجات الخاصة"
+              ],
+              "en": [
+                "Pediatric Dentistry & Special Needs"
+              ]
+            }
+          },
+          "sources": [
+            {
+              "title": "SN Clinic — Arabic profile",
+              "url": "https://snclinics.com/محمد-المحطب/?lang=ar"
+            },
+            {
+              "title": "SN Clinic — English profile",
+              "url": "https://snclinics.com/dr-mohammed-almuhtab/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doctor-ahmed-al-tamimi",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "doctor-ahmed-al-tamimi",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "طب الأسنان",
+                "Dentistry",
+                "اختصاصي أسنان أطفال وذوي الاحتياجات الخاصة"
+              ],
+              "en": [
+                "Pediatric and Special Needs Dentist"
+              ]
+            }
+          },
+          "sources": [
+            {
+              "title": "Al Seef Hospital — doctor profile",
+              "url": "https://www.alseef-hospital.com/dr-ahmed-al-tamimi/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doctor-dalal-alsubaie",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "doctor-dalal-alsubaie",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "طب الأسنان",
+                "Dentistry",
+                "استشارية ورئيسة طب الأسنان"
+              ],
+              "en": [
+                "Consultant and Head of Dentistry"
+              ]
+            }
+          },
+          "sources": [
+            {
+              "title": "Al Salam Hospitals — doctor profile",
+              "url": "https://www.alsalamhosp.com/find-doctor/dr-dalal-alsubaie"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "specialist-nesma-al-aridi",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "specialist-nesma-al-aridi",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "التغذية العلاجية",
+                "Clinical Nutrition",
+                "أخصائية تغذية علاجية للأطفال"
+              ],
+              "en": [
+                "Pediatric Clinical Nutrition Specialist"
+              ]
+            },
+            "supportedConditions": {
+              "ar": [
+                "التغذية العلاجية للأطفال.",
+                "التغذية للأطفال المصابين باضطراب طيف التوحد.",
+                "التغذية للأطفال المصابين بفرط الحركة وتشتت الانتباه.",
+                "التغذية للأطفال الذين يعانون من مشاكل الجهاز الهضمي."
+              ],
+              "en": [
+                "Pediatric clinical nutrition.",
+                "Nutritional support for children with Autism Spectrum Disorder (ASD).",
+                "Nutritional support for children with ADHD.",
+                "Nutritional support for children with gastrointestinal conditions."
+              ],
+              "provenance": "user-provided",
+              "independentlyVerified": false
+            }
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "doctor-sondos-al-hadhoud",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "doctor-sondos-al-hadhoud",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "طب الأطفال",
+                "Pediatrics",
+                "أمراض قلب الجنين",
+                "Fetal Cardiology",
+                "استشاري طب الأطفال وأمراض قلب الأطفال والجنين",
+                "سونار القلب للمواليد والأطفال.",
+                "سونار قلب الأجنة.",
+                "تخطيط القلب.",
+                "مراقبة تخطيط القلب لمدة 24 ساعة (هولتر).",
+                "اختبار مجهود عضلة القلب."
+              ],
+              "en": [
+                "Consultant in Pediatrics, Pediatric and Fetal Cardiology",
+                "Echocardiography for newborns and children.",
+                "Fetal echocardiography.",
+                "Electrocardiogram (ECG).",
+                "24-hour Holter monitoring.",
+                "Cardiac stress testing."
+              ]
+            },
+            "supportedConditions": {
+              "ar": [
+                "أمراض وعيوب القلب الخلقية لدى الأطفال والمواليد.",
+                "تشخيص العيوب الخلقية لدى الأجنة.",
+                "علاج عدم انتظام ضربات القلب لدى الأطفال والأجنة.",
+                "أمراض الأطفال العامة."
+              ],
+              "en": [
+                "Congenital heart diseases and defects in children and newborns.",
+                "Diagnosis of congenital defects in fetuses.",
+                "Treatment of cardiac arrhythmias in children and fetuses.",
+                "General pediatric conditions."
+              ],
+              "provenance": "user-provided",
+              "independentlyVerified": false
+            }
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "specialist-amal-ashour",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "specialist-amal-ashour",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "الصحة النفسية للأطفال والمراهقين",
+                "Child and Adolescent Mental Health",
+                "الصحة النفسية للأطفال والمراهقين"
+              ],
+              "en": [
+                "Child and Adolescent Mental Health"
+              ]
+            }
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "specialist-noha-al-mufarreh",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "specialist-noha-al-mufarreh",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "صعوبات التعلم",
+                "Learning Difficulties",
+                "صعوبات القراءة والكتابة"
+              ],
+              "en": [
+                "Reading and Writing Learning Difficulties"
+              ]
+            },
+            "supportedConditions": {
+              "ar": [
+                "صعوبات القراءة والكتابة"
+              ],
+              "en": [
+                "Reading and Writing Learning Difficulties"
+              ],
+              "provenance": "user-provided",
+              "independentlyVerified": false
+            }
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "doctor-ahmed-nabil-saad",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "doctor-ahmed-nabil-saad",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "الصحة النفسية للأطفال والمراهقين",
+                "Child and Adolescent Mental Health",
+                "استشاري الصحة النفسية للأطفال والمراهقين"
+              ],
+              "en": [
+                "Consultant in Child and Adolescent Mental Health"
+              ]
+            },
+            "supportedConditions": {
+              "ar": [
+                "اضطراب طيف التوحد",
+                "فرط الحركة وتشتت الانتباه (ADHD)",
+                "صعوبات التعلم",
+                "التبول والتبرز اللاإراديين",
+                "العجز الفكري",
+                "الأزمات العصبية",
+                "اضطرابات السلوك",
+                "اضطرابات النوم",
+                "التوتر العصبي والفوبيا والاكتئاب عند الأطفال",
+                "اضطرابات الأكل"
+              ],
+              "en": [
+                "Autism Spectrum Disorder (ASD)",
+                "Attention Deficit Hyperactivity Disorder (ADHD)",
+                "Learning Difficulties",
+                "Enuresis and Encopresis",
+                "Intellectual Disability",
+                "Nervous Crises",
+                "Behavioral Disorders",
+                "Sleep Disorders",
+                "Anxiety, Phobias, and Depression in Children",
+                "Eating Disorders"
+              ],
+              "provenance": "user-provided",
+              "independentlyVerified": false
+            }
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "doctor-rawan-al-khuwaitem",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "avenues",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "طب أسنان الأطفال",
+                "Pediatric Dentistry",
+                "طب أسنان ذوي الاحتياجات الخاصة",
+                "Special Needs Dentistry",
+                "اختصاصي أول طب أسنان الأطفال وذوي الاحتياجات الخاصة"
+              ],
+              "en": [
+                "Senior Specialist in Pediatric and Special Needs Dentistry"
+              ]
+            },
+            "supportedConditions": {
+              "ar": [
+                "طب أسنان الأطفال",
+                "طب أسنان ذوي الاحتياجات الخاصة"
+              ],
+              "en": [
+                "Pediatric Dentistry",
+                "Special Needs Dentistry"
+              ],
+              "provenance": "user-provided",
+              "independentlyVerified": false
+            }
+          },
+          "sources": []
+        },
+        {
+          "id": "jahra",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "طب أسنان الأطفال",
+                "Pediatric Dentistry",
+                "طب أسنان ذوي الاحتياجات الخاصة",
+                "Special Needs Dentistry",
+                "اختصاصي أول طب أسنان الأطفال وذوي الاحتياجات الخاصة"
+              ],
+              "en": [
+                "Senior Specialist in Pediatric and Special Needs Dentistry"
+              ]
+            },
+            "supportedConditions": {
+              "ar": [
+                "طب أسنان الأطفال",
+                "طب أسنان ذوي الاحتياجات الخاصة"
+              ],
+              "en": [
+                "Pediatric Dentistry",
+                "Special Needs Dentistry"
+              ],
+              "provenance": "user-provided",
+              "independentlyVerified": false
+            }
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "doctor-anoud-al-jasser-al-rajhi",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "doctor-anoud-al-jasser-al-rajhi",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "طب أسنان الأطفال",
+                "Pediatric Dentistry",
+                "طب أسنان ذوي الاحتياجات الخاصة",
+                "Special Needs Dentistry",
+                "طبيبة أسنان الأطفال وذوي الاحتياجات الخاصة"
+              ],
+              "en": [
+                "Pediatric and Special Needs Dentist"
+              ]
+            },
+            "supportedConditions": {
+              "ar": [
+                "طب أسنان الأطفال",
+                "طب أسنان ذوي الاحتياجات الخاصة"
+              ],
+              "en": [
+                "Pediatric Dentistry",
+                "Special Needs Dentistry"
+              ],
+              "provenance": "user-provided",
+              "independentlyVerified": false
+            }
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "doctor-abdulaziz-al-thunayan",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "doctor-abdulaziz-al-thunayan",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "طب أسنان الأطفال",
+                "Pediatric Dentistry",
+                "طب أسنان ذوي الاحتياجات الخاصة",
+                "Special Needs Dentistry",
+                "اختصاصي أسنان الأطفال وذوي الاحتياجات الخاصة"
+              ],
+              "en": [
+                "Pediatric and Special Needs Dental Specialist"
+              ]
+            },
+            "supportedConditions": {
+              "ar": [
+                "طب أسنان الأطفال",
+                "طب أسنان ذوي الاحتياجات الخاصة"
+              ],
+              "en": [
+                "Pediatric Dentistry",
+                "Special Needs Dentistry"
+              ],
+              "provenance": "user-provided",
+              "independentlyVerified": false
+            }
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "doctor-salman-bin-nakhi",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "doctor-salman-bin-nakhi",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "طب أسنان الأطفال",
+                "Pediatric Dentistry",
+                "طب أسنان ذوي الاحتياجات الخاصة",
+                "Special Needs Dentistry",
+                "اختصاصي أسنان أطفال وذوي الاحتياجات الخاصة"
+              ],
+              "en": [
+                "Pediatric and Special Needs Dental Specialist"
+              ]
+            },
+            "supportedConditions": {
+              "ar": [
+                "طب أسنان الأطفال",
+                "طب أسنان ذوي الاحتياجات الخاصة"
+              ],
+              "en": [
+                "Pediatric Dentistry",
+                "Special Needs Dentistry"
+              ],
+              "provenance": "user-provided",
+              "independentlyVerified": false
+            }
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "doctor-maitham-al-ali",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "doctor-maitham-al-ali",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "طب العيون",
+                "Ophthalmology",
+                "طب عيون الأطفال والحَوَل"
+              ],
+              "en": [
+                "Pediatric Ophthalmology and Strabismus"
+              ]
+            },
+            "supportedConditions": {
+              "ar": [
+                "فحص وعلاج مشاكل العيون لدى الأطفال.",
+                "فحص وعلاج مشاكل العيون لدى الأطفال ذوي الاحتياجات الخاصة.",
+                "علاج طول النظر وقصر النظر لدى الأطفال."
+              ],
+              "en": [
+                "Eye examinations and treatment for children.",
+                "Eye examinations and treatment for children with special needs.",
+                "Treatment of farsightedness and nearsightedness in children."
+              ],
+              "provenance": "user-provided",
+              "independentlyVerified": false
+            }
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "doctor-ali-akbar",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "doctor-ali-akbar",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "طب أسنان الأطفال",
+                "Pediatric Dentistry",
+                "طب أسنان ذوي الاحتياجات الخاصة",
+                "Special Needs Dentistry",
+                "اختصاصي أسنان أطفال وذوي الاحتياجات الخاصة"
+              ],
+              "en": [
+                "Pediatric and Special Needs Dental Specialist"
+              ]
+            },
+            "supportedConditions": {
+              "ar": [
+                "طب أسنان الأطفال",
+                "طب أسنان ذوي الاحتياجات الخاصة"
+              ],
+              "en": [
+                "Pediatric Dentistry",
+                "Special Needs Dentistry"
+              ],
+              "provenance": "user-provided",
+              "independentlyVerified": false
+            }
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "doctor-ali-adel-saleh",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "doctor-ali-adel-saleh",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "جراحة العظام",
+                "Orthopedic Surgery",
+                "جراحة عظام الأطفال"
+              ],
+              "en": [
+                "Pediatric Orthopedics"
+              ]
+            },
+            "supportedConditions": {
+              "ar": [
+                "كسور العظام لدى الأطفال والكبار",
+                "الخلع الولادي",
+                "القدم المسطحة والقدم المخلبية لدى الأطفال",
+                "تقوس الساقين والتفاف الأقدام لدى الأطفال",
+                "اضطرابات الحركة وتيبس العضلات لدى حالات الشلل الدماغي"
+              ],
+              "en": [
+                "Bone fractures in children and adults",
+                "Developmental dysplasia of the hip (DDH)",
+                "Flat feet and clubfoot in children",
+                "Bowed legs and rotational foot deformities in children",
+                "Movement disorders and muscle stiffness associated with cerebral palsy"
+              ],
+              "provenance": "user-provided",
+              "independentlyVerified": false
+            }
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "specialist-fajer-al-munaie",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "specialist-fajer-al-munaie",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "تحليل السلوك التطبيقي (ABA)",
+                "Applied Behavior Analysis (ABA)",
+                "تحليل السلوك التطبيقي (ABA)"
+              ],
+              "en": [
+                "Applied Behavior Analysis (ABA)"
+              ]
+            },
+            "supportedConditions": {
+              "ar": [
+                "تحليل وتعديل السلوك التطبيقي (ABA)",
+                "اضطراب طيف التوحد (ASD)",
+                "التدريب على التواصل الوظيفي",
+                "تدريب وإرشاد أولياء الأمور",
+                "تقييم ووضع خطط التدخل السلوكي",
+                "المهارات الاجتماعية والتدخل المبكر"
+              ],
+              "en": [
+                "Applied Behavior Analysis (ABA)",
+                "Autism Spectrum Disorder (ASD)",
+                "Functional Communication Training",
+                "Parent Training and Guidance",
+                "Behavioral Assessment and Intervention Planning",
+                "Social Skills and Early Intervention"
+              ],
+              "provenance": "user-provided",
+              "independentlyVerified": false
+            }
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "specialist-nour-qahfarani",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "specialist-nour-qahfarani",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "تحليل السلوك التطبيقي (ABA)",
+                "Applied Behavior Analysis (ABA)",
+                "تحليل السلوك التطبيقي (ABA)"
+              ],
+              "en": [
+                "Applied Behavior Analysis (ABA)"
+              ]
+            },
+            "supportedConditions": {
+              "ar": [
+                "التدخلات السلوكية والبرامج المبكرة",
+                "اضطراب طيف التوحد (ASD)",
+                "فرط الحركة وتشتت الانتباه (ADHD) والوظائف التنفيذية",
+                "النمو الاجتماعي والارتقائي",
+                "إدارة وتعديل السلوك",
+                "مشاكل الانتقائية في الأكل"
+              ],
+              "en": [
+                "Behavioral Interventions and Early Intervention Programs",
+                "Autism Spectrum Disorder (ASD)",
+                "ADHD and Executive Functioning",
+                "Social and Developmental Development",
+                "Behavior Management and Modification",
+                "Selective Eating Difficulties"
+              ],
+              "provenance": "user-provided",
+              "independentlyVerified": false
+            }
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "center-speech-plus",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "center-speech-plus",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "التربية الخاصة",
+                "Special Education",
+                "دكتوراه في التربية الخاصة – تخصص التوحد"
+              ],
+              "en": [
+                "PhD in Special Education – Autism Specialization"
+              ]
+            },
+            "clinicServices": {
+              "ar": [
+                "خدمات النطق والتواصل"
+              ],
+              "en": [
+                "Speech and communication services"
+              ]
+            }
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "doctor-reem-kanawati",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "doctor-reem-kanawati",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "طب الأطفال",
+                "Pediatrics",
+                "استشارية طب الأطفال"
+              ],
+              "en": [
+                "Consultant Pediatrician"
+              ]
+            }
+          },
+          "sources": [
+            {
+              "title": "Kana Group — named leadership portrait",
+              "url": "https://hunt.kayanhr.com/CareerSite/Index/aXVCTUhjanFoR2MwSlQs"
+            },
+            {
+              "title": "RGF Worldwide — Consultant Pediatrician biography",
+              "url": "https://rgfworldwide.com/beauty-station/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doctor-essa-habib-al-mashmoum",
+      "category": "doctor",
+      "branches": [
+        {
+          "id": "doctor-essa-habib-al-mashmoum",
+          "observations": [],
+          "sourceStatus": "unverified",
+          "profile": {
+            "services": {
+              "ar": [
+                "أعصاب الأطفال",
+                "Pediatric neurology",
+                "استشاري أمراض أعصاب الأطفال والصرع وتخطيط وتحفيز الدماغ"
+              ],
+              "en": [
+                "Consultant Pediatric Neurology, Epilepsy, EEG & Brain Stimulation"
+              ]
+            }
+          },
+          "sources": []
+        }
+      ]
+    }
+  ],
+  "version": "bd531830139ad2c4d575192ead0cab8c5b34e0994e1fe52485a6fab76963e906"
+}

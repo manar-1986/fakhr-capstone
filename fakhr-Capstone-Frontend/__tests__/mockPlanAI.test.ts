@@ -1,0 +1,13 @@
+import {Context,validateContext,recommend,propose,approve,answer,weeklySummary} from '../utils/mockPlanAI';
+const c:Context={ageBand:'6-9',goalIds:['communication'],accessibility:['aac'],approvedActivityIds:['fixture:choice'],participation:{completed:2,skipped:1,scheduled:4}};
+const choices=[{id:'fixture:choice',goalId:'communication',ageBand:'6-9' as const},{id:'fixture:other',goalId:'movement',ageBand:'10-13' as const}];
+test.each(['childName','childId','diagnosis','medication','notes','conversationHistory'])('rejects private field %s',field=>expect(()=>validateContext({...c,[field]:'private'})).toThrow());
+test('rejects unknown goals, nested notes, and real identifiers',()=>{expect(()=>validateContext({...c,goalIds:['private text']})).toThrow();expect(()=>validateContext({...c,participation:{...c.participation,note:'x'}})).toThrow();expect(()=>validateContext({...c,approvedActivityIds:['real-id']})).toThrow()});
+test('live path is blocked',()=>{expect(()=>recommend(false,c,choices)).toThrow('PLAN_AI_LIVE_BLOCKED');expect(()=>answer(false,c,'why',false)).toThrow();expect(()=>approve(false,propose(true,c,choices,'weekly'),c,choices,true)).toThrow()});
+test('matches age and goal and allowlist, handles empty catalog',()=>{expect(recommend(true,c,choices)).toHaveLength(1);expect(propose(true,{...c,goalIds:[]},choices,'weekly').entries).toEqual([])});
+test('weekly proposal is seven entries, adjustment three; no input mutation',()=>{expect(propose(true,c,choices,'weekly').entries).toHaveLength(7);expect(propose(true,c,choices,'adjustment').entries).toHaveLength(3);expect(c.participation.completed).toBe(2)});
+test('requires approval and unchanged context',()=>{const p=propose(true,c,choices,'weekly');expect(()=>approve(true,p,c,choices,false)).toThrow();expect(()=>approve(true,p,{...c,accessibility:[]},choices,true)).toThrow();expect(approve(true,p,c,choices,true)).toHaveLength(7)});
+test('rejects malformed or unauthorized proposal edits',()=>{const p=propose(true,c,choices,'weekly');for(const patch of [{time:'25:00'},{day:8},{activityId:'fixture:other'}]){expect(()=>approve(true,{...p,entries:[{...p.entries[0],...patch}]},c,choices,true)).toThrow()}});
+test('Arabic and English summaries distinguish participation from improvement',()=>{expect(weeklySummary(true,c,false)).toContain('not evidence');expect(weeklySummary(true,c,true)).toContain('ليست دليلًا');expect(answer(true,c,'why',false)).toContain('not diagnosis');expect(answer(true,c,'adapt',true)).toContain('لن تتغير')});
+
+test('no adjustment fabricated without recorded participation',()=>expect(propose(true,{...c,participation:{completed:0,skipped:0,scheduled:0}},choices,'adjustment').entries).toEqual([]));

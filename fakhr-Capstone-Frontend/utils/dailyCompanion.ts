@@ -1,0 +1,19 @@
+import type {Snapshot,Task,Meal} from './smartPlan';
+import {localized,timestamp} from './smartPlan';
+import type {CareRecord} from '../api/dailyCare.api';
+export type Prefs={enabled:boolean;quietStart:string;quietEnd:string;timezone:string;snoozes:{key:string;scheduled:number;until:number}[];revision:number};
+export const defaultPrefs=():Prefs=>({enabled:false,quietStart:'21:00',quietEnd:'07:00',timezone:Intl.DateTimeFormat().resolvedOptions().timeZone,snoozes:[],revision:-1});
+export type DailyItem={key:string;kind:'activity'|'meal'|'appointment'|'parent';title:string;time:string;instant:number;status:string;revision:number;task?:Task;meal?:Meal;care?:CareRecord};
+export function timeline(snapshot:Snapshot,care:CareRecord[],date:string,ar:boolean):DailyItem[]{
+ const out:DailyItem[]=[];
+ for(const t of snapshot.tasks){if(t.scheduledDate&&t.scheduledDate!==date)continue;const instant=timestamp(t.scheduledDate||date,t.startTime,t.timezone);if(instant===undefined)continue;out.push({key:'activity:'+t.id,kind:'activity',title:localized(t,'title',ar),time:t.startTime!,instant,status:t.startedAt&&t.status==='pending'?'started':t.status,revision:t.dashboardRevision||0,task:t})}
+ for(const m of snapshot.meals){if(m.date!==date)continue;const instant=timestamp(m.date,m.time,m.timezone);if(instant===undefined)continue;out.push({key:'meal:'+m.id,kind:'meal',title:localized(m,'name',ar),time:m.time,instant,status:m.status,revision:m.revision,meal:m})}
+ for(const e of care){if((e.occurrenceDate||e.date)!==date||e.status==='cancelled'||e.seriesStatus==='cancelled')continue;const instant=timestamp(e.occurrenceDate||e.date,e.startTime,e.timezone);if(instant===undefined)continue;out.push({key:'care:'+e.id+':'+date,kind:e.category==='parent'?'parent':'appointment',title:e.title,time:e.startTime,instant,status:e.status||'scheduled',revision:e.revision,care:e})}
+ return [...new Map(out.map(x=>[x.key,x])).values()].sort((a,b)=>a.instant-b.instant||a.key.localeCompare(b.key));
+}
+export const pending=(i:DailyItem)=>['pending','started','scheduled','confirmed'].includes(i.status);
+export function quiet(p:Prefs,now:number){const time=new Intl.DateTimeFormat('en-GB',{timeZone:p.timezone,hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(now);return p.quietStart===p.quietEnd?false:p.quietStart<p.quietEnd?time>=p.quietStart&&time<p.quietEnd:time>=p.quietStart||time<p.quietEnd}
+export function due(items:DailyItem[],p:Prefs,now:number,foreground:boolean){if(!p.enabled||!foreground||quiet(p,now))return [];return items.filter(i=>{if(!pending(i)||(i.kind==='appointment'&&i.status!=='confirmed'))return false;const snooze=p.snoozes.find(s=>s.key===i.key&&s.scheduled===i.instant);const target=snooze?.until??i.instant;return target<=now&&now-target<86400000})}
+export function snooze(p:Prefs,item:DailyItem,now:number):Prefs{if(!pending(item))throw Error('ITEM_FINISHED');return {...p,snoozes:[...p.snoozes.filter(s=>s.key!==item.key&&s.until>now),{key:item.key,scheduled:item.instant,until:now+15*60000}].slice(-100)}}
+export function mealAlternatives(meal:Meal,meals:Meal[]){if(meal.allergyNotes.trim()||meal.restrictions?.trim()||meal.textureNotes.trim())return [];return meals.filter(m=>m.id!==meal.id&&m.date===meal.date&&!m.allergyNotes.trim()&&!m.restrictions?.trim()&&!m.textureNotes.trim()).map(m=>({id:m.id,label:m.name}));}
+export function companionMessage(items:DailyItem[],now:number,ar:boolean){const unfinished=items.filter(i=>pending(i)&&i.instant<=now);if(unfinished.length)return ar?`لديك ${unfinished.length} عناصر لم تُسجل كمكتملة. راجعها أو أجّل تذكيرها.`:`You have ${unfinished.length} items not recorded as finished. Review them or snooze their reminders.`;const next=items.find(i=>pending(i)&&i.instant>now);return next?(ar?'التالي في جدولك: ':'Next on your schedule: ')+next.title:(ar?'لا توجد عناصر قادمة مسجلة لهذا اليوم.':'No upcoming items are recorded for this day.');}

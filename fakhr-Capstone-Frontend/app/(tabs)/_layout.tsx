@@ -1,0 +1,60 @@
+import { usePathname } from 'expo-router';
+import MinimumUnavailable from '../../components/screens/MinimumUnavailable';
+import { unavailableRoute } from '../../utils/minimumRelease';
+import { Tabs } from "expo-router";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { MainTabBar } from "../../components/navigation/MainTabBar";
+
+export const unstable_settings = {
+  initialRouteName: "home",
+};
+
+/**
+ * Main tabs: Home, Plan, Activities (Discover screen), Profile.
+ * Home Activity Video Library and Home Services stay hidden routes.
+ */
+export default function TabsLayout() {
+  const { t } = useTranslation();
+  const pathname = usePathname();
+  if (unavailableRoute(pathname)) return <MinimumUnavailable />;
+
+  return (
+    <Tabs
+      initialRouteName="home"
+      backBehavior="history"
+      tabBar={(props) => <MainTabBar {...props} />}
+      screenOptions={{
+        headerShown: false,
+        tabBarShowLabel: true,
+      }}
+    >
+      <Tabs.Screen name="home" options={{ title: t("tabs.home") }} />
+      <Tabs.Screen name="plan" options={{ title: t("tabs.plan") }} />
+      <Tabs.Screen name="discover" options={{ title: t("tabs.activities") }} />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: t("tabs.profile"),
+          tabBarLabel: t("tabs.profile"),
+        }}
+      />
+
+      <Tabs.Screen name="directory" options={{ href: null }} />
+      <Tabs.Screen name="community" options={{ href: null }} />
+      <Tabs.Screen name="bookings" options={{ href: null }} />
+      <Tabs.Screen name="favorites" options={{ href: null }} />
+      <Tabs.Screen name="messages" options={{ href: null }} />
+      <Tabs.Screen name="library" options={{ href: null }} />
+      <Tabs.Screen name="documents" options={{ href: null }} />
+      <Tabs.Screen name="resources" options={{ href: null }} />
+      <Tabs.Screen name="activity-library" options={{ href: null }} />
+      <Tabs.Screen name="services" options={{ href: null }} />
+      <Tabs.Screen name="products" options={{ href: null }} />
+      <Tabs.Screen name="professionals" options={{ href: null }} />
+    </Tabs>
+  );
+}
+
+
+

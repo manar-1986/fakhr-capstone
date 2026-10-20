@@ -1,0 +1,34 @@
+import React from 'react';
+import {render,fireEvent,waitFor} from '@testing-library/react-native';
+import {QueryClient,QueryClientProvider} from '@tanstack/react-query';
+import AddChild from '../app/(tabs)/profile/add-child';
+import Library from '../app/(tabs)/activity-library';
+import {createChild} from '../api/children.api';
+import {HOME_ACTIVITY_VIDEOS} from '../constants/homeActivityLibrary';
+let mockRTL=false;const mockReplace=jest.fn();
+jest.mock('expo-router',()=>({useRouter:()=>({replace:mockReplace,back:jest.fn()})}));
+jest.mock('../hooks/useRequireAuth',()=>({useRequireAuth:()=>({requireAuth:()=>true})}));
+jest.mock('../hooks/useI18nLayout',()=>({useI18nLayout:()=>({isRTL:mockRTL,dir:mockRTL?'rtl':'ltr',tabRow:mockRTL?'row-reverse':'row'})}));
+jest.mock('../components/navigation/HeaderBackButton',()=>({HeaderBackButton:()=>null,DisabilityAwareHeaderBackButton:()=>null}));
+jest.mock('@expo/vector-icons',()=>({Ionicons:()=>null}));
+jest.mock('../components/ui/AppText',()=>({Text:require('react-native').Text,TextInput:require('react-native').TextInput,ScrollView:require('react-native').ScrollView}));
+jest.mock('react-i18next',()=>({useTranslation:()=>({t:(s:string)=>s,i18n:{language:mockRTL?'ar':'en'}})}));
+jest.mock('../api/children.api',()=>({createChild:jest.fn()}));
+test.each([false,true])('bilingual child form saves once, refreshes caches and opens new child: RTL=%s',async rtl=>{
+ mockRTL=rtl;mockReplace.mockClear();jest.mocked(createChild).mockResolvedValue({id:'synthetic-new',name:'Synthetic',parentId:'parent'});
+ const client=new QueryClient({defaultOptions:{mutations:{retry:false,gcTime:0},queries:{gcTime:0}}});const invalid=jest.spyOn(client,'invalidateQueries');
+ const ui=render(<QueryClientProvider client={client}><AddChild/></QueryClientProvider>);
+ fireEvent.changeText(ui.getByPlaceholderText(rtl?'أدخل الاسم الأول':'Enter first name'),'Synthetic');
+ fireEvent.press(ui.getByText(rtl?'ذكر':'Male'));
+ for(let i=0;i<3;i++)fireEvent.press(ui.getByText(rtl?'متابعة':'Continue'));
+ expect(ui.getByText(rtl?'الفول السوداني':'Peanuts')).toBeTruthy();
+ fireEvent.press(ui.getByText(rtl?'حفظ الطفل':'Save Child'));
+ await waitFor(()=>expect(mockReplace).toHaveBeenCalledWith({pathname:'/(tabs)/profile/edit-child-profile',params:{id:'synthetic-new'}}));
+ expect(invalid).toHaveBeenCalledWith({queryKey:['children']});expect(invalid).toHaveBeenCalledWith({queryKey:['plan-children']});
+ ui.unmount();client.clear();
+});
+test.each([false,true])('library restores every existing bilingual resource: RTL=%s',rtl=>{
+ mockRTL=rtl;const ui=render(<Library/>);expect(HOME_ACTIVITY_VIDEOS.length).toBeGreaterThan(0);
+ for(const video of HOME_ACTIVITY_VIDEOS)expect(ui.getByText(rtl?video.titleAr:video.titleEn)).toBeTruthy();
+ expect(ui.queryByTestId('activities-empty-state')).toBeNull();ui.unmount();
+});

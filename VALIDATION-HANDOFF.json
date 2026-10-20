@@ -1,0 +1,215 @@
+{
+  "version": "Fakhr-Farooq-20261020-v1",
+  "baseBranch": "codex/fakhr-integrated-20261020",
+  "baseCommit": "8b5e8aaf58bf9e1e7ff6094e511a2188dc7d3a0d",
+  "testedAt": "2026-10-20T19:57:14.121Z",
+  "runtime": {
+    "node": "v24.11.1",
+    "npm": "11.6.2",
+    "os": "Windows"
+  },
+  "cleanInstalls": {
+    "frontend": "passed npm ci including checksum-verified postinstall",
+    "backend": "passed npm ci"
+  },
+  "frontend": {
+    "typeScript": "passed",
+    "suites": 27,
+    "tests": 211,
+    "failed": 0,
+    "securityBackportTests": 23,
+    "assetsParsed": 174,
+    "webExport": "passed",
+    "testSuites": [
+      "verifiedProviders.test.tsx",
+      "professionalTabs.test.tsx",
+      "planAINavigation.test.tsx",
+      "homeDrawer.test.tsx",
+      "providerRecommendations.test.tsx",
+      "authNavigation.test.tsx",
+      "schoolRecommendations.test.tsx",
+      "suggestedActivityPreview.test.tsx",
+      "mainTabNavigation.test.tsx",
+      "minimumScreens.test.tsx",
+      "mockPlanChatInteractions.test.tsx",
+      "planHeader.test.tsx",
+      "approvedActivityInteraction.test.tsx",
+      "themeContrast.test.tsx",
+      "planActionColors.test.tsx",
+      "minimumCompatibility.test.ts",
+      "suggestions.test.ts",
+      "dailyCompanion.test.ts",
+      "mockPlanChat.test.ts",
+      "planPreviewPolicy.test.ts",
+      "populatedPlanVisual.test.ts",
+      "mockPlanAI.test.ts",
+      "restaurantVerifiedData.test.ts",
+      "firstRelease.test.ts",
+      "smartPlan.test.ts",
+      "restaurantMeals.test.ts",
+      "mockPlanSave.test.ts"
+    ]
+  },
+  "backend": {
+    "typeScriptBuild": "passed",
+    "productionConfiguration": "passed",
+    "mockAIAndPrivacyTests": 3,
+    "planPersistenceTests": 12,
+    "companionPersistenceTests": 6,
+    "isolatedStartup": "passed; local disposable MongoDB replica set; health 200 and four protected routes 401"
+  },
+  "routes": [
+    {
+      "route": "/home",
+      "status": 200,
+      "html": true
+    },
+    {
+      "route": "/plan",
+      "status": 200,
+      "html": true
+    },
+    {
+      "route": "/plan/ask",
+      "status": 200,
+      "html": true
+    },
+    {
+      "route": "/plan/assistant",
+      "status": 200,
+      "html": true
+    },
+    {
+      "route": "/plan/companion",
+      "status": 200,
+      "html": true
+    },
+    {
+      "route": "/plan/restaurants",
+      "status": 200,
+      "html": true
+    },
+    {
+      "route": "/directory/professionals",
+      "status": 200,
+      "html": true
+    },
+    {
+      "route": "/directory/centers",
+      "status": 200,
+      "html": true
+    },
+    {
+      "route": "/directory/schools",
+      "status": 200,
+      "html": true
+    }
+  ],
+  "limits": [
+    "No live production/API/AI validation",
+    "No native/store certification",
+    "No fresh manual browser interaction claim",
+    "Expo legacy favorites/messages layout warnings; deprecation warnings"
+  ],
+  "aiSafeguards": [
+    {
+      "file": "/src/modules/ai/ai.activation.ts",
+      "sha256": "c56c37b9b19c7770defed8d714b210836af3ce27c5ff9758c4d8fc670dd85dbd",
+      "standalone": true,
+      "validated": true,
+      "matches": true
+    },
+    {
+      "file": "/src/modules/ai/ai.budget.ts",
+      "sha256": "55719297776af2e1154e245cb18c3a2411d606503a921b0151a3a9baac3c0f6e",
+      "standalone": true,
+      "validated": true,
+      "matches": true
+    },
+    {
+      "file": "/src/modules/ai/ai.quotas.ts",
+      "sha256": "7076b37c19782566ed5d87a964ac570e33a1e4482e8cb8ca955f4b5479a588eb",
+      "standalone": true,
+      "validated": true,
+      "matches": true
+    },
+    {
+      "file": "/src/modules/ai/ai.requests.ts",
+      "sha256": "c12168dcd79d70168350b62a08c23bde3beb111234868fe0c4152b507c56b1aa",
+      "standalone": true,
+      "validated": true,
+      "matches": true
+    },
+    {
+      "file": "/src/modules/ai/ai.transport.ts",
+      "sha256": "4955bb6798d437b42fefd159f6808a45811c967be5897760f893d792d3a6eeb7",
+      "standalone": true,
+      "validated": true,
+      "matches": true
+    },
+    {
+      "file": "/src/modules/ai/ai.witness.ts",
+      "sha256": "2f1f7d38ea60caaaf6e223efcaa2b2bd3df466453309b0543f7466cadfc42750",
+      "standalone": true,
+      "validated": true,
+      "matches": true
+    }
+  ],
+  "changes": [
+    ".gitattributes",
+    "fakhr-Capstone-Frontend/__tests__/homeDrawer.test.tsx",
+    "fakhr-Capstone-Frontend/__tests__/mainTabNavigation.test.tsx",
+    "fakhr-Capstone-Frontend/__tests__/themeContrast.test.tsx",
+    "fakhr-capstone-Backend/.env.example"
+  ],
+  "omittedNonRuntimeFiles": [
+    "Fakhr-UI-Review-Shaikha/01-Welcome.png",
+    "Fakhr-UI-Review-Shaikha/02-Home-Scroll-1.png",
+    "Fakhr-UI-Review-Shaikha/02-Home.png",
+    "Fakhr-UI-Review-Shaikha/03-Disability-Categories-Scroll-1.png",
+    "Fakhr-UI-Review-Shaikha/03-Disability-Categories.png",
+    "Fakhr-UI-Review-Shaikha/04-Disability-Category-Details-Scroll-1.png",
+    "Fakhr-UI-Review-Shaikha/04-Disability-Category-Details-Scroll-2.png",
+    "Fakhr-UI-Review-Shaikha/04-Disability-Category-Details.png",
+    "Fakhr-UI-Review-Shaikha/05-Schools-Scroll-1.png",
+    "Fakhr-UI-Review-Shaikha/05-Schools.png",
+    "Fakhr-UI-Review-Shaikha/06-Centers-Scroll-1.png",
+    "Fakhr-UI-Review-Shaikha/06-Centers.png",
+    "Fakhr-UI-Review-Shaikha/07-Doctors-and-Specialists-Scroll-1.png",
+    "Fakhr-UI-Review-Shaikha/07-Doctors-and-Specialists.png",
+    "Fakhr-UI-Review-Shaikha/08-Products-Scroll-1.png",
+    "Fakhr-UI-Review-Shaikha/08-Products.png",
+    "Fakhr-UI-Review-Shaikha/09-My-Childs-Plan-Progress.png",
+    "Fakhr-UI-Review-Shaikha/09-My-Childs-Plan-Scroll-1.png",
+    "Fakhr-UI-Review-Shaikha/09-My-Childs-Plan-Scroll-2.png",
+    "Fakhr-UI-Review-Shaikha/09-My-Childs-Plan-Week.png",
+    "Fakhr-UI-Review-Shaikha/09-My-Childs-Plan.png",
+    "Fakhr-UI-Review-Shaikha/10-AI-Assistant.png",
+    "Fakhr-UI-Review-Shaikha/11-Profile-Fresh-View.png",
+    "Fakhr-UI-Review-Shaikha/11-Profile.png",
+    "Fakhr-UI-Review-Shaikha/12-Login.png",
+    "Fakhr-UI-Review-Shaikha/13-Registration-Scroll-1.png",
+    "Fakhr-UI-Review-Shaikha/13-Registration.png",
+    "Fakhr-UI-Review-Shaikha/14-Settings.png",
+    "Fakhr-UI-Review-Shaikha/15-Privacy-Scroll-1.png",
+    "Fakhr-UI-Review-Shaikha/15-Privacy.png",
+    "Fakhr-UI-Review-Shaikha/capture-manifest.json",
+    "fakhr-Capstone-Fronend/expo-env.d.ts",
+    "fixture-refine.cjs",
+    "meal-list-layout.cjs",
+    "normal-plan-ui.cjs",
+    "plan-empty-polish.cjs",
+    "populated-visual.cjs",
+    "suggestion-verified-images.cjs",
+    "tatus",
+    "tmp-apply-assessment.cjs",
+    "ui-correction.cjs",
+    "ui-refine.cjs"
+  ],
+  "secretScan": {
+    "forbiddenFiles": 0,
+    "privateKeyOrLiveTokenPatterns": 0,
+    "credentialURIHits": "Only reviewed synthetic .invalid/localhost test fixtures; no real secrets included"
+  },
+  "originals": "Not modified; no production backup/export, deployment or push"
+}

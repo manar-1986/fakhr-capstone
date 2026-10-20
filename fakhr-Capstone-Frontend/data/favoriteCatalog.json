@@ -1,0 +1,710 @@
+[
+  {
+    "kind": "institution",
+    "targetId": "kw-n-bustan",
+    "nameAr": "حضانة البستان لضعاف السمع والنطق",
+    "nameEn": "Al Bustan Nursery for Hearing and Speech Support"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-dream",
+    "nameAr": "حضانة كويت دريم سنتر للاحتياجات الخاصة",
+    "nameEn": "Kuwait Dream Centre for Special Needs"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-nada",
+    "nameAr": "حضانة الندى لذوي الاحتياجات الخاصة",
+    "nameEn": "حضانة الندى لذوي الاحتياجات الخاصة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-ghad",
+    "nameAr": "حضانة الغد المشرق",
+    "nameEn": "Al Ghad Al Moshriq Nursery"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-children",
+    "nameAr": "حضانة بيت الأطفال لذوي الاحتياجات الخاصة",
+    "nameEn": "Bayt Alatfal 4SN"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-basma",
+    "nameAr": "حضانة البسمة",
+    "nameEn": "حضانة البسمة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-maharat",
+    "nameAr": "حضانة مهارات للاحتياجات الخاصة",
+    "nameEn": "Maharat Nursery for Special Needs"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-milestone",
+    "nameAr": "حضانة مايلستون للاحتياجات الخاصة",
+    "nameEn": "Milestone by Reborn"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-royal",
+    "nameAr": "الحضانة الملكية البريطانية ثنائية اللغة",
+    "nameEn": "الحضانة الملكية البريطانية ثنائية اللغة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-shams",
+    "nameAr": "حضانة الشمس المشرقة النموذجية لذوي الاحتياجات الخاصة",
+    "nameEn": "حضانة الشمس المشرقة النموذجية لذوي الاحتياجات الخاصة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-heba",
+    "nameAr": "حضانة الهبة لذوي الاحتياجات الخاصة",
+    "nameEn": "حضانة الهبة لذوي الاحتياجات الخاصة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-nuwair",
+    "nameAr": "حضانة النوير للاحتياجات الخاصة",
+    "nameEn": "Al Nowair Nursery for Special Needs"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-smart",
+    "nameAr": "حضانة سبيشل سمارت أكاديمي",
+    "nameEn": "Special Smart Academy"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-maha",
+    "nameAr": "حضانة المها لذوي الاحتياجات الخاصة",
+    "nameEn": "Al Maha Nursery for Special Needs"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-jack",
+    "nameAr": "حضانة جاك اند جل ثنائية اللغة للاحتياجات الخاصة",
+    "nameEn": "Jack & Jill Nursery for Special Needs"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-amal",
+    "nameAr": "حضانة الأمل",
+    "nameEn": "Al-Amal Nursery for Special Needs"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-best",
+    "nameAr": "حضانة بست دريم لذوي الاحتياجات الخاصة",
+    "nameEn": "Best Dream Nursery for Special Needs"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-abdullah",
+    "nameAr": "حضانة دار عبد الله للاحتياجات الخاصة",
+    "nameEn": "Dar Abdullah Special Needs Nursery"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-yanmo",
+    "nameAr": "حضانة ينمو لذوي الاحتياجات الخاصة",
+    "nameEn": "Yanmo Nursery for Special Needs"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-energy",
+    "nameAr": "حضانة انرجي افكتف كيدز",
+    "nameEn": "حضانة انرجي افكتف كيدز"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-ghali",
+    "nameAr": "حضانة غالي النموذجية لذوي الاحتياجات الخاصة",
+    "nameEn": "Ghali Ideal Nursery for Special Needs"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-insan-1",
+    "nameAr": "حضانة إنسان لذوي الاحتياجات الخاصة",
+    "nameEn": "Insan Nursery for Special Needs"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-little",
+    "nameAr": "حضانة ليتل فنقرز",
+    "nameEn": "Little Fingers Nursery for Special Needs"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-sumaya",
+    "nameAr": "حضانة سمية",
+    "nameEn": "Somya Nursery"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-nasser",
+    "nameAr": "حضانة بيت ناصر",
+    "nameEn": "Bait Nasser Nursery"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-child",
+    "nameAr": "مركز تقويم وتعليم الطفل",
+    "nameEn": "Center for Child Evaluation & Teaching"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-hope",
+    "nameAr": "مدرسة هوب للاحتياجات الخاصة",
+    "nameEn": "HOPE School for Special Needs"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-middle-east",
+    "nameAr": "مدرسة الشرق الأوسط الأمريكية ثنائية اللغة لذوي الاحتياجات الخاصة",
+    "nameEn": "مدرسة الشرق الأوسط الأمريكية ثنائية اللغة لذوي الاحتياجات الخاصة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-dasman-1",
+    "nameAr": "مدرسة دسمان ثنائية اللغة",
+    "nameEn": "Dasman Bilingual School"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-maarifa",
+    "nameAr": "مدرسة المعرفة النموذجية",
+    "nameEn": "Al Maarifa Model School"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-resala",
+    "nameAr": "مدرسة الرسالة ثنائية اللغة",
+    "nameEn": "Resala Bilingual School"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-umm-qura",
+    "nameAr": "مدرسة أم القرى النموذجية الأهلية",
+    "nameEn": "Umm Al Qura Independent Model School"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-future",
+    "nameAr": "مدرسة المستقبل ثنائية اللغة الخاصة",
+    "nameEn": "Future Bilingual School"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-help",
+    "nameAr": "مدرسة كويت هيلب ثنائية اللغة",
+    "nameEn": "مدرسة كويت هيلب ثنائية اللغة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-noor",
+    "nameAr": "مدرسة النور ثنائية اللغة",
+    "nameEn": "مدرسة النور ثنائية اللغة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-riyada-boys",
+    "nameAr": "مدرسة الريادة النموذجية",
+    "nameEn": "Al Reyada Model School"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-modern-girls",
+    "nameAr": "مدرسة الكويت الأهلية الحديثة",
+    "nameEn": "Modern Kuwait Private School"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-nebras-special",
+    "nameAr": "مدرسة النبراس النموذجية لذوي الاحتياجات الخاصة",
+    "nameEn": "مدرسة النبراس النموذجية لذوي الاحتياجات الخاصة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-jaber",
+    "nameAr": "مدرسة الجابر الأهلية الخاصة",
+    "nameEn": "مدرسة الجابر الأهلية الخاصة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-nokhba",
+    "nameAr": "مدرسة النخبة النموذجية",
+    "nameEn": "مدرسة النخبة النموذجية"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-umm-hani",
+    "nameAr": "مدرسة أم هاني (عربية)",
+    "nameEn": "مدرسة أم هاني (عربية)"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-irshad",
+    "nameAr": "مدرسة التعليم الإرشادي بالكويت الخاصة (ثنائية اللغة)",
+    "nameEn": "مدرسة التعليم الإرشادي بالكويت الخاصة (ثنائية اللغة)"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-huda",
+    "nameAr": "مدرسة الهدى للاحتياجات الخاصة (عربية)",
+    "nameEn": "مدرسة الهدى للاحتياجات الخاصة (عربية)"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-ajyal",
+    "nameAr": "مدرسة أجيال المستقبل الأهلية (عربية)",
+    "nameEn": "مدرسة أجيال المستقبل الأهلية (عربية)"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-gulf",
+    "nameAr": "مدرسة الخليج ثنائية اللغة لذوي الإعاقة",
+    "nameEn": "مدرسة الخليج ثنائية اللغة لذوي الإعاقة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-safwa",
+    "nameAr": "مدرسة الصفوة النموذجية بنين",
+    "nameEn": "مدرسة الصفوة النموذجية بنين"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-kes",
+    "nameAr": "مدرسة الكويت الإنجليزية الخاصة",
+    "nameEn": "مدرسة الكويت الإنجليزية الخاصة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-hadarat",
+    "nameAr": "أكاديمية الحضارات العالمية ثنائية اللغة",
+    "nameEn": "أكاديمية الحضارات العالمية ثنائية اللغة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-national",
+    "nameAr": "مدرسة الكويت الوطنية الإنجليزية الخاصة",
+    "nameEn": "مدرسة الكويت الوطنية الإنجليزية الخاصة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-bayan",
+    "nameAr": "مدرسة البيان الدولية للاحتياجات الخاصة",
+    "nameEn": "مدرسة البيان الدولية للاحتياجات الخاصة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-manarat",
+    "nameAr": "مدرسة منارات",
+    "nameEn": "مدرسة منارات"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-khalifa",
+    "nameAr": "مدرسة خليفة الخاصة - ثنائية اللغة",
+    "nameEn": "مدرسة خليفة الخاصة - ثنائية اللغة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-creative",
+    "nameAr": "مدرسة الأطفال المبدعين العالمية لذوي الاحتياجات الخاصة - ثنائية",
+    "nameEn": "مدرسة الأطفال المبدعين العالمية لذوي الاحتياجات الخاصة - ثنائية"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-autism-kuwait",
+    "nameAr": "مركز الكويت للتوحد",
+    "nameEn": "Kuwait Center for Autism"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-kuwait-academy-girls",
+    "nameAr": "مدرسة أكاديمية الكويت التعليمية - بنات عربية",
+    "nameEn": "مدرسة أكاديمية الكويت التعليمية - بنات عربية"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-s-kuwait-academy-boys",
+    "nameAr": "مدرسة أكاديمية الكويت التعليمية - بنين",
+    "nameEn": "مدرسة أكاديمية الكويت التعليمية - بنين"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-r-21",
+    "nameAr": "مركز 21",
+    "nameEn": "مركز 21"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-r-ekhlas",
+    "nameAr": "مؤسسة الإخلاص التأهيلية",
+    "nameEn": "مؤسسة الإخلاص التأهيلية"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-r-day-hawalli",
+    "nameAr": "الجمعية الكويتية لرعاية المعاقين",
+    "nameEn": "الجمعية الكويتية لرعاية المعاقين"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-r-idad",
+    "nameAr": "مؤسسة الإعداد النموذجي",
+    "nameEn": "مؤسسة الإعداد النموذجي"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-r-irshad",
+    "nameAr": "مؤسسة التأهيل الإرشادي",
+    "nameEn": "مؤسسة التأهيل الإرشادي"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-r-integrated",
+    "nameAr": "مؤسسة الرعاية المتكاملة",
+    "nameEn": "Integrated Care Institution"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-r-dyslexia",
+    "nameAr": "مركز الدسلكسيا",
+    "nameEn": "مركز الدسلكسيا"
+  },
+  {
+    "kind": "institution",
+    "targetId": "kw-n-dima",
+    "nameAr": "حضانة ديما",
+    "nameEn": "Dima Nursery for Special Needs"
+  },
+  {
+    "kind": "institution",
+    "targetId": "center-abc-kuwait",
+    "nameAr": "Applied Behavior Center Kuwait",
+    "nameEn": "Applied Behavior Center Kuwait"
+  },
+  {
+    "kind": "institution",
+    "targetId": "center-qudrat-early-intervention",
+    "nameAr": "مركز قدرات للتدخل المبكر",
+    "nameEn": "Qudrat Early Intervention Center"
+  },
+  {
+    "kind": "institution",
+    "targetId": "center-kcld",
+    "nameAr": "المركز الكويتي لصعوبات التعلم",
+    "nameEn": "Kuwait Center for Learning Disabilities"
+  },
+  {
+    "kind": "institution",
+    "targetId": "center-roa-childhood",
+    "nameAr": "مركز رؤى للطفولة المبكرة",
+    "nameEn": "Roa Childhood Center"
+  },
+  {
+    "kind": "institution",
+    "targetId": "center-first-step",
+    "nameAr": "مركز فيرست ستيب",
+    "nameEn": "First Step Counseling Center"
+  },
+  {
+    "kind": "institution",
+    "targetId": "center-slp-shahad-shehab",
+    "nameAr": "عيادة شهد شهاب",
+    "nameEn": "SLP Shahad Shehab"
+  },
+  {
+    "kind": "institution",
+    "targetId": "center-hope",
+    "nameAr": "مركز هوب",
+    "nameEn": "HOPE Center"
+  },
+  {
+    "kind": "institution",
+    "targetId": "center-future-pioneers",
+    "nameAr": "مركز فيوتشر بايونيرز للتدخل المبكر",
+    "nameEn": "Future Pioneers Early Intervention Center"
+  },
+  {
+    "kind": "institution",
+    "targetId": "center-thiqa",
+    "nameAr": "مركز ثقة للتدخل المبكر",
+    "nameEn": "Thiqa Early Intervention Center"
+  },
+  {
+    "kind": "institution",
+    "targetId": "provider-maram-aldihani",
+    "nameAr": "أ. مرام الديحاني",
+    "nameEn": "Maram Aldihani"
+  },
+  {
+    "kind": "institution",
+    "targetId": "center-kdc",
+    "nameAr": "مركز الكويت للتطور والنمو",
+    "nameEn": "Kuwait Developmental Center"
+  },
+  {
+    "kind": "institution",
+    "targetId": "center-initials-clinic",
+    "nameAr": "عيادة إنيشالز",
+    "nameEn": "Initials Clinic"
+  },
+  {
+    "kind": "institution",
+    "targetId": "center-kun-ala-sila",
+    "nameAr": "مركز كُن على صِلة",
+    "nameEn": "Kun Ala Sila Center"
+  },
+  {
+    "kind": "institution",
+    "targetId": "home-provider-lets-speech",
+    "nameAr": "ليتس سبيتش",
+    "nameEn": "Let's Speech"
+  },
+  {
+    "kind": "institution",
+    "targetId": "center-special-reem",
+    "nameAr": "مركز سبيشل ريم",
+    "nameEn": "Special Reem Center"
+  },
+  {
+    "kind": "institution",
+    "targetId": "center-communicate",
+    "nameAr": "مركز كوميونيكيت",
+    "nameEn": "Communicate"
+  },
+  {
+    "kind": "institution",
+    "targetId": "center-speak-up",
+    "nameAr": "مركز سبيك أب الاستشاري للخدمات التأهيلية والتدريب",
+    "nameEn": "Speak Up Consulting Center"
+  },
+  {
+    "kind": "institution",
+    "targetId": "sports-al-tomooh",
+    "nameAr": "نادي الطموح الكويتي الرياضي",
+    "nameEn": "Al Tomooh Kuwaiti Sports Club"
+  },
+  {
+    "kind": "institution",
+    "targetId": "school-noor",
+    "nameAr": "مدرسة النور للتربية الخاصة",
+    "nameEn": "مدرسة النور للتربية الخاصة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "school-amal",
+    "nameAr": "مدرسة الأمل الشاملة",
+    "nameEn": "مدرسة الأمل الشاملة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "school-bayan",
+    "nameAr": "مدرسة البيان الخاصة",
+    "nameEn": "مدرسة البيان الخاصة"
+  },
+  {
+    "kind": "institution",
+    "targetId": "school-tamayoz",
+    "nameAr": "مدرسة التميز العالمية",
+    "nameEn": "مدرسة التميز العالمية"
+  },
+  {
+    "kind": "institution",
+    "targetId": "school-deaf",
+    "nameAr": "مدرسة الكويت للصم",
+    "nameEn": "مدرسة الكويت للصم"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "doctor-hadeel-yassin-faras",
+    "nameAr": "د. هديل فرس",
+    "nameEn": "Dr. Hadeel Faras"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "doctor-fatima-al-awadhi",
+    "nameAr": "د. فاطمة العوضي",
+    "nameEn": "Dr. Fatma Al-Awadhi"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "doctor-dalal-sulaiman-al-shayji",
+    "nameAr": "د. دلال سليمان الشايجي",
+    "nameEn": "Dr. Dalal Sulaiman Al-Shayji"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "doctor-mohammed-almuhtab",
+    "nameAr": "د. محمد المحطب",
+    "nameEn": "Dr. Mohammed Al-Muhtab"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "doctor-ahmed-al-tamimi",
+    "nameAr": "د. أحمد التميمي",
+    "nameEn": "Dr. Ahmed Al-Tamimi"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "doctor-dalal-alsubaie",
+    "nameAr": "د. دلال السبيعي",
+    "nameEn": "Dr. Dalal Al-Subaie"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "specialist-nesma-al-aridi",
+    "nameAr": "أ. نسمة العريضي",
+    "nameEn": "Nesma Al-Aridi"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "doctor-sondos-al-hadhoud",
+    "nameAr": "د. سندس عبدالرحمن الهدهود",
+    "nameEn": "Dr. Sondos Abdulrahman Al-Hadhoud"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "specialist-amal-ashour",
+    "nameAr": "د. آمال عاشور",
+    "nameEn": "Dr. Amal Ashour"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "specialist-noha-al-mufarreh",
+    "nameAr": "د. نهى المفرح",
+    "nameEn": "Dr. Noha Al-Mufarreh"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "doctor-ahmed-nabil-saad",
+    "nameAr": "د. أحمد نبيل سعد",
+    "nameEn": "Dr. Ahmed Nabil Saad"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "doctor-rawan-al-khuwaitem",
+    "nameAr": "د. روان الخويتيم",
+    "nameEn": "Dr. Rawan Al-Khuwaitem"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "doctor-anoud-al-jasser-al-rajhi",
+    "nameAr": "د. عنود يوسف الجاسر الراجحي",
+    "nameEn": "Dr. Anoud Yousef Al-Jasser Al-Rajhi"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "doctor-abdulaziz-al-thunayan",
+    "nameAr": "د. عبدالعزيز الثنيان",
+    "nameEn": "Dr. Abdulaziz Al-Thunayan"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "doctor-salman-bin-nakhi",
+    "nameAr": "د. سلمان بن نخي",
+    "nameEn": "Dr. Salman Bin Nakhi"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "doctor-maitham-al-ali",
+    "nameAr": "د. ميثم العلي",
+    "nameEn": "Dr. Maitham Al-Ali"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "doctor-ali-akbar",
+    "nameAr": "د. علي أكبر",
+    "nameEn": "Dr. Ali Akbar"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "doctor-ali-adel-saleh",
+    "nameAr": "د. علي عادل صالح",
+    "nameEn": "Dr. Ali Adel Saleh"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "specialist-fajer-al-munaie",
+    "nameAr": "فجر المنيع",
+    "nameEn": "Fajer Al Munaie"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "specialist-nour-qahfarani",
+    "nameAr": "نور قهفراني",
+    "nameEn": "Nour Qahfarani"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "center-speech-plus",
+    "nameAr": "د. دعاء الملك",
+    "nameEn": "Dr. Doaa Al-Malek"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "doctor-reem-kanawati",
+    "nameAr": "د. ريم قنواتي",
+    "nameEn": "Dr. Reem Kanawati"
+  },
+  {
+    "kind": "doctor",
+    "targetId": "doctor-essa-habib-al-mashmoum",
+    "nameAr": "د. عيسى حبيب المشموم",
+    "nameEn": "Dr. Essa Habib Al-Mashmoum"
+  },
+  {
+    "kind": "product",
+    "targetId": "p-1",
+    "nameAr": "كرسي متحرك",
+    "nameEn": "Wheelchair"
+  },
+  {
+    "kind": "product",
+    "targetId": "p-2",
+    "nameAr": "بطاقات تواصل مصورة",
+    "nameEn": "Picture communication cards"
+  },
+  {
+    "kind": "product",
+    "targetId": "p-3",
+    "nameAr": "سماعات عازلة للضوضاء",
+    "nameEn": "Noise-reducing headphones"
+  },
+  {
+    "kind": "product",
+    "targetId": "p-4",
+    "nameAr": "أدوات تنمية مهارات",
+    "nameEn": "Skill-building tools"
+  },
+  {
+    "kind": "product",
+    "targetId": "p-5",
+    "nameAr": "لوحة تواصل",
+    "nameEn": "Communication board"
+  },
+  {
+    "kind": "product",
+    "targetId": "p-6",
+    "nameAr": "وسادة دعم",
+    "nameEn": "Support cushion"
+  },
+  {
+    "kind": "product",
+    "targetId": "p-7",
+    "nameAr": "مكعبات حسية",
+    "nameEn": "Sensory blocks"
+  },
+  {
+    "kind": "product",
+    "targetId": "p-8",
+    "nameAr": "حزام أمان",
+    "nameEn": "Safety belt"
+  }
+]

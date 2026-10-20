@@ -1,0 +1,38 @@
+{
+  "packages": {
+    "node-forge": "1.4.0",
+    "image-size": "1.2.1"
+  },
+  "patches": [
+    {
+      "file": "node-forge/lib/rsa.js",
+      "before": "fd4740238145ec26470eb3f06a627c72039538ce1307dbdce40521f94dfd0a50",
+      "after": "447c5441cea1b125e23661d7e27a8b1759cc3400241c0013b2d034b4ee1dbf50",
+      "replacements": []
+    },
+    {
+      "file": "image-size/dist/types/utils.js",
+      "before": "e9faf86abcc962a5fc2488a4c3c9d8dc915aa22a0dd6a7bad6556cd9a326c349",
+      "after": "212e7b7d981e8c2a14ab5bb32a86838a7ecffda69583f1fb407bc113aac06f1d",
+      "replacements": []
+    },
+    {
+      "file": "image-size/dist/types/jxl.js",
+      "before": "2958da1fbda466a2aff5769e3353dc8da6848ae1be0e1f9ec6cd7af25f759721",
+      "after": "e83451f1ef021bf908cdc1cbcedc66b1dd7538a57a70dba5286bef77487ad590",
+      "replacements": []
+    },
+    {
+      "file": "image-size/dist/types/heif.js",
+      "before": "21c673dbce64e0fe43c27e43442ba1c8da2492c375aa78493357cb80d4d61138",
+      "after": "4b57c9704b6f1bd4e0d2b76af90d7199430da17d12032e59cd04c4e529dc2081",
+      "replacements": []
+    },
+    {
+      "file": "image-size/dist/types/icns.js",
+      "before": "5e6a097fca237b0bb3b68a1be920e39a3846c0018d8917658b5ed88590a710e8",
+      "after": "86c1ecd2db57bb35061a2deed295f7e4547a9e329be3e8662abb50cdaeeae41a",
+      "replacements": []
+    }
+  ]
+}

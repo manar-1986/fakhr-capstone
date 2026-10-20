@@ -1,0 +1,1208 @@
+[
+  {
+    "id": "center-abc-kuwait",
+    "nameAr": "Applied Behavior Center Kuwait",
+    "nameEn": "Applied Behavior Center Kuwait",
+    "mainImage": "abc",
+    "identityAliases": [
+      "Applied Behavior Center Kuwait (ABC Early Intervention Center)",
+      "ABC Early Intervention Center"
+    ],
+    "categories": [
+      "rehabilitation"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [
+      "autism"
+    ],
+    "stageTags": [],
+    "publicProfile": {
+      "classification": {
+        "ar": "مركز تدخل مبكر",
+        "en": "Early intervention center"
+      },
+      "description": {
+        "ar": "مركز في السالمية يقدم التقييم والتدخل السلوكي وخدمات النطق والعلاج الوظيفي.",
+        "en": "A Salmiya center offering assessment, behavioral intervention, speech and occupational therapy."
+      },
+      "services": {
+        "ar": [
+          "التقييم",
+          "تحليل السلوك التطبيقي",
+          "النطق والعلاج الوظيفي",
+          "الاستشارات والتدريب"
+        ],
+        "en": [
+          "Assessment",
+          "Applied behavior analysis",
+          "Speech and occupational therapy",
+          "Consultation and training"
+        ]
+      },
+      "area": {
+        "ar": "السالمية",
+        "en": "Salmiya"
+      },
+      "address": {
+        "ar": "أولمبيا، البرج الشرقي، الدور الثالث، قطعة 2، شارع سالم المبارك، السالمية، الكويت.",
+        "en": "Olympia, East Tower, 3rd Floor, Block 2, Salem Al-Mubarak Street, Salmiya, Kuwait."
+      },
+      "phone": "22251564",
+      "whatsapp": {
+        "phone": "65026155",
+        "url": "https://wa.me/96565026155"
+      },
+      "website": "https://abckuwait.com/",
+      "instagram": "https://www.instagram.com/abcofkuwait/"
+    }
+  },
+  {
+    "id": "center-qudrat-early-intervention",
+    "nameAr": "مركز قدرات للتدخل المبكر",
+    "nameEn": "Qudrat Early Intervention Center",
+    "mainImage": "qudrat",
+    "identityAliases": [
+      "Qudrat Kuwait Early Intervention Center"
+    ],
+    "categories": [
+      "rehabilitation"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [
+      "autism",
+      "adhd",
+      "speech"
+    ],
+    "stageTags": [],
+    "publicProfile": {
+      "classification": {
+        "ar": "مركز تدخل مبكر",
+        "en": "Early intervention center"
+      },
+      "description": {
+        "ar": "يقدم المركز التقييم والتدخل للأطفال ذوي التحديات النمائية والسلوكية وتأخر اللغة والكلام.",
+        "en": "The center provides assessment and intervention for children with developmental, behavioral, and speech and language challenges."
+      },
+      "services": {
+        "ar": [
+          "التقييم",
+          "الدعم الفردي والجماعي والمدرسي",
+          "النطق والعلاج الوظيفي",
+          "الاستشارات والتدريب"
+        ],
+        "en": [
+          "Assessment",
+          "Individual, group and school support",
+          "Speech and occupational therapy",
+          "Consultation and training"
+        ]
+      },
+      "ages": {
+        "ar": "من 2 إلى 14 سنة",
+        "en": "Ages 2–14"
+      },
+      "area": {
+        "ar": "السالمية",
+        "en": "Salmiya"
+      },
+      "address": {
+        "ar": "السالمية، قطعة 10، شارع 1، قسيمة 45، مقابل الدائري الخامس.",
+        "en": "Salmiya, Block 10, Street 1, Parcel 45, opposite the Fifth Ring Road."
+      },
+      "phone": "22280108",
+      "whatsapp": {
+        "phone": "22280108",
+        "url": "https://wa.me/96522280108"
+      },
+      "mapUrl": "https://www.google.com/maps?cid=4214790053165937874",
+      "website": "https://qudratkw.com/",
+      "instagram": "https://www.instagram.com/qudrat_kw/"
+    }
+  },
+  {
+    "id": "center-kcld",
+    "nameAr": "المركز الكويتي لصعوبات التعلم",
+    "nameEn": "Kuwait Center for Learning Disabilities",
+    "mainImage": "kcld",
+    "identityAliases": [
+      "Kuwait Center for Learning Disabilities",
+      "KCLD",
+      "Kuwaiti Center for Learning Disabilities"
+    ],
+    "categories": [
+      "rehabilitation"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [
+      "learning",
+      "adhd",
+      "speech"
+    ],
+    "stageTags": [],
+    "publicProfile": {
+      "classification": {
+        "ar": "مركز لصعوبات التعلم",
+        "en": "Learning disabilities center"
+      },
+      "description": {
+        "ar": "متخصصون في صعوبات التعلم منذ عام 2010، ويقدم المركز خدمات متخصصة لدعم الأطفال والأفراد الذين يواجهون صعوبات التعلم والتأخر الأكاديمي والتطوري، ومشكلات الانتباه والنطق والتخاطب.",
+        "en": "Specialized in learning disabilities since 2010, providing support for academic and developmental delays, attention difficulties, hyperactivity, and speech and language development."
+      },
+      "services": {
+        "ar": [
+          "صعوبات التعلم",
+          "التأخر الأكاديمي والتطوري",
+          "تشتت الانتباه وفرط النشاط",
+          "النطق والتخاطب",
+          "تعديل السلوك وتنمية المهارات الاجتماعية"
+        ],
+        "en": [
+          "Learning Disabilities",
+          "Academic and Developmental Delays",
+          "Attention Deficit and Hyperactivity",
+          "Speech and Language Therapy",
+          "Behavior modification and social skills"
+        ]
+      },
+      "area": {
+        "ar": "الجابرية",
+        "en": "Jabriya"
+      },
+      "phone": "+96555269262",
+      "mapUrl": "https://maps.app.goo.gl/je3cAvLqZYQjPMY48",
+      "website": "http://kcld-kw.com/arabic/index.html",
+      "instagram": "https://www.instagram.com/kcld_support/",
+      "established": 2010,
+      "supervisors": {
+        "ar": [
+          "د. نهى المفرح",
+          "د. عواطف البلوشي"
+        ],
+        "en": [
+          "Dr. Noha Al-Mufarreh",
+          "Dr. Awatef Al-Balushi"
+        ]
+      },
+      "additionalPhone": "22233696",
+      "whatsapp": {
+        "phone": "55269262",
+        "url": "https://wa.me/96555269262"
+      }
+    },
+    "sourceExtras": {
+      "profileUpdate": "User-provided profile, supervision, established year and contact update on 2026-10-10. Prior public phone retained as additional contact. Verification metadata unchanged."
+    }
+  },
+  {
+    "id": "center-roa-childhood",
+    "nameAr": "مركز رؤى للطفولة المبكرة",
+    "nameEn": "Roa Childhood Center",
+    "mainImage": "roa",
+    "identityAliases": [
+      "مركز الرؤى للطفولة المبكرة",
+      "مركز رؤى"
+    ],
+    "categories": [
+      "rehabilitation"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [
+      "speech",
+      "learning"
+    ],
+    "stageTags": [],
+    "publicProfile": {
+      "classification": {
+        "ar": "مركز للطفولة المبكرة",
+        "en": "Early childhood center"
+      },
+      "description": {
+        "ar": "مركز في الكويت يقدم برامج التدخل المبكر ودعم النطق واللغة وتنمية مهارات الأطفال.",
+        "en": "A Kuwait center providing early intervention, speech and language support, and child development programs."
+      },
+      "services": {
+        "ar": [
+          "التدخل المبكر",
+          "النطق واللغة",
+          "صعوبات التعلم",
+          "تنمية المهارات"
+        ],
+        "en": [
+          "Early intervention",
+          "Speech and language",
+          "Learning difficulties",
+          "Skills development"
+        ]
+      },
+      "ages": {
+        "ar": "من سنة إلى 12 سنة",
+        "en": "Ages 1–12"
+      },
+      "area": {
+        "ar": "بنيد القار",
+        "en": "Bneid Al Qar"
+      },
+      "phone": "96670460",
+      "whatsapp": {
+        "phone": "96670460",
+        "url": "https://wa.me/96596670460"
+      },
+      "website": "https://roacenter.com/",
+      "instagram": "https://www.instagram.com/ru_ruyy_autism/"
+    }
+  },
+  {
+    "id": "center-first-step",
+    "nameAr": "مركز فيرست ستيب",
+    "nameEn": "First Step Counseling Center",
+    "mainImage": "firststep",
+    "identityAliases": [
+      "First Step Centre for Family Counseling",
+      "First Step",
+      "First Step Center"
+    ],
+    "categories": [
+      "rehabilitation"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [
+      "autism",
+      "adhd",
+      "speech"
+    ],
+    "stageTags": [],
+    "publicProfile": {
+      "classification": {
+        "ar": "مركز استشارات وتدخل مبكر",
+        "en": "Counseling and early intervention center"
+      },
+      "description": {
+        "ar": "يقدم التقييم والتدخل الفردي للأطفال ذوي اضطراب طيف التوحد وفرط الحركة وتأخر اللغة والتحديات النمائية.",
+        "en": "Provides assessment and individualized intervention for children with autism, ADHD, language delays and developmental challenges."
+      },
+      "services": {
+        "ar": [
+          "تحليل السلوك التطبيقي",
+          "النطق واللغة",
+          "العلاج الوظيفي",
+          "الاستشارات النفسية",
+          "التدخل المبكر وتدريب الوالدين"
+        ],
+        "en": [
+          "Applied behavior analysis",
+          "Speech and language",
+          "Occupational therapy",
+          "Psychological counseling",
+          "Early intervention and parent training"
+        ]
+      },
+      "area": {
+        "ar": "السالمية",
+        "en": "Salmiya"
+      },
+      "address": {
+        "ar": "السالمية، شارع حمد المبارك، بجانب مجمع المارينا الطبي، لافان ريزدنس 1، الدور الأول والثاني.",
+        "en": "Salmiya, Hamad Al Mubarak Street, next to Marina Medical Complex, Lavan Residence 1, first and second floors."
+      },
+      "phone": "97222133",
+      "website": "https://www.firststepkw.com/",
+      "instagram": "https://www.instagram.com/firststep_kw/"
+    }
+  },
+  {
+    "id": "center-speech-plus",
+    "nameAr": "Speech Plus",
+    "nameEn": "Speech Plus",
+    "mainImage": "speechplus",
+    "identityAliases": [
+      "Speech+"
+    ],
+    "categories": [
+      "rehabilitation"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [
+      "speech"
+    ],
+    "stageTags": [],
+    "publicProfile": {
+      "classification": {
+        "ar": "خدمات النطق والتواصل",
+        "en": "Speech and communication services"
+      },
+      "description": {
+        "ar": "خدمات لدعم مهارات التواصل.",
+        "en": "Services supporting communication skills."
+      },
+      "whatsapp": {
+        "phone": "68884218",
+        "url": "https://wa.me/96568884218"
+      },
+      "mapUrl": "https://maps.app.goo.gl/sPej96JqtbAyfWvA8",
+      "website": "https://linktr.ee/speechplus.kw",
+      "instagram": "https://www.instagram.com/speechplus.kw/"
+    }
+  },
+  {
+    "id": "center-speak-clinic",
+    "nameAr": "عيادة سبيك كلينك",
+    "nameEn": "Speak Clinic",
+    "identityAliases": [
+      "Speak Clinic للسمع و النطق و التأهيل الشامل",
+      "Speak Clinic",
+      "عيادة سبيك كلينك للسمع والنطق والتأهيل الشامل",
+      "Speak Clinic – Hearing, Speech & Comprehensive Rehabilitation",
+      "سبيك كلينك",
+      "عيادة سبيك",
+      "Speak Clinic Kuwait"
+    ],
+    "categories": [
+      "rehabilitation"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [],
+    "stageTags": [],
+    "publicProfile": {
+      "classification": {
+        "ar": "عيادة للسمع والنطق والتأهيل",
+        "en": "Hearing, speech and rehabilitation clinic"
+      },
+      "area": {
+        "ar": "السالمية",
+        "en": "Salmiya"
+      },
+      "instagram": "https://www.instagram.com/speakclinic.kw/",
+      "description": {
+        "ar": "عيادة متخصصة في خدمات السمع والنطق والتأهيل الشامل، تضم فريقاً من الأخصائيين المؤهلين.",
+        "en": "A clinic specializing in hearing, speech, and comprehensive rehabilitation services, supported by a team of qualified specialists."
+      },
+      "services": {
+        "ar": [
+          "التخاطب",
+          "تعديل السلوك",
+          "العلاج الوظيفي",
+          "صعوبات التعلم",
+          "الدعم النفسي"
+        ],
+        "en": [
+          "Speech and Language Therapy",
+          "Behavior Modification",
+          "Occupational Therapy",
+          "Learning Difficulties Support",
+          "Psychological Support"
+        ]
+      },
+      "phone": "+96550455583",
+      "whatsapp": {
+        "phone": "50455583",
+        "url": "https://wa.me/96550455583"
+      },
+      "address": {
+        "ar": "السالمية، شارع عبدالله الفضالة، عيادة سبيك كلينك، الكويت",
+        "en": "Abdulla Al Fadalah Street, Speak Clinic, Salmiya, Kuwait"
+      },
+      "mapUrl": "https://maps.app.goo.gl/mwvBZABT5KgMHZC67",
+      "website": "https://reach.link/speak_clinic",
+      "instagramLabel": {
+        "ar": "إنستقرام",
+        "en": "Instagram"
+      }
+    },
+    "sourceExtras": {
+      "profileUpdate": "User-provided bilingual profile, seven services and direct contacts on 2026-10-10. Logo attachment not received. Prior verification metadata preserved.",
+      "previousProfile": "{\"description\":{\"ar\":\"عيادة متخصصة في خدمات السمع والنطق والتأهيل الشامل، تقدم خدمات اللغة والتخاطب، فحص السمع، التدخل المبكر، تنمية المهارات، العلاج الوظيفي، الجلسات المنزلية، وتحليل السلوك التطبيقي (ABA).\",\"en\":\"A clinic providing hearing, speech and language, and comprehensive rehabilitation services, including hearing assessments, early intervention, skills development, occupational therapy, home-based sessions, and Applied Behavior Analysis (ABA).\"},\"services\":{\"ar\":[\"اللغة والنطق والتخاطب\",\"فحص السمع\",\"التدخل المبكر\",\"تنمية المهارات\",\"العلاج الوظيفي\",\"الجلسات المنزلية\",\"تحليل السلوك التطبيقي (ABA)\"],\"en\":[\"Speech and Language Therapy\",\"Hearing Assessments\",\"Early Intervention\",\"Skills Development\",\"Occupational Therapy\",\"Home-Based Therapy Sessions\",\"Applied Behavior Analysis (ABA)\"]}}"
+    },
+    "mainImage": "speakclinic"
+  },
+  {
+    "id": "center-slp-shahad-shehab",
+    "nameAr": "عيادة شهد شهاب",
+    "nameEn": "SLP Shahad Shehab",
+    "mainImage": "shahad",
+    "identityAliases": [
+      "SLP Shahad Shehab Speech & Language Pathology Center",
+      "Shahad Shehab Speech Therapy Clinic"
+    ],
+    "categories": [
+      "rehabilitation"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [
+      "speech",
+      "hearing"
+    ],
+    "stageTags": [],
+    "publicProfile": {
+      "classification": {
+        "ar": "عيادة النطق والسمع والخدمات التأهيلية",
+        "en": "Speech, hearing and rehabilitation clinic"
+      },
+      "description": {
+        "ar": "عيادة الاختصاصية شهد شهاب تقدم خدمات النطق والعلاج الوظيفي وتعديل السلوك واختبارات السمع لجميع الفئات العمرية.",
+        "en": "Shahad Shehab’s clinic provides speech therapy, occupational therapy, behavior support and hearing assessments for all ages."
+      },
+      "services": {
+        "ar": [
+          "علاج النطق",
+          "العلاج الوظيفي",
+          "تحليل السلوك التطبيقي",
+          "اختبارات السمع",
+          "الاستشارات النفسية",
+          "اختبارات الذكاء"
+        ],
+        "en": [
+          "Speech therapy",
+          "Occupational therapy",
+          "Applied behavior analysis",
+          "Hearing assessments",
+          "Psychological consultation",
+          "Intelligence testing"
+        ]
+      },
+      "ages": {
+        "ar": "جميع الفئات العمرية",
+        "en": "All age groups"
+      },
+      "phone": "22071100",
+      "additionalPhone": "66900447",
+      "whatsapp": {
+        "phone": "66900447",
+        "url": "https://wa.me/96566900447"
+      },
+      "website": "https://www.slpshahad.com/",
+      "instagram": "https://www.instagram.com/slpshahadshehab/"
+    }
+  },
+  {
+    "id": "center-hope",
+    "nameAr": "مركز هوب",
+    "nameEn": "HOPE Center",
+    "identityAliases": [
+      "Hope Centre"
+    ],
+    "categories": [
+      "rehabilitation"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [],
+    "stageTags": [],
+    "publicProfile": {
+      "description": {
+        "ar": "حيث يبدأ الأمل ويقوده الطموح. يقدم المركز تدخلات علاجية وتقييمات مقننة في مجالات النطق واللغة، وتحليل السلوك التطبيقي، والعلاج الوظيفي.",
+        "en": "Where hope begins and passion leads. HOPE Center provides therapeutic interventions and standardized assessments in speech and language therapy, Applied Behavior Analysis (ABA), and occupational therapy."
+      },
+      "services": {
+        "ar": [
+          "النطق واللغة",
+          "تحليل السلوك التطبيقي (ABA)",
+          "العلاج الوظيفي",
+          "التقييمات المقننة"
+        ],
+        "en": [
+          "Speech and Language Therapy",
+          "Applied Behavior Analysis (ABA)",
+          "Occupational Therapy",
+          "Standardized Assessments"
+        ]
+      },
+      "phone": "+96599307764",
+      "area": {
+        "ar": "السالمية",
+        "en": "Salmiya"
+      },
+      "address": {
+        "ar": "السالمية، السلام مول، الدور الثاني، الكويت",
+        "en": "Al Salam Mall, 2nd Floor, Salmiya, Kuwait"
+      },
+      "mapUrl": "https://maps.app.goo.gl/geuKhrDcQtWaoiEy8",
+      "instagram": "https://www.instagram.com/hopecenter.kw/"
+    },
+    "sourceExtras": {
+      "profileUpdate": "User-provided profile and contacts, 2026-10-10. No logo attachment received. No WhatsApp claim. Distinct from kw-s-hope school in Sharq."
+    },
+    "mainImage": "hope"
+  },
+  {
+    "id": "center-future-pioneers",
+    "nameAr": "مركز فيوتشر بايونيرز للتدخل المبكر",
+    "nameEn": "Future Pioneers Early Intervention Center",
+    "identityAliases": [
+      "Future Pioneers",
+      "Future Pioneers Center"
+    ],
+    "mainImage": "futurepioneers",
+    "categories": [
+      "rehabilitation"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [],
+    "stageTags": [],
+    "publicProfile": {
+      "description": {
+        "ar": "مركز متخصص في التدخل المبكر، يقدم خدمات النطق واللغة، والعلاج الوظيفي، وتحليل السلوك التطبيقي (ABA)، وصعوبات التعلم، والعلاج السلوكي المعرفي (CBT)، بهدف دعم الأطفال وتنمية مهاراتهم.",
+        "en": "An early intervention center offering speech and language therapy, occupational therapy, Applied Behavior Analysis (ABA), learning disabilities support, and Cognitive Behavioral Therapy (CBT)."
+      },
+      "services": {
+        "ar": [
+          "التدخل المبكر",
+          "جلسات النطق واللغة",
+          "العلاج الوظيفي",
+          "تحليل السلوك التطبيقي (ABA)",
+          "صعوبات التعلم",
+          "العلاج السلوكي المعرفي (CBT)"
+        ],
+        "en": [
+          "Early Intervention",
+          "Speech and Language Therapy",
+          "Occupational Therapy",
+          "Applied Behavior Analysis (ABA)",
+          "Learning Disabilities Support",
+          "Cognitive Behavioral Therapy (CBT)"
+        ]
+      },
+      "phone": "+96592232537",
+      "additionalPhone": "+96567793331",
+      "instagram": "https://www.instagram.com/futurepioneerskw/",
+      "website": "https://futurepioneerkw.com/",
+      "additionalUrl": "https://futurepioneerskw.taplink.site/",
+      "mapUrl": "https://maps.app.goo.gl/JiKUdUymjjh5oQFR6"
+    },
+    "sourceExtras": {
+      "profileUpdate": "User-provided profile, contacts and original logo, 2026-10-10. No WhatsApp, address, age range or qualifications supplied."
+    }
+  },
+  {
+    "id": "center-thiqa",
+    "nameAr": "مركز ثقة للتدخل المبكر",
+    "nameEn": "Thiqa Early Intervention Center",
+    "identityAliases": [
+      "مركز ثقة للاستشارات والتدخل المبكر",
+      "مركز ثقه للتدخل المبكر",
+      "Thiqa Center",
+      "Theqa Early Intervention Center"
+    ],
+    "mainImage": "thiqa",
+    "categories": [
+      "rehabilitation"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [],
+    "stageTags": [],
+    "publicProfile": {
+      "description": {
+        "ar": "مركز متخصص في التدخل المبكر، يقدم جلسات التخاطب، وتنمية المهارات الإدراكية، وتعديل السلوك، والعلاج الوظيفي، والتعليم الأكاديمي، والاستشارات التربوية.",
+        "en": "An early intervention center offering speech and language therapy, cognitive skills development, behavior modification, occupational therapy, academic education, and educational consultations."
+      },
+      "services": {
+        "ar": [
+          "النطق والتخاطب",
+          "تنمية المهارات الإدراكية",
+          "تعديل السلوك",
+          "العلاج الوظيفي",
+          "التعليم الأكاديمي",
+          "الاستشارات التربوية"
+        ],
+        "en": [
+          "Speech and Language Therapy",
+          "Cognitive Skills Development",
+          "Behavior Modification",
+          "Occupational Therapy",
+          "Academic Education",
+          "Educational Consultations"
+        ]
+      },
+      "phone": "+96568885376",
+      "whatsapp": {
+        "url": "https://wa.me/message/GWQL6WWG5DXZC1"
+      },
+      "address": {
+        "ar": "منطقة الضجيج، الكويت",
+        "en": "Al-Dajeej, Kuwait"
+      },
+      "area": {
+        "ar": "الضجيج",
+        "en": "Al-Dajeej"
+      },
+      "mapUrl": "https://www.google.com/maps?q=29.263891,47.965710"
+    },
+    "sourceExtras": {
+      "profileUpdate": "User-provided profile, logo and contact links, 2026-10-10. No independent credential verification claimed."
+    }
+  },
+  {
+    "id": "provider-maram-aldihani",
+    "nameAr": "أ. مرام الديحاني",
+    "nameEn": "Maram Aldihani",
+    "identityAliases": [
+      "مرام الديحاني",
+      "Maram Al Dihani",
+      "Maram Al-Dihani"
+    ],
+    "mainImage": "maram",
+    "categories": [
+      "rehabilitation"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [],
+    "stageTags": [],
+    "publicProfile": {
+      "classification": {
+        "ar": "اختصاصية علاج وظيفي مستقلة",
+        "en": "Independent Occupational Therapist"
+      },
+      "description": {
+        "ar": "مرام الديحاني، اختصاصية علاج وظيفي بخبرة تزيد عن 10 سنوات.",
+        "en": "Maram Aldihani is an occupational therapist with more than 10 years of experience."
+      },
+      "phone": "+96599982918",
+      "additionalPhone": "+96569990629",
+      "whatsapp": {
+        "url": "https://wa.link/e9inge"
+      },
+      "instagram": "https://www.instagram.com/maram.aldihani/"
+    },
+    "sourceExtras": {
+      "profileUpdate": "User-provided identity, experience, contacts and portrait, 2026-10-10. Independent occupational therapist; rehabilitation category is Centers navigation placement only. No clinic, address or Maps location supplied."
+    }
+  },
+  {
+    "id": "center-kdc",
+    "nameAr": "مركز الكويت للتطور والنمو",
+    "nameEn": "Kuwait Developmental Center",
+    "identityAliases": [
+      "KDC",
+      "KDC | Kuwait Developmental Center"
+    ],
+    "mainImage": "kdc",
+    "categories": [
+      "rehabilitation"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [],
+    "stageTags": [],
+    "publicProfile": {
+      "classification": {
+        "ar": "مركز للتطور والنمو",
+        "en": "Developmental Center"
+      },
+      "description": {
+        "ar": "مركز يقدم برامج نمائية وتعليمية لدعم مهارات التواصل والتفاعل الاجتماعي والاستقلالية لدى الأطفال، مع مشاركة الأسرة.",
+        "en": "A center offering developmental and educational programs supporting children’s communication, social interaction and independence, with family participation."
+      },
+      "services": {
+        "ar": [
+          "برنامج النمو المبكر",
+          "برنامج الاستعداد للمدرسة",
+          "برنامج المهارات الاجتماعية والصداقة",
+          "برنامج التواصل والتفاعل",
+          "برنامج الاستقلالية والمهارات الحياتية",
+          "برنامج مشاركة الأسرة"
+        ],
+        "en": [
+          "Early Development Program",
+          "School Readiness Program",
+          "Social Skills & Friendship Program",
+          "Communication & Interaction Program",
+          "Independence & Life Skills Program",
+          "Family Engagement Program"
+        ]
+      },
+      "phone": "+96597697665",
+      "whatsapp": {
+        "phone": "97697665",
+        "url": "https://wa.me/96597697665"
+      },
+      "instagram": "https://www.instagram.com/kdc.kw",
+      "website": "http://www.kdccounseling.com/",
+      "mapUrl": "https://maps.app.goo.gl/5C9DZCxiEL4bbF9b8",
+      "area": {
+        "ar": "السالمية",
+        "en": "Salmiya"
+      },
+      "address": {
+        "ar": "الكويت، السالمية، شارع سالم المبارك، برج سحاب، الدور الثاني.",
+        "en": "Sahab Tower, 2nd Floor, Salem Al Mubarak Street, Salmiya, Kuwait."
+      }
+    },
+    "sourceExtras": {
+      "profileUpdate": "User-supplied name, address, Maps and original logo, 2026-10-10. Existing backend seed identity: KDC | Kuwait Developmental Center. Live Centers API returned no records; exact alias reconciliation preserves a future API identity.",
+      "officialSource": "https://kdccounseling.com/ — retrieved 2026-10-10. Homepage lists the six displayed programs and links to https://wa.me/96597697665 and https://www.instagram.com/kdc.kw. Phone also matches existing seed. Clinical assessments, speech therapy, occupational therapy and specific ages not confirmed; omitted."
+    }
+  },
+  {
+    "id": "center-initials-clinic",
+    "nameAr": "عيادة إنيشالز",
+    "nameEn": "Initials Clinic",
+    "identityAliases": [
+      "عيادة انيشالز",
+      "initials_kw"
+    ],
+    "mainImage": "initials",
+    "categories": [
+      "rehabilitation"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [],
+    "stageTags": [],
+    "publicProfile": {
+      "classification": {
+        "ar": "علاج اضطرابات النطق واللغة والبلع",
+        "en": "Speech, Language and Swallowing Disorders"
+      },
+      "description": {
+        "ar": "عيادة متخصصة في علاج اضطرابات النطق واللغة والبلع، وترتبط بالأخصائية سمية العصفور.",
+        "en": "A clinic specializing in speech, language, and swallowing disorders, associated with specialist Somaya Al-Asfour."
+      },
+      "services": {
+        "ar": [
+          "علاج اضطرابات النطق واللغة والبلع"
+        ],
+        "en": [
+          "Speech, Language and Swallowing Disorders"
+        ]
+      },
+      "associatedSpecialists": {
+        "ar": [
+          "أ. سمية العصفور"
+        ],
+        "en": [
+          "Somaya Al-Asfour"
+        ]
+      },
+      "phone": "+96594012660",
+      "instagram": "https://www.instagram.com/initials_kw/",
+      "instagramLabel": {
+        "ar": "إنستقرام",
+        "en": "Instagram"
+      },
+      "mapUrl": "https://maps.app.goo.gl/6m7xrBxD6A4skcDe6",
+      "additionalUrl": "https://linktr.ee/initials_kw",
+      "additionalUrlLabel": {
+        "ar": "لينكتري",
+        "en": "Linktree"
+      }
+    },
+    "sourceExtras": {
+      "profileUpdate": "User-provided clinic information and original logo, 2026-10-10. No existing local or live API identity found. No WhatsApp number or street address supplied."
+    }
+  },
+  {
+    "id": "center-kun-ala-sila",
+    "nameAr": "مركز كُن على صِلة",
+    "nameEn": "Kun Ala Sila Center",
+    "identityAliases": [
+      "مركز كن على صلة",
+      "The Sela Center",
+      "the.sela.center"
+    ],
+    "mainImage": "sila",
+    "categories": [
+      "rehabilitation"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [],
+    "stageTags": [],
+    "publicProfile": {
+      "classification": {
+        "ar": "النطق واللغة والبلع",
+        "en": "Speech, Language and Swallowing"
+      },
+      "description": {
+        "ar": "مركز متخصص في تقييم وعلاج صعوبات اللغة والنطق والبلع، بالإضافة إلى تثقيف وتعليم مقدمي الرعاية والمختصين.",
+        "en": "A center specializing in the assessment and treatment of speech, language, and swallowing difficulties, as well as education and training for caregivers and professionals."
+      },
+      "services": {
+        "ar": [
+          "تقييم اضطرابات النطق واللغة",
+          "علاج صعوبات النطق والتخاطب",
+          "تقييم وعلاج صعوبات البلع",
+          "تثقيف وتدريب مقدمي الرعاية",
+          "تعليم وتدريب المختصين"
+        ],
+        "en": [
+          "Speech and Language Assessments",
+          "Speech and Language Therapy",
+          "Swallowing Assessment and Therapy",
+          "Caregiver Education and Training",
+          "Professional Education and Training"
+        ]
+      },
+      "phone": "+96565117417",
+      "whatsapp": {
+        "phone": "65117417",
+        "url": "https://wa.me/96565117417"
+      },
+      "instagram": "https://www.instagram.com/the.sela.center/"
+    },
+    "sourceExtras": {
+      "profileUpdate": "User-provided profile, contacts and original logo, 2026-10-10. Previously present only in unresolved research notes; no local public or live API record found. No address or Maps location supplied."
+    }
+  },
+  {
+    "id": "home-provider-lets-speech",
+    "nameAr": "ليتس سبيتش",
+    "nameEn": "Let's Speech",
+    "mainImage": "letsspeech",
+    "identityAliases": [
+      "Lets Speech",
+      "لتس سبيتش"
+    ],
+    "categories": [
+      "rehabilitation"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [],
+    "stageTags": [],
+    "publicProfile": {
+      "classification": {
+        "ar": "علاج النطق والتخاطب",
+        "en": "Speech and Language Therapy"
+      },
+      "phone": "+96597944756",
+      "instagram": "https://www.instagram.com/lets.speech/",
+      "mapUrl": "https://maps.app.goo.gl/2yC4gYUayPofTkAKA",
+      "instagramLabel": {
+        "ar": "إنستقرام",
+        "en": "Instagram"
+      }
+    }
+  },
+  {
+    "id": "center-special-reem",
+    "nameAr": "مركز سبيشل ريم",
+    "nameEn": "Special Reem Center",
+    "mainImage": "specialreem",
+    "identityAliases": [
+      "سبيشل ريم",
+      "مركز سبيشل ريم",
+      "Special Reem",
+      "Special Reem Center"
+    ],
+    "categories": [
+      "sports"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [],
+    "stageTags": [],
+    "sourceExtras": {
+      "profileProvenance": "User-provided center details and original logo."
+    },
+    "publicProfile": {
+      "classification": {
+        "ar": "تحليل السلوك · العلاج الطبيعي · العلاج الوظيفي",
+        "en": "Behavior Analysis · Physiotherapy · Occupational Therapy"
+      },
+      "description": {
+        "ar": "مركز يقدم خدمات تحليل السلوك والعلاج الطبيعي والعلاج الوظيفي.",
+        "en": "A center offering behavior analysis, physiotherapy, and occupational therapy services."
+      },
+      "services": {
+        "ar": [
+          "تحليل السلوك",
+          "العلاج الطبيعي",
+          "العلاج الوظيفي"
+        ],
+        "en": [
+          "Behavior Analysis",
+          "Physiotherapy",
+          "Occupational Therapy"
+        ]
+      },
+      "area": {
+        "ar": "صباح السالم",
+        "en": "Sabah Al Salem"
+      },
+      "address": {
+        "ar": "أرجان، صباح السالم",
+        "en": "Argan, Sabah Al Salem"
+      },
+      "phone": "+96595007009",
+      "whatsapp": {
+        "phone": "+96595007009",
+        "url": "https://wa.me/96595007009"
+      },
+      "instagram": "https://www.instagram.com/special.reem/",
+      "mapUrl": "https://maps.app.goo.gl/gW7SfCGw6qyiWav69"
+    }
+  },
+  {
+    "id": "center-communicate",
+    "nameAr": "مركز كوميونيكيت",
+    "nameEn": "Communicate",
+    "mainImage": "communicate",
+    "identityAliases": [
+      "Communicate",
+      "Communicate Kuwait",
+      "مركز كوميونيكيت",
+      "كوميونيكيت"
+    ],
+    "categories": [
+      "rehabilitation"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [
+      "speech"
+    ],
+    "stageTags": [],
+    "sourceExtras": {
+      "profileProvenance": "User-provided center details and original logo."
+    },
+    "publicProfile": {
+      "classification": {
+        "ar": "علاج النطق واللغة",
+        "en": "Speech and Language Therapy"
+      },
+      "description": {
+        "ar": "مركز يقدم خدمات علاج النطق واللغة والعلاج باللعب.",
+        "en": "A center offering speech and language therapy and play therapy services."
+      },
+      "services": {
+        "ar": [
+          "علاج النطق واللغة",
+          "العلاج باللعب"
+        ],
+        "en": [
+          "Speech and Language Therapy",
+          "Play Therapy"
+        ]
+      },
+      "instagram": "https://www.instagram.com/communicate_kw/",
+      "website": "http://www.communicatekw.com/",
+      "mapUrl": "https://maps.app.goo.gl/M3Xnjooot4hS8gbd9"
+    }
+  },
+  {
+    "id": "center-speak-up",
+    "nameAr": "مركز سبيك أب الاستشاري للخدمات التأهيلية والتدريب",
+    "nameEn": "Speak Up Consulting Center",
+    "mainImage": "speakup",
+    "identityAliases": [
+      "Speak Up",
+      "Speak Up Consulting Center",
+      "مركز سبيك أب",
+      "مركز سبيك أب الاستشاري"
+    ],
+    "categories": [
+      "rehabilitation"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [
+      "speech"
+    ],
+    "stageTags": [],
+    "sourceExtras": {
+      "profileProvenance": "User-provided center details and original logo."
+    },
+    "publicProfile": {
+      "classification": {
+        "ar": "النطق واللغة",
+        "en": "Speech and Language Therapy"
+      },
+      "description": {
+        "ar": "مركز سبيك أب الاستشاري للخدمات التأهيلية والتدريب، يتمتع بخبرة تزيد عن 11 سنة في مجال النطق واللغة.",
+        "en": "Speak Up Consulting Center for Rehabilitation and Training Services, with over 11 years of experience in speech and language services."
+      },
+      "services": {
+        "ar": [
+          "النطق واللغة"
+        ],
+        "en": [
+          "Speech and Language Therapy"
+        ]
+      },
+      "phone": "+96555566034",
+      "whatsapp": {
+        "url": "https://wa.me/message/MSKRS5DKDUHIK1"
+      },
+      "instagram": "https://www.instagram.com/speakupkw_/",
+      "mapUrl": "https://maps.app.goo.gl/R5c7ZNy2Vm9dybzXA"
+    }
+  }
+,
+  {
+    "id": "sports-al-tomooh",
+    "nameAr": "نادي الطموح الكويتي الرياضي",
+    "nameEn": "Al Tomooh Kuwaiti Sports Club",
+    "mainImage": "altomooh",
+    "identityAliases": [
+      "نادي الطموح الكويتي الرياضي",
+      "Al Tomooh Kuwaiti Sports Club",
+      "Al Tomooh"
+    ],
+    "categories": [
+      "sports"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [],
+    "stageTags": [],
+    "sourceExtras": {
+      "profileProvenance": "User-provided club details and original logo."
+    },
+    "publicProfile": {
+      "classification": {
+        "ar": "الإعاقة الذهنية",
+        "en": "Intellectual Disabilities"
+      },
+      "description": {
+        "ar": "نادي رياضي كويتي متخصص في رياضة الأشخاص ذوي الإعاقة الذهنية.",
+        "en": "A Kuwaiti sports club specializing in sports for people with intellectual disabilities."
+      },
+      "whatsapp": {
+        "url": "https://wa.me/96560606079"
+      },
+      "instagram": "https://www.instagram.com/altomoohsportclub/",
+      "mapUrl": "https://maps.app.goo.gl/GTa7PpoJir6Jgdcv8"
+    }
+  },
+  {
+    "id": "sports-kuwait-deaf",
+    "nameAr": "النادي الكويتي الرياضي للصم",
+    "nameEn": "Kuwait Sports Club for the Deaf",
+    "mainImage": "kscd",
+    "identityAliases": [
+      "Kuwait Sport Club for the Deaf"
+    ],
+    "categories": [
+      "sports"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [
+      "hearing"
+    ],
+    "stageTags": [],
+    "sourceExtras": {
+      "profileProvenance": "User-approved club information and supplied original logo, 2026-10-16. No admission eligibility or clinical services inferred."
+    },
+    "publicProfile": {
+      "classification": {
+        "ar": "الإعاقة السمعية",
+        "en": "Hearing Disability"
+      },
+      "description": {
+        "ar": "نادي رياضي كويتي متخصص في الأنشطة الرياضية للأشخاص الصم وضعاف السمع.",
+        "en": "A Kuwaiti sports club specializing in sports activities for deaf and hard-of-hearing individuals."
+      },
+      "whatsapp": {
+        "phone": "+96599302971",
+        "url": "https://api.whatsapp.com/send/?phone=96599302971"
+      },
+      "website": "https://www.kscd75.com/",
+      "instagram": "https://www.instagram.com/kscd75/"
+    }
+  },
+  {
+    "id": "sports-warba",
+    "nameAr": "نادي وربة الرياضي للمعاقين",
+    "nameEn": "Warba Disabled Sports Club",
+    "mainImage": "warba",
+    "identityAliases": [
+      "Warba Disabled Sport Club"
+    ],
+    "categories": [
+      "sports"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [
+      "motor",
+      "vision",
+      "cerebral-palsy"
+    ],
+    "stageTags": [],
+    "sourceExtras": {
+      "profileProvenance": "User-approved club information and original logo, 2026-10-16. No admission eligibility or clinical services inferred."
+    },
+    "publicProfile": {
+      "classification": {
+        "ar": "الإعاقة الحركية والبصرية والشلل الدماغي",
+        "en": "Physical/Motor Disability, Visual Disability and Cerebral Palsy"
+      },
+      "description": {
+        "ar": "نادي وربة الرياضي للمعاقين هو نادٍ رياضي كويتي شامل يهتم برياضة الأشخاص ذوي الإعاقة الحركية والبصرية والشلل الدماغي، ويهدف إلى دعم مشاركتهم في الأنشطة الرياضية.",
+        "en": "Warba Disabled Sports Club is a Kuwaiti sports club supporting sports participation for individuals with physical and motor disabilities, visual disabilities, and cerebral palsy."
+      },
+      "supportedConditions": {
+        "ar": [
+          "الإعاقة الحركية",
+          "الإعاقة البصرية",
+          "الشلل الدماغي"
+        ],
+        "en": [
+          "Physical/Motor Disability",
+          "Visual Disability",
+          "Cerebral Palsy"
+        ]
+      },
+      "instagram": "https://www.instagram.com/warbaclub/"
+    }
+  },
+  {
+    "id": "sports-nova-forte",
+    "nameAr": "نادي نوفا فورتي الرياضي",
+    "nameEn": "Nova Forte Gym",
+    "mainImage": "novaforte",
+    "categories": [
+      "sports"
+    ],
+    "observations": [],
+    "reviewStatus": "unverified",
+    "reviewNotesAr": [],
+    "disabilityTags": [],
+    "stageTags": [],
+    "sourceExtras": {
+      "profileProvenance": "User-approved gym information and supplied original logo, 2026-10-16. Specific disability eligibility not supplied."
+    },
+    "publicProfile": {
+      "description": {
+        "ar": "نادي صحي تفاعلي في الكويت مخصص لذوي الهمم، يهدف إلى دعم مشاركتهم في الأنشطة الرياضية واللياقة البدنية ضمن بيئة مناسبة لاحتياجاتهم.",
+        "en": "An interactive fitness gym in Kuwait serving people with disabilities and supporting their participation in physical fitness and sports activities."
+      },
+      "phone": "+96555310469",
+      "additionalPhone": "+96599360507",
+      "instagram": "https://www.instagram.com/novafortegym/"
+    }
+  }
+]

@@ -1,0 +1,2 @@
+import {blockedPlanAI} from '../modules/ai/planAI.blocked';
+test('Plan AI remains blocked without calling transport or storage',()=>{const res:any={setHeader:jest.fn(),status:jest.fn().mockReturnThis(),json:jest.fn()};blockedPlanAI({body:{context:{childId:'private'}}} as any,res);expect(res.status).toHaveBeenCalledWith(503);expect(res.json).toHaveBeenCalledWith({success:false,code:'PLAN_AI_LIVE_BLOCKED'});expect(res.setHeader).toHaveBeenCalledWith('Cache-Control','no-store')});

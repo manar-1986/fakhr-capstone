@@ -1,0 +1,5 @@
+Source: npm decode-uri-component@0.5.0, MIT; upstream license preserved.
+Only runtime source change: export default function -> module.exports = function.
+CommonJS compatibility for query-string 7 in existing Expo/React Navigation.
+No decoding algorithm changes. Local version 0.5.0-fakhr.1.
+Upstream tarball SHA-1: 4592fa1e1d640ec5e2760e2e168ad2ab5f2c9da1

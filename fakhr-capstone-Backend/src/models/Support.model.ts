@@ -1,0 +1,10 @@
+import mongoose from "mongoose";
+const message=new mongoose.Schema({requestId:{type:String,required:true},sender:{type:String,enum:["parent","admin"],required:true},body:{type:String,required:true,maxlength:4000},createdAt:{type:Date,default:Date.now} });
+const conversation=new mongoose.Schema({parentId:{type:mongoose.Schema.Types.ObjectId,required:true,index:true},assignedAdminId:{type:mongoose.Schema.Types.ObjectId,required:true,index:true},subject:{type:String,required:true,maxlength:120},requestId:{type:String,required:true},status:{type:String,enum:["open","closed"],default:"open"},messages:{type:[message],default:[]}}, {timestamps:true});
+conversation.index({parentId:1,requestId:1},{unique:true});
+export const SupportConversation=mongoose.model("SupportConversation",conversation);
+export const SupportAgent=mongoose.model("SupportAgent",new mongoose.Schema({userId:{type:mongoose.Schema.Types.ObjectId,required:true,unique:true},active:{type:Boolean,default:false}}));
+const rate=new mongoose.Schema({_id:String,count:{type:Number,default:0},expiresAt:Date});rate.index({expiresAt:1},{expireAfterSeconds:0});
+export const SupportRate=mongoose.model("SupportRate",rate);
+const report=new mongoose.Schema({conversationId:{type:mongoose.Schema.Types.ObjectId,required:true},reporterId:{type:mongoose.Schema.Types.ObjectId,required:true},reason:{type:String,enum:["privacy","abuse","other"],required:true}}, {timestamps:true});report.index({conversationId:1,reporterId:1},{unique:true});
+export const SupportReport=mongoose.model("SupportReport",report);

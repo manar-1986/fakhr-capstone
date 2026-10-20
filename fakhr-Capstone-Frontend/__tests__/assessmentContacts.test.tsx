@@ -1,0 +1,22 @@
+import React from 'react';
+import {Linking} from 'react-native';
+import {render,fireEvent} from '@testing-library/react-native';
+import AssessmentContactCards from '../components/directory/AssessmentContactCards';
+import type {AssessmentPresentation} from '../types/assessment';
+const phones=['1861111','24814720','24843900','23945619','24814328',null,'24617345'];
+export const assessmentFixture:AssessmentPresentation={version:1,introduction:'Inquiry contacts',explanation:'',verificationNotice:'Confirm services, referrals and acceptance.',sources:['https://online.pada.gov.kw/InfoServices.aspx?type=1'],medicalDisclaimer:'',organizations:phones.map((phone,i)=>({id:String(i),name:{ar:'جهة '+i,en:'Organization '+i},candidatePhone:phone,departmentStatus:'unverified',serviceStatus:'unverified',referralStatus:'unverified',acceptanceStatus:'unverified',contactEvidence:{status:i===0?'verified-general-contact':'unverified',source:i===0?'https://online.pada.gov.kw/InfoServices.aspx?type=1':null,scope:'General contact only'}}))};
+test.each(['ar','en'])('seven compact entries and six exact call destinations: %s',language=>{
+ const open=jest.spyOn(Linking,'openURL').mockResolvedValue(undefined);
+ const ui=render(<AssessmentContactCards data={assessmentFixture} language={language}/>);
+ expect(ui.getAllByTestId(/^assessment-card-/)).toHaveLength(7);
+ expect(ui.getAllByTestId(/^assessment-call-/)).toHaveLength(6);
+ expect(ui.getAllByTestId('assessment-verification-notice')).toHaveLength(1);
+ assessmentFixture.organizations.forEach(o=>{expect(ui.getByText(o.name[language==='en'?'en':'ar'])).toBeTruthy();if(o.candidatePhone){fireEvent.press(ui.getByTestId('assessment-call-'+o.id));expect(open).toHaveBeenLastCalledWith('tel:'+o.candidatePhone);}});
+ expect(ui.queryByTestId('assessment-verification-0')).toBeNull();
+ fireEvent.press(ui.getByTestId('assessment-toggle-0'));
+ expect(ui.getByTestId('assessment-verification-0')).toBeTruthy();
+ expect(ui.getByText(language==='en'?'Official report acceptance: Requires confirmation':'قبول التقرير رسمياً: يحتاج إلى تأكيد')).toBeTruthy();
+ fireEvent.press(ui.getAllByLabelText(language==='en'?'Official source':'المصدر الرسمي')[0]);
+ expect(open).toHaveBeenLastCalledWith(assessmentFixture.sources[0]);
+ fireEvent.press(ui.getByTestId('assessment-toggle-0'));expect(ui.queryByTestId('assessment-verification-0')).toBeNull();open.mockRestore();
+});

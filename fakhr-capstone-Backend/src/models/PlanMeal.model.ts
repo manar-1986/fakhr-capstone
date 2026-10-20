@@ -1,0 +1,4 @@
+import mongoose,{Schema} from 'mongoose';
+const schema=new Schema({parentId:{type:Schema.Types.ObjectId,required:true},childId:{type:Schema.Types.ObjectId,required:true},requestId:{type:String,required:true},fingerprint:{type:String,required:true},date:{type:String,required:true},time:{type:String,required:true},timezone:{type:String,required:true},name:{type:String,required:true},items:{type:String,required:true},allergyNotes:String,textureNotes:String,preparation:String,restrictions:String,kind:String,status:{type:String,enum:['pending','ate','partial','tasted','explored','declined'],default:'pending'},notes:{type:String,default:''},revision:{type:Number,default:0}},{timestamps:true,autoCreate:false,autoIndex:false});
+schema.index({parentId:1,requestId:1},{unique:true});schema.index({parentId:1,childId:1,date:1,time:1});
+export default mongoose.model('PlanMeal',schema);

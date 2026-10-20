@@ -1,0 +1,39 @@
+{
+  "abc": {
+    "url": "https://abckuwait.com/wp-content/uploads/2023/04/ABC-kuwait-logo.png",
+    "file": "abc.png",
+    "bytes": 7995
+  },
+  "qudrat": {
+    "url": "https://qudratkw.com/wp-content/uploads/2025/11/ملف_مفتوح_المصدر-removebg-preview-e1763101795805.png",
+    "file": "qudrat.png",
+    "bytes": 60565
+  },
+  "kcld": {
+    "url": "https://kcld-kw.com/images/logo.png",
+    "file": "kcld.png",
+    "bytes": 5596
+  },
+  "roa": {
+    "url": "https://roacenter.com/wp-content/uploads/2026/04/cropped-مركز-الرؤى-للطفولة-المبكرة-اضطرابات-طيف-التوح-.webp",
+    "file": "roa.webp",
+    "bytes": 29398,
+    "renderedFile": "roa.png",
+    "conversion": "Lossless PNG copy for native compatibility; original WebP retained."
+  },
+  "firststep": {
+    "url": "https://www.firststepkw.com/system/storage/app/public/102/conversions/681d164f78ac4_Logo-thumb_logo.png",
+    "file": "firststep.png",
+    "bytes": 14858
+  },
+  "speechplus": {
+    "url": "https://ugc.production.linktr.ee/8abf89e8-7817-442b-8098-bdb8d42028be_IMG-7724.jpeg",
+    "file": "speechplus.jpg",
+    "bytes": 28398
+  },
+  "shahad": {
+    "url": "https://static.wixstatic.com/media/371991_ae6f29f7783a43c29665e329a7523724~mv2.png",
+    "file": "shahad.png",
+    "bytes": 214798
+  }
+}

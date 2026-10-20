@@ -1,0 +1,30 @@
+import request from 'supertest';
+import {validateProductionEnvironment} from '../config/production';
+import {initializeBackend} from '../startup';
+import {releaseOrigins,minimumRelease} from '../config/releaseProfile';
+import {browserSecurity} from '../config/browserSecurity';
+import express from 'express';
+const auth=jest.fn((req:any,res:any,next:any)=>req.headers.authorization==='Bearer synthetic' ? next() : res.status(401).json({message:'Unauthorized'}));
+jest.mock('../middlewares/auth.middleware',()=>({authenticate:(req:any,res:any,next:any)=>auth(req,res,next)}));
+jest.mock('../utils/email',()=>({sendPasswordResetEmail:jest.fn(),verifyEmailConfig:jest.fn()}));
+import {createApp} from '../application';
+const base=()=>({NODE_ENV:'production',FAKHR_RELEASE_PROFILE:'minimum',JWT_SECRET:'aB3!cD4@eF5#gH6$iJ7%kL8^mN9&oP0*',MONGODB_URI:'mongodb+srv://fixture:fixture-password@db.example.invalid/fakhr'});
+const old={...process.env};
+afterEach(()=>{process.env={...old};jest.clearAllMocks();});
+describe('Minimum release fail-closed profile',()=>{
+ it('boots without email and never calls SMTP',async()=>{const connect=jest.fn(),verifyEmail=jest.fn();await initializeBackend(base(),{connect,verifyEmail});expect(connect).toHaveBeenCalledTimes(1);expect(verifyEmail).not.toHaveBeenCalled();});
+ it.each(['JWT_SECRET','MONGODB_URI'])('still requires %s',(key)=>{const raw:any=base();delete raw[key];expect(()=>validateProductionEnvironment(raw)).toThrow(key);});
+ it('still requires explicit Render trusted proxies',()=>expect(()=>validateProductionEnvironment({...base(),RENDER:'true'})).toThrow());
+ it.each(['MINIMUM','', 'typo'])('rejects invalid profiles %s',FAKHR_RELEASE_PROFILE=>expect(()=>validateProductionEnvironment({...base(),FAKHR_RELEASE_PROFILE})).toThrow('FAKHR_RELEASE_PROFILE'));
+ it('complete default still requires reset hosting',()=>{const raw:any=base();delete raw.FAKHR_RELEASE_PROFILE;expect(()=>validateProductionEnvironment(raw)).toThrow('FRONTEND_URL');});
+ it.each(['FAKHR_AI_ENABLED','SEED_CARE_PATH'])('cannot enable %s',(key)=>expect(()=>validateProductionEnvironment({...base(),[key]:'true'})).toThrow());
+ it('rejects insecure TLS even when SMTP disabled',()=>expect(()=>validateProductionEnvironment({...base(),NODE_TLS_REJECT_UNAUTHORIZED:'0'})).toThrow());
+ it('rejects malformed supplied browser config',()=>expect(()=>validateProductionEnvironment({...base(),FRONTEND_URL:'http://localhost:3000'})).toThrow());
+ it('defaults to native-only and rejects arbitrary browser origins',async()=>{const a=express();a.use(browserSecurity(releaseOrigins(base())));a.get('/',(_q,r)=>r.json({ok:true}));expect((await request(a).get('/')).status).toBe(200);expect((await request(a).get('/').set('Origin','https://evil.invalid')).status).toBe(403);});
+ it('can preserve exact approved browser origin',()=>expect([...releaseOrigins({...base(),FRONTEND_URL:'https://app.example.invalid'})]).toEqual(['https://app.example.invalid']));
+ it.each(['/api/auth/forgot-password','/api/auth/reset-password'])('blocks %s before any DB or SMTP access',async url=>{process.env.FAKHR_RELEASE_PROFILE='minimum';const r=await request(createApp()).post(url).send({});expect(r.status).toBe(503);expect(r.body.code).toBe('FEATURE_DISABLED');expect(r.headers['cache-control']).toBe('no-store');});
+ it.each(['/api/calendar-events','/api/favorites','/api/support','/api/ai/ask','/api/care-paths/generate','/api/care-path-tasks/x/complete','/api/community','/api/auth/delete-account','/api/help-center/message'])('retains authentication and denies optional operation %s',async url=>{process.env.FAKHR_RELEASE_PROFILE='minimum';const app=createApp();const method=url.endsWith('delete-account')?'delete':'post';expect((await request(app)[method](url)).status).toBe(401);const r=await request(app)[method](url).set('Authorization','Bearer synthetic');expect(r.status).toBe(503);expect(r.body.code).toBe('FEATURE_DISABLED');});
+ it('keeps health working',async()=>{process.env.FAKHR_RELEASE_PROFILE='minimum';expect((await request(createApp()).get('/health')).status).toBe(200);});
+ it('does not change test/development defaults',()=>expect(minimumRelease({NODE_ENV:'test'})).toBe(false));
+});
+

@@ -1,0 +1,7 @@
+Asset: home-hero-girl-hd.png
+Created with the built-in image generation tool on 2026-10-08.
+Edit reference: home-hero-girl.png (original retained).
+This is a generated recreation, not a recovered original high-resolution photo.
+
+Prompt:
+Edit target: existing Fakhr Home banner photo. Recreate this low-resolution schoolgirl portrait as a crisp high-resolution square photographic banner asset, preserving the girl, white school shirt, dark backpack, ponytail, relaxed smile, and looking to the left. Frame head and torso with breathing room above head, soft natural studio light, clean pastel periwinkle background matching #AAB3D6 and #BCC3D8. No text, logos, symbols, borders, UI, or extra people. This is only the photograph portion of a mobile app banner; live text will be rendered separately. Natural photographic texture, sharp clean edges. Output 1024x1024.

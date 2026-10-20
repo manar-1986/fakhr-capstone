@@ -1,0 +1,2275 @@
+{
+  "schemaVersion": "inclusive-catalog-review-1",
+  "status": "DRAFT_REVIEW_ONLY_NOT_IMPORTABLE",
+  "date": "2026-10-19",
+  "productionAuthorized": false,
+  "scope": {
+    "ar": "مشاركة تعليمية وترفيهية شاملة، وليست علاجًا أو تشخيصًا. البنية قابلة للتوسع لجميع الأعمار والاحتياجات، لكن هذا الملف لا يدّعي تغطيتها كلها.",
+    "en": "Inclusive educational and recreational participation, not therapy or diagnosis. The structure can expand across ages and needs; this file does not claim complete coverage."
+  },
+  "provenance": {
+    "architecture": "User-approved inclusive architecture",
+    "initialContent": "Only user-supplied titles recoverable; full original approved source unavailable",
+    "newContent": "All older-age variants, suggested timing, Arabic translations not previously supplied, and accessibility options are new drafts. No professional content validation claimed."
+  },
+  "initialCatalog": {
+    "ageYears": [
+      3,
+      5
+    ],
+    "status": "SOURCE_PENDING_NOT_RECONSTRUCTED",
+    "missingFields": [
+      "original bilingual template names and goals",
+      "original bilingual descriptions and instructions",
+      "original frequencies and durations",
+      "original progress observations",
+      "original safety and suitability wording"
+    ],
+    "items": [
+      {
+        "familyId": "communication",
+        "id": "choose",
+        "userSuppliedTitle": {
+          "en": "I choose what I like",
+          "ar": "أختار ما أحب"
+        },
+        "originalFullContent": null,
+        "status": "PRESERVE_ORIGINAL_WHEN_SOURCE_RECOVERED"
+      },
+      {
+        "familyId": "communication",
+        "id": "book",
+        "userSuppliedTitle": {
+          "en": "Explore a book together",
+          "ar": "نكتشف كتابًا معًا"
+        },
+        "originalFullContent": null,
+        "status": "PRESERVE_ORIGINAL_WHEN_SOURCE_RECOVERED"
+      },
+      {
+        "familyId": "routines",
+        "id": "tidy",
+        "userSuppliedTitle": {
+          "en": "Put my toys away",
+          "ar": null
+        },
+        "originalFullContent": null,
+        "status": "PRESERVE_ORIGINAL_WHEN_SOURCE_RECOVERED"
+      },
+      {
+        "familyId": "routines",
+        "id": "ready",
+        "userSuppliedTitle": {
+          "en": "Getting ready to go out",
+          "ar": null
+        },
+        "originalFullContent": null,
+        "status": "PRESERVE_ORIGINAL_WHEN_SOURCE_RECOVERED"
+      },
+      {
+        "familyId": "sensory",
+        "id": "texture",
+        "userSuppliedTitle": {
+          "en": "Choose a texture",
+          "ar": null
+        },
+        "originalFullContent": null,
+        "status": "PRESERVE_ORIGINAL_WHEN_SOURCE_RECOVERED"
+      },
+      {
+        "familyId": "sensory",
+        "id": "sound",
+        "userSuppliedTitle": {
+          "en": "Choose quiet or sound",
+          "ar": null
+        },
+        "originalFullContent": null,
+        "status": "PRESERVE_ORIGINAL_WHEN_SOURCE_RECOVERED"
+      },
+      {
+        "familyId": "social",
+        "id": "turn",
+        "userSuppliedTitle": {
+          "en": "My turn, your turn",
+          "ar": null
+        },
+        "originalFullContent": null,
+        "status": "PRESERVE_ORIGINAL_WHEN_SOURCE_RECOVERED"
+      },
+      {
+        "familyId": "social",
+        "id": "help",
+        "userSuppliedTitle": {
+          "en": "Ask for help or a break",
+          "ar": "أطلب المساعدة أو الاستراحة"
+        },
+        "originalFullContent": null,
+        "status": "PRESERVE_ORIGINAL_WHEN_SOURCE_RECOVERED"
+      },
+      {
+        "familyId": "movement",
+        "id": "ball",
+        "userSuppliedTitle": {
+          "en": "Roll the ball",
+          "ar": null
+        },
+        "originalFullContent": null,
+        "status": "PRESERVE_ORIGINAL_WHEN_SOURCE_RECOVERED"
+      },
+      {
+        "familyId": "movement",
+        "id": "build",
+        "userSuppliedTitle": {
+          "en": "Match and build",
+          "ar": null
+        },
+        "originalFullContent": null,
+        "status": "PRESERVE_ORIGINAL_WHEN_SOURCE_RECOVERED"
+      }
+    ]
+  },
+  "groups": [
+    {
+      "id": "communication",
+      "title": {
+        "ar": "التواصل والتعبير",
+        "en": "Communication and expression"
+      }
+    },
+    {
+      "id": "routines",
+      "title": {
+        "ar": "الروتين اليومي",
+        "en": "Daily routines"
+      }
+    },
+    {
+      "id": "sensory",
+      "title": {
+        "ar": "التفضيلات الحسية",
+        "en": "Sensory preferences"
+      }
+    },
+    {
+      "id": "social",
+      "title": {
+        "ar": "اللعب والمشاركة الاجتماعية",
+        "en": "Social play and participation"
+      }
+    },
+    {
+      "id": "movement",
+      "title": {
+        "ar": "الحركة والاكتشاف",
+        "en": "Movement and discovery"
+      }
+    }
+  ],
+  "timingPolicy": {
+    "status": "NEW_DRAFT_NOT_ORIGINAL_PRESCRIPTION",
+    "duration": {
+      "ar": "اقتراح مرن: 5–10 دقائق، أو أقل حسب رغبة الطفل وراحته؛ لا حد أدنى مطلوب.",
+      "en": "Flexible suggestion: 5–10 minutes, or less according to preference and comfort; no minimum required."
+    },
+    "frequency": {
+      "ar": "يمكن عرض النشاط مرة أو مرتين أسبوعيًا إذا رغب الطفل والأسرة، دون إلزام أو تعويض للمرات المتروكة.",
+      "en": "May be offered once or twice weekly if the child and family wish, without obligation or making up skipped sessions."
+    }
+  },
+  "accessibilityOptions": [
+    {
+      "id": "speech",
+      "status": "DRAFT_REQUIRES_ACCESSIBILITY_REVIEW",
+      "content": {
+        "ar": "اقبل الكلام أو الإشارة أو الكتابة أو وسيلة التواصل المعتادة؛ لا تشترط النطق أو تكرار كلمات.",
+        "en": "Accept speech, gesture, writing or established communication; do not require speech or word repetition."
+      },
+      "applicability": "Only when established, preferred, safe, and compatible with this activity; not an automatic diagnosis mapping."
+    },
+    {
+      "id": "aac",
+      "status": "DRAFT_REQUIRES_ACCESSIBILITY_REVIEW",
+      "content": {
+        "ar": "أبقِ جهاز أو لوحة التواصل المعتادة متاحة. استخدم المفردات الموجودة ولا تغيّر نظام الوصول أو الجهاز دون مراجعة مناسبة.",
+        "en": "Keep the established AAC device or board available. Use existing vocabulary; do not change the access system or device without appropriate review."
+      },
+      "applicability": "Only when established, preferred, safe, and compatible with this activity; not an automatic diagnosis mapping."
+    },
+    {
+      "id": "hearing",
+      "status": "DRAFT_REQUIRES_ACCESSIBILITY_REVIEW",
+      "content": {
+        "ar": "استخدم لغة الإشارة التي يعرفها الطفل أو نصًا أو صورًا وفق تفضيله. اجعل إشارات الدور والإيقاف مرئية؛ لا تفترض أن قراءة الشفاه متاحة.",
+        "en": "Use the child's known sign language, text or pictures as preferred. Make turn and stop signals visible; do not assume lip-reading is accessible."
+      },
+      "applicability": "Only when established, preferred, safe, and compatible with this activity; not an automatic diagnosis mapping."
+    },
+    {
+      "id": "vision",
+      "status": "DRAFT_REQUIRES_ACCESSIBILITY_REVIEW",
+      "content": {
+        "ar": "قدّم وصفًا لفظيًا أو أشياء حقيقية أو علامات ملموسة مناسبة، ونصًا مكبرًا عالي التباين إن كان مفيدًا. لا تعتمد على اللون وحده.",
+        "en": "Offer spoken description, real objects or suitable tactile cues, and large high-contrast text when helpful. Do not rely on color alone."
+      },
+      "applicability": "Only when established, preferred, safe, and compatible with this activity; not an automatic diagnosis mapping."
+    },
+    {
+      "id": "sensory",
+      "status": "DRAFT_REQUIRES_ACCESSIBILITY_REVIEW",
+      "content": {
+        "ar": "اسمح بالهدوء أو تقليل المواد أو المشاهدة دون لمس أو استراحة. أوقف المثير غير المرغوب فورًا؛ لا تجعل تحمله هدفًا.",
+        "en": "Allow quiet, fewer materials, observing without touch or a break. Stop an unwanted stimulus promptly; tolerating it is not a goal."
+      },
+      "applicability": "Only when established, preferred, safe, and compatible with this activity; not an automatic diagnosis mapping."
+    },
+    {
+      "id": "cognitive",
+      "status": "DRAFT_REQUIRES_ACCESSIBILITY_REVIEW",
+      "content": {
+        "ar": "استخدم لغة واضحة وخطوة واحدة أو تسلسلًا قصيرًا وخيارات محدودة ووقت معالجة إضافيًا. حافظ على موضوع يحترم العمر.",
+        "en": "Use clear language, one step or a short sequence, limited choices and additional processing time. Keep the topic age-respectful."
+      },
+      "applicability": "Only when established, preferred, safe, and compatible with this activity; not an automatic diagnosis mapping."
+    },
+    {
+      "id": "mobility",
+      "status": "DRAFT_REQUIRES_ACCESSIBILITY_REVIEW",
+      "content": {
+        "ar": "استخدم الوضعية والأدوات وطرق الوصول المعتادة. انقل المواد إلى مدى الوصول أو دع الطفل يوجّه شريكًا؛ لا تحرّك جسمه أو تفرض تمرينًا.",
+        "en": "Use established positioning, tools and access methods. Place materials within reach or let the child direct a partner; do not move their body or impose exercise."
+      },
+      "applicability": "Only when established, preferred, safe, and compatible with this activity; not an automatic diagnosis mapping."
+    }
+  ],
+  "variants": [
+    {
+      "id": "choose-6-9-draft1",
+      "familyId": "communication",
+      "sourceActivityId": "choose",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        6,
+        9
+      ],
+      "title": {
+        "ar": "اختيار لعبة أو كتاب لوقت الفراغ",
+        "en": "Choose a game or book for free time"
+      },
+      "goal": {
+        "ar": "التعبير عن اختيار شخصي بطريقة التواصل المعتادة.",
+        "en": "Express a personal choice using an established communication method."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: اختيار لعبة أو كتاب لوقت الفراغ. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: choose a game or book for free time. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اعرض خيارين متاحين ومقبولين، مع خيار «لا أريد أيًا منهما».",
+          "en": "Offer two available, acceptable options and a “neither” option."
+        },
+        {
+          "ar": "قدّم المعلومات بطريقة يمكن الوصول إليها، وانتظر الاستجابة دون تلقين اختيار محدد.",
+          "en": "Present information accessibly and wait without prompting a particular choice."
+        },
+        {
+          "ar": "نفّذ الاختيار الممكن أو اشرح حدوده، واسمح بتغييره.",
+          "en": "Honor the feasible choice or explain its limits, and allow it to change."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل طريقة التعبير عن الاختيار والدعم الذي طلبه الطفل، دون تقييم صحة تفضيله.",
+        "en": "Note the choice method and support requested, without judging the preference."
+      },
+      "safety": {
+        "ar": "لا تجعل الطعام أو الراحة أو وسائل التواصل مكافأة مشروطة بالمشاركة.",
+        "en": "Never make food, rest or communication access conditional on participation."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "communication",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "choose-10-13-draft1",
+      "familyId": "communication",
+      "sourceActivityId": "choose",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        10,
+        13
+      ],
+      "title": {
+        "ar": "اختيار مشروع فني أو نشاط ترفيهي",
+        "en": "Choose an art project or leisure activity"
+      },
+      "goal": {
+        "ar": "التعبير عن اختيار شخصي بطريقة التواصل المعتادة.",
+        "en": "Express a personal choice using an established communication method."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: اختيار مشروع فني أو نشاط ترفيهي. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: choose an art project or leisure activity. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اعرض خيارين متاحين ومقبولين، مع خيار «لا أريد أيًا منهما».",
+          "en": "Offer two available, acceptable options and a “neither” option."
+        },
+        {
+          "ar": "قدّم المعلومات بطريقة يمكن الوصول إليها، وانتظر الاستجابة دون تلقين اختيار محدد.",
+          "en": "Present information accessibly and wait without prompting a particular choice."
+        },
+        {
+          "ar": "نفّذ الاختيار الممكن أو اشرح حدوده، واسمح بتغييره.",
+          "en": "Honor the feasible choice or explain its limits, and allow it to change."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل طريقة التعبير عن الاختيار والدعم الذي طلبه الطفل، دون تقييم صحة تفضيله.",
+        "en": "Note the choice method and support requested, without judging the preference."
+      },
+      "safety": {
+        "ar": "لا تجعل الطعام أو الراحة أو وسائل التواصل مكافأة مشروطة بالمشاركة.",
+        "en": "Never make food, rest or communication access conditional on participation."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "communication",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "choose-14-17-draft1",
+      "familyId": "communication",
+      "sourceActivityId": "choose",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        14,
+        17
+      ],
+      "title": {
+        "ar": "اختيار نشاط لوقت الفراغ أو مشاركة مجتمعية",
+        "en": "Choose a leisure or community participation activity"
+      },
+      "goal": {
+        "ar": "التعبير عن اختيار شخصي بطريقة التواصل المعتادة.",
+        "en": "Express a personal choice using an established communication method."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: اختيار نشاط لوقت الفراغ أو مشاركة مجتمعية. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: choose a leisure or community participation activity. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اعرض خيارين متاحين ومقبولين، مع خيار «لا أريد أيًا منهما».",
+          "en": "Offer two available, acceptable options and a “neither” option."
+        },
+        {
+          "ar": "قدّم المعلومات بطريقة يمكن الوصول إليها، وانتظر الاستجابة دون تلقين اختيار محدد.",
+          "en": "Present information accessibly and wait without prompting a particular choice."
+        },
+        {
+          "ar": "نفّذ الاختيار الممكن أو اشرح حدوده، واسمح بتغييره.",
+          "en": "Honor the feasible choice or explain its limits, and allow it to change."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل طريقة التعبير عن الاختيار والدعم الذي طلبه الطفل، دون تقييم صحة تفضيله.",
+        "en": "Note the choice method and support requested, without judging the preference."
+      },
+      "safety": {
+        "ar": "لا تجعل الطعام أو الراحة أو وسائل التواصل مكافأة مشروطة بالمشاركة.",
+        "en": "Never make food, rest or communication access conditional on participation."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "communication",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "book-6-9-draft1",
+      "familyId": "communication",
+      "sourceActivityId": "book",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        6,
+        9
+      ],
+      "title": {
+        "ar": "استكشاف قصة أو كتاب معلومات يختاره الطفل",
+        "en": "Explore a child-chosen story or information book"
+      },
+      "goal": {
+        "ar": "مشاركة الاهتمام والتعبير عن فكرة أو سؤال.",
+        "en": "Share an interest and express an idea or question."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: استكشاف قصة أو كتاب معلومات يختاره الطفل. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: explore a child-chosen story or information book. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اختر مادة مناسبة للعمر والاهتمام ومتاحة بصيغة يستطيع الطفل استخدامها.",
+          "en": "Choose age-respectful, interesting material in an accessible format."
+        },
+        {
+          "ar": "استكشف جزءًا قصيرًا معًا؛ صف الصورة أو اقرأ النص عند الطلب.",
+          "en": "Explore a short section together; describe images or read text when requested."
+        },
+        {
+          "ar": "ادعُ الطفل للتعليق أو السؤال أو الإشارة أو الاكتفاء بالاستماع؛ لا تحوّلها لاختبار.",
+          "en": "Invite a comment, question, indication or listening only; do not turn it into a test."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل الموضوع الذي جذب الاهتمام وطريقة المشاركة والدعم المستخدم.",
+        "en": "Note the topic of interest, participation method and support used."
+      },
+      "safety": {
+        "ar": "احترم حق الطفل في ترك المادة أو تجنب موضوع مزعج.",
+        "en": "Respect the option to stop or avoid an upsetting topic."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "communication",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "book-10-13-draft1",
+      "familyId": "communication",
+      "sourceActivityId": "book",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        10,
+        13
+      ],
+      "title": {
+        "ar": "استكشاف مجلة أو قصة مصورة أو موضوع هواية",
+        "en": "Explore a magazine, graphic story or hobby topic"
+      },
+      "goal": {
+        "ar": "مشاركة الاهتمام والتعبير عن فكرة أو سؤال.",
+        "en": "Share an interest and express an idea or question."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: استكشاف مجلة أو قصة مصورة أو موضوع هواية. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: explore a magazine, graphic story or hobby topic. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اختر مادة مناسبة للعمر والاهتمام ومتاحة بصيغة يستطيع الطفل استخدامها.",
+          "en": "Choose age-respectful, interesting material in an accessible format."
+        },
+        {
+          "ar": "استكشف جزءًا قصيرًا معًا؛ صف الصورة أو اقرأ النص عند الطلب.",
+          "en": "Explore a short section together; describe images or read text when requested."
+        },
+        {
+          "ar": "ادعُ الطفل للتعليق أو السؤال أو الإشارة أو الاكتفاء بالاستماع؛ لا تحوّلها لاختبار.",
+          "en": "Invite a comment, question, indication or listening only; do not turn it into a test."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل الموضوع الذي جذب الاهتمام وطريقة المشاركة والدعم المستخدم.",
+        "en": "Note the topic of interest, participation method and support used."
+      },
+      "safety": {
+        "ar": "احترم حق الطفل في ترك المادة أو تجنب موضوع مزعج.",
+        "en": "Respect the option to stop or avoid an upsetting topic."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "communication",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "book-14-17-draft1",
+      "familyId": "communication",
+      "sourceActivityId": "book",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        14,
+        17
+      ],
+      "title": {
+        "ar": "استكشاف مقال أو دليل عملي عن اهتمام شخصي",
+        "en": "Explore an article or practical guide about a personal interest"
+      },
+      "goal": {
+        "ar": "مشاركة الاهتمام والتعبير عن فكرة أو سؤال.",
+        "en": "Share an interest and express an idea or question."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: استكشاف مقال أو دليل عملي عن اهتمام شخصي. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: explore an article or practical guide about a personal interest. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اختر مادة مناسبة للعمر والاهتمام ومتاحة بصيغة يستطيع الطفل استخدامها.",
+          "en": "Choose age-respectful, interesting material in an accessible format."
+        },
+        {
+          "ar": "استكشف جزءًا قصيرًا معًا؛ صف الصورة أو اقرأ النص عند الطلب.",
+          "en": "Explore a short section together; describe images or read text when requested."
+        },
+        {
+          "ar": "ادعُ الطفل للتعليق أو السؤال أو الإشارة أو الاكتفاء بالاستماع؛ لا تحوّلها لاختبار.",
+          "en": "Invite a comment, question, indication or listening only; do not turn it into a test."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل الموضوع الذي جذب الاهتمام وطريقة المشاركة والدعم المستخدم.",
+        "en": "Note the topic of interest, participation method and support used."
+      },
+      "safety": {
+        "ar": "احترم حق الطفل في ترك المادة أو تجنب موضوع مزعج.",
+        "en": "Respect the option to stop or avoid an upsetting topic."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "communication",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "tidy-6-9-draft1",
+      "familyId": "routines",
+      "sourceActivityId": "tidy",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        6,
+        9
+      ],
+      "title": {
+        "ar": "ترتيب الألعاب أو أدوات الرسم",
+        "en": "Organize toys or art materials"
+      },
+      "goal": {
+        "ar": "المشاركة في ترتيب المتعلقات باستخدام تسلسل مفهوم.",
+        "en": "Participate in organizing belongings using an understandable sequence."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: ترتيب الألعاب أو أدوات الرسم. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: organize toys or art materials. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اتفقا على مجموعة صغيرة من الأشياء ومكان واضح لكل منها.",
+          "en": "Agree on a small set of items and a clear place for each."
+        },
+        {
+          "ar": "قدّم خطوة واحدة أو قائمة قصيرة بصور أو كلمات أو إشارات ملموسة.",
+          "en": "Offer one step or a short list using pictures, words or tactile cues."
+        },
+        {
+          "ar": "دع الطفل ينقل الأشياء أو يوجّه شريكًا، ثم يختار التوقف أو الاستمرار.",
+          "en": "Let the child move items or direct a partner, then choose to stop or continue."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل الخطوات التي شارك فيها الطفل ونوع المساعدة، لا سرعة الإنجاز.",
+        "en": "Note steps participated in and assistance used, not speed."
+      },
+      "safety": {
+        "ar": "استبعد الأشياء الثقيلة والحادة والمنظفات، ولا تنقل ممتلكاته الخاصة دون موافقته.",
+        "en": "Exclude heavy or sharp items and cleaners; do not move private belongings without agreement."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "routines",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "tidy-10-13-draft1",
+      "familyId": "routines",
+      "sourceActivityId": "tidy",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        10,
+        13
+      ],
+      "title": {
+        "ar": "تنظيم أدوات الهواية أو مساحة الدراسة",
+        "en": "Organize hobby materials or a study space"
+      },
+      "goal": {
+        "ar": "المشاركة في ترتيب المتعلقات باستخدام تسلسل مفهوم.",
+        "en": "Participate in organizing belongings using an understandable sequence."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: تنظيم أدوات الهواية أو مساحة الدراسة. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: organize hobby materials or a study space. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اتفقا على مجموعة صغيرة من الأشياء ومكان واضح لكل منها.",
+          "en": "Agree on a small set of items and a clear place for each."
+        },
+        {
+          "ar": "قدّم خطوة واحدة أو قائمة قصيرة بصور أو كلمات أو إشارات ملموسة.",
+          "en": "Offer one step or a short list using pictures, words or tactile cues."
+        },
+        {
+          "ar": "دع الطفل ينقل الأشياء أو يوجّه شريكًا، ثم يختار التوقف أو الاستمرار.",
+          "en": "Let the child move items or direct a partner, then choose to stop or continue."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل الخطوات التي شارك فيها الطفل ونوع المساعدة، لا سرعة الإنجاز.",
+        "en": "Note steps participated in and assistance used, not speed."
+      },
+      "safety": {
+        "ar": "استبعد الأشياء الثقيلة والحادة والمنظفات، ولا تنقل ممتلكاته الخاصة دون موافقته.",
+        "en": "Exclude heavy or sharp items and cleaners; do not move private belongings without agreement."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "routines",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "tidy-14-17-draft1",
+      "familyId": "routines",
+      "sourceActivityId": "tidy",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        14,
+        17
+      ],
+      "title": {
+        "ar": "تنظيم المتعلقات أو أدوات مشروع شخصي",
+        "en": "Organize belongings or personal project materials"
+      },
+      "goal": {
+        "ar": "المشاركة في ترتيب المتعلقات باستخدام تسلسل مفهوم.",
+        "en": "Participate in organizing belongings using an understandable sequence."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: تنظيم المتعلقات أو أدوات مشروع شخصي. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: organize belongings or personal project materials. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اتفقا على مجموعة صغيرة من الأشياء ومكان واضح لكل منها.",
+          "en": "Agree on a small set of items and a clear place for each."
+        },
+        {
+          "ar": "قدّم خطوة واحدة أو قائمة قصيرة بصور أو كلمات أو إشارات ملموسة.",
+          "en": "Offer one step or a short list using pictures, words or tactile cues."
+        },
+        {
+          "ar": "دع الطفل ينقل الأشياء أو يوجّه شريكًا، ثم يختار التوقف أو الاستمرار.",
+          "en": "Let the child move items or direct a partner, then choose to stop or continue."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل الخطوات التي شارك فيها الطفل ونوع المساعدة، لا سرعة الإنجاز.",
+        "en": "Note steps participated in and assistance used, not speed."
+      },
+      "safety": {
+        "ar": "استبعد الأشياء الثقيلة والحادة والمنظفات، ولا تنقل ممتلكاته الخاصة دون موافقته.",
+        "en": "Exclude heavy or sharp items and cleaners; do not move private belongings without agreement."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "routines",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "ready-6-9-draft1",
+      "familyId": "routines",
+      "sourceActivityId": "ready",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        6,
+        9
+      ],
+      "title": {
+        "ar": "الاستعداد لزيارة المكتبة أو نشاط ترفيهي",
+        "en": "Prepare for a library visit or leisure activity"
+      },
+      "goal": {
+        "ar": "اختيار متعلقات لازمة والاستعداد لنشاط متفق عليه.",
+        "en": "Choose needed belongings and prepare for an agreed activity."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: الاستعداد لزيارة المكتبة أو نشاط ترفيهي. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: prepare for a library visit or leisure activity. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "حددا النشاط والمتعلقات اللازمة معًا.",
+          "en": "Identify the activity and needed belongings together."
+        },
+        {
+          "ar": "استخدما قائمة قصيرة متاحة؛ دع الطفل يختار أو يشير أو يوجّه تجهيز كل عنصر.",
+          "en": "Use an accessible short checklist; let the child select, indicate or direct preparation of each item."
+        },
+        {
+          "ar": "راجعا ما تم وما يحتاج مساعدة دون مطالبة باستقلال كامل.",
+          "en": "Review what is ready and what needs support without requiring full independence."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل استخدام القائمة والاختيارات والمساعدة المطلوبة.",
+        "en": "Note checklist use, choices and support requested."
+      },
+      "safety": {
+        "ar": "هذا نشاط تجهيز فقط؛ الإشراف على الخروج مسؤولية البالغ، ولا يتضمن تدريبًا على التنقل المستقل.",
+        "en": "This is preparation only; adult supervision of outings remains necessary and independent travel training is not included."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "routines",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "ready-10-13-draft1",
+      "familyId": "routines",
+      "sourceActivityId": "ready",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        10,
+        13
+      ],
+      "title": {
+        "ar": "إعداد حقيبة لنشاط أو نادٍ يختاره الطفل",
+        "en": "Prepare a bag for a chosen activity or club"
+      },
+      "goal": {
+        "ar": "اختيار متعلقات لازمة والاستعداد لنشاط متفق عليه.",
+        "en": "Choose needed belongings and prepare for an agreed activity."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: إعداد حقيبة لنشاط أو نادٍ يختاره الطفل. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: prepare a bag for a chosen activity or club. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "حددا النشاط والمتعلقات اللازمة معًا.",
+          "en": "Identify the activity and needed belongings together."
+        },
+        {
+          "ar": "استخدما قائمة قصيرة متاحة؛ دع الطفل يختار أو يشير أو يوجّه تجهيز كل عنصر.",
+          "en": "Use an accessible short checklist; let the child select, indicate or direct preparation of each item."
+        },
+        {
+          "ar": "راجعا ما تم وما يحتاج مساعدة دون مطالبة باستقلال كامل.",
+          "en": "Review what is ready and what needs support without requiring full independence."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل استخدام القائمة والاختيارات والمساعدة المطلوبة.",
+        "en": "Note checklist use, choices and support requested."
+      },
+      "safety": {
+        "ar": "هذا نشاط تجهيز فقط؛ الإشراف على الخروج مسؤولية البالغ، ولا يتضمن تدريبًا على التنقل المستقل.",
+        "en": "This is preparation only; adult supervision of outings remains necessary and independent travel training is not included."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "routines",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "ready-14-17-draft1",
+      "familyId": "routines",
+      "sourceActivityId": "ready",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        14,
+        17
+      ],
+      "title": {
+        "ar": "إعداد قائمة شخصية لخروج متفق عليه",
+        "en": "Prepare a personal checklist for an agreed outing"
+      },
+      "goal": {
+        "ar": "اختيار متعلقات لازمة والاستعداد لنشاط متفق عليه.",
+        "en": "Choose needed belongings and prepare for an agreed activity."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: إعداد قائمة شخصية لخروج متفق عليه. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: prepare a personal checklist for an agreed outing. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "حددا النشاط والمتعلقات اللازمة معًا.",
+          "en": "Identify the activity and needed belongings together."
+        },
+        {
+          "ar": "استخدما قائمة قصيرة متاحة؛ دع الطفل يختار أو يشير أو يوجّه تجهيز كل عنصر.",
+          "en": "Use an accessible short checklist; let the child select, indicate or direct preparation of each item."
+        },
+        {
+          "ar": "راجعا ما تم وما يحتاج مساعدة دون مطالبة باستقلال كامل.",
+          "en": "Review what is ready and what needs support without requiring full independence."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل استخدام القائمة والاختيارات والمساعدة المطلوبة.",
+        "en": "Note checklist use, choices and support requested."
+      },
+      "safety": {
+        "ar": "هذا نشاط تجهيز فقط؛ الإشراف على الخروج مسؤولية البالغ، ولا يتضمن تدريبًا على التنقل المستقل.",
+        "en": "This is preparation only; adult supervision of outings remains necessary and independent travel training is not included."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "routines",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "texture-6-9-draft1",
+      "familyId": "sensory",
+      "sourceActivityId": "texture",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        6,
+        9
+      ],
+      "title": {
+        "ar": "اختيار خامة لأشغال يدوية",
+        "en": "Choose a craft material"
+      },
+      "goal": {
+        "ar": "التعبير عن تفضيل حسي أو رفض دون ضغط.",
+        "en": "Express a sensory preference or refusal without pressure."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: اختيار خامة لأشغال يدوية. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: choose a craft material. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اعرض خامتين آمنتين ومألوفتين؛ يمكن النظر فقط دون لمس.",
+          "en": "Offer two safe, familiar materials; looking without touching is acceptable."
+        },
+        {
+          "ar": "دع الطفل يختار طريقة الاستكشاف أو يطلب من الشريك وصف الخامة.",
+          "en": "Let the child choose how to explore or ask a partner to describe the material."
+        },
+        {
+          "ar": "اقبل الاختيار أو الرفض أو طلب بديل، واستخدم المفضل إن أراد.",
+          "en": "Accept a choice, refusal or request for an alternative, and use the preferred material if wanted."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل التفضيل المعبّر عنه وطريقة الاستكشاف الاختيارية؛ لا تسجّل التحمل كهدف.",
+        "en": "Note the expressed preference and optional exploration method; tolerance is not a target."
+      },
+      "safety": {
+        "ar": "تجنب المواد المسببة للحساسية والأجزاء الصغيرة المناسبة لخطر الابتلاع؛ لا إجبار أو برنامج إزالة حساسية.",
+        "en": "Avoid allergens and small parts where swallowing is a risk; no forced exposure or desensitization program."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "sensory",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "texture-10-13-draft1",
+      "familyId": "sensory",
+      "sourceActivityId": "texture",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        10,
+        13
+      ],
+      "title": {
+        "ar": "اختيار خامة لمشروع أو غلاف دفتر",
+        "en": "Choose a project material or notebook cover"
+      },
+      "goal": {
+        "ar": "التعبير عن تفضيل حسي أو رفض دون ضغط.",
+        "en": "Express a sensory preference or refusal without pressure."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: اختيار خامة لمشروع أو غلاف دفتر. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: choose a project material or notebook cover. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اعرض خامتين آمنتين ومألوفتين؛ يمكن النظر فقط دون لمس.",
+          "en": "Offer two safe, familiar materials; looking without touching is acceptable."
+        },
+        {
+          "ar": "دع الطفل يختار طريقة الاستكشاف أو يطلب من الشريك وصف الخامة.",
+          "en": "Let the child choose how to explore or ask a partner to describe the material."
+        },
+        {
+          "ar": "اقبل الاختيار أو الرفض أو طلب بديل، واستخدم المفضل إن أراد.",
+          "en": "Accept a choice, refusal or request for an alternative, and use the preferred material if wanted."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل التفضيل المعبّر عنه وطريقة الاستكشاف الاختيارية؛ لا تسجّل التحمل كهدف.",
+        "en": "Note the expressed preference and optional exploration method; tolerance is not a target."
+      },
+      "safety": {
+        "ar": "تجنب المواد المسببة للحساسية والأجزاء الصغيرة المناسبة لخطر الابتلاع؛ لا إجبار أو برنامج إزالة حساسية.",
+        "en": "Avoid allergens and small parts where swallowing is a risk; no forced exposure or desensitization program."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "sensory",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "texture-14-17-draft1",
+      "familyId": "sensory",
+      "sourceActivityId": "texture",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        14,
+        17
+      ],
+      "title": {
+        "ar": "اختيار خامة لمتعلق شخصي أو مشروع إبداعي",
+        "en": "Choose a material for a personal item or creative project"
+      },
+      "goal": {
+        "ar": "التعبير عن تفضيل حسي أو رفض دون ضغط.",
+        "en": "Express a sensory preference or refusal without pressure."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: اختيار خامة لمتعلق شخصي أو مشروع إبداعي. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: choose a material for a personal item or creative project. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اعرض خامتين آمنتين ومألوفتين؛ يمكن النظر فقط دون لمس.",
+          "en": "Offer two safe, familiar materials; looking without touching is acceptable."
+        },
+        {
+          "ar": "دع الطفل يختار طريقة الاستكشاف أو يطلب من الشريك وصف الخامة.",
+          "en": "Let the child choose how to explore or ask a partner to describe the material."
+        },
+        {
+          "ar": "اقبل الاختيار أو الرفض أو طلب بديل، واستخدم المفضل إن أراد.",
+          "en": "Accept a choice, refusal or request for an alternative, and use the preferred material if wanted."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل التفضيل المعبّر عنه وطريقة الاستكشاف الاختيارية؛ لا تسجّل التحمل كهدف.",
+        "en": "Note the expressed preference and optional exploration method; tolerance is not a target."
+      },
+      "safety": {
+        "ar": "تجنب المواد المسببة للحساسية والأجزاء الصغيرة المناسبة لخطر الابتلاع؛ لا إجبار أو برنامج إزالة حساسية.",
+        "en": "Avoid allergens and small parts where swallowing is a risk; no forced exposure or desensitization program."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "sensory",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "sound-6-9-draft1",
+      "familyId": "sensory",
+      "sourceActivityId": "sound",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        6,
+        9
+      ],
+      "title": {
+        "ar": "اختيار الهدوء أو صوت مألوف أثناء الرسم",
+        "en": "Choose quiet or familiar sound while drawing"
+      },
+      "goal": {
+        "ar": "طلب بيئة صوتية مفضلة أو استراحة.",
+        "en": "Request a preferred sound environment or a break."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: اختيار الهدوء أو صوت مألوف أثناء الرسم. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: choose quiet or familiar sound while drawing. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "قدّم خيار الهدوء أولًا وخيار صوت مألوف منخفض إن كان مرغوبًا.",
+          "en": "Offer quiet first and a familiar low-volume sound if wanted."
+        },
+        {
+          "ar": "اتفقا على إشارة لإيقاف الصوت أو تغييره يمكن استخدامها بسهولة.",
+          "en": "Agree on an easy-to-use signal to stop or change the sound."
+        },
+        {
+          "ar": "استجب للإشارة فورًا؛ يمكن تغيير التفضيل في أي وقت.",
+          "en": "Respond promptly to the signal; preferences can change at any time."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل الاختيار وطلبات التغيير، وليس القدرة على تحمل الضوضاء.",
+        "en": "Note choices and requests for change, not noise tolerance."
+      },
+      "safety": {
+        "ar": "لا تغيّر أجهزة السمع أو إعداداتها؛ تجنب الأصوات العالية أو المفاجئة ولا تحجب إشارات السلامة.",
+        "en": "Do not change hearing devices or settings; avoid loud or sudden sounds and do not obscure safety signals."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "sensory",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "sound-10-13-draft1",
+      "familyId": "sensory",
+      "sourceActivityId": "sound",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        10,
+        13
+      ],
+      "title": {
+        "ar": "اختيار بيئة صوتية لهواية أو قراءة",
+        "en": "Choose a sound environment for a hobby or reading"
+      },
+      "goal": {
+        "ar": "طلب بيئة صوتية مفضلة أو استراحة.",
+        "en": "Request a preferred sound environment or a break."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: اختيار بيئة صوتية لهواية أو قراءة. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: choose a sound environment for a hobby or reading. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "قدّم خيار الهدوء أولًا وخيار صوت مألوف منخفض إن كان مرغوبًا.",
+          "en": "Offer quiet first and a familiar low-volume sound if wanted."
+        },
+        {
+          "ar": "اتفقا على إشارة لإيقاف الصوت أو تغييره يمكن استخدامها بسهولة.",
+          "en": "Agree on an easy-to-use signal to stop or change the sound."
+        },
+        {
+          "ar": "استجب للإشارة فورًا؛ يمكن تغيير التفضيل في أي وقت.",
+          "en": "Respond promptly to the signal; preferences can change at any time."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل الاختيار وطلبات التغيير، وليس القدرة على تحمل الضوضاء.",
+        "en": "Note choices and requests for change, not noise tolerance."
+      },
+      "safety": {
+        "ar": "لا تغيّر أجهزة السمع أو إعداداتها؛ تجنب الأصوات العالية أو المفاجئة ولا تحجب إشارات السلامة.",
+        "en": "Do not change hearing devices or settings; avoid loud or sudden sounds and do not obscure safety signals."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "sensory",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "sound-14-17-draft1",
+      "familyId": "sensory",
+      "sourceActivityId": "sound",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        14,
+        17
+      ],
+      "title": {
+        "ar": "اختيار بيئة صوتية لمهمة أو وقت فراغ",
+        "en": "Choose a sound environment for a task or leisure"
+      },
+      "goal": {
+        "ar": "طلب بيئة صوتية مفضلة أو استراحة.",
+        "en": "Request a preferred sound environment or a break."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: اختيار بيئة صوتية لمهمة أو وقت فراغ. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: choose a sound environment for a task or leisure. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "قدّم خيار الهدوء أولًا وخيار صوت مألوف منخفض إن كان مرغوبًا.",
+          "en": "Offer quiet first and a familiar low-volume sound if wanted."
+        },
+        {
+          "ar": "اتفقا على إشارة لإيقاف الصوت أو تغييره يمكن استخدامها بسهولة.",
+          "en": "Agree on an easy-to-use signal to stop or change the sound."
+        },
+        {
+          "ar": "استجب للإشارة فورًا؛ يمكن تغيير التفضيل في أي وقت.",
+          "en": "Respond promptly to the signal; preferences can change at any time."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل الاختيار وطلبات التغيير، وليس القدرة على تحمل الضوضاء.",
+        "en": "Note choices and requests for change, not noise tolerance."
+      },
+      "safety": {
+        "ar": "لا تغيّر أجهزة السمع أو إعداداتها؛ تجنب الأصوات العالية أو المفاجئة ولا تحجب إشارات السلامة.",
+        "en": "Do not change hearing devices or settings; avoid loud or sudden sounds and do not obscure safety signals."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "sensory",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "turn-6-9-draft1",
+      "familyId": "social",
+      "sourceActivityId": "turn",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        6,
+        9
+      ],
+      "title": {
+        "ar": "تبادل الأدوار في لعبة تعاونية بسيطة",
+        "en": "Take turns in a simple cooperative game"
+      },
+      "goal": {
+        "ar": "المشاركة الاختيارية في تبادل أدوار واضح.",
+        "en": "Participate voluntarily in a clear turn exchange."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: تبادل الأدوار في لعبة تعاونية بسيطة. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: take turns in a simple cooperative game. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اختارا نشاطًا مشتركًا وإشارة واضحة للدور.",
+          "en": "Choose a shared activity and a clear turn signal."
+        },
+        {
+          "ar": "ليؤدّ كل شريك فعلًا متاحًا له؛ يمكن للطفل توجيه الشريك بدل تحريك الأدوات.",
+          "en": "Each partner takes an accessible action; the child may direct a partner instead of moving materials."
+        },
+        {
+          "ar": "اسمح بوقت استجابة مناسب أو تجاوز الدور أو إنهاء النشاط.",
+          "en": "Allow adequate response time, passing a turn or ending the activity."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل المشاركة أو تجاوز الدور والدعم المستخدم، لا التواصل البصري أو الطاعة.",
+        "en": "Note participation or passing and support used, not eye contact or compliance."
+      },
+      "safety": {
+        "ar": "لا تشترط الكلام أو اللمس أو التواصل البصري؛ تجنب التنافس الضاغط.",
+        "en": "Do not require speech, touch or eye contact; avoid pressured competition."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "social",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "turn-10-13-draft1",
+      "familyId": "social",
+      "sourceActivityId": "turn",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        10,
+        13
+      ],
+      "title": {
+        "ar": "تبادل الأدوار في رسم أو مشروع مشترك",
+        "en": "Take turns in shared art or a project"
+      },
+      "goal": {
+        "ar": "المشاركة الاختيارية في تبادل أدوار واضح.",
+        "en": "Participate voluntarily in a clear turn exchange."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: تبادل الأدوار في رسم أو مشروع مشترك. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: take turns in shared art or a project. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اختارا نشاطًا مشتركًا وإشارة واضحة للدور.",
+          "en": "Choose a shared activity and a clear turn signal."
+        },
+        {
+          "ar": "ليؤدّ كل شريك فعلًا متاحًا له؛ يمكن للطفل توجيه الشريك بدل تحريك الأدوات.",
+          "en": "Each partner takes an accessible action; the child may direct a partner instead of moving materials."
+        },
+        {
+          "ar": "اسمح بوقت استجابة مناسب أو تجاوز الدور أو إنهاء النشاط.",
+          "en": "Allow adequate response time, passing a turn or ending the activity."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل المشاركة أو تجاوز الدور والدعم المستخدم، لا التواصل البصري أو الطاعة.",
+        "en": "Note participation or passing and support used, not eye contact or compliance."
+      },
+      "safety": {
+        "ar": "لا تشترط الكلام أو اللمس أو التواصل البصري؛ تجنب التنافس الضاغط.",
+        "en": "Do not require speech, touch or eye contact; avoid pressured competition."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "social",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "turn-14-17-draft1",
+      "familyId": "social",
+      "sourceActivityId": "turn",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        14,
+        17
+      ],
+      "title": {
+        "ar": "تبادل الأدوار في لعبة أو مهمة تعاونية مختارة",
+        "en": "Take turns in a chosen game or collaborative task"
+      },
+      "goal": {
+        "ar": "المشاركة الاختيارية في تبادل أدوار واضح.",
+        "en": "Participate voluntarily in a clear turn exchange."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: تبادل الأدوار في لعبة أو مهمة تعاونية مختارة. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: take turns in a chosen game or collaborative task. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اختارا نشاطًا مشتركًا وإشارة واضحة للدور.",
+          "en": "Choose a shared activity and a clear turn signal."
+        },
+        {
+          "ar": "ليؤدّ كل شريك فعلًا متاحًا له؛ يمكن للطفل توجيه الشريك بدل تحريك الأدوات.",
+          "en": "Each partner takes an accessible action; the child may direct a partner instead of moving materials."
+        },
+        {
+          "ar": "اسمح بوقت استجابة مناسب أو تجاوز الدور أو إنهاء النشاط.",
+          "en": "Allow adequate response time, passing a turn or ending the activity."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل المشاركة أو تجاوز الدور والدعم المستخدم، لا التواصل البصري أو الطاعة.",
+        "en": "Note participation or passing and support used, not eye contact or compliance."
+      },
+      "safety": {
+        "ar": "لا تشترط الكلام أو اللمس أو التواصل البصري؛ تجنب التنافس الضاغط.",
+        "en": "Do not require speech, touch or eye contact; avoid pressured competition."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "social",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "help-6-9-draft1",
+      "familyId": "social",
+      "sourceActivityId": "help",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        6,
+        9
+      ],
+      "title": {
+        "ar": "طلب المساعدة أو الاستراحة أثناء لعبة",
+        "en": "Request help or a break during a game"
+      },
+      "goal": {
+        "ar": "التعبير عن الحاجة للمساعدة أو الاستراحة والاستجابة لها.",
+        "en": "Express a need for help or a break and have it respected."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: طلب المساعدة أو الاستراحة أثناء لعبة. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: request help or a break during a game. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اتفقا على طريقة مألوفة ومتاحة لطلب المساعدة أو الاستراحة.",
+          "en": "Agree on a familiar, accessible way to request help or a break."
+        },
+        {
+          "ar": "أبقِ وسيلة الطلب في المتناول أثناء نشاط يختاره الطفل، دون صنع صعوبة متعمدة.",
+          "en": "Keep the request method available during a chosen activity without creating deliberate difficulty."
+        },
+        {
+          "ar": "استجب للطلب؛ اعرض العودة لاحقًا كخيار لا كشرط.",
+          "en": "Respond to the request; returning later is an option, not a condition."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل طريقة الطلب والاستجابة له؛ قلة الطلبات ليست دليل تحسن.",
+        "en": "Note how a request was made and honored; fewer requests are not evidence of improvement."
+      },
+      "safety": {
+        "ar": "لا تحجب المساعدة أو الاستراحة حتى يستخدم الطفل صيغة معينة.",
+        "en": "Never withhold help or a break until a particular expression is used."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "social",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "help-10-13-draft1",
+      "familyId": "social",
+      "sourceActivityId": "help",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        10,
+        13
+      ],
+      "title": {
+        "ar": "طلب المساعدة أو الاستراحة أثناء هواية أو مهمة دراسية",
+        "en": "Request help or a break during a hobby or learning task"
+      },
+      "goal": {
+        "ar": "التعبير عن الحاجة للمساعدة أو الاستراحة والاستجابة لها.",
+        "en": "Express a need for help or a break and have it respected."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: طلب المساعدة أو الاستراحة أثناء هواية أو مهمة دراسية. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: request help or a break during a hobby or learning task. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اتفقا على طريقة مألوفة ومتاحة لطلب المساعدة أو الاستراحة.",
+          "en": "Agree on a familiar, accessible way to request help or a break."
+        },
+        {
+          "ar": "أبقِ وسيلة الطلب في المتناول أثناء نشاط يختاره الطفل، دون صنع صعوبة متعمدة.",
+          "en": "Keep the request method available during a chosen activity without creating deliberate difficulty."
+        },
+        {
+          "ar": "استجب للطلب؛ اعرض العودة لاحقًا كخيار لا كشرط.",
+          "en": "Respond to the request; returning later is an option, not a condition."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل طريقة الطلب والاستجابة له؛ قلة الطلبات ليست دليل تحسن.",
+        "en": "Note how a request was made and honored; fewer requests are not evidence of improvement."
+      },
+      "safety": {
+        "ar": "لا تحجب المساعدة أو الاستراحة حتى يستخدم الطفل صيغة معينة.",
+        "en": "Never withhold help or a break until a particular expression is used."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "social",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "help-14-17-draft1",
+      "familyId": "social",
+      "sourceActivityId": "help",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        14,
+        17
+      ],
+      "title": {
+        "ar": "طلب الدعم أو الاستراحة أثناء مشروع أو نشاط يومي",
+        "en": "Request support or a break during a project or daily activity"
+      },
+      "goal": {
+        "ar": "التعبير عن الحاجة للمساعدة أو الاستراحة والاستجابة لها.",
+        "en": "Express a need for help or a break and have it respected."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: طلب الدعم أو الاستراحة أثناء مشروع أو نشاط يومي. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: request support or a break during a project or daily activity. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اتفقا على طريقة مألوفة ومتاحة لطلب المساعدة أو الاستراحة.",
+          "en": "Agree on a familiar, accessible way to request help or a break."
+        },
+        {
+          "ar": "أبقِ وسيلة الطلب في المتناول أثناء نشاط يختاره الطفل، دون صنع صعوبة متعمدة.",
+          "en": "Keep the request method available during a chosen activity without creating deliberate difficulty."
+        },
+        {
+          "ar": "استجب للطلب؛ اعرض العودة لاحقًا كخيار لا كشرط.",
+          "en": "Respond to the request; returning later is an option, not a condition."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل طريقة الطلب والاستجابة له؛ قلة الطلبات ليست دليل تحسن.",
+        "en": "Note how a request was made and honored; fewer requests are not evidence of improvement."
+      },
+      "safety": {
+        "ar": "لا تحجب المساعدة أو الاستراحة حتى يستخدم الطفل صيغة معينة.",
+        "en": "Never withhold help or a break until a particular expression is used."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "social",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "ball-6-9-draft1",
+      "familyId": "movement",
+      "sourceActivityId": "ball",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        6,
+        9
+      ],
+      "title": {
+        "ar": "دحرجة كرة مناسبة على سطح متاح",
+        "en": "Roll a suitable ball on an accessible surface"
+      },
+      "goal": {
+        "ar": "المشاركة في تبادل حركة أو توجيهها ضمن نشاط ترفيهي.",
+        "en": "Participate in or direct a movement exchange during recreation."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: دحرجة كرة مناسبة على سطح متاح. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: roll a suitable ball on an accessible surface. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اختر كرة مناسبة وسطحًا ثابتًا ضمن الوضعية والدعم المعتادين.",
+          "en": "Choose a suitable ball and stable surface within established positioning and support."
+        },
+        {
+          "ar": "دع الطفل يختار الاتجاه ويدحرج أو يوجّه شريكًا حسب طريقة وصوله المعتادة.",
+          "en": "Let the child choose a direction and roll or direct a partner using established access."
+        },
+        {
+          "ar": "تبادلا المحاولات اختياريًا وتوقفا عند الرغبة أو عدم الارتياح.",
+          "en": "Exchange attempts optionally and stop when wanted or uncomfortable."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل الاختيارات والمشاركة والدعم دون استنتاج تحسن حركي.",
+        "en": "Note choices, participation and support without inferring motor improvement."
+      },
+      "safety": {
+        "ar": "لا توجّه أطراف الطفل أو تغيّر وضعية جسمه أو تفرض مدى حركة؛ أوقف النشاط عند الألم أو التعب.",
+        "en": "Do not guide limbs, change body positioning or impose a movement range; stop for pain or fatigue."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "movement",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "ball-10-13-draft1",
+      "familyId": "movement",
+      "sourceActivityId": "ball",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        10,
+        13
+      ],
+      "title": {
+        "ar": "اختيار هدف ودحرجة الكرة نحوه بشكل تعاوني",
+        "en": "Choose a target and cooperatively roll a ball toward it"
+      },
+      "goal": {
+        "ar": "المشاركة في تبادل حركة أو توجيهها ضمن نشاط ترفيهي.",
+        "en": "Participate in or direct a movement exchange during recreation."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: اختيار هدف ودحرجة الكرة نحوه بشكل تعاوني. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: choose a target and cooperatively roll a ball toward it. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اختر كرة مناسبة وسطحًا ثابتًا ضمن الوضعية والدعم المعتادين.",
+          "en": "Choose a suitable ball and stable surface within established positioning and support."
+        },
+        {
+          "ar": "دع الطفل يختار الاتجاه ويدحرج أو يوجّه شريكًا حسب طريقة وصوله المعتادة.",
+          "en": "Let the child choose a direction and roll or direct a partner using established access."
+        },
+        {
+          "ar": "تبادلا المحاولات اختياريًا وتوقفا عند الرغبة أو عدم الارتياح.",
+          "en": "Exchange attempts optionally and stop when wanted or uncomfortable."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل الاختيارات والمشاركة والدعم دون استنتاج تحسن حركي.",
+        "en": "Note choices, participation and support without inferring motor improvement."
+      },
+      "safety": {
+        "ar": "لا توجّه أطراف الطفل أو تغيّر وضعية جسمه أو تفرض مدى حركة؛ أوقف النشاط عند الألم أو التعب.",
+        "en": "Do not guide limbs, change body positioning or impose a movement range; stop for pain or fatigue."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "movement",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "ball-14-17-draft1",
+      "familyId": "movement",
+      "sourceActivityId": "ball",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        14,
+        17
+      ],
+      "title": {
+        "ar": "تصميم تحدٍّ ترفيهي بسيط لدحرجة الكرة",
+        "en": "Design a simple recreational ball-rolling challenge"
+      },
+      "goal": {
+        "ar": "المشاركة في تبادل حركة أو توجيهها ضمن نشاط ترفيهي.",
+        "en": "Participate in or direct a movement exchange during recreation."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: تصميم تحدٍّ ترفيهي بسيط لدحرجة الكرة. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: design a simple recreational ball-rolling challenge. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "اختر كرة مناسبة وسطحًا ثابتًا ضمن الوضعية والدعم المعتادين.",
+          "en": "Choose a suitable ball and stable surface within established positioning and support."
+        },
+        {
+          "ar": "دع الطفل يختار الاتجاه ويدحرج أو يوجّه شريكًا حسب طريقة وصوله المعتادة.",
+          "en": "Let the child choose a direction and roll or direct a partner using established access."
+        },
+        {
+          "ar": "تبادلا المحاولات اختياريًا وتوقفا عند الرغبة أو عدم الارتياح.",
+          "en": "Exchange attempts optionally and stop when wanted or uncomfortable."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل الاختيارات والمشاركة والدعم دون استنتاج تحسن حركي.",
+        "en": "Note choices, participation and support without inferring motor improvement."
+      },
+      "safety": {
+        "ar": "لا توجّه أطراف الطفل أو تغيّر وضعية جسمه أو تفرض مدى حركة؛ أوقف النشاط عند الألم أو التعب.",
+        "en": "Do not guide limbs, change body positioning or impose a movement range; stop for pain or fatigue."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "movement",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "build-6-9-draft1",
+      "familyId": "movement",
+      "sourceActivityId": "build",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        6,
+        9
+      ],
+      "title": {
+        "ar": "مطابقة قطع كبيرة وبناء شكل مختار",
+        "en": "Match large pieces and build a chosen shape"
+      },
+      "goal": {
+        "ar": "استكشاف علاقة أو نمط وبناء شيء يختاره الطفل.",
+        "en": "Explore a relationship or pattern and build something chosen by the child."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: مطابقة قطع كبيرة وبناء شكل مختار. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: match large pieces and build a chosen shape. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "قدّم عددًا قليلًا من القطع الآمنة المتاحة بصريًا أو باللمس أو الوصف.",
+          "en": "Offer a few safe pieces accessible visually, by touch or description."
+        },
+        {
+          "ar": "دع الطفل يختار قاعدة للمطابقة أو فكرة للبناء؛ يمكنه توجيه شريك.",
+          "en": "Let the child choose a matching rule or building idea; directing a partner is valid."
+        },
+        {
+          "ar": "استكشف النتيجة معًا دون اختبار سرعة أو اشتراط نموذج واحد صحيح.",
+          "en": "Explore the result without testing speed or requiring one correct model."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل الاختيارات والاستراتيجيات والمساعدة دون اعتبار النتيجة مقياسًا للقدرة العامة.",
+        "en": "Note choices, strategies and help without treating the result as a measure of general ability."
+      },
+      "safety": {
+        "ar": "استخدم قطعًا ملائمة لخطر الابتلاع والقدرة على الوصول، وتجنب أدوات القطع والحرارة.",
+        "en": "Use pieces appropriate to swallowing risks and access; avoid cutting tools and heat."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "movement",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "build-10-13-draft1",
+      "familyId": "movement",
+      "sourceActivityId": "build",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        10,
+        13
+      ],
+      "title": {
+        "ar": "تصميم نمط أو نموذج بقطع مناسبة",
+        "en": "Design a pattern or model with suitable pieces"
+      },
+      "goal": {
+        "ar": "استكشاف علاقة أو نمط وبناء شيء يختاره الطفل.",
+        "en": "Explore a relationship or pattern and build something chosen by the child."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: تصميم نمط أو نموذج بقطع مناسبة. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: design a pattern or model with suitable pieces. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "قدّم عددًا قليلًا من القطع الآمنة المتاحة بصريًا أو باللمس أو الوصف.",
+          "en": "Offer a few safe pieces accessible visually, by touch or description."
+        },
+        {
+          "ar": "دع الطفل يختار قاعدة للمطابقة أو فكرة للبناء؛ يمكنه توجيه شريك.",
+          "en": "Let the child choose a matching rule or building idea; directing a partner is valid."
+        },
+        {
+          "ar": "استكشف النتيجة معًا دون اختبار سرعة أو اشتراط نموذج واحد صحيح.",
+          "en": "Explore the result without testing speed or requiring one correct model."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل الاختيارات والاستراتيجيات والمساعدة دون اعتبار النتيجة مقياسًا للقدرة العامة.",
+        "en": "Note choices, strategies and help without treating the result as a measure of general ability."
+      },
+      "safety": {
+        "ar": "استخدم قطعًا ملائمة لخطر الابتلاع والقدرة على الوصول، وتجنب أدوات القطع والحرارة.",
+        "en": "Use pieces appropriate to swallowing risks and access; avoid cutting tools and heat."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "movement",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    },
+    {
+      "id": "build-14-17-draft1",
+      "familyId": "movement",
+      "sourceActivityId": "build",
+      "status": "NEW_DRAFT_REQUIRES_APPROVAL",
+      "ageYears": [
+        14,
+        17
+      ],
+      "title": {
+        "ar": "تصميم نموذج مرتبط بهواية أو فكرة شخصية",
+        "en": "Design a model related to a hobby or personal idea"
+      },
+      "goal": {
+        "ar": "استكشاف علاقة أو نمط وبناء شيء يختاره الطفل.",
+        "en": "Explore a relationship or pattern and build something chosen by the child."
+      },
+      "description": {
+        "ar": "نشاط اختياري حول: تصميم نموذج مرتبط بهواية أو فكرة شخصية. يختار الطفل طريقة المشاركة ويمكنه تعديل النشاط أو رفضه.",
+        "en": "An optional activity about: design a model related to a hobby or personal idea. The child chooses how to participate and may adapt or decline it."
+      },
+      "steps": [
+        {
+          "ar": "قدّم عددًا قليلًا من القطع الآمنة المتاحة بصريًا أو باللمس أو الوصف.",
+          "en": "Offer a few safe pieces accessible visually, by touch or description."
+        },
+        {
+          "ar": "دع الطفل يختار قاعدة للمطابقة أو فكرة للبناء؛ يمكنه توجيه شريك.",
+          "en": "Let the child choose a matching rule or building idea; directing a partner is valid."
+        },
+        {
+          "ar": "استكشف النتيجة معًا دون اختبار سرعة أو اشتراط نموذج واحد صحيح.",
+          "en": "Explore the result without testing speed or requiring one correct model."
+        }
+      ],
+      "materials": {
+        "ar": "استخدم فقط الأدوات المذكورة في الخطوات بعد التأكد من ملاءمتها وسهولة الوصول إليها؛ يمكن لشريك التعامل معها بتوجيه الطفل.",
+        "en": "Use only materials described in the steps after checking suitability and accessibility; a partner may handle them under the child's direction."
+      },
+      "timingPolicyRef": "timingPolicy",
+      "participationObservation": {
+        "ar": "سجّل الاختيارات والاستراتيجيات والمساعدة دون اعتبار النتيجة مقياسًا للقدرة العامة.",
+        "en": "Note choices, strategies and help without treating the result as a measure of general ability."
+      },
+      "safety": {
+        "ar": "استخدم قطعًا ملائمة لخطر الابتلاع والقدرة على الوصول، وتجنب أدوات القطع والحرارة.",
+        "en": "Use pieces appropriate to swallowing risks and access; avoid cutting tools and heat."
+      },
+      "accessibilityOptionRefs": [
+        "speech",
+        "aac",
+        "hearing",
+        "vision",
+        "sensory",
+        "cognitive",
+        "mobility"
+      ],
+      "suitability": {
+        "requiredParentGoal": "movement",
+        "required": "Interest or willingness, accessible established choice/stop method, safe materials and setting; parent verifies activity-specific requirements.",
+        "unknownCriticalNeeds": "HOLD_FOR_REVIEW",
+        "diagnosisRequired": false
+      },
+      "adaptationReview": "Resolve sensory, communication and physical access together; generic options do not establish that every combination is safe."
+    }
+  ],
+  "matching": {
+    "diagnosisRanking": false,
+    "inputs": [
+      "parent-selected goals",
+      "chronological age",
+      "task-specific abilities and established supports",
+      "strengths",
+      "preferences and avoidances",
+      "communication method",
+      "accessibility needs"
+    ],
+    "rules": [
+      "Use only explicitly approved versions in future real generation.",
+      "Age is a content-context boundary, not a developmental score.",
+      "Never default an older child to toddler-themed content based on disability.",
+      "Unknown essential safety/access prerequisites => no automatic suggestion.",
+      "Offer parent choice among compatible activities; do not require diagnosis.",
+      "Multiple needs require compatible reviewed adaptation combinations; do not blindly stack options.",
+      "No suitable content => bilingual empty state; never generate unreviewed AI substitutes."
+    ],
+    "emptyState": {
+      "ar": "لا يتوفر حاليًا نشاط معتمد يناسب الأهداف واحتياجات الوصول المحددة. يمكنك تعديل الاختيارات أو تخطي الاقتراح.",
+      "en": "No approved activity currently fits the selected goals and access needs. You can adjust selections or skip the suggestion."
+    }
+  },
+  "parentControl": {
+    "actions": {
+      "ar": "تعديل الأدوات أو الوقت أو طريقة المشاركة ضمن الخيارات الآمنة، اختيار بديل، تخطي، رفض، أو التوقف في أي وقت دون عقوبة.",
+      "en": "Adjust materials, time or participation within safe options, choose an alternative, skip, decline or stop at any time without penalty."
+    },
+    "customEdits": "Private parent adaptations are separate from the reviewed catalog, never silently promoted as approved content; material changes require suitability review."
+  },
+  "tracking": {
+    "states": [
+      "offered",
+      "participated",
+      "completed",
+      "skipped",
+      "declined",
+      "stopped"
+    ],
+    "fields": [
+      "accountId",
+      "childId",
+      "activityVersion",
+      "selectedAdaptations",
+      "optionalParentNote",
+      "supportUsed",
+      "date"
+    ],
+    "rule": {
+      "ar": "يسجل الإنجاز المشاركة فقط، وليس إثباتًا للتحسن النمائي. التخطي والرفض لا يخفضان تقييم الطفل. لا تدمج حضور المواعيد أو إعطاء الدواء في تقدم الأهداف.",
+      "en": "Completion records participation only, not proof of developmental improvement. Skipping or declining does not lower a child's assessment. Appointment attendance and medication administration remain separate from goal progress."
+    }
+  },
+  "privacy": {
+    "designOnly": true,
+    "rules": [
+      "Account and child ownership on every future operation.",
+      "Collect only needed accessibility information; diagnosis optional.",
+      "No child notes or medical details sent to AI for matching.",
+      "No real child records used in this review."
+    ]
+  },
+  "coverageLimits": {
+    "notYetPrepared": [
+      "ages 0–2",
+      "ages 18+",
+      "all individual combinations of support needs"
+    ],
+    "note": "Requested older-child bands are drafts only; five original ages 3–5 templates remain source-pending. Do not label this complete all-age validated coverage."
+  },
+  "implementationBoundary": "No application integration, task generation, seeds, import script, database writes or notification changes authorized.",
+  "reviewRequired": [
+    "Recover exact original ages 3–5 bilingual source before filling its empty content fields.",
+    "Approve or revise each older-age variant and flexible timing.",
+    "Obtain appropriate educational/accessibility review for adaptations and combined needs.",
+    "Separate approval for local application implementation; production approval remains separate."
+  ]
+}

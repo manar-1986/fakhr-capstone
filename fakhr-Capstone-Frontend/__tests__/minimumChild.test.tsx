@@ -1,0 +1,21 @@
+import React from 'react';
+import {renderHook, waitFor} from '@testing-library/react-native';
+import {QueryClient,QueryClientProvider} from '@tanstack/react-query';
+import {useActiveChild} from '../hooks/useActiveChild';
+import {getChildren} from '../api/children.api';
+let mockUser: {id:string}|null={id:'a'};
+jest.mock('../context/AuthContext',()=>({useAuth:()=>({user:mockUser})}));
+jest.mock('../api/children.api',()=>({getChildren:jest.fn()}));
+test('active child uses real helper, is account-scoped and does not load for guests',async()=>{
+ const client=new QueryClient({defaultOptions:{queries:{retry:false,gcTime:0}}});
+ const wrapper=({children}:React.PropsWithChildren)=><QueryClientProvider client={client}>{children}</QueryClientProvider>;
+ jest.mocked(getChildren).mockImplementation(async()=>[{id:mockUser!.id+'-child',name:'Synthetic',parentId:mockUser!.id}]);
+ const h=renderHook(()=>useActiveChild(),{wrapper});
+ await waitFor(()=>expect(h.result.current.activeChildId).toBe('a-child'));
+ mockUser={id:'b'};h.rerender({});
+ expect(h.result.current.activeChild?.id).not.toBe('a-child');
+ await waitFor(()=>expect(h.result.current.activeChildId).toBe('b-child'));
+ const calls=jest.mocked(getChildren).mock.calls.length;
+ mockUser=null;h.rerender({});expect(h.result.current.activeChild).toBeUndefined();expect(getChildren).toHaveBeenCalledTimes(calls);
+ h.unmount();client.clear();
+});

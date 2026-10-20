@@ -1,0 +1,7 @@
+import React from 'react';
+import {render,fireEvent} from '@testing-library/react-native';
+import {Text,StyleSheet} from 'react-native';
+import Button from '../components/ui/PlanActionPressable';
+import {planActions,planActionState} from '../theme/planActions';
+test('approved primary and interaction states remain in the Fakhr palette',()=>{expect(planActions.primary).toBe('#6E7CAF');expect(planActionState(false,false,false,false).backgroundColor).toBe('#6E7CAF');expect(planActionState(false,false,true,false).borderColor).toBe('#8B91AF');expect(planActionState(false,true,false,false).borderColor).toBe('#AAB3D6');expect(planActionState(false,false,false,true).borderColor).toBe('#6E7CAF');expect(planActionState(true,false,false,false).backgroundColor).toBe('#BCC3D8')});
+test('shared control overrides legacy blue and preserves presses and disabled handling',()=>{const onPress=jest.fn();const v=render(<Button accessibilityLabel="action" onPress={onPress} style={{backgroundColor:'#607DCB'}}><Text>Action</Text></Button>);expect(StyleSheet.flatten(v.getByLabelText('action').props.style).backgroundColor).toBe('#6E7CAF');fireEvent.press(v.getByLabelText('action'));expect(onPress).toHaveBeenCalledTimes(1);v.rerender(<Button accessibilityLabel="action" disabled onPress={onPress}><Text>Action</Text></Button>);fireEvent.press(v.getByLabelText('action'));expect(onPress).toHaveBeenCalledTimes(1)});

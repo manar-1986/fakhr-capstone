@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-20",
+  "frontend": {
+    "suites": 22,
+    "passed": 167,
+    "failed": 0,
+    "typeScript": "passed"
+  },
+  "backend": {
+    "typeScript": "passed",
+    "configurationTests": 78,
+    "planPersistence": 12,
+    "companionPersistence": 6,
+    "aiBlockedAndPrivacy": 3
+  },
+  "runtime": {
+    "metroPort": 8116,
+    "bundle": "compiled with SmartPlanDashboard, MockPlanChat, RestaurantScreens",
+    "backend": "compiled startup against temporary local MongoDB; health 200; protected routes 401",
+    "browserInteraction": "not manually revalidated in this reconciliation"
+  },
+  "assets": {
+    "missingStaticImports": 0
+  },
+  "aiSafeguards": "six files byte-identical to ai-luna-monthly-20261019"
+}

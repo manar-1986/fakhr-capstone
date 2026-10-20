@@ -1,0 +1,106 @@
+{
+  "reviewedAt": "2026-10-10",
+  "method": "Official provider websites and linked profiles; source publication establishes the public claim, not professional licensing or treatment efficacy. No source metadata is rendered.",
+  "records": [
+    {
+      "id": "center-abc-kuwait",
+      "sources": [
+        "https://abckuwait.com/contact/",
+        "https://abckuwait.com/abc-services/abc-programs/"
+      ],
+      "status": "official public sources",
+      "notes": ""
+    },
+    {
+      "id": "center-qudrat-early-intervention",
+      "sources": [
+        "https://qudratkw.com/",
+        "https://qudratkw.com/contact-us/"
+      ],
+      "status": "official public sources",
+      "notes": "Distinct from existing Hattin Qudrat nursery. Maps cid extracted from official embedded place ID."
+    },
+    {
+      "id": "center-kcld",
+      "sources": [
+        "https://kcld-kw.com/",
+        "https://kcld-kw.com/arabic/index.html",
+        "https://kcld-kw.com/contact-us.html"
+      ],
+      "status": "official public sources",
+      "notes": "Governorate omitted: website conflicts with Jabriya geography. Maps cid extracted from official embed."
+    },
+    {
+      "id": "center-roa-childhood",
+      "sources": [
+        "https://roacenter.com/"
+      ],
+      "status": "official public sources",
+      "notes": ""
+    },
+    {
+      "id": "center-first-step",
+      "sources": [
+        "https://www.firststepkw.com/",
+        "https://www.firststepkw.com/contact",
+        "https://firststepkw.com/?change_language=ar"
+      ],
+      "status": "official public sources",
+      "notes": "Existing backend seed identity reconciled. Map omitted because embedded pin and new textual address may differ."
+    },
+    {
+      "id": "center-speech-plus",
+      "sources": [
+        "https://linktr.ee/speechplus.kw"
+      ],
+      "status": "official public sources",
+      "notes": ""
+    },
+    {
+      "id": "center-speak-clinic",
+      "sources": [
+        "https://www.waze.com/live-map/directions/kw/hwly/alsalmyh/speak-clinic-llsma-w-alntq-w-altahyl-alshaml?to=place.ChIJ7Uwigk2dzz8RO1H0WSopSNc",
+        "https://www.instagram.com/speakclinic.kw/"
+      ],
+      "status": "identity corroborated; Instagram supplied by user; official site inaccessible",
+      "notes": "Phone, address, logo and services omitted pending official corroboration. No fabricated Arabic brand translation."
+    },
+    {
+      "id": "center-slp-shahad-shehab",
+      "sources": [
+        "https://www.slpshahad.com/",
+        "https://www.slpshahad.com/contact",
+        "https://www.slpshahad.com/en/about-us"
+      ],
+      "status": "official public sources",
+      "notes": ""
+    }
+  ],
+  "unresolved": [
+    {
+      "name": "مركز ثقة للاستشارات والتدخل المبكر",
+      "reason": "No reliable Kuwait identity found; similarly named Saudi and consulting businesses excluded."
+    },
+    {
+      "name": "thaat.kwt",
+      "reason": "Instagram unavailable; unrelated Saudi Thaat platform excluded."
+    },
+    {
+      "name": "مركز مزهر",
+      "reason": "No reliable exact Kuwait identity found."
+    },
+    {
+      "name": "مجموعة اختصاصيي النطق والبلع",
+      "reason": "No identifiable organization; generic department and hospital matches excluded."
+    },
+    {
+      "name": "مركز كن على صلة",
+      "reason": "No reliable exact Kuwait identity found."
+    }
+  ],
+  "limitations": [
+    "Configured public API https://fakhrcapstone-36gs.onrender.com/api/directory/centers returned HTTP 200 with zero records on 2026-10-10. Local localhost:8000 unavailable. No database writes performed; two identities exist in backend seed source only.",
+    "Missing fields deliberately omitted.",
+    "No licensing, efficacy or availability claims imported."
+  ]
+}

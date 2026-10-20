@@ -1,0 +1,10 @@
+fakhr-capstone-Backend/src/modules/ai/ai.activation.ts -text
+fakhr-capstone-Backend/src/modules/ai/ai.budget.ts -text
+fakhr-capstone-Backend/src/modules/ai/ai.quotas.ts -text
+fakhr-capstone-Backend/src/modules/ai/ai.requests.ts -text
+fakhr-capstone-Backend/src/modules/ai/ai.transport.ts -text
+fakhr-capstone-Backend/src/modules/ai/ai.witness.ts -text
+*.tgz binary
+
+# Preserve checksum-verified dependency backport bytes on every platform.
+fakhr-Capstone-Frontend/security-backports/*__*.js text eol=lf

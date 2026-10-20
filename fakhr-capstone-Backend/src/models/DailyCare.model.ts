@@ -1,0 +1,15 @@
+import mongoose,{Schema} from 'mongoose';
+const identity={parentId:{type:Schema.Types.ObjectId,required:true,immutable:true},childId:{type:Schema.Types.ObjectId,required:true,immutable:true},requestId:{type:String,required:true,immutable:true},fingerprint:{type:String,required:true,immutable:true}};
+const options={timestamps:true,autoCreate:false,autoIndex:false};
+const reminder=new Schema({...identity,title:String,date:String,startTime:String,timezone:String,notes:String,reminder:String,recurrence:Schema.Types.Mixed,dose:String,frequency:String,active:Boolean,revision:{type:Number,default:0}},options);
+reminder.index({parentId:1,requestId:1},{unique:true});
+reminder.index({parentId:1,childId:1,date:1});
+export const MedicationReminder=mongoose.model('MedicationReminder',reminder);
+const action=new Schema({...identity,reminderId:Schema.Types.ObjectId,occurrence:String,scheduleRevision:Number,sequence:Number,scheduleSnapshot:{title:String,dose:String,frequency:String,timezone:String},status:{type:String,enum:['given','skipped','pending']}},options);
+action.index({parentId:1,requestId:1},{unique:true});
+action.index({parentId:1,childId:1,reminderId:1,occurrence:1,sequence:1},{unique:true});
+export const MedicationAction=mongoose.model('MedicationAction',action);
+const participation=new Schema({...identity,templateId:Schema.Types.ObjectId,catalogVersion:String,activityId:String,status:{type:String,enum:['completed','skipped','declined']},notes:String,accessibilityConfirmed:Boolean,safetyConfirmed:Boolean},options);
+participation.index({parentId:1,requestId:1},{unique:true});
+participation.index({parentId:1,childId:1,createdAt:1});
+export const ActivityParticipation=mongoose.model('ActivityParticipation',participation);

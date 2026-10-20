@@ -1,0 +1,5 @@
+import {previewData,savePreview,fixtureAppointments} from '../utils/smartPlanPreview';
+import {localDate,progress,nextMeal,timestamp} from '../utils/smartPlan';
+import {planFixturesEnabled} from '../utils/planPreviewPolicy';
+test('populated visual data is child-scoped and has activities, meals, and an explicit sample appointment',()=>{const date=localDate(),a=previewData('synthetic-child-a',date),b=previewData('synthetic-child-b',date);expect(progress(a.tasks)).toEqual({done:3,total:7,percent:43});expect(a.meals).toHaveLength(4);expect(nextMeal(a.meals,timestamp(date,'11:00','Asia/Kuwait')!)?.kind).toBe('lunch');expect(fixtureAppointments('synthetic-child-a',date,true)[0].title).toContain('مثال بصري');savePreview('synthetic-child-a',date,{...a,tasks:[]});expect(previewData('synthetic-child-b',date)).toEqual(b)});
+test('fixture build flags never permit fixture data in production or the ordinary local app',()=>{expect(planFixturesEnabled(false,'true','true')).toBe(false);expect(planFixturesEnabled(true,'true',undefined)).toBe(false)});

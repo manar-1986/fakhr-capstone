@@ -1,0 +1,5851 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "id": "directory",
+      "files": [
+        "menwhm.pdf",
+        "menwhmة.pdf"
+      ],
+      "sha256": "9767ce664f6e91403ffed06d8bbd5622df2b9ec7fd709a07d5a0909e576f3316",
+      "pages": 8,
+      "date": null,
+      "note": "Identical files; source date not stated. Read once per unique page."
+    },
+    {
+      "id": "scan-2023",
+      "files": [
+        "مدارس وحضانات.pdf"
+      ],
+      "sha256": "2dbd168fbacda743951ca401ffed3064592081cf94b4429533a2583410017c2e",
+      "pages": 8,
+      "date": "2023-04-20",
+      "note": "Scanned pages visually transcribed; not evidence of current operation."
+    }
+  ],
+  "institutions": [
+    {
+      "id": "kw-n-bustan",
+      "nameAr": "حضانة البستان لضعاف السمع والنطق",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 1,
+          "row": "1",
+          "nameAr": "حضانة البستان لضعاف السمع والنطق",
+          "governorateAr": "العاصمة",
+          "areaAr": "الخالدية",
+          "addressAr": "الخالدية: قطعة 2، شارع العروبة، قسيمة 2",
+          "phones": [
+            "24822086"
+          ],
+          "needsAr": "ضعف سمع، تأخر لغوي، زراعة قوقعة",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "48",
+          "agesAr": "3–6 سنوات"
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "hearing",
+        "speech"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": "Al Bustan Nursery for Hearing and Speech Support",
+      "verifiedMapUrl": null,
+      "mainImage": "albustan",
+      "publicProfile": {
+        "specialization": {
+          "ar": "دعم الأطفال ذوي ضعف السمع وصعوبات النطق والتواصل.",
+          "en": "Support for children with hearing impairments and speech and communication difficulties."
+        },
+        "additionalUrl": "https://forms.gle/v62wQTgREg6KufvDA",
+        "additionalUrlLabel": {
+          "ar": "التسجيل للعام الدراسي 2026–2027",
+          "en": "Registration for Academic Year 2026–2027"
+        },
+        "mapUrl": "https://maps.app.goo.gl/rhHVy2zS3JJPEump8",
+        "instagram": "https://www.instagram.com/albustan1997/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        }
+      }
+    },
+    {
+      "id": "kw-n-dream",
+      "nameAr": "حضانة كويت دريم سنتر للاحتياجات الخاصة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 1,
+          "row": "2",
+          "nameAr": "حضانة كويت دريم سنتر للاحتياجات الخاصة",
+          "governorateAr": "العاصمة",
+          "areaAr": "الخالدية",
+          "addressAr": "الخالدية: قطعة 1، شارع غزة، مبنى 4",
+          "phones": [
+            "24827123",
+            "55290612"
+          ],
+          "needsAr": "توحد، تأخر تطوري، متلازمة داون",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "76",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 3,
+          "row": "29",
+          "nameAr": "حضانة كويت دريم سنتر",
+          "governorateAr": "العاصمة",
+          "areaAr": "الخالدية",
+          "addressAr": "الخالدية – قطعة 1 – شارع غزة – مبنى 4",
+          "phones": [
+            "24827123",
+            "55290612"
+          ],
+          "needsAr": "توحد (إعاقة ذهنية)؛ تأخر تطوري (إعاقة تطورية)؛ داون",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "sourceExtras": {
+        "fax": "24828123"
+      },
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "autism",
+        "intellectual",
+        "down",
+        "developmental"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": "Kuwait Dream Centre for Special Needs",
+      "verifiedMapUrl": null,
+      "mainImage": "kuwaitdream",
+      "publicProfile": {
+        "specialization": {
+          "ar": "مركز للتدخل المبكر مخصص للأطفال ذوي الاحتياجات الخاصة.",
+          "en": "An early intervention centre for children with special needs."
+        },
+        "instagram": "https://www.instagram.com/kuwaitdreamcentre/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/RB6pjdAtikXkWK8U7"
+      }
+    },
+    {
+      "id": "kw-n-nasser-2",
+      "nameAr": "حضانة بيت ناصر 2",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 1,
+          "row": "3",
+          "nameAr": "حضانة بيت ناصر 2",
+          "governorateAr": "العاصمة",
+          "areaAr": "جابر الأحمد",
+          "addressAr": "جابر الأحمد قطعة 5 شارع 528 فيلا 24",
+          "phones": [
+            "22259590",
+            "60050735"
+          ],
+          "needsAr": null,
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "49",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 3,
+          "row": "32",
+          "nameAr": "حضانة بيت ناصر 2",
+          "governorateAr": "العاصمة",
+          "areaAr": "جابر الأحمد",
+          "addressAr": "جابر الأحمد – ق 5 – شارع 528 – قسيمة 884 – فيلا 24 – مقابل مدرسة تميم الداري",
+          "phones": [
+            "62220012",
+            "60050735",
+            "55916205",
+            "64445953",
+            "22259590"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-n-nada",
+      "nameAr": "حضانة الندى لذوي الاحتياجات الخاصة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 1,
+          "row": "4",
+          "nameAr": "حضانة الندى لذوي الاحتياجات الخاصة",
+          "governorateAr": "العاصمة",
+          "areaAr": "المنصورية",
+          "addressAr": "المنصورية: قطعة 1، جادة 10، منزل 29، خلف حديقة المنصورية",
+          "phones": [
+            "50311309",
+            "22547016"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "96",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 3,
+          "row": "30",
+          "nameAr": "حضانة الندى لذوي الاحتياجات الخاصة",
+          "governorateAr": "العاصمة",
+          "areaAr": "المنصورية",
+          "addressAr": "المنصورية – قطعة 1 – جادة 10 – منزل 29 – خلف حديقة المنصورية",
+          "phones": [
+            "50311309",
+            "22547016"
+          ],
+          "needsAr": "طيف التوحد؛ الإعاقة الذهنية والحركية والحسية؛ تأخر تطوري شامل؛ ازدواج الإعاقة؛ المتلازمات الوراثية",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "autism",
+        "intellectual",
+        "motor",
+        "developmental",
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null,
+      "mainImage": "nada",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/nadacenter2015/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "whatsapp": {
+          "phone": "+96597163315",
+          "url": "https://wa.me/96597163315"
+        },
+        "mapUrl": "https://maps.app.goo.gl/eB8qZ86U3xqJoyoD8"
+      }
+    },
+    {
+      "id": "kw-n-ghad",
+      "nameAr": "حضانة الغد المشرق",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 1,
+          "row": "5",
+          "nameAr": "حضانة الغد المشرق",
+          "governorateAr": "حولي",
+          "areaAr": "الزهراء",
+          "addressAr": "جنوب السرة الزهراء قطعة 2 شارع 218 م 498",
+          "phones": [
+            "25242460",
+            "60352111"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "75",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 2,
+          "row": "16",
+          "nameAr": "حضانة الغد المشرق لذوي الاحتياجات الخاصة",
+          "governorateAr": "حولي",
+          "areaAr": "الزهراء",
+          "addressAr": "جنوب السرة – الزهراء – قطعة 2 – شارع 218 – منزل 498",
+          "phones": [
+            "25242460"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": "Al Ghad Al Moshriq Nursery",
+      "verifiedMapUrl": null,
+      "mainImage": "alghad",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/alghad.almoshriq/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/U41tGHh7B9vtgqG87"
+      }
+    },
+    {
+      "id": "kw-n-children",
+      "nameAr": "حضانة بيت الأطفال لذوي الاحتياجات الخاصة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 1,
+          "row": "6",
+          "nameAr": "حضانة بيت الأطفال للاحتياجات الخاصة",
+          "governorateAr": "حولي",
+          "areaAr": "الجابرية",
+          "addressAr": "الجابرية: قطعة 8، شارع 101، منزل 5، بجوار مستشفى هادي",
+          "phones": [
+            "25350358",
+            "25350359",
+            "97223077"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "50",
+          "agesAr": "3–6 سنوات"
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": "Bayt Alatfal 4SN",
+      "verifiedMapUrl": null,
+      "mainImage": "baytalatfal",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/childrenhomekwt/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "whatsapp": {
+          "phone": "+96597223077",
+          "url": "https://wa.me/96597223077"
+        },
+        "mapUrl": "https://maps.app.goo.gl/pxFNHF7J2nogESv5A"
+      }
+    },
+    {
+      "id": "kw-n-basma",
+      "nameAr": "حضانة البسمة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 1,
+          "row": "7",
+          "nameAr": "حضانة البسمة",
+          "governorateAr": "حولي",
+          "areaAr": "السلام",
+          "addressAr": "السلام: قطعة 5، شارع 507، فيلا 8",
+          "phones": [
+            "99734267",
+            "25240970",
+            "25240960"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "64",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 2,
+          "row": "12",
+          "nameAr": "حضانة البسمة",
+          "governorateAr": "حولي",
+          "areaAr": "السلام",
+          "addressAr": "جنوب السرة – السلام – قطعة 5 – شارع 507 – فيلا 8",
+          "phones": [
+            "99734267",
+            "25240970",
+            "25240960"
+          ],
+          "needsAr": "الإعاقة الذهنية والحركية (بسيطة/متوسطة/شديدة)؛ فرط حركة وتشتت انتباه؛ تأخر تطوري شامل؛ داون؛ الاضطراب الانفعالي والسلوكي؛ الإعاقة السمعية (بسيطة/متوسطة)؛ تأخر لغوي؛ إعاقة بصرية (بسيطة)؛ طيف توحد؛ إعاقة مزدوجة",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "autism",
+        "intellectual",
+        "hearing",
+        "vision",
+        "motor",
+        "down",
+        "developmental",
+        "speech",
+        "multiple",
+        "adhd",
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null,
+      "publicProfile": {
+        "mapUrl": "https://maps.app.goo.gl/aYaVwS88Xa1B5nfQ8"
+      }
+    },
+    {
+      "id": "kw-n-maharat",
+      "nameAr": "حضانة مهارات للاحتياجات الخاصة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 1,
+          "row": "8",
+          "nameAr": "حضانة مهارات للاحتياجات الخاصة",
+          "governorateAr": "حولي",
+          "areaAr": "الزهراء",
+          "addressAr": "الزهراء: قطعة 8، شارع 806، فيلا 220",
+          "phones": [
+            "99680656",
+            "25244894",
+            "60901962"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "48",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 2,
+          "row": "19",
+          "nameAr": "حضانة مهارات للاحتياجات الخاصة",
+          "governorateAr": "حولي",
+          "areaAr": "الزهراء",
+          "addressAr": "الزهراء – قطعة 8 – شارع 806 – فيلا 220",
+          "phones": [
+            "99680656",
+            "25244894",
+            "60901962"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": "Maharat Nursery for Special Needs",
+      "verifiedMapUrl": null,
+      "mainImage": "maharat",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/maharat.nursery/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/wYNiTPACVpyLFxX98"
+      }
+    },
+    {
+      "id": "kw-n-milestone",
+      "nameAr": "حضانة مايلستون للاحتياجات الخاصة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 1,
+          "row": "9",
+          "nameAr": "حضانة مايلستون للاحتياجات الخاصة",
+          "governorateAr": "حولي",
+          "areaAr": "الصديق",
+          "addressAr": "الصديق: قطعة 5، قسيمة 282–283",
+          "phones": [
+            "69006591"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "101",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 2,
+          "row": "17",
+          "nameAr": "حضانة مايلستون للاحتياجات الخاصة",
+          "governorateAr": "حولي",
+          "areaAr": "الصديق",
+          "addressAr": "الصديق – قطعة 5 – قسيمة 502 – مبنى 282/283",
+          "phones": [
+            "69006591"
+          ],
+          "needsAr": "صعوبات تعلم – طيف توحد – فرط نشاط – تأخر نطق – تأخر نمائي شامل – بطء تعلم – داون – صرع – شلل دماغي – إعاقة سمعية والحركية بسيطة",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "الدليل يسمي 282–283 قسيمة؛ قائمة 2023 تسميهما مبنى وتذكر قسيمة 502."
+      ],
+      "disabilityTags": [
+        "autism",
+        "hearing",
+        "motor",
+        "down",
+        "learning",
+        "developmental",
+        "speech",
+        "cerebral-palsy",
+        "adhd",
+        "epilepsy",
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": "Milestone by Reborn",
+      "verifiedMapUrl": null,
+      "mainImage": "milestone",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/milestone_q8/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/Jum3sux5wMiWj1SS6"
+      }
+    },
+    {
+      "id": "kw-n-royal",
+      "nameAr": "الحضانة الملكية البريطانية ثنائية اللغة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 1,
+          "row": "10",
+          "nameAr": "الحضانة الملكية البريطانية ثنائية اللغة",
+          "governorateAr": "حولي",
+          "areaAr": "الصديق",
+          "addressAr": "الصديق: قطعة 4، شارع 401، فيلا 233–234",
+          "phones": [
+            "98009696",
+            "25239696"
+          ],
+          "needsAr": "ذهنية بسيطة، داون، سمعية، طيف التوحد",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "165",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 2,
+          "row": "18",
+          "nameAr": "الحضانة الملكية البريطانية",
+          "governorateAr": "حولي",
+          "areaAr": "الصديق",
+          "addressAr": "الصديق – قطعة 4 – شارع 401 – فيلا 233/234",
+          "phones": [
+            "98009696",
+            "25239696"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "autism",
+        "intellectual",
+        "hearing",
+        "down",
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "mapVerification": {
+        "verifiedAt": "2026-10-11",
+        "evidence": "Exact Google Maps URL supplied by the user on 2026-10-11."
+      },
+      "verifiedMapUrl": "https://maps.app.goo.gl/bZEeia2puNhYHSqa7",
+      "mainImage": "royalbritish",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/rbkedu/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "website": "http://www.rb.edu.kw/"
+      }
+    },
+    {
+      "id": "kw-n-shams",
+      "nameAr": "حضانة الشمس المشرقة النموذجية لذوي الاحتياجات الخاصة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 2,
+          "row": "11",
+          "nameAr": "حضانة الشمس المشرقة النموذجية لذوي الاحتياجات الخاصة",
+          "governorateAr": "الفروانية",
+          "areaAr": "إشبيلية",
+          "addressAr": "إشبيلية: قطعة 4، شارع 401، قسيمة 782",
+          "phones": [
+            "24385524",
+            "24385523",
+            "60669545"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "64",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 1,
+          "row": "5",
+          "nameAr": "حضانة الشمس المشرقة",
+          "governorateAr": "الفروانية",
+          "areaAr": "إشبيلية",
+          "addressAr": "إشبيلية – قطعة 4 – شارع 401 – قسيمة 782",
+          "phones": [
+            "24385524",
+            "24385523",
+            "60669545",
+            "60788391"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null,
+      "mainImage": "sunshine",
+      "publicProfile": {
+        "phone": "+96560669545",
+        "extraPhones": [
+          {
+            "phone": "+96560788391",
+            "label": {
+              "ar": "رقم إضافي",
+              "en": "Additional contact"
+            }
+          }
+        ],
+        "address": {
+          "ar": "إشبيلية: قطعة 4، شارع 401، قسيمة 782\nإشبيلية – قطعة 4 – شارع 401 – قسيمة 782",
+          "en": "إشبيلية: قطعة 4، شارع 401، قسيمة 782\nإشبيلية – قطعة 4 – شارع 401 – قسيمة 782"
+        },
+        "area": {
+          "ar": "إشبيلية",
+          "en": "إشبيلية"
+        },
+        "supportedConditions": {
+          "ar": [
+            "جميع الإعاقات"
+          ],
+          "en": [
+            "جميع الإعاقات"
+          ]
+        },
+        "ages": {
+          "ar": "3–6 سنوات",
+          "en": "3–6 سنوات"
+        },
+        "instagram": "https://www.instagram.com/sunshineidealnursery/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/dE562Jvv2emv4HvK6"
+      }
+    },
+    {
+      "id": "kw-n-heba",
+      "nameAr": "حضانة الهبة لذوي الاحتياجات الخاصة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 2,
+          "row": "12",
+          "nameAr": "حضانة الهبة لذوي الاحتياجات الخاصة",
+          "governorateAr": "الفروانية",
+          "areaAr": "عبد الله المبارك",
+          "addressAr": "عبد الله المبارك: قطعة 6، شارع 601، قسيمة 22",
+          "phones": [
+            "97446577",
+            "97446477"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "48",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 1,
+          "row": "1",
+          "nameAr": "حضانة الهبة",
+          "governorateAr": "الفروانية",
+          "areaAr": "عبد الله المبارك",
+          "addressAr": "عبد الله المبارك – قطعة 6 – شارع 601 – قسيمة 409 – لوحة زرقاء 3",
+          "phones": [
+            "97446577",
+            "97446477"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "العنوان يختلف: قسيمة 22 في الدليل، وقسيمة 409/لوحة زرقاء 3 في قائمة 2023."
+      ],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-n-nasser-3",
+      "nameAr": "حضانة بيت ناصر 3",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 2,
+          "row": "13",
+          "nameAr": "حضانة بيت ناصر 3",
+          "governorateAr": "الفروانية",
+          "areaAr": "غرب عبد الله المبارك",
+          "addressAr": "غرب عبد الله المبارك: قطعة 4، شارع 441، فيلا 428",
+          "phones": [
+            "22259590",
+            "60050735"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "46",
+          "agesAr": "3–6 سنوات"
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-n-heba-2",
+      "nameAr": "حضانة الهبة 2",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 2,
+          "row": "14",
+          "nameAr": "حضانة الهبة 2",
+          "governorateAr": "الفروانية",
+          "areaAr": "الأندلس",
+          "addressAr": "الأندلس ق 4 ش 5 قسيمة 173",
+          "phones": [
+            "51142276"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "45",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 1,
+          "row": "2",
+          "nameAr": "حضانة الهبة 2 للاحتياجات الخاصة",
+          "governorateAr": "الفروانية",
+          "areaAr": "الأندلس",
+          "addressAr": "الأندلس – قطعة 4 – شارع 5 – قسيمة 173",
+          "phones": [
+            "51142276"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "sourceExtras": {
+        "email": "Alheba2nursery@gmail.com"
+      },
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-n-nuwair",
+      "nameAr": "حضانة النوير للاحتياجات الخاصة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 2,
+          "row": "15",
+          "nameAr": "حضانة النوير للاحتياجات الخاصة",
+          "governorateAr": "الفروانية",
+          "areaAr": "الرحاب",
+          "addressAr": "الرحاب: قطعة 2، شارع 2، قسيمة 387",
+          "phones": [
+            "55544069"
+          ],
+          "needsAr": "إعاقة ذهنية، توحد، إعاقة حركية",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "40",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 1,
+          "row": "6",
+          "nameAr": "حضانة النوير للاحتياجات الخاصة",
+          "governorateAr": "الفروانية",
+          "areaAr": "الرحاب",
+          "addressAr": "الرحاب – قطعة 2 – شارع 1 – قسيمة 11",
+          "phones": [
+            "55544069"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "العنوان يختلف: شارع 2 قسيمة 387 مقابل شارع 1 قسيمة 11."
+      ],
+      "disabilityTags": [
+        "autism",
+        "intellectual",
+        "motor",
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": "Al Nowair Nursery for Special Needs",
+      "mapVerification": {
+        "verifiedAt": "2026-10-11",
+        "evidence": "Exact Google Maps URL supplied by the user on 2026-10-11."
+      },
+      "verifiedMapUrl": "https://maps.app.goo.gl/ejNzP5TRhEYvxe4ZA",
+      "mainImage": "alnowair",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/alnowairnurserygroup/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "whatsapp": {
+          "phone": "+96555544069",
+          "url": "https://wa.me/96555544069"
+        }
+      }
+    },
+    {
+      "id": "kw-n-smart",
+      "nameAr": "حضانة سبيشل سمارت أكاديمي",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 2,
+          "row": "16",
+          "nameAr": "حضانة سبيشل سمارت أكاديمي",
+          "governorateAr": "الفروانية",
+          "areaAr": "خيطان",
+          "addressAr": "خيطان ق 5 ش 41 م 345",
+          "phones": [
+            "95002006",
+            "94002004"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "50",
+          "agesAr": "3–6 سنوات"
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": "Special Smart Academy",
+      "verifiedMapUrl": null,
+      "mainImage": "specialsmart",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/s.academy.kw/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/yTB8QHQsYXF2Roqe8"
+      }
+    },
+    {
+      "id": "kw-n-maha",
+      "nameAr": "حضانة المها لذوي الاحتياجات الخاصة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 2,
+          "row": "17",
+          "nameAr": "حضانة المها لذوي الاحتياجات الخاصة",
+          "governorateAr": "مبارك الكبير",
+          "areaAr": "فنيطيس",
+          "addressAr": "فنيطيس: قطعة 4، شارع 407، منزل 354",
+          "phones": [
+            "50999405",
+            "66569293"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "70",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 2,
+          "row": "20",
+          "nameAr": "حضانة المها",
+          "governorateAr": "مبارك الكبير",
+          "areaAr": "فنيطيس",
+          "addressAr": "فنيطيس – ق 4 – شارع 407 – منزل 354",
+          "phones": [
+            "50999405",
+            "66569293"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "mapVerification": {
+        "verifiedAt": "2026-10-11",
+        "evidence": "User-supplied Google Maps place displays phone 50999405, matching this branch; kw-n-maha-2 uses 60484449. Checked 2026-10-11."
+      },
+      "verifiedMapUrl": "https://maps.app.goo.gl/mQaGNzWjqzrZHa7h8"
+    },
+    {
+      "id": "kw-n-maha-2",
+      "nameAr": "حضانة المها 2 لذوي الاحتياجات الخاصة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 2,
+          "row": "18",
+          "nameAr": "حضانة المها 2 لذوي الاحتياجات الخاصة",
+          "governorateAr": "مبارك الكبير",
+          "areaAr": "فنيطيس",
+          "addressAr": "فنيطيس: قطعة 8، شارع 815، منزل 114",
+          "phones": [
+            "60484449"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "51",
+          "agesAr": "3–6 سنوات"
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-n-jack",
+      "nameAr": "حضانة جاك اند جل ثنائية اللغة للاحتياجات الخاصة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 2,
+          "row": "19",
+          "nameAr": "حضانة جاك اند جل ثنائية اللغة للاحتياجات الخاصة",
+          "governorateAr": "مبارك الكبير",
+          "areaAr": "أبو فطيرة",
+          "addressAr": "أبو فطيرة: قطعة 8، شارع 189، قسيمة 438",
+          "phones": [
+            "69018209",
+            "69624824"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "44",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 3,
+          "row": "22",
+          "nameAr": "حضانة جاك اند جل",
+          "governorateAr": "مبارك الكبير",
+          "areaAr": "أبو فطيرة",
+          "addressAr": "أبوفطيرة – قطعة 8 – شارع 189 – قسيمة 438",
+          "phones": [
+            "97712272",
+            "69018209"
+          ],
+          "needsAr": "الإعاقات الذهنية؛ الإعاقات الحركية؛ تأخر تطوري شامل",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "رقما اتصال غير مشتركين بين المصدرين؛ لا يمكن تحديد الأحدث."
+      ],
+      "disabilityTags": [
+        "intellectual",
+        "motor",
+        "developmental",
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": "Jack & Jill Nursery for Special Needs",
+      "verifiedMapUrl": null,
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/jack.jill.kw/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/XR6uE7MZmcdMXitu5"
+      },
+      "mainImage": "jackjill"
+    },
+    {
+      "id": "kw-n-amal",
+      "nameAr": "حضانة الأمل",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 2,
+          "row": "20",
+          "nameAr": "حضانة الأمل",
+          "governorateAr": "مبارك الكبير",
+          "areaAr": "فنيطيس",
+          "addressAr": "فنيطيس قطعة 3 شارع 306 فيلا 233",
+          "phones": [
+            "99107631",
+            "99108345"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "54",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 3,
+          "row": "24",
+          "nameAr": "حضانة الأمل",
+          "governorateAr": "مبارك الكبير",
+          "areaAr": "فنيطيس",
+          "addressAr": "الفنيطيس – قطعة 3 – شارع 306 – فيلا 233",
+          "phones": [
+            "99107631",
+            "99108345"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "sourceExtras": {
+        "email": "HopeNursery@hopekw.com"
+      },
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": "Al-Amal Nursery for Special Needs",
+      "verifiedMapUrl": null,
+      "mainImage": "alamal",
+      "publicProfile": {
+        "website": "http://www.hopenurserykw.com/",
+        "mapUrl": "https://maps.app.goo.gl/UC1cutUUVgb5fyFh8"
+      }
+    },
+    {
+      "id": "kw-n-best",
+      "nameAr": "حضانة بست دريم لذوي الاحتياجات الخاصة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 2,
+          "row": "21",
+          "nameAr": "حضانة بست دريم لذوي الاحتياجات الخاصة",
+          "governorateAr": "مبارك الكبير",
+          "areaAr": "أبو فطيرة",
+          "addressAr": "أبو فطيرة: قطعة 6 شارع 50، قسيمة 155",
+          "phones": [
+            "99220249",
+            "55704473"
+          ],
+          "needsAr": "إعاقة ذهنية، توحد، تأخر تطوري شامل",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "40",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 3,
+          "row": "23",
+          "nameAr": "حضانة بست دريم لذوي الاحتياجات الخاصة",
+          "governorateAr": "مبارك الكبير",
+          "areaAr": "أبو فطيرة",
+          "addressAr": "أبوفطيرة – ق 6 – شارع 50 – قسيمة 155",
+          "phones": [
+            "99220249",
+            "55704473"
+          ],
+          "needsAr": "الإعاقات الذهنية – توحد – تأخر تطوري شامل",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "autism",
+        "intellectual",
+        "developmental"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": "Best Dream Nursery for Special Needs",
+      "verifiedMapUrl": null,
+      "mainImage": "bestdream",
+      "publicProfile": {
+        "extraPhones": [
+          {
+            "phone": "55704473",
+            "label": {
+              "ar": "رقم إضافي",
+              "en": "Additional contact"
+            }
+          },
+          {
+            "phone": "+96541149088",
+            "label": {
+              "ar": "رقم إضافي",
+              "en": "Additional contact"
+            }
+          }
+        ],
+        "instagram": "https://www.instagram.com/bestdreamkw/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/hQ21G6XeBWwYqPwd6"
+      }
+    },
+    {
+      "id": "kw-n-abdullah",
+      "nameAr": "حضانة دار عبد الله للاحتياجات الخاصة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 3,
+          "row": "22",
+          "nameAr": "حضانة دار عبد الله للاحتياجات الخاصة",
+          "governorateAr": "مبارك الكبير",
+          "areaAr": "أبو فطيرة",
+          "addressAr": "أبو فطيرة قطعة 8، شارع 81، منزل 180–181",
+          "phones": [
+            "22072244",
+            "66110660"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "72",
+          "agesAr": "3–6 سنوات"
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": "Dar Abdullah Special Needs Nursery",
+      "verifiedMapUrl": null,
+      "mainImage": "darabdullah",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/darabdullahnursery/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "whatsapp": {
+          "phone": "+96566110660",
+          "url": "https://wa.me/96566110660"
+        },
+        "mapUrl": "https://maps.app.goo.gl/6jUoran1ggrKdyx56"
+      }
+    },
+    {
+      "id": "kw-n-yanmo",
+      "nameAr": "حضانة ينمو لذوي الاحتياجات الخاصة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 3,
+          "row": "23",
+          "nameAr": "حضانة ينمو لذوي الاحتياجات الخاصة",
+          "governorateAr": "الأحمدي",
+          "areaAr": "العقيلة",
+          "addressAr": "العقيلة ق 4 ش 420 مبنى 131",
+          "phones": [
+            "41111577",
+            "41111588"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "52",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 3,
+          "row": "28",
+          "nameAr": "حضانة ينمو النموذجية",
+          "governorateAr": "الأحمدي",
+          "areaAr": "العقيلة",
+          "addressAr": "العقيلة – قطعة 4 – شارع 420 – مبنى 131",
+          "phones": [
+            "41111577",
+            "41111588"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": "Yanmo Nursery for Special Needs",
+      "verifiedMapUrl": null,
+      "mainImage": "yanmo",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/yanmo_ideal_nursery/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "whatsapp": {
+          "phone": "+96541111588",
+          "url": "https://wa.me/96541111588"
+        },
+        "mapUrl": "https://maps.google.com/?q=29.177370,48.094494"
+      }
+    },
+    {
+      "id": "kw-n-energy",
+      "nameAr": "حضانة انرجي افكتف كيدز",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 3,
+          "row": "24",
+          "nameAr": "حضانة انرجي افكتف كيدز",
+          "governorateAr": "الأحمدي",
+          "areaAr": "صباح الأحمد",
+          "addressAr": "صباح الأحمد ش 127 قسيمة 134 قطاع E1",
+          "phones": [
+            "55992218",
+            "50031300"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "40",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 3,
+          "row": "27",
+          "nameAr": "حضانة انرجي افكتف كيدز",
+          "governorateAr": "الأحمدي",
+          "areaAr": "صباح الأحمد",
+          "addressAr": "صباح الأحمد – قسيمة 134 – قطاع E1",
+          "phones": [
+            "55992218",
+            "50031300"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null,
+      "mainImage": "eek",
+      "publicProfile": {
+        "phone": "+96560006383",
+        "extraPhones": [
+          {
+            "phone": "+96566700017",
+            "label": {
+              "ar": "رقم إضافي",
+              "en": "Additional contact"
+            }
+          }
+        ],
+        "address": {
+          "ar": "صباح الأحمد ش 127 قسيمة 134 قطاع E1\nصباح الأحمد – قسيمة 134 – قطاع E1",
+          "en": "صباح الأحمد ش 127 قسيمة 134 قطاع E1\nصباح الأحمد – قسيمة 134 – قطاع E1"
+        },
+        "area": {
+          "ar": "صباح الأحمد",
+          "en": "صباح الأحمد"
+        },
+        "supportedConditions": {
+          "ar": [
+            "جميع الإعاقات"
+          ],
+          "en": [
+            "جميع الإعاقات"
+          ]
+        },
+        "ages": {
+          "ar": "3–6 سنوات",
+          "en": "3–6 سنوات"
+        },
+        "instagram": "https://www.instagram.com/energyeek/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/YKhQTiRJmwYtA1aBA"
+      }
+    },
+    {
+      "id": "kw-n-ghali",
+      "nameAr": "حضانة غالي النموذجية لذوي الاحتياجات الخاصة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 3,
+          "row": "25",
+          "nameAr": "حضانة غالي النموذجية لذوي الاحتياجات الخاصة",
+          "governorateAr": "الأحمدي",
+          "areaAr": "المنقف",
+          "addressAr": "المنقف: قطعة 1، شارع 121، فيلا 5",
+          "phones": [
+            "23746758",
+            "23741289",
+            "99942901"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "150",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 3,
+          "row": "26",
+          "nameAr": "حضانة غالي للاحتياجات الخاصة",
+          "governorateAr": "الأحمدي",
+          "areaAr": "المنقف",
+          "addressAr": "المنقف – قطعة 1 – شارع 121 – فيلا 5",
+          "phones": [
+            "23746758",
+            "23741289",
+            "99942901"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": "Ghali Ideal Nursery for Special Needs",
+      "verifiedMapUrl": null,
+      "mainImage": "ghali",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/ghali_nursery2/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/opg8qT4DfKjMQTNy9"
+      }
+    },
+    {
+      "id": "kw-n-insan-1",
+      "nameAr": "حضانة إنسان 1",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 3,
+          "row": "26",
+          "nameAr": "حضانة إنسان 1",
+          "governorateAr": "الأحمدي",
+          "areaAr": "الفنطاس الزراعية",
+          "addressAr": "الفنطاس الزراعية: قطعة 4، شارع 2، منزل 291",
+          "phones": [
+            "60041147",
+            "60031132",
+            "65502770"
+          ],
+          "needsAr": "إعاقة ذهنية بسيطة ومتوسطة – توحد – إعاقات حركية",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "90",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 3,
+          "row": "25",
+          "nameAr": "حضانة مركز انسان",
+          "governorateAr": "الأحمدي",
+          "areaAr": "الفنطاس الزراعية",
+          "addressAr": "الفنطاس الزراعية – قطعة 4 – شارع 2 – منزل 291",
+          "phones": [
+            "23908080",
+            "52226632",
+            "99721356"
+          ],
+          "needsAr": "الإعاقة الذهنية؛ إعاقة تطورية (توحد)؛ إعاقة حركية",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "أرقام الاتصال مختلفة كلياً بين المصدرين."
+      ],
+      "disabilityTags": [
+        "autism",
+        "intellectual",
+        "motor",
+        "developmental"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-n-insan-2",
+      "nameAr": "حضانة انسان 2",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 3,
+          "row": "27",
+          "nameAr": "حضانة انسان 2",
+          "governorateAr": "الأحمدي",
+          "areaAr": "صباح الأحمد",
+          "addressAr": "صباح الأحمد قطعة D4 ش 427 ق 394 م 18",
+          "phones": [
+            "60041147",
+            "60031132",
+            "65502770"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "45",
+          "agesAr": "3–6 سنوات"
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "الهاتف في خلية مشتركة مع إنسان 1؛ يلزم تأكيد رقم الفرع."
+      ],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-n-little",
+      "nameAr": "حضانة ليتل فنقرز",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 3,
+          "row": "28",
+          "nameAr": "حضانة ليتل فنقرز",
+          "governorateAr": "الجهراء",
+          "areaAr": "الجهراء القديمة",
+          "addressAr": "الجهراء القديمة ق 1 ش 3 متفرع من شارع عبد الله بن جدعان 37",
+          "phones": [
+            "51678168",
+            "55996615",
+            "24554130"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "48",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 1,
+          "row": "8",
+          "nameAr": "حضانة ليتل فنقرز للاحتياجات الخاصة",
+          "governorateAr": "الجهراء",
+          "areaAr": "الجهراء القديمة",
+          "addressAr": "الجهراء القديمة – قطعة 1 – شارع 3 متفرع من شارع عبد الله بن جدعان – منزل 37",
+          "phones": [
+            "51678168",
+            "55996615",
+            "24554130"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": "Little Fingers Nursery for Special Needs",
+      "verifiedMapUrl": null,
+      "identityAliases": [
+        "حضانة الأصابع الصغيرة",
+        "حضانة الأصابع الصغيرة لذوي الاحتياجات الخاصة"
+      ],
+      "mainImage": "littlefingers",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/littlefingers_nursery/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/AQyNovaPtwJBLU898"
+      }
+    },
+    {
+      "id": "kw-n-sumaya",
+      "nameAr": "حضانة سمية",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 3,
+          "row": "29",
+          "nameAr": "حضانة سمية",
+          "governorateAr": "الجهراء",
+          "areaAr": "القصر",
+          "addressAr": "الجهراء القصر ق 2 ش مرشد الشمري م 10",
+          "phones": [
+            "66677126",
+            "55299862",
+            "24563356",
+            "24563358"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "111",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 1,
+          "row": "9",
+          "nameAr": "حضانة سمية النموذجية",
+          "governorateAr": "الجهراء",
+          "areaAr": "القصر",
+          "addressAr": "الجهراء – القصر – قطعة 2 – شارع مرشد الشمري – منزل 10 – الرقم الآلي للعنوان 17629462",
+          "phones": [
+            "66677126",
+            "55299862",
+            "24563356",
+            "24563358"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": "Somya Nursery",
+      "verifiedMapUrl": null,
+      "mainImage": "somya",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/somya_jahra/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/HN9pmxqPzfetrRhT7"
+      }
+    },
+    {
+      "id": "kw-n-nasser",
+      "nameAr": "حضانة بيت ناصر",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 3,
+          "row": "30",
+          "nameAr": "حضانة بيت ناصر",
+          "governorateAr": "الجهراء",
+          "areaAr": "النسيم",
+          "addressAr": "النسيم -93 ش 9 فيلا 324",
+          "phones": [
+            "22259590",
+            "60050735"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "58",
+          "agesAr": "3–6 سنوات"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 1,
+          "row": "10",
+          "nameAr": "حضانة بيت ناصر لذوي الاحتياجات الخاصة",
+          "governorateAr": "الجهراء",
+          "areaAr": "النسيم",
+          "addressAr": "النسيم – قطعة 3 – فيلا 242 – مقابل الكلية الكندية",
+          "phones": [
+            "96926826",
+            "55081912"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "العنوان وأرقام الاتصال مختلفان بين المصدرين؛ قد يكون انتقالاً أو فرعاً غير موضح. يلزم التحقق."
+      ],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-child",
+      "nameAr": "مركز تقويم وتعليم الطفل",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 4,
+          "row": "1",
+          "nameAr": "مركز تقويم وتعليم الطفل (عربية)",
+          "governorateAr": "العاصمة",
+          "areaAr": "السرة",
+          "addressAr": "السرة: قطعة 4",
+          "phones": [
+            "1832000"
+          ],
+          "needsAr": "إعاقة تعليمية (صعوبات تعلم)",
+          "stagesAr": null,
+          "classroomAr": "دمج",
+          "capacityAr": "236",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 5,
+          "row": "15",
+          "nameAr": "مركز تقويم وتعليم الطفل",
+          "governorateAr": "العاصمة",
+          "areaAr": "السرة",
+          "addressAr": "السرة – قطعة 4 – شارع 14 – ص ب 5453 – الصفاة 13055 الكويت",
+          "phones": [
+            "1832000"
+          ],
+          "needsAr": "إعاقة تعليمية (صعوبات التعلم)",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "learning"
+      ],
+      "stageTags": [],
+      "nameEn": "Center for Child Evaluation & Teaching",
+      "verifiedMapUrl": null,
+      "identityAliases": [
+        "CCET",
+        "مركز تقويم وتعليم الطفل (عربية)"
+      ],
+      "mainImage": "ccet",
+      "publicProfile": {
+        "classification": {
+          "ar": "جمعية نفع عام",
+          "en": "Non-profit Public Benefit Association"
+        },
+        "specialization": {
+          "ar": "صعوبات التعلم المحددة",
+          "en": "Specific Learning Disabilities"
+        },
+        "established": 1984,
+        "description": {
+          "ar": "جمعية نفع عام كويتية متخصصة في مجال صعوبات التعلم المحددة منذ عام 1984، تقدم خدمات التشخيص والتدريب والعلاج التربوي لدعم الأطفال ذوي صعوبات التعلم.",
+          "en": "A Kuwaiti non-profit public benefit association specializing in specific learning disabilities since 1984, offering assessment, training, and educational intervention services."
+        },
+        "services": {
+          "ar": [
+            "تشخيص صعوبات التعلم المحددة",
+            "التدريب التربوي",
+            "العلاج والتدخل التربوي",
+            "دعم الأطفال ذوي صعوبات التعلم"
+          ],
+          "en": [
+            "Specific Learning Disabilities Assessment",
+            "Educational Training",
+            "Educational Intervention",
+            "Learning Disabilities Support"
+          ]
+        },
+        "phone": "+9651832000",
+        "additionalPhone": "+96560362896",
+        "additionalPhoneLabel": {
+          "ar": "اتصال مسائي",
+          "en": "Evening Phone"
+        },
+        "mapUrl": "https://maps.app.goo.gl/vhJPyYBXBnBaDcEk7",
+        "instagram": "https://www.instagram.com/ccetkuwait/"
+      }
+    },
+    {
+      "id": "kw-s-tarbiya",
+      "nameAr": "مدرسة التربية النموذجية الخاصة (ثنائية اللغة)",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 4,
+          "row": "2",
+          "nameAr": "مدرسة التربية النموذجية الخاصة (ثنائية اللغة)",
+          "governorateAr": "العاصمة",
+          "areaAr": "شرق",
+          "addressAr": "شرق: قطعة 8",
+          "phones": [
+            "22403668",
+            "22403669",
+            "22463774"
+          ],
+          "needsAr": "بطء تعلم واحتياجات خاصة",
+          "stagesAr": null,
+          "classroomAr": "احتياجات",
+          "capacityAr": "240",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 7,
+          "row": "17",
+          "nameAr": "مدرسة التربية النموذجية",
+          "governorateAr": "العاصمة",
+          "areaAr": "شرق",
+          "addressAr": "شرق – قطعة 8 – شارع 151",
+          "phones": [
+            "22403668",
+            "22403669",
+            "22463774"
+          ],
+          "needsAr": "فصول احتياجات خاصة",
+          "stagesAr": null,
+          "classroomAr": "احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "learning"
+      ],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-hope",
+      "nameAr": "مدرسة هوب للاحتياجات الخاصة",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 4,
+          "row": "3",
+          "nameAr": "مدرسة هوب للاحتياجات الخاصة (ثنائية اللغة)",
+          "governorateAr": "العاصمة",
+          "areaAr": "شرق",
+          "addressAr": "شرق: قطعة 1",
+          "phones": [
+            "22496600"
+          ],
+          "needsAr": "احتياجات خاصة",
+          "stagesAr": null,
+          "classroomAr": "احتياجات",
+          "capacityAr": "378",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 7,
+          "row": "18",
+          "nameAr": "مدرسة هوب للاحتياجات الخاصة",
+          "governorateAr": "العاصمة",
+          "areaAr": "شرق",
+          "addressAr": "شرق – قطعة 1 – شارع الشهداء – بجوار برج الحمراء",
+          "phones": [
+            "22496600"
+          ],
+          "needsAr": "فصول احتياجات خاصة",
+          "stagesAr": null,
+          "classroomAr": "احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "autism",
+        "down",
+        "adhd",
+        "developmental",
+        "intellectual"
+      ],
+      "stageTags": [],
+      "nameEn": "HOPE School for Special Needs",
+      "verifiedMapUrl": null,
+      "identityAliases": [
+        "مدرسة هوب للاحتياجات الخاصة (ثنائية اللغة)",
+        "Hope School"
+      ],
+      "mainImage": "hopeschool",
+      "publicProfile": {
+        "classification": {
+          "ar": "مدرسة للاحتياجات الخاصة",
+          "en": "Special Needs School"
+        },
+        "specialization": {
+          "ar": "الإعاقات الذهنية والنمائية",
+          "en": "Intellectual and Developmental Disabilities"
+        },
+        "description": {
+          "ar": "مدرسة متخصصة في تعليم ودعم الطلاب من ذوي الإعاقات الذهنية والتحديات النمائية، وتشمل الفئات التي تخدمها الطلاب ذوي اضطراب طيف التوحد، ومتلازمة داون، واضطراب فرط الحركة وتشتت الانتباه (ADHD)، والتأخر النمائي الشامل (GDD)، وغيرها من التحديات الذهنية والنمائية.",
+          "en": "A special education school supporting students with intellectual and developmental disabilities, including autism spectrum disorder, Down syndrome, ADHD, Global Developmental Delay (GDD), and other developmental needs."
+        },
+        "supportedConditions": {
+          "ar": [
+            "اضطراب طيف التوحد",
+            "متلازمة داون",
+            "اضطراب فرط الحركة وتشتت الانتباه",
+            "التأخر النمائي الشامل (GDD)",
+            "الإعاقات الذهنية والنمائية"
+          ],
+          "en": [
+            "Autism Spectrum Disorder",
+            "Down Syndrome",
+            "Attention Deficit Hyperactivity Disorder (ADHD)",
+            "Global Developmental Delay (GDD)",
+            "Intellectual and Developmental Disabilities"
+          ]
+        },
+        "phone": "+96522496600",
+        "extraPhones": [
+          {
+            "phone": "+96522496601",
+            "label": {
+              "ar": "هاتف المدرسة 2",
+              "en": "School Phone 2"
+            }
+          },
+          {
+            "phone": "+96522496602",
+            "label": {
+              "ar": "هاتف المدرسة 3",
+              "en": "School Phone 3"
+            }
+          },
+          {
+            "phone": "+96551414344",
+            "label": {
+              "ar": "برنامج ما بعد المدرسة",
+              "en": "After School Program"
+            }
+          }
+        ],
+        "email": "Info@hopeschool.edu.kw",
+        "instagram": "https://www.instagram.com/hopeschoolkuwait/",
+        "mapUrl": "https://maps.app.goo.gl/iZRSe6BaGFa7wuHa9"
+      }
+    },
+    {
+      "id": "kw-s-middle-east",
+      "nameAr": "مدرسة الشرق الأوسط الأمريكية ثنائية اللغة لذوي الاحتياجات الخاصة",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 4,
+          "row": "4",
+          "nameAr": "مدرسة الشرق الأوسط الأمريكية ثنائية اللغة لذوي الاحتياجات الخاصة",
+          "governorateAr": "العاصمة",
+          "areaAr": "الدوحة",
+          "addressAr": "الدوحة: قطعة 4",
+          "phones": [
+            "24866850",
+            "24866950"
+          ],
+          "needsAr": "جميع الإعاقات؛ فصول دمج",
+          "stagesAr": null,
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "139",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 7,
+          "row": "20",
+          "nameAr": "مدرسة الشرق الأوسط الأمريكية ثنائية اللغة",
+          "governorateAr": "العاصمة",
+          "areaAr": "الدوحة",
+          "addressAr": "الدوحة – قطعة 4 – شارع جمال عبد الناصر – خلف ثانوية شهاب الدين",
+          "phones": [
+            "24866850",
+            "24866950"
+          ],
+          "needsAr": null,
+          "stagesAr": "روضة وجميع المراحل الدراسية",
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "kindergarten",
+        "all-as-reported"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null,
+      "mainImage": "amebs",
+      "publicProfile": {
+        "phone": "+96599009251",
+        "additionalPhone": "+96524866950",
+        "address": {
+          "ar": "الدوحة: قطعة 4\nالدوحة – قطعة 4 – شارع جمال عبد الناصر – خلف ثانوية شهاب الدين",
+          "en": "الدوحة: قطعة 4\nالدوحة – قطعة 4 – شارع جمال عبد الناصر – خلف ثانوية شهاب الدين"
+        },
+        "area": {
+          "ar": "الدوحة",
+          "en": "الدوحة"
+        },
+        "services": {
+          "ar": [
+            "دمج؛ احتياجات",
+            "روضة وجميع المراحل الدراسية"
+          ],
+          "en": [
+            "دمج؛ احتياجات",
+            "روضة وجميع المراحل الدراسية"
+          ]
+        },
+        "supportedConditions": {
+          "ar": [
+            "جميع الإعاقات؛ فصول دمج"
+          ],
+          "en": [
+            "جميع الإعاقات؛ فصول دمج"
+          ]
+        },
+        "instagram": "https://www.instagram.com/amebs_kwt/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "email": "amebs.edu@gmail.com",
+        "mapUrl": "https://maps.app.goo.gl/PgeE8JfzBAKsis74A"
+      }
+    },
+    {
+      "id": "kw-s-dasman-1",
+      "nameAr": "مدرسة دسمان ثنائية اللغة",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 4,
+          "row": "5",
+          "nameAr": "مدرسة دسمان ثنائية اللغة الخاصة (1)",
+          "governorateAr": "العاصمة",
+          "areaAr": "شرق",
+          "addressAr": "الشرق، قطعة 3",
+          "phones": [
+            "22277377"
+          ],
+          "needsAr": null,
+          "stagesAr": "رياض أطفال + ابتدائي",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "545 (خلية مشتركة للقسمين 1 و2)",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 7,
+          "row": "19 القسم 1",
+          "nameAr": "مدرسة دسمان ثنائية اللغة (1)",
+          "governorateAr": "العاصمة",
+          "areaAr": "شرق",
+          "addressAr": "شرق – دسمان – شارع بن مسباح",
+          "phones": [
+            "22277377"
+          ],
+          "needsAr": null,
+          "stagesAr": "روضة ومرحلة الابتدائي",
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "السعة 545 في خلية مشتركة للقسمين وليست سعة كل قسم."
+      ],
+      "disabilityTags": [],
+      "stageTags": [
+        "kindergarten",
+        "primary",
+        "middle",
+        "secondary"
+      ],
+      "nameEn": "Dasman Bilingual School",
+      "verifiedMapUrl": null,
+      "identityAliases": [
+        "مدرسة دسمان ثنائية اللغة الخاصة (1)",
+        "DBS"
+      ],
+      "mainImage": "dasman",
+      "publicProfile": {
+        "classification": {
+          "ar": "مدرسة خاصة ثنائية اللغة للتعليم الدامج",
+          "en": "Private Inclusive Bilingual School"
+        },
+        "specialization": {
+          "ar": "التعليم الدامج ودعم الاحتياجات التعليمية الخاصة",
+          "en": "Inclusive Education & SEN Support"
+        },
+        "description": {
+          "ar": "مدرسة خاصة ثنائية اللغة في الكويت تقدم تعليماً شاملاً ودامجاً للطلاب، مع دعم ذوي الاحتياجات التعليمية الخاصة، من مرحلة رياض الأطفال حتى المرحلة الثانوية.",
+          "en": "A private bilingual school in Kuwait providing inclusive education and Special Educational Needs (SEN) support from Kindergarten through High School."
+        },
+        "services": {
+          "ar": [
+            "التعليم ثنائي اللغة",
+            "التعليم الدامج",
+            "دعم ذوي الاحتياجات التعليمية الخاصة",
+            "رياض الأطفال",
+            "المرحلة الابتدائية",
+            "المرحلة المتوسطة",
+            "المرحلة الثانوية"
+          ],
+          "en": [
+            "Bilingual Education",
+            "Inclusive Education",
+            "Special Educational Needs (SEN) Support",
+            "Kindergarten",
+            "Elementary School",
+            "Middle School",
+            "High School"
+          ]
+        },
+        "phone": "+96522277377",
+        "phoneExtension": "101",
+        "website": "https://www.dbs.edu.kw/",
+        "instagram": "https://www.instagram.com/dasmanbilingualschool/",
+        "mapUrl": "https://maps.app.goo.gl/M3Tzr3C2u3426rYS9"
+      }
+    },
+    {
+      "id": "kw-s-dasman-2",
+      "nameAr": "مدرسة دسمان ثنائية اللغة الخاصة (2)",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 4,
+          "row": "6",
+          "nameAr": "مدرسة دسمان ثنائية اللغة الخاصة (2)",
+          "governorateAr": "العاصمة",
+          "areaAr": "شرق",
+          "addressAr": "الشرق، قطعة 3",
+          "phones": [
+            "22277377"
+          ],
+          "needsAr": null,
+          "stagesAr": "متوسط + ثانوي",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "545 (خلية مشتركة للقسمين 1 و2)",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 7,
+          "row": "19 القسم 2",
+          "nameAr": "مدرسة دسمان ثنائية اللغة (2)",
+          "governorateAr": "العاصمة",
+          "areaAr": "شرق",
+          "addressAr": "شرق – دسمان – شارع بن مسباح",
+          "phones": [
+            "22277377"
+          ],
+          "needsAr": null,
+          "stagesAr": "مرحلة المتوسط والثانوي",
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "السعة 545 في خلية مشتركة للقسمين وليست سعة كل قسم."
+      ],
+      "disabilityTags": [],
+      "stageTags": [
+        "middle",
+        "secondary"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-marifa-girls",
+      "nameAr": "مدرسة المعرفة النموذجية الأهلية - بنات (عربية)",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 4,
+          "row": "7",
+          "nameAr": "مدرسة المعرفة النموذجية الأهلية - بنات (عربية)",
+          "governorateAr": "الأحمدي",
+          "areaAr": "المنقف",
+          "addressAr": "المنقف: قطعة 55",
+          "phones": [
+            "23746758",
+            "23741289",
+            "99942901"
+          ],
+          "needsAr": null,
+          "stagesAr": "رياض أطفال + ابتدائي (مختلط)؛ متوسط + ثانوي (بنات)",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "762",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 5,
+          "row": "14 بنات",
+          "nameAr": "مدرسة المعرفة النموذجية (بنات)",
+          "governorateAr": "الأحمدي",
+          "areaAr": "المنقف",
+          "addressAr": "المنقف – قطعة 4 – شارع 21",
+          "phones": [
+            "23746758",
+            "23741289",
+            "99942901"
+          ],
+          "needsAr": null,
+          "stagesAr": "روضة وابتدائي (مختلط)؛ متوسط وثانوي (بنات)",
+          "classroomAr": "احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "قطعة 55 في الدليل مقابل قطعة 4 في قائمة 2023؛ لا تُدمج مع قسم البنين."
+      ],
+      "disabilityTags": [],
+      "stageTags": [
+        "kindergarten",
+        "primary",
+        "middle",
+        "secondary"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-marifa-boys",
+      "publicProfile": {
+        "mapUrl": "https://maps.app.goo.gl/vbJkDEYd8sNC3AqK7"
+      },
+      "nameAr": "مدرسة المعرفة النموذجية - بنين (عربية)",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 4,
+          "row": "8",
+          "nameAr": "مدرسة المعرفة النموذجية - بنين (عربية)",
+          "governorateAr": "الأحمدي",
+          "areaAr": "المنقف",
+          "addressAr": "المنقف: قطعة 63",
+          "phones": [
+            "23746758",
+            "23741289",
+            "99942901"
+          ],
+          "needsAr": null,
+          "stagesAr": "متوسط + ثانوي (بنين)",
+          "classroomAr": "دمج",
+          "capacityAr": "432",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 5,
+          "row": "14 بنين",
+          "nameAr": "مدرسة المعرفة النموذجية (بنين)",
+          "governorateAr": "الأحمدي",
+          "areaAr": "المنقف",
+          "addressAr": "المنقف – قطعة 4 – شارع 21",
+          "phones": [
+            "23746758",
+            "23741289",
+            "99942901"
+          ],
+          "needsAr": null,
+          "stagesAr": "متوسط وثانوي (بنين)",
+          "classroomAr": "احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "قطعة 63 في الدليل مقابل قطعة 4 في قائمة 2023؛ لا تُدمج مع قسم البنات."
+      ],
+      "disabilityTags": [],
+      "stageTags": [
+        "middle",
+        "secondary"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-resala",
+      "nameAr": "مدرسة الرسالة ثنائية اللغة",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 4,
+          "row": "9",
+          "nameAr": "مدرسة الرسالة ثنائية اللغة",
+          "governorateAr": "الأحمدي",
+          "areaAr": "المهبولة",
+          "addressAr": "المهبولة: قطعة 2أ",
+          "phones": [
+            "23732015"
+          ],
+          "needsAr": null,
+          "stagesAr": "رياض أطفال + جميع المراحل الدراسية",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "196",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 7,
+          "row": "13",
+          "nameAr": "مدرسة الرسالة ثنائية اللغة",
+          "governorateAr": "الأحمدي",
+          "areaAr": "المهبولة",
+          "addressAr": "المهبولة – ق 2أ – قسيمة 236 – طريق الفحيحيل السريع",
+          "phones": [
+            "1831020",
+            "23732015"
+          ],
+          "needsAr": null,
+          "stagesAr": "روضة وجميع المراحل الدراسية",
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "learning"
+      ],
+      "stageTags": [
+        "kindergarten",
+        "all-as-reported"
+      ],
+      "nameEn": "Resala Bilingual School",
+      "verifiedMapUrl": null,
+      "mainImage": "resala",
+      "publicProfile": {
+        "phone": "1831020",
+        "phoneExtension": "171 / 112",
+        "address": {
+          "ar": "المهبولة – ق 2أ – قسيمة 236 – طريق الفحيحيل السريع",
+          "en": "Mahboula, Block 2A, Plot 236, Fahaheel Expressway"
+        },
+        "area": {
+          "ar": "المهبولة",
+          "en": "Mahboula"
+        },
+        "services": {
+          "ar": [
+            "رياض أطفال وجميع المراحل الدراسية",
+            "التعليم الدامج ودعم الاحتياجات الخاصة"
+          ],
+          "en": [
+            "Kindergarten and all educational stages",
+            "Inclusive education and special educational needs support"
+          ]
+        },
+        "supportedConditions": {
+          "ar": [
+            "إعاقة تعليمية"
+          ],
+          "en": [
+            "Learning Disability"
+          ]
+        },
+        "instagram": "https://www.instagram.com/resala_school/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/kQc6pBZhk8EUo5xo9",
+        "additionalUrl": "https://register.creativeresalaonline.com/",
+        "additionalUrlLabel": {
+          "ar": "التسجيل الإلكتروني",
+          "en": "Online Registration"
+        }
+      }
+    },
+    {
+      "id": "kw-s-umm-qura",
+      "nameAr": "مدرسة أم القرى النموذجية الأهلية",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 4,
+          "row": "10",
+          "nameAr": "مدرسة أم القرى النموذجية الأهلية (عربية)",
+          "governorateAr": "الأحمدي",
+          "areaAr": "أبو حليفة",
+          "addressAr": "أبو حليفة: قطعة 2",
+          "phones": [
+            "22277280",
+            "22277292"
+          ],
+          "needsAr": null,
+          "stagesAr": "رياض أطفال + ابتدائي (مختلط)؛ متوسط + ثانوي (بنات)",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "434",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 5,
+          "row": "13",
+          "nameAr": "مدرسة أم القرى النموذجية",
+          "governorateAr": "الأحمدي",
+          "areaAr": "أبو حليفة",
+          "addressAr": "بوحليفة – قطعة 2 – شارع 1 – رقم 41",
+          "phones": [
+            "22277280",
+            "22277292"
+          ],
+          "needsAr": null,
+          "stagesAr": "ابتدائي (مختلط)؛ متوسط وثانوي (بنات)",
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported",
+        "learning"
+      ],
+      "stageTags": [
+        "kindergarten",
+        "primary",
+        "middle",
+        "secondary"
+      ],
+      "nameEn": "Umm Al Qura Independent Model School",
+      "verifiedMapUrl": null,
+      "mainImage": "ummalqura",
+      "publicProfile": {
+        "classification": {
+          "ar": "مدرسة أهلية — لغة التعليم: العربية",
+          "en": "Independent School — Educational language: Arabic"
+        },
+        "phone": "+96522277281",
+        "instagram": "https://www.instagram.com/ummalqoramodel/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/Gbo8qfDgNYnevFiP8",
+        "supportedConditions": {
+          "ar": [
+            "جميع الإعاقات (حسب المعلومات المقدمة)",
+            "إعاقة تعليمية لفصول الدمج"
+          ],
+          "en": [
+            "All disability categories (as stated in the supplied information)",
+            "Learning Disabilities – Inclusive Classrooms"
+          ]
+        }
+      }
+    },
+    {
+      "id": "kw-s-future-girls",
+      "nameAr": "مدرسة المستقبل ثنائية اللغة الخاصة - بنات",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 4,
+          "row": "11",
+          "nameAr": "مدرسة المستقبل ثنائية اللغة الخاصة - بنات",
+          "governorateAr": "الأحمدي",
+          "areaAr": "الفحيحيل",
+          "addressAr": "الفحيحيل: قطعة 2/23",
+          "phones": [
+            "23921917",
+            "23934248",
+            "23921918"
+          ],
+          "needsAr": "جسدية – بصرية – حركية – سمعية",
+          "stagesAr": null,
+          "classroomAr": "دمج",
+          "capacityAr": "230",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 7,
+          "row": "15 بنات",
+          "nameAr": "المستقبل ثنائية اللغة (بنات)",
+          "governorateAr": "الأحمدي",
+          "areaAr": "الفحيحيل",
+          "addressAr": "فحيحيل – شارع مكة – بجانب منطقة الأحمدي التعليمية",
+          "phones": [
+            "23921917",
+            "23934248",
+            "23921918"
+          ],
+          "needsAr": "بطء وصعوبات تعلم؛ إعاقة جسدية/بصرية/حركية/سمعية",
+          "stagesAr": "روضة وجميع المراحل الدراسية",
+          "classroomAr": "دمج",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "hearing",
+        "vision",
+        "motor",
+        "learning"
+      ],
+      "stageTags": [
+        "kindergarten",
+        "all-as-reported"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-future",
+      "nameAr": "مدرسة المستقبل ثنائية اللغة الخاصة",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 4,
+          "row": "12",
+          "nameAr": "مدرسة المستقبل ثنائية اللغة الخاصة",
+          "governorateAr": "الأحمدي",
+          "areaAr": "الفحيحيل",
+          "addressAr": "الفحيحيل: قطعة 2/23",
+          "phones": [
+            "23921917",
+            "23934248",
+            "23921918"
+          ],
+          "needsAr": null,
+          "stagesAr": "رياض أطفال + جميع المراحل الدراسية",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "200",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 7,
+          "row": "15 عامة",
+          "nameAr": "المستقبل ثنائية اللغة الخاصة",
+          "governorateAr": "الأحمدي",
+          "areaAr": "الفحيحيل",
+          "addressAr": "فحيحيل – شارع مكة – بجانب منطقة الأحمدي التعليمية",
+          "phones": [
+            "23921917",
+            "23934248",
+            "23921918"
+          ],
+          "needsAr": null,
+          "stagesAr": "روضة وجميع المراحل الدراسية",
+          "classroomAr": "احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [],
+      "stageTags": [
+        "kindergarten",
+        "all-as-reported"
+      ],
+      "nameEn": "Future Bilingual School",
+      "verifiedMapUrl": null,
+      "mainImage": "futurebilingual",
+      "publicProfile": {
+        "classification": {
+          "ar": "قسم الاحتياجات الخاصة",
+          "en": "Special Needs Department"
+        },
+        "supportedConditions": {
+          "ar": [
+            "الإعاقات الذهنية والنفسية البسيطة والمتوسطة، حسب المعلومات المقدمة."
+          ],
+          "en": [
+            "Mild to moderate intellectual and psychological disabilities, as stated in the supplied information."
+          ]
+        },
+        "phone": "23921917",
+        "additionalPhone": "23934248",
+        "extraPhones": [
+          {
+            "phone": "23921918",
+            "label": {
+              "ar": "رقم إضافي",
+              "en": "Additional contact"
+            }
+          }
+        ],
+        "area": {
+          "ar": "الفحيحيل",
+          "en": "Fahaheel"
+        },
+        "address": {
+          "ar": "الفحيحيل: قطعة 2/23؛ شارع مكة – بجانب منطقة الأحمدي التعليمية",
+          "en": "Fahaheel, Block 2/23; Makkah Street, beside the Ahmadi Educational Area"
+        },
+        "services": {
+          "ar": [
+            "رياض أطفال وجميع المراحل الدراسية",
+            "دمج واحتياجات خاصة"
+          ],
+          "en": [
+            "Kindergarten and all educational stages",
+            "Inclusive education and special needs"
+          ]
+        },
+        "instagram": "https://www.instagram.com/futurebilingualschool2/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/2BtacJS4vPkeAAWX7"
+      }
+    },
+    {
+      "id": "kw-s-help",
+      "mainImage": "kuwaithelp",
+      "publicProfile": {
+        "supportedConditions": {
+          "ar": [
+            "تدعم المدرسة الطلاب من ذوي اضطراب طيف التوحد، ومتلازمة داون، واضطراب فرط الحركة وتشتت الانتباه (ADHD)، والاضطرابات السلوكية، والتأخر النمائي الشامل (GDD)، والتأخر في القدرات الإدراكية، والإعاقة الذهنية، بالإضافة إلى الطلاب الذين يستخدمون الكراسي المتحركة، وفقاً للفئات المذكورة في المعلومات المقدمة."
+          ],
+          "en": [
+            "The school supports students with Autism Spectrum Disorder (ASD), Down Syndrome, Attention Deficit Hyperactivity Disorder (ADHD), behavioral disorders, Global Developmental Delay (GDD), cognitive delays, and intellectual disabilities, as well as students who use wheelchairs, according to the provided school information."
+          ]
+        }
+      },
+      "nameAr": "مدرسة كويت هيلب ثنائية اللغة",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 4,
+          "row": "غير مرقم",
+          "nameAr": "مدرسة كويت هيلب ثنائية اللغة",
+          "governorateAr": "الأحمدي",
+          "areaAr": "المنقف",
+          "addressAr": "المنقف قطعة 3 شارع 1 مقابل مسجد عقبة ابن عامر",
+          "phones": [
+            "22286811",
+            "22286812",
+            "22286813"
+          ],
+          "needsAr": "فصول احتياجات خاصة",
+          "stagesAr": null,
+          "classroomAr": "فصول احتياجات",
+          "capacityAr": "128",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 7,
+          "row": "16",
+          "nameAr": "مدرسة كويت هلب ثنائية اللغة للاحتياجات الخاصة",
+          "governorateAr": "الأحمدي",
+          "areaAr": "المنقف",
+          "addressAr": "المنقف – قطعة 63",
+          "phones": [],
+          "needsAr": "فصول احتياجات خاصة",
+          "stagesAr": null,
+          "classroomAr": "احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "قطعة 3 في الدليل مقابل قطعة 63 في قائمة 2023."
+      ],
+      "disabilityTags": [],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-noor",
+      "mainImage": "alnoor",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/nbs_kwt/",
+        "mapUrl": "https://maps.app.goo.gl/479c6hhgZASNK9or9"
+      },
+      "nameAr": "مدرسة النور ثنائية اللغة",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 4,
+          "row": "13",
+          "nameAr": "مدرسة النور ثنائية اللغة",
+          "governorateAr": "الأحمدي",
+          "areaAr": "المهبولة",
+          "addressAr": "المهبولة: قطعة 1",
+          "phones": [
+            "95535730",
+            "95535731",
+            "95535732"
+          ],
+          "needsAr": "جسدية – بصرية – حركية – سمعية",
+          "stagesAr": "من الروضة حتى الصف الثامن",
+          "classroomAr": "دمج",
+          "capacityAr": "150",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 7,
+          "row": "14",
+          "nameAr": "مدرسة النور ثنائية اللغة",
+          "governorateAr": "الأحمدي",
+          "areaAr": "المهبولة",
+          "addressAr": "المهبولة – قطعة 1 – شارع 114",
+          "phones": [
+            "95535730",
+            "95535731",
+            "95535732"
+          ],
+          "needsAr": "بطء وصعوبات تعلم؛ إعاقة جسدية/سمعية/بصرية/حركية",
+          "stagesAr": "روضة وجميع المراحل الدراسية",
+          "classroomAr": "احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "الدليل يحدد الروضة حتى الثامن؛ قائمة 2023 تقول جميع المراحل. الاسم لا يثبت مطابقته لمدرسة النور المحلية القديمة."
+      ],
+      "disabilityTags": [
+        "hearing",
+        "vision",
+        "motor",
+        "learning"
+      ],
+      "stageTags": [
+        "kindergarten",
+        "middle",
+        "all-as-reported"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-riyada-boys",
+      "nameAr": "مدرسة الريادة النموذجية (بنين)",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 5,
+          "row": "14 بنين",
+          "nameAr": "مدرسة الريادة النموذجية (بنين)",
+          "governorateAr": "مبارك الكبير",
+          "areaAr": "صباح السالم",
+          "addressAr": "صباح السالم قطعة 1 شارع جاسم الخرافي",
+          "phones": [
+            "22070111",
+            "22261411"
+          ],
+          "needsAr": null,
+          "stagesAr": "ابتدائي + متوسط؛ بنين + بنات (خلية مشتركة)",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "140 (خلية مشتركة للبنين والبنات)",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 5,
+          "row": "12 بنين",
+          "nameAr": "مدرسة الريادة النموذجية (بنين)",
+          "governorateAr": "مبارك الكبير",
+          "areaAr": "صباح السالم",
+          "addressAr": "صباح السالم – قطعة 1 – شارع جاسم الخرافي – الدائري السادس – قسيمة 4ق52",
+          "phones": [
+            "22070111"
+          ],
+          "needsAr": null,
+          "stagesAr": "متوسط وثانوي (بنين)",
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "المراحل مختلفة بين المصدرين؛ سعة 140 في الدليل مشتركة للبنين والبنات."
+      ],
+      "disabilityTags": [],
+      "stageTags": [
+        "primary",
+        "middle",
+        "secondary"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-riyada-girls",
+      "nameAr": "مدرسة الريادة النموذجية (بنات)",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 5,
+          "row": "14 بنات",
+          "nameAr": "مدرسة الريادة النموذجية (بنات)",
+          "governorateAr": "مبارك الكبير",
+          "areaAr": "صباح السالم",
+          "addressAr": "صباح السالم قطعة 1 شارع جاسم الخرافي",
+          "phones": [
+            "22070111",
+            "22261411"
+          ],
+          "needsAr": null,
+          "stagesAr": "ابتدائي + متوسط؛ بنين + بنات (خلية مشتركة)",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "140 (خلية مشتركة للبنين والبنات)",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 5,
+          "row": "12 بنات",
+          "nameAr": "مدرسة الريادة النموذجية (بنات)",
+          "governorateAr": "مبارك الكبير",
+          "areaAr": "صباح السالم",
+          "addressAr": "صباح السالم – قطعة 1 – شارع جاسم الخرافي – الدائري السادس – قسيمة 4ق52",
+          "phones": [
+            "22070111"
+          ],
+          "needsAr": null,
+          "stagesAr": "روضة وابتدائي (مختلط)؛ متوسط وثانوي (بنات)",
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "المراحل مختلفة بين المصدرين؛ سعة 140 في الدليل مشتركة للبنين والبنات."
+      ],
+      "disabilityTags": [],
+      "stageTags": [
+        "kindergarten",
+        "primary",
+        "middle",
+        "secondary"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-modern-girls",
+      "nameAr": "مدرسة الكويت الأهلية الحديثة - بنات (عربية)",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 5,
+          "row": "15",
+          "nameAr": "مدرسة الكويت الأهلية الحديثة - بنات (عربية)",
+          "governorateAr": "الفروانية",
+          "areaAr": "الفروانية",
+          "addressAr": "الفروانية: قطعة 1",
+          "phones": [
+            "22087999"
+          ],
+          "needsAr": null,
+          "stagesAr": "رياض أطفال + ابتدائي (مختلط)؛ متوسط + ثانوي (بنات)",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "134 فصل لعدد 1038 طالب وطالبة (مشتركة للقسمين)",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 4,
+          "row": "2",
+          "nameAr": "مدرسة الكويت الأهلية الحديثة (بنات)",
+          "governorateAr": "الفروانية",
+          "areaAr": "الفروانية",
+          "addressAr": "الفروانية – قطعة 1 – قسيمة 190 – خلف فندق كراون بلازا",
+          "phones": [
+            "22087999"
+          ],
+          "needsAr": "فصول دمج واحتياجات خاصة",
+          "stagesAr": "روضة وابتدائي (مختلط)؛ متوسط وثانوي (بنات)",
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "السعة 1038 و134 فصلاً مشتركة للقسمين وليست لكل قسم."
+      ],
+      "disabilityTags": [],
+      "stageTags": [
+        "kindergarten",
+        "primary",
+        "middle",
+        "secondary"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-modern-boys",
+      "nameAr": "مدرسة الكويت الأهلية الحديثة - بنين (عربية)",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 5,
+          "row": "16",
+          "nameAr": "مدرسة الكويت الأهلية الحديثة - بنين (عربية)",
+          "governorateAr": "الفروانية",
+          "areaAr": "الفروانية",
+          "addressAr": "الفروانية: قطعة 1",
+          "phones": [
+            "22087999"
+          ],
+          "needsAr": null,
+          "stagesAr": "متوسط + ثانوي (بنين)",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "134 فصل لعدد 1038 طالب وطالبة (مشتركة للقسمين)",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 4,
+          "row": "1",
+          "nameAr": "مدرسة الكويت الأهلية الحديثة (بنين)",
+          "governorateAr": "الفروانية",
+          "areaAr": "الفروانية",
+          "addressAr": "الفروانية – قطعة 1 – قسيمة 190 – خلف فندق كراون بلازا",
+          "phones": [
+            "22087999"
+          ],
+          "needsAr": "فصول دمج واحتياجات خاصة",
+          "stagesAr": "الخامس ابتدائي ومرحلة المتوسط والثانوي (بنين)",
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "قائمة 2023 تضيف الخامس الابتدائي؛ السعة في الدليل مشتركة للقسمين."
+      ],
+      "disabilityTags": [],
+      "stageTags": [
+        "primary",
+        "middle",
+        "secondary"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-nebras-special",
+      "mainImage": "nibrasspecial",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/alnibrasidealschool/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/Jbdvmkdhe2YMnGgU9"
+      },
+      "nameAr": "مدرسة النبراس النموذجية لذوي الاحتياجات الخاصة",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 5,
+          "row": "17",
+          "nameAr": "مدرسة النبراس النموذجية لذوي الاحتياجات الخاصة",
+          "governorateAr": "الفروانية",
+          "areaAr": "جليب الشيوخ",
+          "addressAr": "غرب جليب الشيوخ: قطعة 4",
+          "phones": [
+            "24376888",
+            "24376868"
+          ],
+          "needsAr": "ذوي الإعاقات الذهنية فقط؛ فصول احتياجات خاصة",
+          "stagesAr": null,
+          "classroomAr": "احتياجات",
+          "capacityAr": "161",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 4,
+          "row": "3",
+          "nameAr": "مدرسة النبراس النموذجية لذوي الاحتياجات الخاصة",
+          "governorateAr": "الفروانية",
+          "areaAr": "جليب الشيوخ",
+          "addressAr": "جليب الشيوخ – قطعة 4 – شارع 200",
+          "phones": [
+            "24376888",
+            "24376868"
+          ],
+          "needsAr": "فصول احتياجات خاصة",
+          "stagesAr": null,
+          "classroomAr": "احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "intellectual"
+      ],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-nebras-int",
+      "nameAr": "مدرسة النبراس الدولية ثنائية اللغة الخاصة",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 5,
+          "row": "18",
+          "nameAr": "مدرسة النبراس الدولية ثنائية اللغة الخاصة",
+          "governorateAr": "الفروانية",
+          "areaAr": "جليب الشيوخ",
+          "addressAr": "غرب جليب الشيوخ: قطعة 4",
+          "phones": [
+            "24376800",
+            "24376888"
+          ],
+          "needsAr": null,
+          "stagesAr": "رياض أطفال + جميع المراحل الدراسية",
+          "classroomAr": "دمج",
+          "capacityAr": "288",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 6,
+          "row": "2",
+          "nameAr": "مدرسة النبراس الدولية ثنائية اللغة",
+          "governorateAr": "الفروانية",
+          "areaAr": "جليب الشيوخ",
+          "addressAr": "جليب الشيوخ – قطعة 4 – شارع 200",
+          "phones": [
+            "24376800",
+            "24376888"
+          ],
+          "needsAr": null,
+          "stagesAr": "رياض أطفال وجميع المراحل الدراسية",
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [],
+      "stageTags": [
+        "kindergarten",
+        "all-as-reported"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-jaber",
+      "mainImage": "aljaber",
+      "publicProfile": {
+        "supportedConditions": {
+          "ar": [
+            "صعوبات التعلم",
+            "الشلل النصفي",
+            "الإعاقات السمعية"
+          ],
+          "en": [
+            "Learning Disabilities",
+            "Hemiplegia",
+            "Hearing Disabilities"
+          ]
+        },
+        "instagram": "https://www.instagram.com/aljaberschool_special_needs/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/3VCQSjj5ksLBH7ks7"
+      },
+      "nameAr": "مدرسة الجابر الأهلية الخاصة",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 5,
+          "row": "19",
+          "nameAr": "مدرسة الجابر الأهلية الخاصة",
+          "governorateAr": "الفروانية",
+          "areaAr": "جليب الشيوخ",
+          "addressAr": "جليب الشيوخ: قطعة 24، قسيمة 4",
+          "phones": [
+            "24340113",
+            "24340118"
+          ],
+          "needsAr": null,
+          "stagesAr": "الصف الأول + الثاني + الثالث (مختلط)؛ الرابع + الخامس + متوسط + ثانوي (بنات)",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "107",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 4,
+          "row": "5",
+          "nameAr": "مدرسة الجابر الأهلية",
+          "governorateAr": "الفروانية",
+          "areaAr": "جليب الشيوخ",
+          "addressAr": "جليب الشيوخ – قطعة 24 – قسيمة 4 – شارع المدارس",
+          "phones": [
+            "24340113",
+            "24340118"
+          ],
+          "needsAr": null,
+          "stagesAr": "ابتدائي (مختلط)؛ متوسط وثانوي (بنات)",
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [],
+      "stageTags": [
+        "primary",
+        "middle",
+        "secondary"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-nokhba",
+      "mainImage": "alnukhba",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/alnukhba_school/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/hXpzJJ4Y3VFxXt6u6"
+      },
+      "nameAr": "مدرسة النخبة النموذجية",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 5,
+          "row": "20",
+          "nameAr": "مدرسة النخبة النموذجية",
+          "governorateAr": "الفروانية",
+          "areaAr": "جليب الشيوخ",
+          "addressAr": "جليب الشيوخ ق 4 ش 15 قسيمة 25",
+          "phones": [
+            "97181883"
+          ],
+          "needsAr": "فصول احتياجات خاصة",
+          "stagesAr": "متوسط وثانوي بنين",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "فصول دمج 104؛ فصول احتياجات 168",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 4,
+          "row": "7",
+          "nameAr": "مدرسة النخبة النموذجية",
+          "governorateAr": "الفروانية",
+          "areaAr": "جليب الشيوخ",
+          "addressAr": "جليب شيوخ – ق 4 – ش 15 – قسيمة 25",
+          "phones": [
+            "97181883"
+          ],
+          "needsAr": "فصول احتياجات خاصة",
+          "stagesAr": "متوسط وثانوي (بنين)",
+          "classroomAr": "احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [],
+      "stageTags": [
+        "middle",
+        "secondary"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-umm-hani",
+      "mainImage": "ummhanibuilding",
+      "publicProfile": {
+        "mapUrl": "https://maps.app.goo.gl/yH2EZ38o3wHu6Ng36"
+      },
+      "nameAr": "مدرسة أم هاني (عربية)",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 5,
+          "row": "21",
+          "nameAr": "مدرسة أم هاني (عربية)",
+          "governorateAr": "الفروانية",
+          "areaAr": "الفروانية",
+          "addressAr": "الفروانية: قطعة 1",
+          "phones": [
+            "24767135",
+            "24767136"
+          ],
+          "needsAr": null,
+          "stagesAr": "رياض أطفال + ابتدائي (مختلط)؛ متوسط + ثانوي (بنات)",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "400",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 4,
+          "row": "4",
+          "nameAr": "مدرسة أم هاني لذوي الاحتياجات الخاصة",
+          "governorateAr": "الفروانية",
+          "areaAr": "الفروانية",
+          "addressAr": "الفروانية – قطعة 1 – شارع الأردن – خلف نادي التضامن",
+          "phones": [
+            "24767135",
+            "24767136"
+          ],
+          "needsAr": null,
+          "stagesAr": "رياض أطفال؛ ابتدائي ومتوسط وثانوي (بنات)",
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [],
+      "stageTags": [
+        "kindergarten",
+        "primary",
+        "middle",
+        "secondary"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-irshad",
+      "mainImage": "conductiveeducation",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/cesk_kw/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/7fnMkeBm9t1U916MA"
+      },
+      "nameAr": "مدرسة التعليم الإرشادي بالكويت الخاصة (ثنائية اللغة)",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 5,
+          "row": "22",
+          "nameAr": "مدرسة التعليم الإرشادي بالكويت الخاصة (ثنائية اللغة)",
+          "governorateAr": "الفروانية",
+          "areaAr": "الفروانية",
+          "addressAr": "الفروانية: قطعة 1",
+          "phones": [
+            "24731580",
+            "24767129",
+            "97900405"
+          ],
+          "needsAr": "ذوي الاحتياجات الخاصة",
+          "stagesAr": null,
+          "classroomAr": "احتياجات",
+          "capacityAr": "307",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 6,
+          "row": "1",
+          "nameAr": "مدرسة التعليم الإرشادي لذوي الاحتياجات الخاصة",
+          "governorateAr": "الفروانية",
+          "areaAr": "الفروانية",
+          "addressAr": "الفروانية – قطعة 1 – شارع الأردن – بجانب نادي التضامن",
+          "phones": [
+            "24731580",
+            "24767128",
+            "97900405"
+          ],
+          "needsAr": "فصول ذوي احتياجات خاصة",
+          "stagesAr": null,
+          "classroomAr": "احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "رقم الهاتف 24767129 في الدليل مقابل 24767128 في قائمة 2023."
+      ],
+      "disabilityTags": [],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-jahra-academy",
+      "nameAr": "أكاديمية الجهراء ثنائية اللغة الخاصة",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 5,
+          "row": "23",
+          "nameAr": "أكاديمية الجهراء ثنائية اللغة الخاصة",
+          "governorateAr": "الجهراء",
+          "areaAr": "شمال غرب الجهراء",
+          "addressAr": "شمال غرب الجهراء",
+          "phones": [
+            "24589600",
+            "24589400"
+          ],
+          "needsAr": null,
+          "stagesAr": "رياض أطفال + ابتدائي + متوسط فقط",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "35",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 6,
+          "row": "3",
+          "nameAr": "مدرسة أكاديمية الجهراء ثنائية اللغة",
+          "governorateAr": "الجهراء",
+          "areaAr": "شمال غرب الجهراء",
+          "addressAr": "شمال غرب الجهراء – مقابل بيت التمويل – قسيمة 3",
+          "phones": [
+            "24589600",
+            "24589400"
+          ],
+          "needsAr": null,
+          "stagesAr": "روضة وابتدائي ومتوسط",
+          "classroomAr": "دمج",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [],
+      "stageTags": [
+        "kindergarten",
+        "primary",
+        "middle"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-huda",
+      "mainImage": "alhudabuilding",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/al_hudaschool/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/Kv6BrAUArjAuocw98"
+      },
+      "nameAr": "مدرسة الهدى للاحتياجات الخاصة (عربية)",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 6,
+          "row": "24",
+          "nameAr": "مدرسة الهدى للاحتياجات الخاصة (عربية)",
+          "governorateAr": "الجهراء",
+          "areaAr": "شمال غرب الجهراء",
+          "addressAr": "شمال غرب الجهراء",
+          "phones": [
+            "24589600",
+            "24589400"
+          ],
+          "needsAr": "طلاب الاحتياجات الخاصة",
+          "stagesAr": null,
+          "classroomAr": "احتياجات",
+          "capacityAr": "221",
+          "agesAr": null
+        },
+        {
+          "sourceId": "directory",
+          "page": 6,
+          "row": "34",
+          "nameAr": "مدرسة الهدى للاحتياجات الخاصة",
+          "governorateAr": "الجهراء",
+          "areaAr": "شمال غرب الجهراء",
+          "addressAr": "شمال غرب الجهراء ق 1 ش دعبل الخزاعي قرب بيت التمويل",
+          "phones": [
+            "24589600",
+            "24589400"
+          ],
+          "needsAr": "فصول احتياجات خاصة",
+          "stagesAr": null,
+          "classroomAr": "فصول احتياجات",
+          "capacityAr": "221",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 4,
+          "row": "8",
+          "nameAr": "مدرسة الهدى للاحتياجات الخاصة",
+          "governorateAr": "الجهراء",
+          "areaAr": "شمال غرب الجهراء",
+          "addressAr": "شمال غرب الجهراء – قسيمة 3 – شارع دعبل الخزاعي قرب بيت التمويل",
+          "phones": [
+            "24589600",
+            "24589400"
+          ],
+          "needsAr": "فصول ذوي احتياجات خاصة",
+          "stagesAr": null,
+          "classroomAr": "احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "دُمج الصفان 24 و34 لتطابق الاسم والهاتف والسعة؛ احتُفظ بالعنوانين وبقائمة 2023."
+      ],
+      "sourceExtras": {
+        "email": "Alhoda2021.school@gmail.com"
+      },
+      "disabilityTags": [],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-ajyal",
+      "mainImage": "ajyalbuilding",
+      "publicProfile": {
+        "additionalServices": {
+          "ar": [
+            "فصول الدمج مع الطلبة العاديين."
+          ],
+          "en": [
+            "Inclusive classrooms integrating students with special educational needs alongside students in mainstream education."
+          ]
+        },
+        "instagram": "https://www.instagram.com/ajyalalmustaqbal/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/P7GEiDJrGs8Qadeg9"
+      },
+      "nameAr": "مدرسة أجيال المستقبل الأهلية (عربية)",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 6,
+          "row": "25",
+          "nameAr": "مدرسة أجيال المستقبل الأهلية (عربية)",
+          "governorateAr": "الجهراء",
+          "areaAr": "شمال غرب الجهراء",
+          "addressAr": "شمال غرب الجهراء",
+          "phones": [
+            "24574610",
+            "22402858",
+            "99026217"
+          ],
+          "needsAr": null,
+          "stagesAr": "ابتدائي + متوسط + ثانوي (بنين)",
+          "classroomAr": "دمج",
+          "capacityAr": "388",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 4,
+          "row": "9",
+          "nameAr": "مدرسة أجيال المستقبل الأهلية",
+          "governorateAr": "الجهراء",
+          "areaAr": "شمال غرب الجهراء",
+          "addressAr": "شمال غرب الجهراء – قسيمة 3 – شارع دعبل الخزاعي – مقابل بيت التمويل",
+          "phones": [
+            "24574610",
+            "22402858",
+            "99026217"
+          ],
+          "needsAr": null,
+          "stagesAr": "ابتدائي ومتوسط وثانوي (بنين)",
+          "classroomAr": "دمج",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [],
+      "stageTags": [
+        "primary",
+        "middle",
+        "secondary"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-gulf",
+      "mainImage": "gulfspecial",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/gbs.kw0/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/B71CLYqoWKWjt3Hb9"
+      },
+      "nameAr": "مدرسة الخليج ثنائية اللغة لذوي الإعاقة",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 6,
+          "row": "26",
+          "nameAr": "مدرسة الخليج ثنائية اللغة لذوي الإعاقة",
+          "governorateAr": "الجهراء",
+          "areaAr": "شمال غرب الجهراء",
+          "addressAr": "شمال غرب الجهراء",
+          "phones": [
+            "22083101",
+            "22083102"
+          ],
+          "needsAr": "إعاقة ذهنية بسيطة + متوسطة؛ إعاقات حركية – توحد – تأخر تطوري شامل – إعاقات مزدوجة – داون",
+          "stagesAr": null,
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "400",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 6,
+          "row": "5",
+          "nameAr": "مدرسة الخليج ثنائية اللغة",
+          "governorateAr": "الجهراء",
+          "areaAr": "الجهراء",
+          "addressAr": "الجهراء طريق السليل – خلف مركز سلطان – مقابل مجمع المحاكم الجديد",
+          "phones": [
+            "22083101",
+            "22083102"
+          ],
+          "needsAr": "فصول احتياجات خاصة",
+          "stagesAr": null,
+          "classroomAr": "احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "autism",
+        "intellectual",
+        "motor",
+        "down",
+        "developmental",
+        "multiple"
+      ],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-gulf-american",
+      "nameAr": "مدرسة الخليج الأمريكية ثنائية اللغة الخاصة",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 6,
+          "row": "27",
+          "nameAr": "مدرسة الخليج الأمريكية ثنائية اللغة الخاصة",
+          "governorateAr": "الجهراء",
+          "areaAr": "شمال غرب الجهراء",
+          "addressAr": "شمال غرب الجهراء",
+          "phones": [
+            "22083081",
+            "22083082"
+          ],
+          "needsAr": null,
+          "stagesAr": "رياض الأطفال + ابتدائي + متوسط + الصف التاسع من المرحلة الثانوية",
+          "classroomAr": "دمج",
+          "capacityAr": "208",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 6,
+          "row": "4",
+          "nameAr": "مدرسة الخليج الأمريكية ثنائية اللغة",
+          "governorateAr": "الجهراء",
+          "areaAr": "الجهراء",
+          "addressAr": "الجهراء طريق السليل – خلف مركز سلطان – مقابل مجمع المحاكم الجديد",
+          "phones": [
+            "22083081",
+            "22083082"
+          ],
+          "needsAr": null,
+          "stagesAr": "روضة وجميع المراحل الدراسية",
+          "classroomAr": "دمج",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [],
+      "stageTags": [
+        "kindergarten",
+        "primary",
+        "middle",
+        "secondary",
+        "all-as-reported"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-safwa",
+      "mainImage": "alsafwa",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/al_safwa/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/K3Aktd8uqYiWkY3x6"
+      },
+      "nameAr": "مدرسة الصفوة النموذجية بنين",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 6,
+          "row": "28",
+          "nameAr": "مدرسة الصفوة النموذجية بنين",
+          "governorateAr": "الجهراء",
+          "areaAr": "الجهراء",
+          "addressAr": "الجهراء",
+          "phones": [
+            "24570473"
+          ],
+          "needsAr": "فصول احتياجات خاصة",
+          "stagesAr": "ابتدائي ومتوسط بنين",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "320",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 4,
+          "row": "10",
+          "nameAr": "مدرسة الصفوة النموذجية (بنين)",
+          "governorateAr": "الجهراء",
+          "areaAr": "الجهراء",
+          "addressAr": "الجهراء – قطعة 92 – قسيمة 112 – قسائم العثمان – قرب سنترال الجهراء",
+          "phones": [
+            "24570473",
+            "32260290"
+          ],
+          "needsAr": null,
+          "stagesAr": "ابتدائي ومتوسط (بنين)",
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [],
+      "stageTags": [
+        "primary",
+        "middle"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-kes",
+      "mainImage": "kuwaitenglish",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/kuwaitenglishschool/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/QyxaarFqRhu3BdAt7"
+      },
+      "nameAr": "مدرسة الكويت الإنجليزية الخاصة",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 6,
+          "row": "29",
+          "nameAr": "مدرسة الكويت الإنجليزية الخاصة",
+          "governorateAr": "حولي",
+          "areaAr": "سلوى",
+          "addressAr": "سلوى: قطعة 11",
+          "phones": [
+            "22390100"
+          ],
+          "needsAr": null,
+          "stagesAr": "جميع المراحل الدراسية",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "492",
+          "agesAr": null
+        },
+        {
+          "sourceId": "directory",
+          "page": 7,
+          "row": "40",
+          "nameAr": "مدرسة الكويت الإنجليزية الخاصة",
+          "governorateAr": "حولي",
+          "areaAr": "سلوى",
+          "addressAr": "سلوى ق 11 شارع 9 م 383",
+          "phones": [
+            "22390100"
+          ],
+          "needsAr": null,
+          "stagesAr": "جميع المراحل",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "492",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 6,
+          "row": "6",
+          "nameAr": "مدرسة الكويت الإنجليزية الخاصة",
+          "governorateAr": "حولي",
+          "areaAr": "سلوى",
+          "addressAr": "سلوى – قطعة 11 – شارع 9 – منزل 383",
+          "phones": [
+            "22390100"
+          ],
+          "needsAr": null,
+          "stagesAr": "جميع المراحل الدراسية",
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "دُمج الصفان 29 و40 لتطابق الاسم والهاتف والسعة؛ الصف 40 يضيف العنوان التفصيلي."
+      ],
+      "sourceExtras": {
+        "websiteAsPrinted": "www.kes.edu.kw",
+        "emailAsPrinted": "Kes.edu.kw@keschool"
+      },
+      "disabilityTags": [],
+      "stageTags": [
+        "all-as-reported"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-hadarat",
+      "mainImage": "uca",
+      "publicProfile": {
+        "phone": "+96522639681",
+        "additionalPhone": "+96522639682",
+        "address": {
+          "ar": "النقرة: قطعة 1\nحولي – النقرة – شارع قتيبة – خلف مجمع النقرة الشمالي",
+          "en": "النقرة: قطعة 1\nحولي – النقرة – شارع قتيبة – خلف مجمع النقرة الشمالي"
+        },
+        "area": {
+          "ar": "النقرة",
+          "en": "النقرة"
+        },
+        "services": {
+          "ar": [
+            "جميع المراحل الدراسية",
+            "دمج؛ احتياجات",
+            "دمج؛ احتياجات خاصة"
+          ],
+          "en": [
+            "جميع المراحل الدراسية",
+            "دمج؛ احتياجات",
+            "دمج؛ احتياجات خاصة"
+          ]
+        },
+        "website": "http://www.uca.edu.kw/",
+        "mapUrl": "https://maps.app.goo.gl/zStnE7BAyUUghHYL9"
+      },
+      "nameAr": "أكاديمية الحضارات العالمية ثنائية اللغة",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 6,
+          "row": "30",
+          "nameAr": "أكاديمية الحضارات العالمية ثنائية اللغة",
+          "governorateAr": "حولي",
+          "areaAr": "النقرة",
+          "addressAr": "النقرة: قطعة 1",
+          "phones": [
+            "22639681",
+            "22630394"
+          ],
+          "needsAr": null,
+          "stagesAr": "جميع المراحل الدراسية",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "321",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 6,
+          "row": "7",
+          "nameAr": "أكاديمية الحضارات العالمية ثنائية اللغة",
+          "governorateAr": "حولي",
+          "areaAr": "النقرة",
+          "addressAr": "حولي – النقرة – شارع قتيبة – خلف مجمع النقرة الشمالي",
+          "phones": [
+            "22639681",
+            "22630394"
+          ],
+          "needsAr": null,
+          "stagesAr": "جميع المراحل الدراسية",
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [],
+      "stageTags": [
+        "all-as-reported"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-national",
+      "mainImage": "knes",
+      "publicProfile": {
+        "website": "https://www.knes.edu.kw/",
+        "mapUrl": "https://maps.app.goo.gl/A1ch8UqnaU2ejvKB6"
+      },
+      "nameAr": "مدرسة الكويت الوطنية الإنجليزية الخاصة",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 6,
+          "row": "31",
+          "nameAr": "مدرسة الكويت الوطنية الإنجليزية الخاصة",
+          "governorateAr": "حولي",
+          "areaAr": "النقرة",
+          "addressAr": "النقرة: قطعة 3",
+          "phones": [
+            "22639681",
+            "22630394"
+          ],
+          "needsAr": null,
+          "stagesAr": "رياض أطفال + جميع المراحل الدراسية",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "فصول الدمج 40 لعدد 200 طالب؛ فصول احتياجات 13 لعدد 113 طالب",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 6,
+          "row": "8",
+          "nameAr": "مدرسة الكويت الوطنية الإنجليزية",
+          "governorateAr": "حولي",
+          "areaAr": "النقرة",
+          "addressAr": "النقرة – شارع موسى بن النصير – دوار الفارابي",
+          "phones": [
+            "22656905",
+            "22656904"
+          ],
+          "needsAr": null,
+          "stagesAr": "رياض أطفال وجميع المراحل الدراسية",
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "أرقام الدليل تطابق أكاديمية الحضارات؛ قائمة 2023 تعرض 22656905 و22656904. يلزم التحقق."
+      ],
+      "disabilityTags": [],
+      "stageTags": [
+        "kindergarten",
+        "all-as-reported"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-bayan",
+      "mainImage": "bayanbuilding",
+      "publicProfile": {
+        "website": "https://www.bis.edu.kw/",
+        "mapUrl": "https://maps.app.goo.gl/EqK4rQiz5e2ejSELA"
+      },
+      "galleryPhotos": [
+        "al-bayan-building"
+      ],
+      "nameAr": "مدرسة البيان الدولية للاحتياجات الخاصة",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 6,
+          "row": "32",
+          "nameAr": "مدرسة البيان الدولية للاحتياجات الخاصة",
+          "governorateAr": "حولي",
+          "areaAr": "حولي",
+          "addressAr": "حولي: قطعة 67",
+          "phones": [
+            "22052855",
+            "22052800",
+            "22052822"
+          ],
+          "needsAr": null,
+          "stagesAr": "من الخامس إلى الثاني عشر",
+          "classroomAr": "احتياجات",
+          "capacityAr": "180",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 6,
+          "row": "9",
+          "nameAr": "مدرسة البيان الدولية الخاصة",
+          "governorateAr": "حولي",
+          "areaAr": "حولي",
+          "addressAr": "حولي – شارع بيروت – خلف مستشفى دار الشفا",
+          "phones": [
+            "22052855",
+            "22052800",
+            "22052822"
+          ],
+          "needsAr": null,
+          "stagesAr": "روضة وجميع المراحل الدراسية؛ فصول دمج واحتياجات خاصة للمرحلة المتوسط والثانوي",
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "المراحل والعنوان التفصيلي مختلفان بين المصدرين؛ الاسم لا يكفي لدمجه مع مدرسة البيان المحلية."
+      ],
+      "disabilityTags": [],
+      "stageTags": [
+        "kindergarten",
+        "primary",
+        "middle",
+        "secondary",
+        "all-as-reported"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-manarat",
+      "mainImage": "manarat",
+      "publicProfile": {
+        "phone": "+96525722083",
+        "additionalPhone": "+96596660920",
+        "extraPhones": [
+          {
+            "phone": "25750792",
+            "label": {
+              "ar": "رقم إضافي",
+              "en": "Additional contact"
+            }
+          },
+          {
+            "phone": "25750782",
+            "label": {
+              "ar": "رقم إضافي",
+              "en": "Additional contact"
+            }
+          }
+        ],
+        "address": {
+          "ar": "السالمية، شارع سالم المبارك، الكويت.\nالسالمية: قطعة 67\nالسالمية – قطعة 2 – شارع يوسف بن حمود – جادة 2",
+          "en": "Salem Al Mubarak Street, Salmiya, Kuwait.\nالسالمية: قطعة 67\nالسالمية – قطعة 2 – شارع يوسف بن حمود – جادة 2"
+        },
+        "area": {
+          "ar": "السالمية",
+          "en": "Salmiya"
+        },
+        "services": {
+          "ar": [
+            "دمج",
+            "دمج؛ احتياجات خاصة"
+          ],
+          "en": [
+            "دمج",
+            "دمج؛ احتياجات خاصة"
+          ]
+        },
+        "supportedConditions": {
+          "ar": [
+            "ذوي الاحتياجات الخاصة من فئة صعوبات التعلم",
+            "فصول دمج وفصول احتياجات خاصة"
+          ],
+          "en": [
+            "ذوي الاحتياجات الخاصة من فئة صعوبات التعلم",
+            "فصول دمج وفصول احتياجات خاصة"
+          ]
+        },
+        "website": "https://www.manaratschool.com/",
+        "mapUrl": "https://maps.app.goo.gl/yiXPwU8t23FV5Nqq7"
+      },
+      "nameAr": "مدرسة منارات",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 6,
+          "row": "33",
+          "nameAr": "مدرسة منارات",
+          "governorateAr": "حولي",
+          "areaAr": "السالمية",
+          "addressAr": "السالمية: قطعة 67",
+          "phones": [
+            "25750792",
+            "25750782"
+          ],
+          "needsAr": "ذوي الاحتياجات الخاصة من فئة صعوبات التعلم",
+          "stagesAr": null,
+          "classroomAr": "دمج",
+          "capacityAr": "260",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 6,
+          "row": "10",
+          "nameAr": "مدرسة منارات",
+          "governorateAr": "حولي",
+          "areaAr": "السالمية",
+          "addressAr": "السالمية – قطعة 2 – شارع يوسف بن حمود – جادة 2",
+          "phones": [
+            "25750792",
+            "25750782",
+            "25722083"
+          ],
+          "needsAr": "فصول دمج وفصول احتياجات خاصة",
+          "stagesAr": null,
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "قطعة 67 في الدليل مقابل قطعة 2 في قائمة 2023."
+      ],
+      "disabilityTags": [
+        "learning"
+      ],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-khalifa",
+      "mainImage": "khalifa",
+      "publicProfile": {
+        "website": "https://khalifaschool.edu.kw/",
+        "mapUrl": "https://maps.app.goo.gl/ic5VNjGsxLi9HHBi8",
+        "instagram": "https://www.instagram.com/khalifaschool_kw/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "whatsapp": {
+          "phone": "+96597738487",
+          "url": "https://wa.me/96597738487"
+        }
+      },
+      "nameAr": "مدرسة خليفة الخاصة - ثنائية اللغة",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 7,
+          "row": "35",
+          "nameAr": "مدرسة خليفة الخاصة - ثنائية اللغة",
+          "governorateAr": "حولي",
+          "areaAr": "السالمية",
+          "addressAr": "السالمية: قطعة 50",
+          "phones": [
+            "25744104",
+            "25744105",
+            "25744106"
+          ],
+          "needsAr": "ذوي الاحتياجات الخاصة",
+          "stagesAr": null,
+          "classroomAr": "احتياجات",
+          "capacityAr": "211",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 6,
+          "row": "12",
+          "nameAr": "مدرسة خليفة للاحتياجات الخاصة",
+          "governorateAr": "حولي",
+          "areaAr": "السالمية",
+          "addressAr": "السالمية – خلف مجمع الفنار – بجانب مدرسة الخليج والإنترناشيونال كلينيك",
+          "phones": [
+            "25744104",
+            "25744105",
+            "25744106"
+          ],
+          "needsAr": "فصول المعاقين",
+          "stagesAr": null,
+          "classroomAr": "احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-creative",
+      "mainImage": "ccis",
+      "publicProfile": {
+        "website": "https://www.cciskuwait.com/",
+        "mapUrl": "https://maps.app.goo.gl/memnNvmaUmE2RoY3A",
+        "instagram": "https://www.instagram.com/cciskuwait/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        }
+      },
+      "nameAr": "مدرسة الأطفال المبدعين العالمية لذوي الاحتياجات الخاصة - ثنائية",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 7,
+          "row": "36",
+          "nameAr": "مدرسة الأطفال المبدعين العالمية لذوي الاحتياجات الخاصة - ثنائية",
+          "governorateAr": "حولي",
+          "areaAr": "حولي",
+          "addressAr": "حولي: قطعة 12",
+          "phones": [
+            "22625729",
+            "22623074"
+          ],
+          "needsAr": null,
+          "stagesAr": "رياض الأطفال + صف أول وثاني ابتدائي فقط",
+          "classroomAr": "احتياجات",
+          "capacityAr": "142",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 6,
+          "row": "11",
+          "nameAr": "مدرسة الأطفال المبدعين",
+          "governorateAr": "حولي",
+          "areaAr": "حولي",
+          "addressAr": "حولي – قطعة 19 – شارع الراشد – بناية 13 – خلف شارع تونس",
+          "phones": [
+            "22625729",
+            "22623074"
+          ],
+          "needsAr": null,
+          "stagesAr": "روضة والصف الأول والثاني الابتدائي",
+          "classroomAr": "احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "قطعة 12 في الدليل مقابل قطعة 19 في قائمة 2023."
+      ],
+      "disabilityTags": [],
+      "stageTags": [
+        "kindergarten",
+        "primary"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-autism-kuwait",
+      "mainImage": "kuwait-autism-building",
+      "publicContact": {
+        "phone": "25309300",
+        "mapUrl": "https://maps.app.goo.gl/xuJSiameVsN9ZE1N9",
+        "provenance": "user-provided"
+      },
+      "nameAr": "مركز الكويت للتوحد",
+      "categories": [
+        "school",
+        "rehabilitation"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 7,
+          "row": "37",
+          "nameAr": "مركز الكويت للتوحد (عربية)",
+          "governorateAr": "حولي",
+          "areaAr": "مبارك العبد الله الجابر",
+          "addressAr": "مبارك العبد الله الجابر: قطعة 6",
+          "phones": [
+            "25309300"
+          ],
+          "needsAr": "توحد",
+          "stagesAr": null,
+          "classroomAr": "احتياجات",
+          "capacityAr": "206",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 8,
+          "row": "6",
+          "nameAr": "مؤسسة مركز الكويت للتوحد",
+          "governorateAr": "حولي",
+          "areaAr": "مبارك العبد الله الجابر",
+          "addressAr": "ضاحية مبارك العبد الله الجابر (غرب مشرف) – قطعة 6أ – شارع 3",
+          "phones": [
+            "25309300",
+            "25375017"
+          ],
+          "needsAr": "الإعاقات الشديدة؛ الإعاقات الذهنية البسيطة والمتوسطة والشديدة",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": "6–45 سنة"
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "ورد ضمن المدارس في الدليل وضمن التأهيل في قائمة 2023؛ سجل واحد يظهر في الفئتين، ولا يُفترض أن جميع البرامج تقبل نفس الأعمار."
+      ],
+      "sourceExtras": {
+        "phoneNoteAr": "داخلي 1100 و1101 للرقم 25375017 كما ورد في قائمة 2023."
+      },
+      "disabilityTags": [
+        "autism",
+        "intellectual"
+      ],
+      "stageTags": [],
+      "nameEn": "Kuwait Center for Autism",
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-kuwait-academy-girls",
+      "mainImage": "kuwaitacademygirls",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/kuwait_academy_school/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/ajwGeq2gu5UMmEkj9",
+        "additionalUrl": "https://forms.gle/fBXyeMPnL7MZWkbC7",
+        "additionalUrlLabel": {
+          "ar": "التسجيل الإلكتروني",
+          "en": "Online Registration"
+        }
+      },
+      "nameAr": "مدرسة أكاديمية الكويت التعليمية - بنات عربية",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 7,
+          "row": "38",
+          "nameAr": "مدرسة أكاديمية الكويت التعليمية - بنات عربية",
+          "governorateAr": "حولي",
+          "areaAr": "السالمية",
+          "addressAr": "السالمية: قطعة 10",
+          "phones": [
+            "25648955",
+            "25648944",
+            "25648966"
+          ],
+          "needsAr": null,
+          "stagesAr": "رياض أطفال + ابتدائي (مختلط)؛ متوسط + ثانوي (بنات)",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "الدمج 80 طالب لعدد 18 فصل؛ فصول احتياجات 32 طالب لعدد 8 فصول",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 4,
+          "row": "11 بنات",
+          "nameAr": "مدرسة أكاديمية الكويت التعليمية (بنات)",
+          "governorateAr": "حولي",
+          "areaAr": "السالمية",
+          "addressAr": "السالمية – قطعة 10 – شارع يوسف البدر",
+          "phones": [
+            "25648955",
+            "25648944"
+          ],
+          "needsAr": null,
+          "stagesAr": "رياض أطفال وابتدائي ومتوسط وثانوي (بنات)",
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [],
+      "stageTags": [
+        "kindergarten",
+        "primary",
+        "middle",
+        "secondary"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-s-kuwait-academy-boys",
+      "nameAr": "مدرسة أكاديمية الكويت التعليمية - بنين",
+      "categories": [
+        "school"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 7,
+          "row": "39",
+          "nameAr": "مدرسة أكاديمية الكويت التعليمية - بنين",
+          "governorateAr": "حولي",
+          "areaAr": "السالمية",
+          "addressAr": "السالمية: قطعة 10",
+          "phones": [
+            "25648955",
+            "25648944",
+            "25648966"
+          ],
+          "needsAr": null,
+          "stagesAr": "متوسط + ثانوي (بنين)",
+          "classroomAr": "دمج؛ احتياجات",
+          "capacityAr": "184 طالب لعدد 32 فصل",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 4,
+          "row": "11 بنين",
+          "nameAr": "مدرسة أكاديمية الكويت التعليمية (بنين)",
+          "governorateAr": "حولي",
+          "areaAr": "السالمية",
+          "addressAr": "السالمية – قطعة 10 – شارع يوسف البدر",
+          "phones": [
+            "25648955",
+            "25648944"
+          ],
+          "needsAr": null,
+          "stagesAr": "مرحلة متوسط وثانوي (بنين)",
+          "classroomAr": "دمج؛ احتياجات خاصة",
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [],
+      "stageTags": [
+        "middle",
+        "secondary"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-r-21",
+      "mainImage": "center21",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/markaz21/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/odVSGDb5DEa5JoKU7",
+        "whatsapp": {
+          "phone": "+96550993750",
+          "url": "https://wa.me/96550993750"
+        }
+      },
+      "nameAr": "مركز 21",
+      "categories": [
+        "rehabilitation"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 8,
+          "row": "1",
+          "nameAr": "مركز 21",
+          "governorateAr": null,
+          "areaAr": "الزهراء",
+          "addressAr": "الزهراء – قطعة 1 – شارع 112 – قسيمة 612–615",
+          "phones": [
+            "25212028",
+            "50993750",
+            "99340669"
+          ],
+          "needsAr": "إعاقة ذهنية متوسطة + شديدة",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "118",
+          "agesAr": "21–65 سنة"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 8,
+          "row": "3",
+          "nameAr": "مركز 21",
+          "governorateAr": "حولي",
+          "areaAr": "الزهراء",
+          "addressAr": "الزهراء – قطعة 1 – شارع 117 – قسيمة 612–615",
+          "phones": [
+            "99384500",
+            "25212028",
+            "50993750"
+          ],
+          "needsAr": "الإعاقة الذهنية المتوسطة والشديدة",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": "21–45 سنة"
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "الشارع 112 مقابل 117، والعمر 21–65 مقابل 21–45، وأحد أرقام الهاتف مختلف."
+      ],
+      "disabilityTags": [
+        "intellectual"
+      ],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-r-ekhlas",
+      "mainImage": "alekhlas",
+      "publicProfile": {
+        "phone": "+96560068524",
+        "extraPhones": [
+          {
+            "phone": "69910452",
+            "label": {
+              "ar": "رقم إضافي",
+              "en": "Additional contact"
+            }
+          },
+          {
+            "phone": "25621655",
+            "label": {
+              "ar": "رقم إضافي",
+              "en": "Additional contact"
+            }
+          }
+        ],
+        "address": {
+          "ar": "سلوى قطعة 11 قسيمة 387\nسلوى – قطعة 11 – قسيمة 387 – شارع محمد وسمي الوسمي",
+          "en": "سلوى قطعة 11 قسيمة 387\nسلوى – قطعة 11 – قسيمة 387 – شارع محمد وسمي الوسمي"
+        },
+        "area": {
+          "ar": "سلوى",
+          "en": "سلوى"
+        },
+        "ages": {
+          "ar": "6–45 سنة",
+          "en": "6–45 سنة"
+        },
+        "supportedConditions": {
+          "ar": [
+            "جميع الإعاقات الشديدة والذهنية البسيطة والمتوسطة",
+            "الإعاقات الشديدة؛ الإعاقات الذهنية البسيطة والمتوسطة والشديدة"
+          ],
+          "en": [
+            "جميع الإعاقات الشديدة والذهنية البسيطة والمتوسطة",
+            "الإعاقات الشديدة؛ الإعاقات الذهنية البسيطة والمتوسطة والشديدة"
+          ]
+        },
+        "instagram": "https://www.instagram.com/alekhlasrehab/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/zcBoU1xHS1PYrLX77",
+        "whatsapp": {
+          "phone": "+96560068524",
+          "url": "https://wa.me/96560068524"
+        }
+      },
+      "nameAr": "مؤسسة الإخلاص التأهيلية",
+      "categories": [
+        "rehabilitation"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 8,
+          "row": "2",
+          "nameAr": "مؤسسة الإخلاص التأهيلية",
+          "governorateAr": null,
+          "areaAr": "سلوى",
+          "addressAr": "سلوى قطعة 11 قسيمة 387",
+          "phones": [
+            "69910452",
+            "25621655"
+          ],
+          "needsAr": "جميع الإعاقات الشديدة والذهنية البسيطة والمتوسطة",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "232",
+          "agesAr": "6–45 سنة"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 8,
+          "row": "5",
+          "nameAr": "مؤسسة الإخلاص التأهيلية",
+          "governorateAr": "حولي",
+          "areaAr": "سلوى",
+          "addressAr": "سلوى – قطعة 11 – قسيمة 387 – شارع محمد وسمي الوسمي",
+          "phones": [
+            "69910452",
+            "25621655"
+          ],
+          "needsAr": "الإعاقات الشديدة؛ الإعاقات الذهنية البسيطة والمتوسطة والشديدة",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": "6–45 سنة"
+        }
+      ],
+      "reviewStatus": "unverified",
+      "sourceExtras": {
+        "email": "specialneeds@ekhlas.edu.kw"
+      },
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "intellectual",
+        "all-as-reported"
+      ],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-r-day-hawalli",
+      "nameAr": "الجمعية الكويتية لرعاية المعاقين",
+      "categories": [
+        "rehabilitation"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 8,
+          "row": "3",
+          "nameAr": "الجمعية الكويتية لرعاية المعاقين",
+          "governorateAr": null,
+          "areaAr": "حولي",
+          "addressAr": "حولي: شارع القاهرة",
+          "phones": [
+            "22631277",
+            "22632343"
+          ],
+          "needsAr": "الإعاقات الشديدة والمزدوجة، الشلل الدماغي، التأخر النمائي الشامل",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 8,
+          "row": "4",
+          "nameAr": "مركز الرعاية النهارية",
+          "governorateAr": "حولي",
+          "areaAr": "حولي",
+          "addressAr": "حولي – شارع القاهرة – خلف كلية الدراسات التجارية بنين",
+          "phones": [
+            "22631277",
+            "22632343"
+          ],
+          "needsAr": "الإعاقات الشديدة والمزدوجة؛ الشلل الدماغي؛ التأخر النمائي الشامل",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "developmental",
+        "multiple",
+        "cerebral-palsy"
+      ],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null,
+      "mainImage": "ksh",
+      "publicProfile": {
+        "phone": "1805005",
+        "extraPhones": [
+          {
+            "phone": "22631277",
+            "label": {
+              "ar": "رقم إضافي",
+              "en": "Additional contact"
+            }
+          },
+          {
+            "phone": "22632343",
+            "label": {
+              "ar": "رقم إضافي",
+              "en": "Additional contact"
+            }
+          }
+        ],
+        "address": {
+          "ar": "حولي: شارع القاهرة\nحولي – شارع القاهرة – خلف كلية الدراسات التجارية بنين",
+          "en": "حولي: شارع القاهرة\nحولي – شارع القاهرة – خلف كلية الدراسات التجارية بنين"
+        },
+        "area": {
+          "ar": "حولي",
+          "en": "حولي"
+        },
+        "supportedConditions": {
+          "ar": [
+            "الإعاقات الشديدة والمزدوجة، الشلل الدماغي، التأخر النمائي الشامل",
+            "الإعاقات الشديدة والمزدوجة؛ الشلل الدماغي؛ التأخر النمائي الشامل"
+          ],
+          "en": [
+            "الإعاقات الشديدة والمزدوجة، الشلل الدماغي، التأخر النمائي الشامل",
+            "الإعاقات الشديدة والمزدوجة؛ الشلل الدماغي؛ التأخر النمائي الشامل"
+          ]
+        },
+        "instagram": "https://www.instagram.com/kshkuwait/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "website": "https://www.ksh.org.kw/",
+        "localizedWebsite": {
+          "ar": "https://ksh.org.kw/ar/",
+          "en": "https://www.ksh.org.kw/"
+        }
+      }
+    },
+    {
+      "id": "kw-r-day-jahra",
+      "nameAr": "مركز الرعاية النهارية (فرع الجهراء)",
+      "categories": [
+        "rehabilitation"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 8,
+          "row": "4",
+          "nameAr": "مركز الرعاية النهارية (فرع الجهراء)",
+          "governorateAr": null,
+          "areaAr": "الجهراء",
+          "addressAr": "الجهراء: قطعة 2 شارع نصر بن يسار",
+          "phones": [
+            "24586733"
+          ],
+          "needsAr": "تأخر عقلي دون 70، توحد، داون، كف بصر، إعاقات حركية",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 8,
+          "row": "2",
+          "nameAr": "جمعية رعاية المعاقين (الجهراء)",
+          "governorateAr": "الجهراء",
+          "areaAr": "الجهراء",
+          "addressAr": "الجهراء – قطعة 2 – شارع نصر بن يسار – بجانب روضة القصر الأحمر",
+          "phones": [
+            "24586733"
+          ],
+          "needsAr": "تأخر ذهني دون 70 – توحد – داون – كف بصر – إعاقات حركية",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "autism",
+        "intellectual",
+        "vision",
+        "motor",
+        "down"
+      ],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-r-day-ahmadi",
+      "nameAr": "مركز الرعاية النهارية (فرع الأحمدي)",
+      "categories": [
+        "rehabilitation"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 8,
+          "row": "5",
+          "nameAr": "مركز الرعاية النهارية (فرع الأحمدي)",
+          "governorateAr": null,
+          "areaAr": "جنوب الصباحية",
+          "addressAr": "جنوب الصباحية: بجوار حديقة مرح لاند",
+          "phones": [
+            "23624768",
+            "23624748"
+          ],
+          "needsAr": "تأخر عقلي دون 70، توحد، داون، كف بصر، إعاقات حركية",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 8,
+          "row": "7",
+          "nameAr": "جمعية رعاية المعاقين (الأحمدي)",
+          "governorateAr": "الأحمدي",
+          "areaAr": "الصباحية",
+          "addressAr": "الصباحية – شارع مجمع المحاكم – بجوار سينما سيارات جنوب الصباحية",
+          "phones": [
+            "23624768",
+            "23624748"
+          ],
+          "needsAr": "تأخر ذهني دون 70 – توحد – داون – كف بصر – إعاقات حركية",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "autism",
+        "intellectual",
+        "vision",
+        "motor",
+        "down"
+      ],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-r-umm-qura",
+      "nameAr": "مركز أم القرى التأهيلي",
+      "categories": [
+        "rehabilitation"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 8,
+          "row": "6",
+          "nameAr": "مركز أم القرى التأهيلي",
+          "governorateAr": null,
+          "areaAr": "أبو حليفة",
+          "addressAr": "أبو حليفة: قطعة 2 شارع عبد الملك بن مروان قسيمة 69",
+          "phones": [
+            "98012335",
+            "98857752"
+          ],
+          "needsAr": "إعاقة ذهنية",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "153",
+          "agesAr": "21–35 سنة"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 8,
+          "row": "8",
+          "nameAr": "مركز أم القرى",
+          "governorateAr": "الأحمدي",
+          "areaAr": "أبو حليفة",
+          "addressAr": "بوحليفة – شارع عبد الملك بن مروان – ق 2",
+          "phones": [
+            "98012335",
+            "98857752"
+          ],
+          "needsAr": "الإعاقات الشديدة؛ الإعاقات الذهنية البسيطة والمتوسطة والشديدة",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [
+        "الدليل يحدد عمر 21–35؛ قائمة 2023 لا تذكر العمر وتصف إعاقات أشد."
+      ],
+      "disabilityTags": [
+        "intellectual"
+      ],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-r-idad",
+      "nameAr": "مؤسسة الإعداد النموذجي",
+      "categories": [
+        "rehabilitation"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 8,
+          "row": "7",
+          "nameAr": "مؤسسة الإعداد النموذجي",
+          "governorateAr": null,
+          "areaAr": "حولي",
+          "addressAr": "حولي قطعة 93 شارع شرحبيل قسيمة 4",
+          "phones": [
+            "22612221",
+            "98020348"
+          ],
+          "needsAr": "جميع الإعاقات الشديدة",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "128",
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null,
+      "mainImage": "idad",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/ipe_kwt/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/T9Crz968M4bjuGbC8"
+      }
+    },
+    {
+      "id": "kw-r-irshad",
+      "nameAr": "مؤسسة التأهيل الإرشادي",
+      "categories": [
+        "rehabilitation"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 8,
+          "row": "8",
+          "nameAr": "مؤسسة التأهيل الإرشادي",
+          "governorateAr": null,
+          "areaAr": "الفروانية",
+          "addressAr": "الفروانية قطعة 1 شارع الأردن",
+          "phones": [
+            "24731546",
+            "24731539",
+            "24731574"
+          ],
+          "needsAr": "إعاقة ذهنية متوسطة + شديدة",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "196",
+          "agesAr": "6–35 سنة"
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 8,
+          "row": "1",
+          "nameAr": "مؤسسة التأهيل الإرشادي",
+          "governorateAr": "الفروانية",
+          "areaAr": "الفروانية",
+          "addressAr": "الفروانية – قطعة 1 – شارع الأردن – خلف نادي التضامن",
+          "phones": [
+            "24731546",
+            "24731539",
+            "24731574"
+          ],
+          "needsAr": "الإعاقة الذهنية الشديدة والمتوسطة",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": "6–35 سنة"
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "intellectual"
+      ],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null,
+      "mainImage": "crehbuilding",
+      "galleryPhotos": [
+        "conductive-rehabilitation-building"
+      ],
+      "publicProfile": {
+        "mapUrl": "https://maps.app.goo.gl/pbq6mXTNaadzUCcA6",
+        "email": "info@creh.edu.kw",
+        "website": "http://www.creh.edu.kw/ar/about"
+      }
+    },
+    {
+      "id": "kw-r-integrated",
+      "nameAr": "مؤسسة الرعاية المتكاملة",
+      "categories": [
+        "rehabilitation"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 8,
+          "row": "9",
+          "nameAr": "مؤسسة الرعاية المتكاملة",
+          "governorateAr": null,
+          "areaAr": "غرناطة",
+          "addressAr": "غرناطة قطعة 1 مقابل جسر الجهراء مبنى 319",
+          "phones": [
+            "22206056",
+            "22206055",
+            "22206054"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "338",
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 8,
+          "row": "9",
+          "nameAr": "مؤسسة الرعاية المتكاملة لذوي الإعاقة",
+          "governorateAr": "العاصمة",
+          "areaAr": "غرناطة",
+          "addressAr": "غرناطة – قطعة 1 – شارع 100 – مبنى 319",
+          "phones": [
+            "22206056",
+            "22206055",
+            "22206054",
+            "99193134",
+            "65949355",
+            "66852254"
+          ],
+          "needsAr": "الإعاقات الشديدة؛ الإعاقات الذهنية البسيطة والمتوسطة والشديدة",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": "6–45 سنة"
+        }
+      ],
+      "reviewStatus": "unverified",
+      "sourceExtras": {
+        "email": "info@icankuwait.com"
+      },
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "intellectual",
+        "all-as-reported"
+      ],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null,
+      "mainImage": "ican",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/ican2_kuwait/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/d3iL44gkif7bxCvdA"
+      }
+    },
+    {
+      "id": "kw-r-integrated-2",
+      "nameAr": "مؤسسة الرعاية المتكاملة 2",
+      "categories": [
+        "rehabilitation"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 8,
+          "row": "10",
+          "nameAr": "مؤسسة الرعاية المتكاملة 2",
+          "governorateAr": null,
+          "areaAr": "المهبولة",
+          "addressAr": "المهبولة قطعة 4 شارع صباح السالم الصباح قسيمة 973",
+          "phones": [
+            "63330705",
+            "65142000"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": "457",
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-r-dyslexia",
+      "nameAr": "مركز الدسلكسيا",
+      "categories": [
+        "rehabilitation"
+      ],
+      "observations": [
+        {
+          "sourceId": "directory",
+          "page": 8,
+          "row": "11",
+          "nameAr": "مركز الدسلكسيا",
+          "governorateAr": null,
+          "areaAr": "العمرية",
+          "addressAr": "العمرية قطعة 4 شارع العمرية مبنى 4",
+          "phones": [
+            "24757986",
+            "24758514",
+            "94731056"
+          ],
+          "needsAr": "إعاقة تعليمية",
+          "stagesAr": null,
+          "classroomAr": "دمج",
+          "capacityAr": null,
+          "agesAr": null
+        },
+        {
+          "sourceId": "scan-2023",
+          "page": 4,
+          "row": "6",
+          "nameAr": "مركز الكويت للدسلكسيا",
+          "governorateAr": "الفروانية",
+          "areaAr": "العمرية",
+          "addressAr": "العمرية – قطعة 4 – شارع العمرية – مبنى 4",
+          "phones": [
+            "24757986",
+            "24758514",
+            "94731056"
+          ],
+          "needsAr": "إعاقة تعليمية",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "learning"
+      ],
+      "stageTags": [],
+      "nameEn": null,
+      "verifiedMapUrl": null,
+      "mainImage": "dyslexia",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/dyslexiakuwait/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "website": "https://q8da.com/"
+      }
+    },
+    {
+      "id": "kw-n-blue-sky",
+      "nameAr": "حضانة كويت بلو سكاي للاحتياجات الخاصة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "scan-2023",
+          "page": 1,
+          "row": "3",
+          "nameAr": "حضانة كويت بلو سكاي للاحتياجات الخاصة",
+          "governorateAr": "الفروانية",
+          "areaAr": "عبد الله المبارك",
+          "addressAr": "عبد الله المبارك – قطعة 9 – شارع 914 – قسيمة 144",
+          "phones": [
+            "24360960",
+            "97267261"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-n-jwan",
+      "nameAr": "حضانة جوان",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "scan-2023",
+          "page": 1,
+          "row": "4",
+          "nameAr": "حضانة جوان",
+          "governorateAr": "الفروانية",
+          "areaAr": "عبد الله المبارك",
+          "addressAr": "عبد الله المبارك – قطعة 8 – شارع 808 – منزل 8",
+          "phones": [
+            "97579858",
+            "99497046"
+          ],
+          "needsAr": "توحد – داون – الإعاقات الذهنية",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "autism",
+        "intellectual",
+        "down"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-n-dima",
+      "nameAr": "حضانة ديما",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "scan-2023",
+          "page": 1,
+          "row": "7",
+          "nameAr": "حضانة ديما",
+          "governorateAr": "الجهراء",
+          "areaAr": "سعد العبد الله",
+          "addressAr": "سعد العبد الله – قطعة 2 – شارع 221 – منزل 71 – مقابل مدرسة الصامتة متوسطة بنات",
+          "phones": [
+            "55507189",
+            "24534954",
+            "24534955"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": "Dima Nursery for Special Needs",
+      "verifiedMapUrl": null,
+      "mainImage": "dima",
+      "publicProfile": {
+        "instagram": "https://www.instagram.com/dima_nursery/",
+        "instagramLabel": {
+          "ar": "إنستقرام",
+          "en": "Instagram"
+        },
+        "mapUrl": "https://maps.app.goo.gl/6UDHCcQdXLv5uN1q9"
+      }
+    },
+    {
+      "id": "kw-n-qudrat",
+      "nameAr": "حضانة قدرات لذوي الاحتياجات الخاصة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "scan-2023",
+          "page": 1,
+          "row": "11",
+          "nameAr": "حضانة قدرات لذوي الاحتياجات الخاصة",
+          "governorateAr": "حولي",
+          "areaAr": "حطين",
+          "addressAr": "حطين – قطعة 1 – شارع 327 – منزل 58",
+          "phones": [
+            "50237070",
+            "51087711"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-n-sabah",
+      "nameAr": "حضانة الصباح النموذجية",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "scan-2023",
+          "page": 2,
+          "row": "13",
+          "nameAr": "حضانة الصباح النموذجية",
+          "governorateAr": "حولي",
+          "areaAr": "بيان",
+          "addressAr": "بيان – قطعة 3 – شارع 4 – منزل 38",
+          "phones": [
+            "69018208",
+            "25384120"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-n-big-wish",
+      "nameAr": "حضانة بيج وش",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "scan-2023",
+          "page": 2,
+          "row": "14",
+          "nameAr": "حضانة بيج وش",
+          "governorateAr": "حولي",
+          "areaAr": "بيان",
+          "addressAr": "بيان – قطعة 2 – شارع 1 خلف الجمعية الجديدة بجانب مستوصف بيان الجديد",
+          "phones": [
+            "50955559"
+          ],
+          "needsAr": "توحد – ذهنية شديدة – الإعاقات الحركية – داون",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "autism",
+        "intellectual",
+        "motor",
+        "down"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-n-salam",
+      "nameAr": "حضانة أكاديمية السلام",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "scan-2023",
+          "page": 2,
+          "row": "15",
+          "nameAr": "حضانة أكاديمية السلام",
+          "governorateAr": "حولي",
+          "areaAr": "بيان",
+          "addressAr": "بيان – قطعة 3 – شارع 2 – منزل 39",
+          "phones": [
+            "25384810",
+            "94433102",
+            "25384811"
+          ],
+          "needsAr": "جميع الإعاقات",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-n-portage",
+      "nameAr": "حضانة بورتج للاحتياجات الخاصة",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "scan-2023",
+          "page": 3,
+          "row": "21",
+          "nameAr": "حضانة بورتج للاحتياجات الخاصة",
+          "governorateAr": "مبارك الكبير",
+          "areaAr": "العدان",
+          "addressAr": "العدان – ق 2 – شارع 52 – منزل 28",
+          "phones": [
+            "50886042",
+            "50886074"
+          ],
+          "needsAr": "جميع الإعاقات (ماعدا الإعاقة البصرية)",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "sourceExtras": {
+        "emailAsPrinted": "Rimaalsaid67@ymail.com",
+        "phoneNoteAr": "50886074 مذكور للواتساب في قائمة 2023."
+      },
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "all-as-reported"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    },
+    {
+      "id": "kw-n-tabarak",
+      "nameAr": "حضانة تبارك",
+      "categories": [
+        "nursery"
+      ],
+      "observations": [
+        {
+          "sourceId": "scan-2023",
+          "page": 3,
+          "row": "31",
+          "nameAr": "حضانة تبارك",
+          "governorateAr": "العاصمة",
+          "areaAr": "جابر الأحمد",
+          "addressAr": "جابر الأحمد – قطعة 2 – شارع 216 – قسيمة 654 – مقابل مدرسة حمود الإبراهيم",
+          "phones": [
+            "66334862",
+            "60081151",
+            "66944482"
+          ],
+          "needsAr": "إعاقة ذهنية – توحد – داون",
+          "stagesAr": null,
+          "classroomAr": null,
+          "capacityAr": null,
+          "agesAr": null
+        }
+      ],
+      "reviewStatus": "unverified",
+      "reviewNotesAr": [],
+      "disabilityTags": [
+        "autism",
+        "intellectual",
+        "down"
+      ],
+      "stageTags": [
+        "nursery"
+      ],
+      "nameEn": null,
+      "verifiedMapUrl": null
+    }
+  ]
+}
