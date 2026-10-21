@@ -1,10 +1,15 @@
-# Fakhr developer handoff — 20 October 2026
+# Fakhr final v2 developer handoff — updated 21 October 2026
 
-Source: `codex/fakhr-integrated-20261020` at
-`8b5e8aaf58bf9e1e7ff6094e511a2188dc7d3a0d`.
-This handoff preserves the application source and adds handoff instructions plus a safe
-environment-template correction (`FAKHR_AI_ACCESS=off`). See VALIDATION-HANDOFF.json
-for checks actually run on this copy. Existing reconciliation reports are historical.
+GitHub handoff branch: handoff/fakhr-final-v2 in manar-1986/fakhr-capstone.
+Includes approved v2 source 8c81aeca87e0e3015eaa703ec3f6f6f4426816bf and validated general-AI integration through 232478ffeb30cb6bf9caccde34f13c48c3ddf9be.
+
+The approved frontend, backend, assets, My Plan, Daily Companion, meals, directory and navigation are retained. General Ask Fakhr now has an authenticated API connection gated off by default; it sends fixed educational topic prompts and locale, not typed narratives, child data or history. This is not unrestricted chat. Personalized Plan AI remains mock-only.
+
+Keep FAKHR_AI_ENABLED=false, FAKHR_AI_ACCESS=off and EXPO_PUBLIC_FAKHR_AI_ACCESS=off. No live activation or deployment is authorized by this handoff. The only approved runtime safeguard correction is integer rounding of the witness cursor timeout. The $20 UTC-month ceiling, $0.01 reservation, quotas and signed witness protections are preserved.
+
+Latest validation: backend build passed; 37 budget/witness tests and 99 focused regressions passed, zero failures or skips. See docs/AI-CANDIDATE-VALIDATION.json and docs/MONTHLY-SECURITY-TEST-RESOLUTIONS.md. Earlier root readiness/manifests describe the historical v2 snapshot, not the newer AI integration.
+
+Remaining release gates: authoritative Render ingress trust configuration (support inquiry pending), source promotion approval, saved environment application, witness runtime authentication/privilege verification, model metadata/access and tariff verification, production backup/recovery approval as required, empty primary ledger collection creation and separately approved signed initialization. Read-only preflight found primary ai_budget_ledgers absent; authlimits and its TTL index exist. No production mutations were made. See docs/AI-DEPLOYMENT-CANDIDATE.md for deployment and rollback constraints. Do not deploy this handoff branch automatically.
 
 ## Start here
 
@@ -51,7 +56,7 @@ environment containing real service credentials.
 Handoff fixes: enforce LF for the five checksum-protected dependency patch files;
 update three stale frontend tests for the approved palette and explicit legacy
 navigation isolation. Real minimum-release gate tests remain enabled and pass.
-Version 1 preserved application behavior. Version 2 closes archived preview routes in production, repairs the existing professionals search, and marks unsupported legacy actions disabled. Validated AI modules remain unchanged.
+Version 1 preserved application behavior. Version 2 closes archived preview routes in production, repairs the existing professionals search, and marks unsupported legacy actions disabled. The v2 baseline retained validated AI modules; the later explicitly approved witness integer-timeout correction is documented above.
 
 For local authenticated daily-care testing also set EXPO_PUBLIC_DAILY_CARE_ENABLED=true
 in the frontend, alongside FAKHR_DAILY_CARE_ENABLED=true in the local backend.
