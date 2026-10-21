@@ -16,13 +16,13 @@
     "typescript": "PASS",
     "focusedTests": {
       "suites": 6,
-      "passed": 95,
+      "passed": 99,
       "failed": 0
     },
     "witnessBudgetTests": {
       "suite": "aiPortableBudget.test.ts",
-      "failed": 36,
-      "reason": "MongoDB rejects non-integral maxTimeMS derived from fractional witness cursor timeoutMS"
+      "passed": 37,
+      "failed": 0
     },
     "metadataHelperTests": {
       "passed": 4,
@@ -86,5 +86,72 @@
     },
     "remainingFailure": "Stale-policy assertions; monthly-policy validation still required",
     "productionChanges": false
-  }
+  },
+  "historicalBackendBeforeTimeoutCorrection": {
+    "typescript": "PASS",
+    "focusedTests": {
+      "suites": 6,
+      "passed": 95,
+      "failed": 0
+    },
+    "witnessBudgetTests": {
+      "suite": "aiPortableBudget.test.ts",
+      "failed": 36,
+      "reason": "MongoDB rejects non-integral maxTimeMS derived from fractional witness cursor timeoutMS"
+    },
+    "metadataHelperTests": {
+      "passed": 4,
+      "network": "mocked"
+    }
+  },
+  "monthlyPolicyValidation": {
+    "date": "2026-10-21",
+    "suites": 7,
+    "passed": 136,
+    "failed": 0,
+    "skipped": 0,
+    "runtimeChanges": false,
+    "policy": {
+      "utcMonthlyMicros": 20000000,
+      "reservationMicros": 10000,
+      "perAccountAttempts": {
+        "per15Minutes": 3,
+        "perDay": 10,
+        "perMonth": 100
+      }
+    },
+    "report": "MONTHLY-SECURITY-TEST-RESOLUTIONS.md"
+  },
+  "currentSafeguards": [
+    {
+      "file": "/src/modules/ai/ai.activation.ts",
+      "sha256": "c56c37b9b19c7770defed8d714b210836af3ce27c5ff9758c4d8fc670dd85dbd",
+      "unchangedSinceApprovedTimeoutCorrection": true
+    },
+    {
+      "file": "/src/modules/ai/ai.budget.ts",
+      "sha256": "55719297776af2e1154e245cb18c3a2411d606503a921b0151a3a9baac3c0f6e",
+      "unchangedSinceApprovedTimeoutCorrection": true
+    },
+    {
+      "file": "/src/modules/ai/ai.quotas.ts",
+      "sha256": "7076b37c19782566ed5d87a964ac570e33a1e4482e8cb8ca955f4b5479a588eb",
+      "unchangedSinceApprovedTimeoutCorrection": true
+    },
+    {
+      "file": "/src/modules/ai/ai.requests.ts",
+      "sha256": "c12168dcd79d70168350b62a08c23bde3beb111234868fe0c4152b507c56b1aa",
+      "unchangedSinceApprovedTimeoutCorrection": true
+    },
+    {
+      "file": "/src/modules/ai/ai.transport.ts",
+      "sha256": "4955bb6798d437b42fefd159f6808a45811c967be5897760f893d792d3a6eeb7",
+      "unchangedSinceApprovedTimeoutCorrection": true
+    },
+    {
+      "file": "/src/modules/ai/ai.witness.ts",
+      "sha256": "6b878d850433e058dd20b0cee8bce00465762ddb271d269e6d7f271a9dd8c724",
+      "unchangedSinceApprovedTimeoutCorrection": true
+    }
+  ]
 }

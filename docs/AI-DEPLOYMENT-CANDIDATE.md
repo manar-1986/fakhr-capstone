@@ -10,15 +10,8 @@ Classification occurs locally; only a fixed general topic prompt and locale cros
 
 The general API accepts authenticated users independently of selecting a child. The existing child selector remains display-only context for this path. Personalized Smart Plan remains mock-only and /api/plan-ai remains blocked. Design/style declarations are unchanged.
 
-## Timeout correction status
-The approved integer-timeout correction is now applied locally. See WITNESS-INTEGER-TIMEOUT.md: 31/36 budget/witness tests pass; five stale-policy assertions remain unresolved. The historical findings below describe the pre-correction candidate. Deployment remains blocked.
-
-## Original source blocker (corrected)
-The unmodified ai.witness.ts computes cursor timeoutMS from performance.now(), producing a fractional value. With locked mongoose 9.7.2 / mongodb 7.2.0 and isolated MongoDB 7.0.14, the driver sends a fractional maxTimeMS and MongoDB rejects it: maxTimeMS has non-integral value. Budget/witness initialization tests fail before any provider dispatch. All six safeguard SHA-256 hashes still match docs/reconciliation/ai-safeguard-verification.json.
-
-A narrowly reviewed integer deadline correction in the protected witness module, followed by full budget/witness regression tests, needs explicit approval under the byte-for-byte preservation requirement. No workaround, dependency downgrade, clock override, or weakened test was introduced. Atlas 8 runtime behavior has not been tested and must not be assumed to resolve this.
-
-Two stale test fixtures were corrected: activation now mocks consumeAIQuotas rather than the obsolete consumeAuthLimit; the authenticated quota test supplies its own synthetic signing key and checks stored counter IDs are hashed. Runtime quota code is unchanged.
+## Current local validation
+The approved integer-timeout fix and five outdated test assertions are resolved. Backend TypeScript build passes. All 37 budget/witness tests and 99 focused regressions pass (136 total, zero skipped). No runtime safeguard changed during assertion reconciliation. See MONTHLY-SECURITY-TEST-RESOLUTIONS.md for exact corrections and AI-CANDIDATE-VALIDATION.json for current hashes and historical results. Production configuration and activation checks below remain outstanding.
 
 ## Deployment contract (not executed)
 Existing Render service: srv-daa1g41srm7s73dkun10. Current linked repository: farooq023/fakhrCapstone main. Current live source: 9a7f0dd5a849a3256bfd9ca6a2379031d4581fd8. This integration checkout is a monorepo, so do not use Deploy latest commit against the unrelated live branch. An explicitly approved source publication/promotion and exact commit selection is required. If deploying this monorepo, root directory is fakhr-capstone-Backend; if promoting a backend-only tree, verify that tree against this candidate.
@@ -42,4 +35,4 @@ Only after these pass: separately approve a bounded paid test, frontend pilot bu
 Before deployment verify the retained artifact for dep-danpfp0jo6nc739ndalg. Render Dashboard rollback restores its build and runtime environment, but not DB data or saved dashboard settings, and disables auto-deploys. It would also remove the new safety flags from that runtime because they were absent in the old deploy; this restores the old application, not a verified AI safety configuration. Recheck availability/authentication and keep AI launch halted. Do not initialize a ledger or run migrations as part of deployment, so rollback has no budget/data reversal. A rollback to older code cannot undo external API spend.
 
 ## Validation
-See AI-CANDIDATE-VALIDATION.json for local results. No deployment approval should be requested until the witness defect and production configuration blockers are resolved. No paid inference, deployment, push, production write or budget initialization has occurred.
+See AI-CANDIDATE-VALIDATION.json for local results. No deployment approval should be requested until the production configuration blockers are resolved. No paid inference, deployment, push, production write or budget initialization has occurred.

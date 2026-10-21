@@ -41,7 +41,7 @@ test('signed persistent reservation precedes dispatch; only usage metadata is st
  });
  await expect(runBudgetedAI(config)).resolves.toEqual({output_text:'General educational guidance.'});
  expect(OpenAI).toHaveBeenLastCalledWith(expect.objectContaining({maxRetries:0,timeout:20000,logLevel:'off',baseURL:'https://api.openai.com/v1'}));
- expect(mockCreate).toHaveBeenCalledWith(expect.objectContaining({model:'gpt-5-mini',store:false,max_output_tokens:8000,service_tier:'default'}),expect.objectContaining({signal:expect.any(AbortSignal)}));
+ expect(mockCreate).toHaveBeenCalledWith(expect.objectContaining({model:'gpt-6-luna',store:false,max_output_tokens:8000,service_tier:'default'}),expect.objectContaining({signal:expect.any(AbortSignal)}));
  const text=JSON.stringify(await ledger().findOne({_id:AI_POLICY.id}));
  expect(text).not.toContain('offline-synthetic-key');
  expect(text).not.toContain('General educational');
@@ -54,14 +54,30 @@ test.each(['missing','corrupt','replaced'])('%s ledger fails closed without init
  await expect(runBudgetedAI(config)).rejects.toMatchObject({statusCode:503});
  expect(mockCreate).not.toHaveBeenCalled();
 });
-test('twelve reservations cap spending and attempt thirteen is denied',async()=>{
- for(let i=0;i<12;i++)await runBudgetedAI(config);
+// Synthetic signed history checkpoint avoids 2,000 requests while retaining real
+// ledger verification, witness append/signature verification, and budget mutations.
+async function nearMonthlyCeiling(){
+ const current=(await ledger().findOne({_id:AI_POLICY.id}))!;
+ const clock=await ledger().aggregate([{$project:{now:'$$NOW'}}]).next();
+ const month=(clock!.now as Date).toISOString().slice(0,7);
+ const base={_id:current._id,anchor:current.anchor,policyHash:current.policyHash,revision:current.revision+1,
+  months:{[month]:19980000},lastSeen:(clock!.now as Date).getTime(),attempts:current.attempts,recoveries:current.recoveries};
+ const next={...base,signature:createHmac('sha256',process.env.FAKHR_AI_LEDGER_SIGNING_KEY!).update(JSON.stringify(base)).digest('hex')};
+ await appendWitness(next,current.signature);
+ await ledger().replaceOne({_id:current._id},next);
+ expect((await witnessHead())!.ledger.signature).toBe(next.signature);
+ return month;
+}
+test('$20 monthly cap permits the last two cents and denies the next attempt',async()=>{
+ expect(AI_POLICY.ceilingMicros).toBe(20000000);expect(AI_POLICY.reservationMicros).toBe(10000);
+ const month=await nearMonthlyCeiling();
+ await runBudgetedAI(config);expect((await ledger().findOne({_id:AI_POLICY.id}))!.months[month]).toBe(19990000);
+ await runBudgetedAI(config);const full=(await ledger().findOne({_id:AI_POLICY.id}))!;
+ expect(full.months[month]).toBe(20000000);
  await expect(runBudgetedAI(config)).rejects.toMatchObject({statusCode:503});
- expect(mockCreate).toHaveBeenCalledTimes(12);
- const doc=await ledger().findOne({_id:AI_POLICY.id});
- expect(doc?.attempts).toHaveLength(12);
- expect(doc?.attempts.length*AI_POLICY.reservationMicros).toBe(240000);
- expect(AI_POLICY.ceilingMicros).toBe(250000);
+ expect(mockCreate).toHaveBeenCalledTimes(2);
+ expect((await ledger().findOne({_id:AI_POLICY.id}))!.signature).toBe(full.signature);
+ expect((await witnessHead())!.ledger.signature).toBe(full.signature);
 });
 test('concurrent instances cannot reserve multiple active requests',async()=>{
  const results=await Promise.allSettled(Array.from({length:8},()=>reserveAI({public:'body'})));
@@ -164,9 +180,9 @@ test('oversized public input is rejected before reservation or HTTP',async()=>{
 });
 
 
-import {randomUUID} from 'node:crypto';
+import {randomUUID,createHmac} from 'node:crypto';
 import {recoverAIBudget} from '../modules/ai/ai.budget';
-import {witnessConnection,witnessHead,appendOnlyPrivileges} from '../modules/ai/ai.witness';
+import {witnessConnection,witnessHead,appendOnlyPrivileges,appendWitness} from '../modules/ai/ai.witness';
 import {witnessAdmin} from '../testSupport/integrationMongo';
 function approveRecovery(){process.env.FAKHR_AI_ENABLED='false';process.env.FAKHR_AI_RECOVERY_APPROVED='forfeit-without-refund';}
 afterEach(()=>{delete process.env.FAKHR_AI_RECOVERY_APPROVED;});
@@ -225,7 +241,12 @@ test('partial primary write preserves witness reservation and allows no dispatch
  expect((await ledger().findOne({_id:AI_POLICY.id}))?.attempts[0].state).toBe('forfeited');
  process.env.FAKHR_AI_ENABLED='true';
  await runBudgetedAI(config);
- expect((await ledger().findOne({_id:AI_POLICY.id}))?.attempts).toHaveLength(2);
+ const recovered=(await ledger().findOne({_id:AI_POLICY.id}))!;
+ expect(recovered.attempts).toHaveLength(1);expect(recovered.attempts[0].state).toBe('completed');
+ expect(Object.values(recovered.months).reduce((a,b)=>a+b,0)).toBe(20000);
+ const history=await witnessAdmin!.collection('ai_budget_witness').find({}).sort({_id:1}).toArray();
+ expect(history.some(row=>row.ledger.attempts.some((a:any)=>a.token===head.ledger.attempts[0].token&&a.state==='forfeited'))).toBe(true);
+ expect((await witnessHead())!.ledger.signature).toBe(recovered.signature);
  expect(mockCreate).toHaveBeenCalledTimes(1);
 });
 test('recovery requires disabled AI and exact reviewed witness revision',async()=>{
@@ -239,21 +260,23 @@ test('recovery requires disabled AI and exact reviewed witness revision',async()
  await expect(claimAI(token,body)).rejects.toThrow();
  await expect(completeAI(token,10,10)).rejects.toThrow();
 });
-test('twelve failed/recovered requests still exhaust all attempts with no refunds',async()=>{
- mockCreate.mockRejectedValue(new Error('synthetic failure'));
- for(let i=0;i<12;i++){
+test('failed and recovered attempts retain monthly charges and exhaust the remaining budget',async()=>{
+ const month=await nearMonthlyCeiling();mockCreate.mockRejectedValue(new Error('synthetic failure'));
+ const tokens:string[]=[];
+ for(let i=0;i<2;i++){
   process.env.FAKHR_AI_ENABLED='true';
   await expect(runBudgetedAI(config)).rejects.toMatchObject({statusCode:503});
-  approveRecovery();
-  await recoverAIBudget((await witnessHead())!.ledger.signature,randomUUID());
+  const head=(await witnessHead())!;tokens.push(head.ledger.attempts[0].token);
+  expect(head.ledger.months[month]).toBe(19980000+(i+1)*10000);
+  approveRecovery();await recoverAIBudget(head.ledger.signature,randomUUID());
+  const doc=(await ledger().findOne({_id:AI_POLICY.id}))!;
+  expect(doc.months[month]).toBe(19980000+(i+1)*10000);expect(doc.attempts[0].state).toBe('forfeited');
  }
  process.env.FAKHR_AI_ENABLED='true';
- await expect(runBudgetedAI(config)).rejects.toMatchObject({statusCode:503});
- expect(mockCreate).toHaveBeenCalledTimes(12);
- const attempts=(await ledger().findOne({_id:AI_POLICY.id}))!.attempts;
- expect(attempts).toHaveLength(12);
- expect(attempts.every(a=>a.state==='forfeited')).toBe(true);
- expect(attempts.length*AI_POLICY.reservationMicros).toBe(240000);
+ await expect(runBudgetedAI(config)).rejects.toMatchObject({statusCode:503});expect(mockCreate).toHaveBeenCalledTimes(2);
+ const history=await witnessAdmin!.collection('ai_budget_witness').find({}).toArray();
+ for(const token of tokens)expect(history.some(row=>row.ledger.attempts.some((a:any)=>a.token===token&&a.state==='forfeited'))).toBe(true);
+ expect((await witnessHead())!.ledger.months[month]).toBe(20000000);
 });
 test('concurrent recovery cannot refund or duplicate an attempt',async()=>{
  await reserveAI({public:'body'});approveRecovery();const head=(await witnessHead())!;
@@ -268,7 +291,9 @@ test('byte cap catches low-token but oversized strings; reservations include ful
  await expect(runBudgetedAI(config)).rejects.toMatchObject({statusCode:503});
  expect(mockCreate).not.toHaveBeenCalled();
  expect(AI_POLICY.inputBytes+AI_POLICY.framingAllowance).toBe(AI_POLICY.billedInputTokens);
- expect(AI_POLICY.billedInputTokens*AI_POLICY.inputMicrosPerToken+AI_POLICY.outputTokens*AI_POLICY.outputMicrosPerToken).toBe(AI_POLICY.reservationMicros);
+ const maximumCost=AI_POLICY.billedInputTokens*AI_POLICY.inputMicrosPerToken+AI_POLICY.outputTokens*AI_POLICY.outputMicrosPerToken;
+ expect(maximumCost).toBe(6000);expect(AI_POLICY.reservationMicros).toBe(10000);
+ expect(maximumCost).toBeLessThanOrEqual(AI_POLICY.reservationMicros);
 });
 
 test('recovery restores completed history without replenishing budget',async()=>{
@@ -295,4 +320,15 @@ test('removing primary ledger cannot reset campaign while witness survives',asyn
  await expect(provisionAIBudget()).rejects.toThrow();
  approveRecovery();await recoverAIBudget((await witnessHead())!.ledger.signature,randomUUID());
  expect((await ledger().findOne({_id:AI_POLICY.id}))?.attempts).toHaveLength(1);
+});
+
+test('UTC month rollover retains prior spend and charges cross-month completion',async()=>{
+ let now=new Date('2030-01-31T23:59:59.999Z');
+ jest.spyOn(ledger(),'aggregate').mockImplementation(()=>({next:async()=>({now})}) as any);
+ const token=await reserveAI({topic:'general'});await claimAI(token,{topic:'general'});
+ now=new Date('2030-02-01T00:00:00.000Z');await completeAI(token,100,100);
+ const doc=(await ledger().findOne({_id:AI_POLICY.id}))!;
+ expect(doc.months).toEqual({'2030-01':10000,'2030-02':10000});
+ expect((await witnessHead())!.ledger.signature).toBe(doc.signature);
+ now=new Date('2030-01-31T23:59:59.999Z');await expect(reserveAI({topic:'general'})).rejects.toThrow('BUDGET_CLOCK_INVALID');
 });
