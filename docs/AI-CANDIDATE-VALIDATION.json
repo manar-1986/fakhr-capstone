@@ -69,5 +69,22 @@
     "Initial sandbox test attempts failed before execution due to EPERM cache rename. Local isolated tests rerun outside sandbox.",
     "Initial backend fixture failures corrected without runtime safeguard changes.",
     "No current model availability/pricing assertion or production database permission assertion."
-  ]
+  ],
+  "timeoutCorrection": {
+    "approved": true,
+    "witnessSha256": "6b878d850433e058dd20b0cee8bce00465762ddb271d269e6d7f271a9dd8c724",
+    "onlyRuntimeChange": "Math.floor on remaining cursor timeoutMS",
+    "backendBuild": "PASS",
+    "budgetWitness": {
+      "total": 36,
+      "passed": 31,
+      "failed": 5
+    },
+    "regressions": {
+      "passed": 95,
+      "failed": 0
+    },
+    "remainingFailure": "Stale-policy assertions; monthly-policy validation still required",
+    "productionChanges": false
+  }
 }

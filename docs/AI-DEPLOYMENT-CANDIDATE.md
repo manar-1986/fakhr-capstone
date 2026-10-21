@@ -10,7 +10,10 @@ Classification occurs locally; only a fixed general topic prompt and locale cros
 
 The general API accepts authenticated users independently of selecting a child. The existing child selector remains display-only context for this path. Personalized Smart Plan remains mock-only and /api/plan-ai remains blocked. Design/style declarations are unchanged.
 
-## Mandatory source blocker
+## Timeout correction status
+The approved integer-timeout correction is now applied locally. See WITNESS-INTEGER-TIMEOUT.md: 31/36 budget/witness tests pass; five stale-policy assertions remain unresolved. The historical findings below describe the pre-correction candidate. Deployment remains blocked.
+
+## Original source blocker (corrected)
 The unmodified ai.witness.ts computes cursor timeoutMS from performance.now(), producing a fractional value. With locked mongoose 9.7.2 / mongodb 7.2.0 and isolated MongoDB 7.0.14, the driver sends a fractional maxTimeMS and MongoDB rejects it: maxTimeMS has non-integral value. Budget/witness initialization tests fail before any provider dispatch. All six safeguard SHA-256 hashes still match docs/reconciliation/ai-safeguard-verification.json.
 
 A narrowly reviewed integer deadline correction in the protected witness module, followed by full budget/witness regression tests, needs explicit approval under the byte-for-byte preservation requirement. No workaround, dependency downgrade, clock override, or weakened test was introduced. Atlas 8 runtime behavior has not been tested and must not be assumed to resolve this.

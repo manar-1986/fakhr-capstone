@@ -68,7 +68,7 @@ export async function witnessHead() {
   const col=await collection(controller.signal);checkDeadline();
   // Check every signature/link. Never authorize against a partial chain or tail alone.
   const cursor=col.find({},{readPreference:'primary',maxTimeMS:WITNESS_LIMITS.timeoutMs,
-   timeoutMS:Math.max(1,WITNESS_LIMITS.timeoutMs-(performance.now()-started)),
+   timeoutMS:Math.max(1,Math.floor(WITNESS_LIMITS.timeoutMs-(performance.now()-started))),
    timeoutMode:'cursorLifetime',signal:controller.signal}).sort({_id:1})
    .limit(WITNESS_LIMITS.entries+1).batchSize(WITNESS_LIMITS.batchSize);
   let head:Witness|null=null,count=0;
