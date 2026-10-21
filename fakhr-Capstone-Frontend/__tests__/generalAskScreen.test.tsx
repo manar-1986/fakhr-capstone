@@ -1,0 +1,27 @@
+jest.mock('../api/children.api',()=>({getChildren:jest.fn()}));
+import React from 'react';
+import {render,fireEvent,act} from '@testing-library/react-native';
+import Chat from '../components/plan/MockPlanChat';
+import {assistantQuestions} from '../utils/assistantQuestions';
+import {sendGeneralAsk} from '../utils/generalAsk';
+jest.mock('../utils/generalAsk',()=>({sendGeneralAsk:jest.fn(),generalAskError:()=> 'Unavailable'}));
+jest.mock('../utils/minimumRelease',()=>({AI_PILOT_UI:true}));
+let mockRTL=true;
+const mockRouter={push:jest.fn(),replace:jest.fn(),back:jest.fn(),setParams:jest.fn(),canGoBack:()=>false};
+jest.mock('expo-router',()=>({useRouter:()=>mockRouter,useLocalSearchParams:()=>({date:'2026-10-20'})}));
+jest.mock('@react-navigation/native',()=>({useIsFocused:()=>true}));
+jest.mock('react-native-safe-area-context',()=>({useSafeAreaInsets:()=>({top:0,bottom:0,left:0,right:0})}));
+jest.mock('@tanstack/react-query',()=>({useQuery:()=>({data:undefined}),useQueryClient:()=>({getQueryData:()=>undefined})}));
+jest.mock('../context/AuthContext',()=>({useAuth:()=>({user:{id:'synthetic-user'}})}));
+jest.mock('../hooks/useI18nLayout',()=>({useI18nLayout:()=>({isRTL:mockRTL})}));
+jest.mock('../api/smartPlan.api',()=>({dashboardPreview:()=>false}));
+jest.mock('../components/ui/AppText',()=>{const rn=require('react-native');return {Text:rn.Text,TextInput:rn.TextInput,ScrollView:rn.ScrollView}});
+jest.mock('@expo/vector-icons',()=>({Ionicons:()=>null}));
+jest.mock('../utils/mockPlanChat',()=>({mockChatReply:jest.fn(jest.requireActual('../utils/mockPlanChat').mockChatReply)}));
+
+beforeEach(()=>{jest.clearAllMocks();mockRTL=false;(sendGeneralAsk as jest.Mock).mockResolvedValue('General response')});
+test.each(assistantQuestions)('general path responds to question %s',async(_,ar,en,arPrompt,enPrompt)=>{const v=render(<Chat/>);await act(async()=>fireEvent.press(v.getByLabelText(en)));expect(sendGeneralAsk).toHaveBeenCalledWith(enPrompt,false);expect(v.getByText('General response')).toBeTruthy()});
+test('all three additional questions remain enabled without a child',async()=>{const v=render(<Chat/>);fireEvent.press(v.getByText('More questions'));for(const q of ['How do I create a plan?','What accessibility options are there?','What does progress mean?']){await act(async()=>fireEvent.press(v.getByLabelText(q)));expect(sendGeneralAsk).toHaveBeenCalledWith(q,false)}});
+test('Arabic input/send works and failure is visible',async()=>{mockRTL=true;(sendGeneralAsk as jest.Mock).mockRejectedValue({status:503});const v=render(<Chat/>);fireEvent.changeText(v.getByLabelText('اكتب سؤالك'),'نشاط عام');await act(async()=>fireEvent.press(v.getByLabelText('إرسال')));expect(sendGeneralAsk).toHaveBeenCalledWith('نشاط عام',true);expect(v.getByText('Unavailable')).toBeTruthy()});
+test('late response is ignored after unmount; no duplicate send while busy',async()=>{let resolve!:(v:string)=>void;(sendGeneralAsk as jest.Mock).mockImplementation(()=>new Promise(r=>resolve=r));const v=render(<Chat/>);fireEvent.press(v.getByLabelText('Suggest an Activity'));fireEvent.press(v.getByLabelText('Suggest an Activity'));expect(sendGeneralAsk).toHaveBeenCalledTimes(1);v.unmount();await act(async()=>resolve('Late response'))});
+test('Smart Plan live action remains blocked; Back works',()=>{const v=render(<Chat/>);fireEvent.press(v.getByLabelText('Open Smart Plan'));expect(mockRouter.push).not.toHaveBeenCalled();fireEvent.press(v.getByLabelText('Back'));expect(mockRouter.replace).toHaveBeenCalled()});

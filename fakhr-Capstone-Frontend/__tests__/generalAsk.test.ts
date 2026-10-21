@@ -1,0 +1,10 @@
+jest.mock('../api/helpCenter.api',()=>({sendHelpMessage:jest.fn()}));
+import {sendHelpMessage} from '../api/helpCenter.api';
+import {generalAskRequest,sendGeneralAsk,generalAskError} from '../utils/generalAsk';
+import {assistantQuestions} from '../utils/assistantQuestions';
+beforeEach(()=>jest.clearAllMocks());
+test.each(assistantQuestions)('preserves bilingual question %s',(_,ar,en,arPrompt,enPrompt)=>{expect(generalAskRequest(arPrompt,true)).not.toBeNull();expect(generalAskRequest(enPrompt,false)).not.toBeNull()});
+test.each(['How do I create a plan?','What accessibility options are there?','What does progress mean?','كيف أنشئ خطة؟','ما خيارات الوصول؟','ماذا يعني التقدم؟'])('additional question maps locally: %s',q=>expect(generalAskRequest(q,false)).not.toBeNull());
+test('personal narrative never leaves client',async()=>{(sendHelpMessage as jest.Mock).mockResolvedValue({message:'General guidance'});await sendGeneralAsk('Suggest activities for PRIVATE_NAME, medication PRIVATE_MED, child-id-123',false);expect(sendHelpMessage).toHaveBeenCalledWith({message:'General educational activities',locale:'en',schoolContext:{category:'general',topic:'activities',language:'en'}})});
+test('unknown personal question makes no API call',async()=>{await sendGeneralAsk('PRIVATE_NAME PRIVATE_MED',false);expect(sendHelpMessage).not.toHaveBeenCalled()});
+test('no retry or simulated success on backend failure',async()=>{(sendHelpMessage as jest.Mock).mockRejectedValue({code:'FEATURE_DISABLED'});await expect(sendGeneralAsk('activities',false)).rejects.toEqual({code:'FEATURE_DISABLED'});expect(sendHelpMessage).toHaveBeenCalledTimes(1);expect(generalAskError({code:'FEATURE_DISABLED'},false)).toContain('disabled')});
